@@ -1,4 +1,4 @@
-import { createSupabaseClient } from './client'
+import { createSupabasePublicClient } from './client'
 
 export type ArticleRow = {
   slug: string
@@ -32,7 +32,7 @@ export async function getPublishedArticles(
   locale: string,
   limit = 20
 ): Promise<ArticleWithTranslation[]> {
-  const supabase = await createSupabaseClient()
+  const supabase = createSupabasePublicClient()
 
   const { data, error } = await supabase
     .from('articles')
@@ -62,7 +62,7 @@ export async function getArticlesByCategory(
   locale: string,
   limit = 10
 ): Promise<ArticleWithTranslation[]> {
-  const supabase = await createSupabaseClient()
+  const supabase = createSupabasePublicClient()
 
   const { data, error } = await supabase
     .from('articles')
@@ -92,7 +92,7 @@ export async function getArticleBySlug(
   slug: string,
   locale: string
 ): Promise<ArticleWithTranslation | null> {
-  const supabase = await createSupabaseClient()
+  const supabase = createSupabasePublicClient()
 
   const { data, error } = await supabase
     .from('articles')
@@ -126,7 +126,7 @@ export async function getArticlesForTool(
   locale: string,
   limit = 3
 ): Promise<ArticleWithTranslation[]> {
-  const supabase = await createSupabaseClient()
+  const supabase = createSupabasePublicClient()
 
   const { data, error } = await supabase
     .from('articles')
@@ -155,7 +155,7 @@ export async function getArticlesForTool(
 export async function getAllPublishedArticleSlugs(): Promise<
   { slug: string; published_at: string }[]
 > {
-  const supabase = await createSupabaseClient()
+  const supabase = createSupabasePublicClient()
 
   const { data, error } = await supabase
     .from('articles')
