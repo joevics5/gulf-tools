@@ -1,3 +1,6 @@
+
+
+
 // 📁 app/[locale]/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
@@ -16,11 +19,10 @@ import { getArticleBySlug, getPublishedArticles } from '@/lib/supabase/queries'
 import { getToolBySlug } from '@/lib/registry/tools'
 import AdUnit from '@/components/ads/AdUnit'
 import { AD_SLOTS } from '@/components/ads/slots'
-
 type Params = { locale: string; slug: string }
 
-// ISR: rebuild blog pages every hour
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
+// export const revalidate = 3600
 
 const BASE_URL = 'https://gulftools.jobmeter.app'
 
