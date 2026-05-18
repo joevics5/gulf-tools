@@ -9,11 +9,16 @@ type Props = {
 export async function Header({ locale, activePath }: Props) {
   const tNav = await getTranslations({ locale, namespace: 'nav' })
 
-  const navLinks = [
-    { href: `/${locale}/tools`,    label: tNav('tools') },
-    { href: `/${locale}/blog`,     label: tNav('blog') },
-    { href: `/${locale}/location`, label: tNav('locations') },
-  ]
+const navLinks = [
+  { href: `/${locale}/tools`,      label: tNav('tools') },
+  { href: `/${locale}/blog`,       label: tNav('blog') },
+  { href: `/${locale}/location`,   label: tNav('locations') },
+  { href: `/${locale}/about`,      label: tNav('about') },
+  { href: `/${locale}/contact`,    label: tNav('contact') },
+  { href: `/${locale}/disclaimer`, label: tNav('disclaimer') },
+  { href: `/${locale}/privacy`,    label: tNav('privacy') },
+  { href: `/${locale}/terms`,      label: tNav('terms') },
+]
 
   return (
     <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
