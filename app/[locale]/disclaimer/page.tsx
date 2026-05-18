@@ -28,7 +28,7 @@ export default async function DisclaimerPage({ params }: { params: Promise<Param
     { label: isAr ? 'إخلاء المسؤولية' : 'Disclaimer', href: `/${locale}/disclaimer` },
   ]
 
-  const lastUpdated = 'January 1, 2025'
+  const lastUpdated = 'May 18, 2026'
 
   return (
     <>

@@ -28,7 +28,7 @@ export default async function TermsPage({ params }: { params: Promise<Params> })
     { label: isAr ? 'شروط الخدمة' : 'Terms of Service', href: `/${locale}/terms` },
   ]
 
-  const lastUpdated = 'January 1, 2025'
+  const lastUpdated = 'May 18, 2026'
 
   return (
     <>

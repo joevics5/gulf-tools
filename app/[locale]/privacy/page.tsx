@@ -28,7 +28,7 @@ export default async function PrivacyPage({ params }: { params: Promise<Params> 
     { label: isAr ? 'سياسة الخصوصية' : 'Privacy Policy', href: `/${locale}/privacy` },
   ]
 
-  const lastUpdated = 'January 1, 2025'
+  const lastUpdated = 'May 18, 2026'
 
   return (
     <>
@@ -86,7 +86,7 @@ export default async function PrivacyPage({ params }: { params: Promise<Params> 
 
                 <h2>7. حقوقك</h2>
                 <p>
-                  يحق لك: الوصول إلى بياناتك، تصحيحها، حذفها، والاعتراض على معالجتها. للتواصل معنا: <a href="mailto:privacy@jobmeter.app">privacy@jobmeter.app</a>
+                  يحق لك: الوصول إلى بياناتك، تصحيحها، حذفها، والاعتراض على معالجتها. للتواصل معنا: <a href="mailto:hello@jobmeter.app">hello@jobmeter.app</a>
                 </p>
 
                 <h2>8. التغييرات على هذه السياسة</h2>
@@ -131,7 +131,7 @@ export default async function PrivacyPage({ params }: { params: Promise<Params> 
 
                 <h2>7. Your Rights</h2>
                 <p>
-                  You have the right to access, correct, delete your data, and object to its processing. Contact us at: <a href="mailto:privacy@jobmeter.app">privacy@jobmeter.app</a>
+                  You have the right to access, correct, delete your data, and object to its processing. Contact us at: <a href="mailto:hello@jobmeter.app">hello@jobmeter.app</a>
                 </p>
 
                 <h2>8. Changes to This Policy</h2>
@@ -141,7 +141,7 @@ export default async function PrivacyPage({ params }: { params: Promise<Params> 
 
                 <h2>9. Contact</h2>
                 <p>
-                  For any privacy-related questions, contact us at <a href="mailto:privacy@jobmeter.app">privacy@jobmeter.app</a> or visit <a href="https://jobmeter.app">jobmeter.app</a>.
+                  For any privacy-related questions, contact us at <a href="mailto:hello@jobmeter.app">hello@jobmeter.app</a> or visit <a href="https://jobmeter.app">jobmeter.app</a>.
                 </p>
               </>
             )}

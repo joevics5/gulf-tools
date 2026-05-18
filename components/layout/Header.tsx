@@ -13,11 +13,6 @@ const navLinks = [
   { href: `/${locale}/tools`,      label: tNav('tools') },
   { href: `/${locale}/blog`,       label: tNav('blog') },
   { href: `/${locale}/location`,   label: tNav('locations') },
-  { href: `/${locale}/about`,      label: tNav('about') },
-  { href: `/${locale}/contact`,    label: tNav('contact') },
-  { href: `/${locale}/disclaimer`, label: tNav('disclaimer') },
-  { href: `/${locale}/privacy`,    label: tNav('privacy') },
-  { href: `/${locale}/terms`,      label: tNav('terms') },
 ]
 
   return (

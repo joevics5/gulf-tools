@@ -235,26 +235,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
               </div>
             )}
 
-            {tool.hasCountryVariants && (
-              <div className="bg-white border border-gray-100 rounded-2xl p-5">
-                <h3 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wide">
-                  {isRTL ? 'حسب الدولة' : 'By Country'}
-                </h3>
-                <div className="space-y-2">
-                  {tool.countries.map(country => {
-                    const flags: Record<string, string> = { uae:'🇦🇪', saudi:'🇸🇦', qatar:'🇶🇦', kuwait:'🇰🇼', bahrain:'🇧🇭', oman:'🇴🇲', egypt:'🇪🇬' }
-                    const names: Record<string, string> = { uae:'UAE', saudi:'Saudi Arabia', qatar:'Qatar', kuwait:'Kuwait', bahrain:'Bahrain', oman:'Oman', egypt:'Egypt' }
-                    return (
-                      <Link key={country} href={`/${locale}/location/${country}/${category}/${toolSlug}`}
-                        className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-gray-50 transition-colors text-sm text-gray-700 hover:text-emerald-600">
-                        <span>{flags[country]}</span>
-                        <span>{names[country]}</span>
-                      </Link>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
+            {/* Country variant pages — coming in Phase 2 */}
 
             <div>
               <p className="text-xs text-gray-400 text-center mb-1">Advertisement</p>

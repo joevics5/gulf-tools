@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import BlogMarkdownRenderer from '@/components/BlogMarkdownRenderer'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import {
@@ -26,7 +27,12 @@ const BASE_URL = 'https://gulftools.jobmeter.app'
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params
-  const article = await getArticleBySlug(slug, locale)
+  let article
+  try {
+    article = await getArticleBySlug(slug, locale)
+  } catch {
+    return {}
+  }
   if (!article?.translation) return {}
 
   const t = article.translation
@@ -118,7 +124,12 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
   const { locale, slug } = await params
   const isAr = locale === 'ar'
 
-  const article = await getArticleBySlug(slug, locale)
+  let article
+  try {
+    article = await getArticleBySlug(slug, locale)
+  } catch {
+    notFound()
+  }
   if (!article?.translation) notFound()
 
   const t = article.translation
@@ -230,35 +241,22 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               <AdUnit slot={AD_SLOTS.DISPLAY_TOP} />
             </div>
 
-            {/* Article body */}
-            {hasContent ? (
-              <div
-                className="prose prose-gray prose-lg max-w-none
-                  prose-headings:font-black prose-headings:text-gray-900
-                  prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-                  prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-                  prose-p:text-gray-600 prose-p:leading-relaxed
-                  prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
-                  prose-strong:text-gray-900
-                  prose-ul:text-gray-600 prose-ol:text-gray-600
-                  prose-li:my-1
-                  prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50
-                  prose-blockquote:rounded-r-xl prose-blockquote:py-1 prose-blockquote:text-gray-700"
-                dangerouslySetInnerHTML={{ __html: t.content }}
-              />
-            ) : (
-              /* Placeholder when content column is empty */
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
-                <p className="text-amber-700 font-medium">
-                  {isAr ? 'المحتوى الكامل قادم قريباً.' : 'Full article content coming soon.'}
-                </p>
-                <p className="text-amber-600 text-sm mt-1">
-                  {isAr
-                    ? 'في انتظار ذلك، استخدم الأدوات ذات الصلة أدناه.'
-                    : 'In the meantime, use the related tools below.'}
-                </p>
-              </div>
-            )}
+{/* Article body */}
+{hasContent ? (
+  <BlogMarkdownRenderer content={t.content} locale={locale} />
+) : (
+  /* Placeholder when content column is empty */
+  <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-center">
+    <p className="text-amber-700 font-medium">
+      {isAr ? 'المحتوى الكامل قادم قريباً.' : 'Full article content coming soon.'}
+    </p>
+    <p className="text-amber-600 text-sm mt-1">
+      {isAr
+        ? 'في انتظار ذلك، استخدم الأدوات ذات الصلة أدناه.'
+        : 'In the meantime, use the related tools below.'}
+    </p>
+  </div>
+)}
 
             {/* Ad: mid-article */}
             <div className="my-8">

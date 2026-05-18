@@ -14,12 +14,17 @@
     "viewAll": "View All",
     "comingSoon": "Coming Soon"
   },
-  "nav": {
-    "home": "Home",
-    "tools": "Tools",
-    "blog": "Blog",
-    "locations": "Locations",
-    "search": "Search tools..."
+"nav": {
+  "home": "Home",
+  "tools": "Tools",
+  "blog": "Blog",
+  "locations": "Locations",
+  "search": "Search tools...",
+  "about": "About",
+  "contact": "Contact",
+  "disclaimer": "Disclaimer",
+  "privacy": "Privacy",
+  "terms": "Terms"
   },
   "homepage": {
     "hero": "Free Tools for the Gulf",
