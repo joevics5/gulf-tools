@@ -71,7 +71,46 @@ export const TOOLS: Tool[] = [
     launchDate: '2025-01-01',
   },
 
-  // ─── HR & PAYROLL ─────────────────────────────────────────
+// ─── MORTGAGE  ─────────────────────────────────────────
+
+{
+  slug: 'uae-mortgage-calculator',
+  category: 'finance',
+  schema: 'calculator',
+  featured: true,
+  countries: ['uae'],
+  relatedTools: ['salary-calculator', 'loan-emi-calculator', 'profit-margin-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2025-01-01',
+},
+{
+  slug: 'dubai-mortgage-calculator-non-residents',
+  category: 'finance',
+  schema: 'calculator',
+  featured: true,
+  countries: ['uae'],
+  relatedTools: ['uae-mortgage-calculator', 'salary-calculator', 'loan-emi-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2025-01-01',
+},
+{
+  slug: 'home-loan-calculator-dubai',
+  category: 'finance',
+  schema: 'calculator',
+  featured: true,
+  countries: ['uae'],
+  relatedTools: ['uae-mortgage-calculator', 'dubai-mortgage-calculator-non-residents', 'salary-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2025-01-01',
+},
+  
+// ─── HR & PAYROLL ─────────────────────────────────────────
   {
     slug: 'gratuity-calculator',
     category: 'hr-payroll',

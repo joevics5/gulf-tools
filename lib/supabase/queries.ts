@@ -1,5 +1,7 @@
 import { createSupabasePublicClient } from './client'
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 export type ArticleRow = {
   slug: string
   category_slug: string
@@ -27,7 +29,22 @@ export type ArticleWithTranslation = ArticleRow & {
   translation: ArticleTranslationRow | null
 }
 
-// ─── Fetch all published articles with translation for a locale ───────────────
+export type ToolTranslation = {
+  tool_slug: string
+  locale: string
+  title: string
+  description: string | null
+  meta_description: string | null
+  article_title: string | null
+  /** Plain text (paragraphs separated by \n\n) or an HTML string from a rich-text editor. */
+  article_body: string | null
+  faq: { q: string; a: string }[]
+  is_translated: boolean
+  created_at: string
+}
+
+// ─── Article queries ──────────────────────────────────────────────────────────
+
 export async function getPublishedArticles(
   locale: string,
   limit = 20
@@ -36,10 +53,7 @@ export async function getPublishedArticles(
 
   const { data, error } = await supabase
     .from('articles')
-    .select(`
-      *,
-      article_translations!inner(*)
-    `)
+    .select(`*, article_translations!inner(*)`)
     .eq('published', true)
     .eq('article_translations.locale', locale)
     .order('published_at', { ascending: false })
@@ -56,7 +70,6 @@ export async function getPublishedArticles(
   }))
 }
 
-// ─── Fetch articles by category ───────────────────────────────────────────────
 export async function getArticlesByCategory(
   categorySlug: string,
   locale: string,
@@ -66,10 +79,7 @@ export async function getArticlesByCategory(
 
   const { data, error } = await supabase
     .from('articles')
-    .select(`
-      *,
-      article_translations!inner(*)
-    `)
+    .select(`*, article_translations!inner(*)`)
     .eq('published', true)
     .eq('category_slug', categorySlug)
     .eq('article_translations.locale', locale)
@@ -87,7 +97,6 @@ export async function getArticlesByCategory(
   }))
 }
 
-// ─── Fetch a single article by slug ───────────────────────────────────────────
 export async function getArticleBySlug(
   slug: string,
   locale: string
@@ -96,20 +105,14 @@ export async function getArticleBySlug(
 
   const { data, error } = await supabase
     .from('articles')
-    .select(`
-      *,
-      article_translations!inner(*)
-    `)
+    .select(`*, article_translations!inner(*)`)
     .eq('slug', slug)
     .eq('published', true)
     .eq('article_translations.locale', locale)
     .single()
 
   if (error) {
-    // Try English fallback if locale translation not found
-    if (locale !== 'en') {
-      return getArticleBySlug(slug, 'en')
-    }
+    if (locale !== 'en') return getArticleBySlug(slug, 'en')
     console.error('getArticleBySlug error:', error.message)
     return null
   }
@@ -120,7 +123,6 @@ export async function getArticleBySlug(
   }
 }
 
-// ─── Fetch articles related to a tool ─────────────────────────────────────────
 export async function getArticlesForTool(
   toolSlug: string,
   locale: string,
@@ -130,10 +132,7 @@ export async function getArticlesForTool(
 
   const { data, error } = await supabase
     .from('articles')
-    .select(`
-      *,
-      article_translations!inner(*)
-    `)
+    .select(`*, article_translations!inner(*)`)
     .eq('published', true)
     .contains('related_tool_slugs', [toolSlug])
     .eq('article_translations.locale', locale)
@@ -151,7 +150,6 @@ export async function getArticlesForTool(
   }))
 }
 
-// ─── Fetch all published slugs (for sitemap) ──────────────────────────────────
 export async function getAllPublishedArticleSlugs(): Promise<
   { slug: string; published_at: string }[]
 > {
@@ -169,4 +167,29 @@ export async function getAllPublishedArticleSlugs(): Promise<
   }
 
   return data ?? []
+}
+
+// ─── Tool translation queries ─────────────────────────────────────────────────
+
+export async function getToolTranslation(
+  slug: string,
+  locale: string
+): Promise<ToolTranslation | null> {
+  const supabase = createSupabasePublicClient()
+
+  const { data, error } = await supabase
+    .from('tool_translations')
+    .select('*')
+    .eq('tool_slug', slug)
+    .eq('locale', locale)
+    .single()
+
+  if (error) {
+    // Arabic not translated yet — fall back to English
+    if (locale !== 'en') return getToolTranslation(slug, 'en')
+    console.error('getToolTranslation error:', error.message)
+    return null
+  }
+
+  return data as ToolTranslation
 }
