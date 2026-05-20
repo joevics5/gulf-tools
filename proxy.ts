@@ -5,13 +5,15 @@ import { NextRequest, NextResponse } from 'next/server'
 const intlMiddleware = createMiddleware(routing)
 
 export default function middleware(request: NextRequest) {
-  // Redirect bare root to /en instantly — no flash
   if (request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/en', request.url))
+    const url = request.nextUrl.clone()
+    url.pathname = '/en'
+    return NextResponse.redirect(url)
   }
+
   return intlMiddleware(request)
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|_vercel|.*\..*).*)'],
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 }
