@@ -1,5 +1,6 @@
 // 📁 app/layout.tsx
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 
 const siteUrl = 'https://gulftools.jobmeter.app'
@@ -13,9 +14,16 @@ export const metadata: Metadata = {
   description:
     'Free online tools and calculators built for the Gulf — salary, gratuity, VAT, zakat, loan EMI and more for UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman and Egypt.',
   keywords: [
-    'gulf tools', 'uae salary calculator', 'gratuity calculator uae',
-    'zakat calculator', 'uae vat calculator', 'loan emi calculator gulf',
-    'saudi arabia tools', 'qatar calculators', 'gulf finance tools', 'expat tools uae',
+    'gulf tools',
+    'uae salary calculator',
+    'gratuity calculator uae',
+    'zakat calculator',
+    'uae vat calculator',
+    'loan emi calculator gulf',
+    'saudi arabia tools',
+    'qatar calculators',
+    'gulf finance tools',
+    'expat tools uae',
   ],
   authors: [{ name: 'Gulf Tools' }],
   creator: 'Gulf Tools',
@@ -23,7 +31,12 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   openGraph: {
     type: 'website',
@@ -31,8 +44,16 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: 'Gulf Tools',
     title: 'Gulf Tools — Free Calculators for UAE, Saudi Arabia & the Gulf',
-    description: 'Free online tools and calculators built for the Gulf — salary, gratuity, VAT, zakat, loan EMI and more.',
-    images: [{ url: `${siteUrl}/og/homepage.png`, width: 1200, height: 630, alt: 'Gulf Tools' }],
+    description:
+      'Free online tools and calculators built for the Gulf — salary, gratuity, VAT, zakat, loan EMI and more.',
+    images: [
+      {
+        url: `${siteUrl}/og/homepage.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Gulf Tools',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -48,44 +69,77 @@ export const metadata: Metadata = {
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    apple: [
+      {
+        url: '/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
   },
-  alternates: { canonical: siteUrl },
-  formatDetection: { telephone: false },
+  alternates: {
+    canonical: siteUrl,
+  },
+  formatDetection: {
+    telephone: false,
+  },
 }
 
-// ─── Root layout must export html+body for Next.js App Router ─────────────────
-// The locale layout (app/[locale]/layout.tsx) sets the real lang, dir, fonts.
-// We use suppressHydrationWarning because the locale layout re-renders html/body
-// with the correct attributes — React sees a mismatch and this suppresses it.
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html suppressHydrationWarning>
       <head>
         {/* AdSense account verification */}
-        <meta name="google-adsense-account" content="ca-pub-1119289641389825" />
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-1119289641389825"
+        />
+
         {/* Admaven */}
         <meta name="admaven-placement" content="Bqjw8rHw7" />
+
         {/* Preconnects */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-        {/* Google AdSense — loaded once here, never inside AdUnit */}
-        <script
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://pagead2.googlesyndication.com"
+        />
+      </head>
+
+      <body suppressHydrationWarning>
+        {children}
+
+        {/* ✅ AdSense (safe placement) */}
+        <Script
           async
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1119289641389825"
           crossOrigin="anonymous"
         />
-        {/* Google Analytics GA4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-315B0S5RGE" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-315B0S5RGE');`,
-          }}
+
+        {/* ✅ Google Analytics (SAFE Next.js way) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-315B0S5RGE"
+          strategy="afterInteractive"
         />
-      </head>
-      <body suppressHydrationWarning>
-        {children}
+
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-315B0S5RGE');
+          `}
+        </Script>
       </body>
     </html>
   )
