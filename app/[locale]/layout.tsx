@@ -35,6 +35,8 @@ export default async function LocaleLayout({
   const messages = await getMessages()
   const isRTL = locale === 'ar'
 
+  const schema = generateOrganizationSchema()
+
   return (
     <html
       lang={locale}
@@ -42,9 +44,13 @@ export default async function LocaleLayout({
       className={cairo.variable}
     >
       <head>
-        <SchemaOrg schema={generateOrganizationSchema()} />
+        {/* DO NOT put React components here */}
       </head>
+
       <body className="font-[family-name:var(--font-cairo)] antialiased bg-gray-50 text-gray-900">
+        {/* Schema MUST be inside body */}
+        <SchemaOrg schema={schema} />
+
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
