@@ -151,11 +151,42 @@ async function loadToolComponent(toolSlug: string) {
         return (await import('@/components/tools/finance/DubaiNonResidentMortgageCalculator')).default
       case 'home-loan-calculator-dubai':
         return (await import('@/components/tools/finance/HomeLoanCalculatorDubai')).default
+      case 'loan-emi-calculator':
+        return (await import('@/components/tools/finance/LoanEMICalculator')).default
+     case 'savings-goal-calculator':
+        return (await import('@/components/tools/finance/SavingsGoalCalculator')).default
+     case 'gratuity-calculator':
+        return (await import('@/components/tools/hr-payroll/GratuityCalculator')).default
+
+     case 'notice-period-calculator':
+       return (await import('@/components/tools/hr-payroll/NoticePeriodCalculator')).default
+
+     case 'leave-encashment-calculator':
+      return (await import('@/components/tools/hr-payroll/LeaveEncashmentCalculator')).default;
+
+     case 'zakat-calculator':
+      return (await import('@/components/tools/islamic-tools/ZakatCalculator')).default
+
+     case 'compound-interest-calculator':
+       return (await import('@/components/tools/finance/CompoundInterestCalculator')).default
+
+     case 'uae-vat-calculator':
+       return (await import('@/components/tools/tax-vat/UAEVatCalculator')).default
+
+     case 'hijri-gregorian-converter':
+       return (await import('@/components/tools/islamic-tools/HijriGregorianConverter')).default;
+
+     case 'ksa-vat-calculator':
+       return (await import('@/components/tools/tax-vat/KSAVatCalculator')).default
+
+     case 'profit-margin-calculator':
+       return (await import('@/components/tools/business/ProfitMarginCalculator')).default
+
+     case 'invoice-generator':
+       return (await import('@/components/tools/business/InvoiceGenerator')).default;
+
 
       // ── Add new tools here ──
-      // case 'loan-emi-calculator':
-      //   return (await import('@/components/tools/finance/LoanEmiCalculator')).default
-
       default:
         return null
     }
