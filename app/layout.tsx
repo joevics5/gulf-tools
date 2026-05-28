@@ -8,7 +8,7 @@ const siteUrl = 'https://gulftools.jobmeter.app'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Gulf Tools — Free Calculators for UAE, Saudi Arabia & the Gulf',
+    default: 'Gulf Tools — Free Online tools for UAE, Saudi Arabia & the Gulf',
     template: '%s | Gulf Tools',
   },
   description:
@@ -113,20 +113,19 @@ export default function RootLayout({
           rel="preconnect"
           href="https://pagead2.googlesyndication.com"
         />
+
+        {/* ✅ FIXED: AdSense script (no next/script to avoid data-nscript warning) */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1119289641389825"
+          crossOrigin="anonymous"
+        />
       </head>
 
       <body suppressHydrationWarning>
         {children}
 
-        {/* ✅ AdSense (safe placement) */}
-        <Script
-          async
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1119289641389825"
-          crossOrigin="anonymous"
-        />
-
-        {/* ✅ Google Analytics (SAFE Next.js way) */}
+        {/* Google Analytics (unchanged) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-315B0S5RGE"
           strategy="afterInteractive"
