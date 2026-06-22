@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Gulf Tools' }],
   creator: 'Gulf Tools',
-  publisher: 'JobMeter Network',
+  publisher: 'Gulf Tools', // ✅ FIXED: was 'JobMeter Network'
   robots: {
     index: true,
     follow: true,
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
     title: 'Gulf Tools — Free Calculators for UAE, Saudi Arabia & the Gulf',
     description: 'Free online tools and calculators built for the Gulf.',
     images: [`${siteUrl}/og/homepage.png`],
-    creator: '@jobmeterapp',
-    site: '@jobmeterapp',
+    creator: '@gulftools', // ✅ FIXED: was '@jobmeterapp'
+    site: '@gulftools',   // ✅ FIXED: was '@jobmeterapp'
   },
   icons: {
     icon: [
@@ -114,18 +114,32 @@ export default function RootLayout({
           href="https://pagead2.googlesyndication.com"
         />
 
-        {/* ✅ FIXED: AdSense script (no next/script to avoid data-nscript warning) */}
+        {/* AdSense script */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1119289641389825"
           crossOrigin="anonymous"
+        />
+
+        {/* ✅ ADDED: WebSite structured data — strongest signal to Google for site name */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'Gulf Tools',
+              alternateName: 'Gulf Tools — Free Online Calculators',
+              url: siteUrl,
+            }),
+          }}
         />
       </head>
 
       <body suppressHydrationWarning>
         {children}
 
-        {/* Google Analytics (unchanged) */}
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-315B0S5RGE"
           strategy="afterInteractive"
