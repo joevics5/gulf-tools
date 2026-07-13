@@ -1,5 +1,3 @@
-'use client';
-
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -8,6 +6,8 @@ interface BlogMarkdownRendererProps {
   className?: string;
   locale?: string;
 }
+
+const SITE_HOST = 'gulftools.jobmeter.app';
 
 export default function BlogMarkdownRenderer({ content, className = "", locale }: BlogMarkdownRendererProps) {
   const isRtl = locale === 'ar';
@@ -27,16 +27,31 @@ export default function BlogMarkdownRenderer({ content, className = "", locale }
           p: ({node, ...props}) => <p className="text-gray-700 leading-relaxed my-4" {...props} />,
           strong: ({node, ...props}) => <strong className="font-semibold text-gray-900" {...props} />,
           em: ({node, ...props}) => <em className="italic text-gray-700" {...props} />,
-          a: ({node, href, children, ...props}) => (
-            <a
-              href={href}
-              className="text-blue-600 hover:text-blue-700 underline transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
+          a: ({node, href, children, ...props}) => {
+            // Only open truly external links in a new tab. Internal links
+            // (relative, or absolute links back to this site) should behave
+            // like normal navigation so they carry ordinary internal-link
+            // signals and don't force readers into a new tab unexpectedly.
+            const isExternal = !!href && /^https?:\/\//i.test(href) && !href.includes(SITE_HOST)
+            return (
+              <a
+                href={href}
+                className="text-blue-600 hover:text-blue-700 underline transition-colors"
+                {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                {...props}
+              >
+                {children}
+              </a>
+            )
+          },
+          img: ({node, alt, ...props}) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              alt={alt ?? ''}
+              loading="lazy"
+              className="rounded-xl my-6 w-full h-auto"
               {...props}
-            >
-              {children}
-            </a>
+            />
           ),
           ul: ({node, ...props}) => <ul className="list-disc list-inside my-6 space-y-2" {...props} />,
           ol: ({node, ...props}) => <ol className="list-decimal list-inside my-6 space-y-2" {...props} />,

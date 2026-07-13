@@ -10,6 +10,8 @@ import { generateCategoryMetadata } from '@/lib/utils/seo'
 import { generateCollectionSchema, generateBreadcrumbSchema } from '@/lib/schema/schemas'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
+import { getToolIcon } from '@/lib/utils/toolIcons'
 
 type Params = { locale: string; category: string }
 
@@ -33,22 +35,6 @@ function getToolName(slug: string, locale: string): string {
   const entry = TOOL_NAMES[slug]
   if (entry) return locale === 'ar' ? entry.ar : entry.en
   return slug.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-}
-
-const toolEmojiMap: Record<string, string> = {
-  'salary-calculator':         '💵',
-  'loan-emi-calculator':       '🏦',
-  'compound-interest-calculator':'📈',
-  'savings-goal-calculator':   '🎯',
-  'gratuity-calculator':       '📋',
-  'leave-encashment-calculator':'🏖️',
-  'notice-period-calculator':  '📅',
-  'zakat-calculator':          '☪️',
-  'hijri-gregorian-converter': '🗓️',
-  'uae-vat-calculator':        '🧾',
-  'ksa-vat-calculator':        '🧾',
-  'invoice-generator':         '📄',
-  'profit-margin-calculator':  '📊',
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
@@ -101,6 +87,9 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}/tools`} />
+        </div>
 
         {/* Category header */}
         <header className="mb-10">
@@ -124,7 +113,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
                 className="group bg-white border border-gray-100 rounded-2xl p-5 hover:border-emerald-200 hover:shadow-md transition-all"
               >
                 <div className="text-2xl mb-3">
-                  {toolEmojiMap[tool.slug] ?? '🔧'}
+                  {getToolIcon(tool)}
                 </div>
                 <h2 className="font-bold text-gray-900 group-hover:text-emerald-600 transition-colors mb-1">
                   {getToolName(tool.slug, locale)}
@@ -146,7 +135,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
           </div>
         ) : (
           <div className="text-center py-20 text-gray-400">
-            <div className="text-4xl mb-3">🔧</div>
+            <div className="text-4xl mb-3">{categoryData.icon}</div>
             <p>{locale === 'ar' ? 'أدوات قريباً' : 'Tools coming soon'}</p>
           </div>
         )}

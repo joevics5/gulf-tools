@@ -11,11 +11,13 @@ import {
 import { getToolTranslation } from '@/lib/supabase/queries'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 import { ToolWrapper } from '@/components/tools/ToolWrapper'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import AdUnit from '@/components/ads/AdUnit'
 import { AD_SLOTS } from '@/components/ads/slots'
+import { getToolIcon } from '@/lib/utils/toolIcons'
 import Link from 'next/link'
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -376,6 +378,9 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}/tools/${category}`} />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 mt-2">
 
@@ -385,7 +390,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
             {/* Tool header */}
             <div className="mb-6">
               <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full mb-3 ${badgeColor}`}>
-                {categoryData.icon} {tCat('name')}
+                {getToolIcon(tool)} {tCat('name')}
               </span>
               <h1 className="text-3xl sm:text-4xl font-black text-gray-900 leading-tight mb-2">
                 {toolContent.title}
@@ -503,8 +508,8 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
                 </h3>
                 <div className="space-y-1">
                   {relatedTools.map(related => {
-                    // Use registry icon if available, fall back to 🔧
-                    const icon = (related as any).icon ?? '🔧'
+                    // Resolve a specific icon for the related tool
+                    const icon = getToolIcon(related)
                     const relatedBadgeColor =
                       categoryColorMap[related.category] ?? 'bg-gray-50 text-gray-500'
                     return (

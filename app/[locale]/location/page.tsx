@@ -6,6 +6,7 @@ import { getToolsByCountry } from '@/lib/registry/tools'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { generateBreadcrumbSchema } from '@/lib/schema/schemas'
 
@@ -54,6 +55,9 @@ export default async function LocationIndexPage({ params }: { params: Promise<Pa
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}`} />
+        </div>
 
         <header className="mb-10">
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">

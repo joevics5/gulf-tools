@@ -3,13 +3,14 @@ import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { getFeaturedTools } from '@/lib/registry/tools'
+import { getFeaturedTools, TOOLS } from '@/lib/registry/tools'
 import { CATEGORIES } from '@/lib/registry/categories'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { generateOrganizationSchema } from '@/lib/schema/schemas'
 import AdUnit from '@/components/ads/AdUnit'
 import { AD_SLOTS } from '@/components/ads/slots'
 import { generateHomepageMetadata } from '@/lib/utils/seo'
+import { getToolIcon } from '@/lib/utils/toolIcons'
 
 type Params = { locale: string }
 
@@ -44,54 +45,81 @@ const colorMap: Record<string, string> = {
 
 // Tool name translations (static lookup — these match tool slugs to i18n keys)
 const toolNameMap: Record<string, string> = {
-  'salary-calculator':        'Salary Calculator',
-  'loan-emi-calculator':      'Loan EMI Calculator',
-  'gratuity-calculator':      'Gratuity Calculator',
-  'zakat-calculator':         'Zakat Calculator',
-  'hijri-gregorian-converter':'Hijri–Gregorian Converter',
-  'uae-vat-calculator':       'UAE VAT Calculator',
-  'invoice-generator':        'Invoice Generator',
+  'salary-calculator':                       'Salary Calculator',
+  'loan-emi-calculator':                     'Loan EMI Calculator',
+  'gratuity-calculator':                     'Gratuity Calculator',
+  'zakat-calculator':                        'Zakat Calculator',
+  'hijri-gregorian-converter':               'Hijri–Gregorian Converter',
+  'uae-vat-calculator':                      'UAE VAT Calculator',
+  'invoice-generator':                       'Invoice Generator',
+  'uae-salary-calculator':                   'UAE Salary Calculator',
+  'dubai-salary-calculator':                 'Dubai Salary Calculator',
+  'gcc-emi-calculator':                      'GCC EMI Calculator',
+  'car-loan-calculator-uae':                 'UAE Car Loan Calculator',
+  'uae-mortgage-calculator':                 'UAE Mortgage Calculator',
+  'dubai-mortgage-calculator-non-residents': 'Dubai Mortgage (Non-Residents)',
+  'home-loan-calculator-dubai':              'Dubai Home Loan Calculator',
+  'gold-zakat-calculator':                   'Gold Zakat Calculator',
+  'cash-zakat-calculator':                   'Cash Zakat Calculator',
 }
 
 const toolDescMap: Record<string, string> = {
-  'salary-calculator':         'Net salary after deductions for UAE, KSA, Qatar and more',
-  'loan-emi-calculator':       'Monthly EMI, total interest and repayment schedule',
-  'gratuity-calculator':       'End-of-service benefit under UAE & Gulf Labour Law',
-  'zakat-calculator':          'Annual Zakat on savings, gold and investments',
-  'hijri-gregorian-converter': 'Convert between Hijri and Gregorian calendars instantly',
-  'uae-vat-calculator':        'Add or remove UAE 5% VAT from any amount',
-  'invoice-generator':         'Professional invoices with VAT for Gulf businesses',
+  'salary-calculator':                       'Net salary after deductions for UAE, KSA, Qatar and more',
+  'loan-emi-calculator':                     'Monthly EMI, total interest and repayment schedule',
+  'gratuity-calculator':                     'End-of-service benefit under UAE & Gulf Labour Law',
+  'zakat-calculator':                        'Annual Zakat on savings, gold and investments',
+  'hijri-gregorian-converter':               'Convert between Hijri and Gregorian calendars instantly',
+  'uae-vat-calculator':                      'Add or remove UAE 5% VAT from any amount',
+  'invoice-generator':                       'Professional invoices with VAT for Gulf businesses',
+  'uae-salary-calculator':                   'Take-home pay after deductions across the UAE',
+  'dubai-salary-calculator':                 'Calculate your net salary in Dubai instantly',
+  'gcc-emi-calculator':                      'Compare loan EMIs across all Gulf countries',
+  'car-loan-calculator-uae':                 'Monthly instalments for auto financing in the UAE',
+  'uae-mortgage-calculator':                 'Estimate your monthly mortgage payments in the UAE',
+  'dubai-mortgage-calculator-non-residents': 'Mortgage estimates for non-resident property buyers in Dubai',
+  'home-loan-calculator-dubai':              'Plan your home loan repayments in Dubai',
+  'gold-zakat-calculator':                   'Calculate Zakat due on your gold holdings',
+  'cash-zakat-calculator':                   'Calculate Zakat due on cash and savings',
 }
 
 const toolNameMapAr: Record<string, string> = {
-  'salary-calculator':         'حاسبة الراتب',
-  'loan-emi-calculator':       'حاسبة القسط الشهري',
-  'gratuity-calculator':       'حاسبة مكافأة نهاية الخدمة',
-  'zakat-calculator':          'حاسبة الزكاة',
-  'hijri-gregorian-converter': 'محول التاريخ الهجري والميلادي',
-  'uae-vat-calculator':        'حاسبة ضريبة القيمة المضافة',
-  'invoice-generator':         'مولّد الفواتير',
+  'salary-calculator':                       'حاسبة الراتب',
+  'loan-emi-calculator':                     'حاسبة القسط الشهري',
+  'gratuity-calculator':                     'حاسبة مكافأة نهاية الخدمة',
+  'zakat-calculator':                        'حاسبة الزكاة',
+  'hijri-gregorian-converter':               'محول التاريخ الهجري والميلادي',
+  'uae-vat-calculator':                      'حاسبة ضريبة القيمة المضافة',
+  'invoice-generator':                       'مولّد الفواتير',
+  'uae-salary-calculator':                   'حاسبة الراتب في الإمارات',
+  'dubai-salary-calculator':                 'حاسبة راتب دبي',
+  'gcc-emi-calculator':                      'حاسبة القسط الشهري الخليجية',
+  'car-loan-calculator-uae':                 'حاسبة قرض السيارة في الإمارات',
+  'uae-mortgage-calculator':                 'حاسبة الرهن العقاري في الإمارات',
+  'dubai-mortgage-calculator-non-residents': 'رهن عقاري لغير المقيمين في دبي',
+  'home-loan-calculator-dubai':              'حاسبة قرض المنزل في دبي',
+  'gold-zakat-calculator':                   'حاسبة زكاة الذهب',
+  'cash-zakat-calculator':                   'حاسبة زكاة النقد',
 }
 
 const toolDescMapAr: Record<string, string> = {
-  'salary-calculator':         'الراتب الصافي بعد الخصومات للإمارات والسعودية وقطر',
-  'loan-emi-calculator':       'القسط الشهري وإجمالي الفوائد وجدول السداد',
-  'gratuity-calculator':       'مكافأة نهاية الخدمة وفق قانون العمل الخليجي',
-  'zakat-calculator':          'الزكاة السنوية على المدخرات والذهب والاستثمارات',
-  'hijri-gregorian-converter': 'التحويل بين التقويم الهجري والميلادي فوراً',
-  'uae-vat-calculator':        'إضافة أو طرح ضريبة القيمة المضافة 5% من أي مبلغ',
-  'invoice-generator':         'فواتير احترافية شاملة ضريبة القيمة المضافة',
+  'salary-calculator':                       'الراتب الصافي بعد الخصومات للإمارات والسعودية وقطر',
+  'loan-emi-calculator':                     'القسط الشهري وإجمالي الفوائد وجدول السداد',
+  'gratuity-calculator':                     'مكافأة نهاية الخدمة وفق قانون العمل الخليجي',
+  'zakat-calculator':                        'الزكاة السنوية على المدخرات والذهب والاستثمارات',
+  'hijri-gregorian-converter':               'التحويل بين التقويم الهجري والميلادي فوراً',
+  'uae-vat-calculator':                      'إضافة أو طرح ضريبة القيمة المضافة 5% من أي مبلغ',
+  'invoice-generator':                       'فواتير احترافية شاملة ضريبة القيمة المضافة',
+  'uae-salary-calculator':                   'الراتب الصافي بعد الخصومات في الإمارات',
+  'dubai-salary-calculator':                 'احسب راتبك الصافي في دبي فوراً',
+  'gcc-emi-calculator':                      'قارن الأقساط الشهرية بين دول الخليج',
+  'car-loan-calculator-uae':                 'الأقساط الشهرية لتمويل السيارات في الإمارات',
+  'uae-mortgage-calculator':                 'احسب أقساط الرهن العقاري الشهرية في الإمارات',
+  'dubai-mortgage-calculator-non-residents': 'تقديرات الرهن العقاري لغير المقيمين في دبي',
+  'home-loan-calculator-dubai':              'خطط لأقساط قرض منزلك في دبي',
+  'gold-zakat-calculator':                   'احسب الزكاة المستحقة على مقتنياتك الذهبية',
+  'cash-zakat-calculator':                   'احسب الزكاة المستحقة على النقد والمدخرات',
 }
 
-const flagMap: Record<string, string> = {
-  'salary-calculator':         '🇦🇪',
-  'loan-emi-calculator':       '🏦',
-  'gratuity-calculator':       '📋',
-  'zakat-calculator':          '☪️',
-  'hijri-gregorian-converter': '📅',
-  'uae-vat-calculator':        '🧾',
-  'invoice-generator':         '📄',
-}
 
 export default async function HomePage({
   params,
@@ -106,8 +134,9 @@ export default async function HomePage({
   const tCat = await getTranslations({ locale, namespace: 'categories' })
 
   const featuredTools = getFeaturedTools()
-  // Top 8 categories
-  const topCategories = CATEGORIES.slice(0, 8)
+  // Top 8 categories that actually have at least one tool
+  const categoriesWithTools = CATEGORIES.filter(cat => TOOLS.some(t => t.category === cat.slug))
+  const topCategories = categoriesWithTools.slice(0, 8)
 
   const stats = [
     { value: '50+', label: t('toolsCount') },
@@ -198,7 +227,7 @@ export default async function HomePage({
                 const desc = isAr
                   ? (toolDescMapAr[tool.slug] ?? '')
                   : (toolDescMap[tool.slug] ?? '')
-                const emoji = flagMap[tool.slug] ?? '🔧'
+                const emoji = getToolIcon(tool)
 
                 return (
                   <Link

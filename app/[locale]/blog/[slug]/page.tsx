@@ -9,6 +9,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import BlogMarkdownRenderer from '@/components/BlogMarkdownRenderer'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import {
   generateArticleSchema,
@@ -19,11 +20,12 @@ import { getArticleBySlug, getPublishedArticles } from '@/lib/supabase/queries'
 import { getToolBySlug } from '@/lib/registry/tools'
 import AdUnit from '@/components/ads/AdUnit'
 import { AD_SLOTS } from '@/components/ads/slots'
+import { getToolIcon } from '@/lib/utils/toolIcons'
 
 type Params = { locale: string; slug: string }
 
 // ISR: rebuild blog pages every hour
-export const revalidate = 0
+export const revalidate = 3600
 
 const BASE_URL = 'https://gulftools.jobmeter.app'
 
@@ -106,22 +108,6 @@ const categoryIcons: Record<string, string> = {
   government:      '🏛️',
 }
 
-const toolEmojiMap: Record<string, string> = {
-  'salary-calculator':          '💵',
-  'loan-emi-calculator':        '🏦',
-  'gratuity-calculator':        '📋',
-  'zakat-calculator':           '☪️',
-  'hijri-gregorian-converter':  '🗓️',
-  'uae-vat-calculator':         '🧾',
-  'ksa-vat-calculator':         '🧾',
-  'invoice-generator':          '📄',
-  'compound-interest-calculator':'📈',
-  'savings-goal-calculator':    '🎯',
-  'leave-encashment-calculator': '🏖️',
-  'notice-period-calculator':   '📅',
-  'profit-margin-calculator':   '📊',
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params
@@ -192,6 +178,9 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}/blog`} />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-10 mt-2">
 
@@ -285,7 +274,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                       className="flex items-center gap-3 bg-white rounded-xl p-4 border border-emerald-100 hover:border-emerald-300 hover:shadow-sm transition-all group"
                     >
                       <span className="text-2xl flex-shrink-0">
-                        {toolEmojiMap[tool.slug] ?? '🔧'}
+                        {getToolIcon(tool)}
                       </span>
                       <div className="min-w-0">
                         <div className="font-semibold text-sm text-gray-900 group-hover:text-emerald-600 transition-colors">
@@ -366,7 +355,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                       className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group"
                     >
                       <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-base flex-shrink-0">
-                        {toolEmojiMap[tool.slug] ?? '🔧'}
+                        {getToolIcon(tool)}
                       </div>
                       <span className="text-sm font-medium text-gray-700 group-hover:text-emerald-600 transition-colors leading-snug">
                         {tool.slug

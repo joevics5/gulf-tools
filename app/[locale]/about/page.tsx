@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 
 type Params = { locale: string }
 
@@ -71,6 +72,9 @@ export default async function AboutPage({ params }: { params: Promise<Params> })
       <Header locale={locale} />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}`} />
+        </div>
 
         {/* Hero */}
         <div className="text-center py-12">

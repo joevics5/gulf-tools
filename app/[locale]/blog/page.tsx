@@ -4,9 +4,11 @@ import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
-import { generateBreadcrumbSchema } from '@/lib/schema/schemas'
+import { generateBreadcrumbSchema, generateBlogSchema } from '@/lib/schema/schemas'
 import { getPublishedArticles } from '@/lib/supabase/queries'
+import { generateBlogIndexMetadata } from '@/lib/utils/seo'
 import AdUnit from '@/components/ads/AdUnit'
 import { AD_SLOTS } from '@/components/ads/slots'
 
@@ -14,14 +16,7 @@ type Params = { locale: string }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { locale } = await params
-  return {
-    title: locale === 'ar' ? 'المدونة | Gulf Tools' : 'Blog | Gulf Tools',
-    description:
-      locale === 'ar'
-        ? 'مقالات وأدلة عملية حول الرواتب والضرائب والقوانين في دول الخليج'
-        : 'Guides and articles on salaries, taxes, labour law and finance across the Gulf',
-    robots: { index: true, follow: true },
-  }
+  return generateBlogIndexMetadata(locale)
 }
 
 const categoryColors: Record<string, string> = {
@@ -73,13 +68,33 @@ export default async function BlogIndexPage({
     breadcrumbItems.map(b => ({ name: b.label, url: `${BASE_URL}${b.href}` }))
   )
 
+  const blogSchema = generateBlogSchema({
+    url: `${BASE_URL}/${locale}/blog`,
+    name: isAr ? 'المدونة' : 'Blog',
+    description: isAr
+      ? 'أدلة عملية ومقالات حول الرواتب والضرائب وقانون العمل والمال في دول الخليج'
+      : 'Practical guides and articles on salaries, taxes, labour law and finance across the Gulf',
+    locale,
+    articles: articles
+      .filter(a => a.translation)
+      .map(a => ({
+        title: a.translation!.title,
+        url: `${BASE_URL}/${locale}/blog/${a.slug}`,
+        datePublished: a.published_at,
+        description: a.translation!.excerpt ?? undefined,
+      })),
+  })
+
   return (
     <>
-      <SchemaOrg schema={breadcrumbSchema} />
+      <SchemaOrg schema={[breadcrumbSchema, blogSchema]} />
       <Header locale={locale} activePath={`/${locale}/blog`} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}`} />
+        </div>
 
         <header className="mb-10">
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">

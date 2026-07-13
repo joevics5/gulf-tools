@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 
 type Params = { locale: string }
 
@@ -60,6 +61,9 @@ export default async function ContactPage({ params }: { params: Promise<Params> 
       <Header locale={locale} />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}`} />
+        </div>
 
         <div className="text-center py-10">
           <h1 className="text-4xl font-black text-gray-900 mb-3">

@@ -7,6 +7,7 @@ import { CATEGORIES } from '@/lib/registry/categories'
 import { TOOLS } from '@/lib/registry/tools'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
+import { BackButton } from '@/components/layout/BackButton'
 import { generateBreadcrumbSchema } from '@/lib/schema/schemas'
 
 type Params = { locale: string }
@@ -64,6 +65,9 @@ export default async function ToolsDirectoryPage({ params }: { params: Promise<P
     return acc
   }, {})
 
+  // Only show categories that actually have at least one tool
+  const visibleCategories = CATEGORIES.filter(cat => (toolCountByCategory[cat.slug] ?? 0) > 0)
+
   return (
     <>
       <SchemaOrg schema={breadcrumbSchema} />
@@ -73,6 +77,9 @@ export default async function ToolsDirectoryPage({ params }: { params: Promise<P
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
+        <div className="mb-4">
+          <BackButton fallbackHref={`/${locale}`} />
+        </div>
 
         <header className="mb-10">
           <h1 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">
@@ -80,14 +87,14 @@ export default async function ToolsDirectoryPage({ params }: { params: Promise<P
           </h1>
           <p className="text-gray-500 text-lg">
             {isAr
-              ? `${TOOLS.length}+ أداة مجانية موزعة على ${CATEGORIES.length} فئة`
-              : `${TOOLS.length}+ free tools across ${CATEGORIES.length} categories`}
+              ? `${TOOLS.length}+ أداة مجانية موزعة على ${visibleCategories.length} فئة`
+              : `${TOOLS.length}+ free tools across ${visibleCategories.length} categories`}
           </p>
         </header>
 
         {/* Categories grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {CATEGORIES.map(cat => {
+          {visibleCategories.map(cat => {
             const hoverColor = colorMap[cat.color] ?? colorMap.emerald
             const count = toolCountByCategory[cat.slug] ?? 0
             const catName = tCat(`${cat.slug}.name` as any)
@@ -107,9 +114,7 @@ export default async function ToolsDirectoryPage({ params }: { params: Promise<P
                   {catDesc}
                 </p>
                 <span className="text-xs font-semibold text-gray-400">
-                  {count > 0
-                    ? `${count} ${isAr ? 'أداة' : count === 1 ? 'tool' : 'tools'}`
-                    : isAr ? 'قريباً' : 'Coming soon'}
+                  {count} {isAr ? 'أداة' : count === 1 ? 'tool' : 'tools'}
                 </span>
               </Link>
             )

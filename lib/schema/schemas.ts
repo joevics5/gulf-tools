@@ -138,6 +138,39 @@ export function generateArticleSchema({
   }
 }
 
+// ─── Blog Index Schema ────────────────────────────────────────────────────────
+
+export function generateBlogSchema({
+  url,
+  name,
+  description,
+  locale = 'en',
+  articles,
+}: {
+  url: string
+  name: string
+  description: string
+  locale?: string
+  articles: { title: string; url: string; datePublished: string; description?: string }[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${url}#blog`,
+    url,
+    name,
+    description,
+    inLanguage: locale === 'ar' ? 'ar' : 'en',
+    blogPost: articles.map(article => ({
+      '@type': 'BlogPosting',
+      headline: article.title,
+      url: article.url,
+      datePublished: article.datePublished,
+      ...(article.description ? { description: article.description } : {}),
+    })),
+  }
+}
+
 // ─── Organization + WebSite Schema (root layout) ─────────────────────────────
 
 export function generateOrganizationSchema() {

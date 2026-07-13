@@ -119,3 +119,46 @@ export async function generateHomepageMetadata(locale: string) {
     robots: { index: true, follow: true },
   }
 }
+
+export function generateBlogIndexMetadata(locale: string) {
+  const title = locale === 'ar' ? 'المدونة | Gulf Tools' : 'Blog | Gulf Tools'
+  const description =
+    locale === 'ar'
+      ? 'مقالات وأدلة عملية حول الرواتب والضرائب والقوانين في دول الخليج'
+      : 'Guides and articles on salaries, taxes, labour law and finance across the Gulf'
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/blog`,
+      languages: {
+        en: `${BASE_URL}/en/blog`,
+        ar: `${BASE_URL}/ar/blog`,
+        'x-default': `${BASE_URL}/en/blog`,
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}/blog`,
+      siteName: 'Gulf Tools',
+      locale: locale === 'ar' ? 'ar_AE' : 'en_AE',
+      type: 'website' as const,
+      images: [
+        {
+          url: `${BASE_URL}/og/blog-default.png`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
+    },
+    robots: { index: true, follow: true },
+  }
+}
