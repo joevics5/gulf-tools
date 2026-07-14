@@ -441,7 +441,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
                 {articleIsHtml ? (
                   // Rich-text / HTML content from a CMS or editor
                   <div
-                    className="prose prose-sm prose-gray max-w-none
+                    className="prose prose-base sm:prose-lg prose-gray max-w-none
                       prose-headings:font-bold prose-headings:text-gray-800
                       prose-p:text-gray-600 prose-p:leading-relaxed
                       prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
@@ -450,12 +450,12 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
                   />
                 ) : (
                   // Plain text: split on double newlines → paragraphs
-                  <div className="space-y-4">
+                  <div className="space-y-5">
                     {articleBody
                       .split(/\n\n+/)
                       .filter(Boolean)
                       .map((para, i) => (
-                        <p key={i} className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                        <p key={i} className="text-gray-600 leading-relaxed text-base sm:text-lg">
                           {para.trim()}
                         </p>
                       ))}
@@ -488,7 +488,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
                           +
                         </span>
                       </summary>
-                      <div className="px-5 pb-5 pt-2 text-gray-600 leading-relaxed text-sm border-t border-gray-100">
+                      <div className="px-5 pb-5 pt-2 text-gray-600 leading-relaxed text-base border-t border-gray-100">
                         {faq.answer}
                       </div>
                     </details>
