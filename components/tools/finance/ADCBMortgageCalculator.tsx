@@ -115,7 +115,7 @@ function Label({ children, hint }: { children: React.ReactNode; hint?: string })
   return (
     <label className="block text-sm font-semibold text-gray-700 mb-1.5">
       {children}
-      {hint && <span className="font-normal text-gray-400 ml-1 text-xs">{hint}</span>}
+      {hint && <span className="font-normal text-gray-500 ml-1 text-xs">{hint}</span>}
     </label>
   )
 }
@@ -125,7 +125,7 @@ function InputAED({
 }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div className="relative">
-      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400 pointer-events-none">AED</span>
+      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500 pointer-events-none">AED</span>
       <input
         type="number"
         min="0"
@@ -157,9 +157,9 @@ function Row({
 }: { label: string; value: string; highlight?: boolean; negative?: boolean; muted?: boolean; bold?: boolean }) {
   return (
     <div className="flex items-center justify-between gap-4 py-2">
-      <span className={`text-sm ${muted ? 'text-gray-400' : 'text-gray-600'}`}>{label}</span>
+      <span className={`text-sm ${muted ? 'text-gray-500' : 'text-gray-600'}`}>{label}</span>
       <span className={`text-sm tabular-nums ${bold ? 'font-bold' : 'font-semibold'} ${
-        highlight ? 'text-blue-700' : negative ? 'text-red-500' : muted ? 'text-gray-400' : 'text-gray-900'
+        highlight ? 'text-blue-700' : negative ? 'text-red-500' : muted ? 'text-gray-500' : 'text-gray-900'
       }`}>{value}</span>
     </div>
   )
@@ -365,7 +365,7 @@ export default function ADCBMortgageCalculator({ locale }: Props) {
               onChange={e => update('downPaymentPct', e.target.value)}
               className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
           {parseFloat(inputs.downPaymentPct) < minDPPct && (
             <p className="text-xs text-red-600 mt-1">
@@ -389,9 +389,9 @@ export default function ADCBMortgageCalculator({ locale }: Props) {
               onChange={e => update('annualRate', e.target.value)}
               className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
-          <p className="text-xs text-gray-400 mt-1">ADCB indicative from ~3.99% p.a. (subject to approval & EIBOR)</p>
+          <p className="text-xs text-gray-500 mt-1">ADCB indicative from ~3.99% p.a. (subject to approval & EIBOR)</p>
         </div>
 
         {/* Tenor */}
@@ -408,7 +408,7 @@ export default function ADCBMortgageCalculator({ locale }: Props) {
               onChange={e => update('tenorYears', e.target.value)}
               className="w-full pl-4 pr-14 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">yrs</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">yrs</span>
           </div>
         </div>
 
@@ -549,7 +549,7 @@ export default function ADCBMortgageCalculator({ locale }: Props) {
 
           {/* Disclaimer */}
           <div className="border-t border-gray-200 pt-4">
-            <p className="text-xs text-gray-400 leading-relaxed">
+            <p className="text-xs text-gray-500 leading-relaxed">
               <strong className="text-gray-500">Disclaimer:</strong> This calculator is for illustrative and educational purposes only. Results are not a quote, pre-approval, or commitment by ADCB. Actual rates, LTV, eligibility, and terms are subject to ADCB credit assessment, AECB check, property valuation, UAE Central Bank regulations, and individual T&Cs. Rates shown are indicative and subject to change. Islamic finance profit rates follow Murabaha/Ijara structures; consult ADCB for exact terms. Non-residents and self-employed applicants may face additional conditions. Always verify directly with ADCB.
             </p>
           </div>

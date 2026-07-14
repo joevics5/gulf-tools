@@ -326,7 +326,7 @@ export default function UAELeaveCalculator({ locale }: Props) {
             <Tooltip text="Basic salary only — excludes all allowances, bonuses, and commissions. This is used for encashment payouts." />
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">AED</span>
             <input
               type="number"
               min="0"
@@ -347,7 +347,7 @@ export default function UAELeaveCalculator({ locale }: Props) {
             <Tooltip text="Included in full wage for approved leave pay. Not used for encashment." />
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">AED</span>
             <input
               type="number"
               min="0"
@@ -367,7 +367,7 @@ export default function UAELeaveCalculator({ locale }: Props) {
             <Tooltip text="Transport, phone, food, and other regular fixed allowances. Included in full wage for approved leave only." />
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">AED</span>
             <input
               type="number"
               min="0"

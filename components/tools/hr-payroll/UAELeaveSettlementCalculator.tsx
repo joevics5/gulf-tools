@@ -244,7 +244,7 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className={labelClass}>{l.basicSalary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={basicSalary}
               onChange={e => setBasicSalary(e.target.value)}
@@ -274,7 +274,7 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
         {/* Unpaid leave */}
         <div>
           <label className={labelClass}>{l.unpaidLeave}
-            <span className="ml-1 text-xs font-normal text-gray-400" title="Unpaid leave days are excluded from service period per UAE law">ⓘ</span>
+            <span className="ml-1 text-xs font-normal text-gray-500" title="Unpaid leave days are excluded from service period per UAE law">ⓘ</span>
           </label>
           <input type="number" min="0" value={unpaidLeaveDays} onChange={e => setUnpaidLeaveDays(e.target.value)}
             placeholder="0" className={inputClass} />
@@ -378,7 +378,7 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
               <div key={i} className="flex items-start justify-between gap-4">
                 <div>
                   <span className="text-sm text-gray-600">{isAr ? row.labelAr : row.label}</span>
-                  <div className="text-xs text-gray-400 mt-0.5 font-mono">{row.formula}</div>
+                  <div className="text-xs text-gray-500 mt-0.5 font-mono">{row.formula}</div>
                 </div>
                 <span className="text-sm font-semibold text-gray-900 whitespace-nowrap">{formatAED(row.amount)}</span>
               </div>
@@ -393,7 +393,7 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
           </Section>
 
           {/* Disclaimer */}
-          <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+          <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
             {l.disclaimer}
           </p>
         </div>
@@ -405,7 +405,7 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2.5">
-      <div className="text-xs font-bold uppercase tracking-wider text-gray-400">{title}</div>
+      <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{title}</div>
       {children}
     </div>
   )
@@ -418,7 +418,7 @@ function InfoRow({ label, value, negative, highlight, sub }: {
     <div className="flex items-start justify-between gap-4">
       <div>
         <span className="text-sm text-gray-600">{label}</span>
-        {sub && <div className="text-xs text-gray-400 font-mono mt-0.5">{sub}</div>}
+        {sub && <div className="text-xs text-gray-500 font-mono mt-0.5">{sub}</div>}
       </div>
       <span className={`text-sm font-semibold whitespace-nowrap ${highlight ? 'text-teal-600' : negative ? 'text-red-500' : 'text-gray-900'}`}>
         {negative && value !== '0 days' ? `− ${value}` : value}

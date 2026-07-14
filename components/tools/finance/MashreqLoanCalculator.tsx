@@ -178,7 +178,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
 
       {/* Islamic / Conventional Toggle */}
       <div className="flex items-center gap-3">
-        <span className={`text-sm font-semibold ${!isIslamic ? 'text-[#C8960C]' : 'text-gray-400'}`}>{t.conventional}</span>
+        <span className={`text-sm font-semibold ${!isIslamic ? 'text-[#C8960C]' : 'text-gray-500'}`}>{t.conventional}</span>
         <button
           onClick={() => setIsIslamic(v => !v)}
           aria-label="Toggle Islamic mode"
@@ -186,7 +186,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
         >
           <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${isIslamic ? 'left-7' : 'left-1'}`} />
         </button>
-        <span className={`text-sm font-semibold ${isIslamic ? 'text-emerald-600' : 'text-gray-400'}`}>{t.islamic}</span>
+        <span className={`text-sm font-semibold ${isIslamic ? 'text-emerald-600' : 'text-gray-500'}`}>{t.islamic}</span>
       </div>
 
       {/* Quick Presets */}
@@ -209,7 +209,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.amount}</label>
           <div className="flex items-center gap-3">
             <div className="relative flex-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
               <input
                 type="number"
                 min={10000}
@@ -231,7 +231,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
             className="w-full mt-2 accent-[#C8960C] cursor-pointer"
             aria-label="Loan amount slider"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5">
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5">
             <span>AED 10,000</span><span>AED 2,000,000</span>
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
               className="w-full pr-8 pl-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#C8960C] focus:border-transparent transition"
               aria-label={isIslamic ? t.profitRate : t.rate}
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
           <input
             type="range"
@@ -263,7 +263,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
             onChange={e => { const v = Number(e.target.value); setRate(v); setRateInput(String(v)) }}
             className="w-full mt-2 accent-[#C8960C] cursor-pointer"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5">
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5">
             <span>0%</span><span>36%</span>
           </div>
         </div>
@@ -296,7 +296,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-500 mb-1.5">{t.salary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input
               type="number"
               min={0}

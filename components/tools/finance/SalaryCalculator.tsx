@@ -126,7 +126,7 @@ export default function SalaryCalculator({ locale }: Props) {
             {labels.gross}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {selectedCountry.currency}
             </span>
             <input

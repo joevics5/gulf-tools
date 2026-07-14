@@ -138,7 +138,7 @@ function ResultRow({
     <div className="flex items-start justify-between gap-4 py-2">
       <div>
         <span className="text-sm text-gray-600">{label}</span>
-        {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+        {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
       </div>
       <span className={`text-sm font-semibold whitespace-nowrap ${highlight ? 'text-emerald-600' : negative ? 'text-red-500' : 'text-gray-900'}`}>
         {value}
@@ -207,7 +207,7 @@ function AmortizationChart({ rows }: { rows: AmortizationRow[] }) {
                 <div className="bg-blue-300 w-full" style={{ height: `${iPct}%` }} />
               </div>
               {byYear.length <= 15 && (
-                <span className="text-[9px] text-gray-400 text-center mt-0.5">{b.year}</span>
+                <span className="text-[9px] text-gray-500 text-center mt-0.5">{b.year}</span>
               )}
             </div>
           )
@@ -400,7 +400,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
             onChange={e => setPropertyPrice(Number(e.target.value))}
             className="w-full accent-emerald-600"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5">
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5">
             <span>AED 300K</span><span>AED 20M</span>
           </div>
         </div>
@@ -420,7 +420,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
             onChange={e => setDownPaymentPct(Number(e.target.value))}
             className="w-full accent-emerald-600"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5">
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5">
             <span>5%</span>
             <span className={`font-semibold ${ltvStatus === 'red' ? 'text-red-500' : ltvStatus === 'yellow' ? 'text-amber-500' : 'text-emerald-600'}`}>
               LTV: {ltv.toFixed(1)}% {ltvStatus === 'red' ? '⚠ Exceeds cap' : ltvStatus === 'yellow' ? '⚠ Near cap' : '✓'}
@@ -442,7 +442,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
               onChange={e => setLoanTerm(Number(e.target.value))}
               className="w-full accent-emerald-600"
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-0.5"><span>5</span><span>25</span></div>
+            <div className="flex justify-between text-xs text-gray-500 mt-0.5"><span>5</span><span>25</span></div>
           </div>
           <div>
             <div className="flex justify-between items-center mb-1.5">
@@ -457,7 +457,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
               onChange={e => setAnnualRate(Number(e.target.value))}
               className="w-full accent-emerald-600"
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-0.5"><span>2%</span><span>9%</span></div>
+            <div className="flex justify-between text-xs text-gray-500 mt-0.5"><span>2%</span><span>9%</span></div>
           </div>
         </div>
 
@@ -517,7 +517,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.income}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
               <input
                 type="number" min="0"
                 value={monthlyIncome}
@@ -530,7 +530,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.otherDebts}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
               <input
                 type="number" min="0"
                 value={otherDebts}
@@ -665,7 +665,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
                         ))}
                     </tbody>
                   </table>
-                  <p className="text-xs text-gray-400 mt-2">All amounts in AED. Yearly rows shown (end of year).</p>
+                  <p className="text-xs text-gray-500 mt-2">All amounts in AED. Yearly rows shown (end of year).</p>
                 </div>
               </div>
             )}
@@ -680,7 +680,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
                 <div className="pt-2">
                   <ResultRow label={L.totalCash} sub="Down payment + all estimated fees" value={fmtAED(result.totalCashNeeded)} highlight />
                 </div>
-                <p className="text-xs text-gray-400 pt-2">
+                <p className="text-xs text-gray-500 pt-2">
                   Fees are estimates. Mortgage registration, valuation, and insurance fees are not included. Actual costs may vary.
                 </p>
               </div>

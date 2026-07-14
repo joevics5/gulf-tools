@@ -106,7 +106,7 @@ function ResultCard({
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
       <div className="text-xs text-gray-500 mb-1">{label}</div>
       <div className={`text-lg font-black leading-tight ${colors[accent]}`}>{value}</div>
-      {sub && <div className="text-xs text-gray-400 mt-0.5">{sub}</div>}
+      {sub && <div className="text-xs text-gray-500 mt-0.5">{sub}</div>}
     </div>
   )
 }
@@ -308,7 +308,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
       {/* Section: Personal & Employment */}
       <div>
-        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
           {isAr ? 'المعلومات الشخصية والوظيفية' : 'Personal & Employment'}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -317,7 +317,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           <div className="sm:col-span-2">
             <FieldLabel text={L.salary} tip={L.salaryTip} />
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
                 type="number"
                 min="0"
@@ -389,7 +389,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           <div>
             <FieldLabel text={L.existingDebts} tip={L.debtsTip} />
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
                 type="number"
                 min="0"
@@ -405,7 +405,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
       {/* Section: Vehicle Details */}
       <div>
-        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
           {isAr ? 'تفاصيل السيارة' : 'Vehicle Details'}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -432,7 +432,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           <div className="sm:col-span-2">
             <FieldLabel text={L.carPrice} />
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
                 type="number"
                 min="0"
@@ -466,7 +466,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                   onChange={e => handlePctChange(e.target.value)}
                   className="w-20 px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-400">% (min 20%)</span>
+                <span className="text-sm text-gray-500">% (min 20%)</span>
               </div>
             </div>
           </div>
@@ -475,7 +475,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           <div>
             <FieldLabel text={L.downAmt} />
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
                 type="number"
                 min="0"
@@ -491,7 +491,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
       {/* Section: Loan Parameters */}
       <div>
-        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">
+        <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
           {isAr ? 'شروط القرض' : 'Loan Parameters'}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -501,7 +501,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
             <FieldLabel text={`${L.tenure}: `} />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-blue-600 font-bold">{tenure}</span>
-              <span className="text-sm text-gray-400">{isAr ? 'شهر' : 'months'}</span>
+              <span className="text-sm text-gray-500">{isAr ? 'شهر' : 'months'}</span>
             </div>
             <input
               type="range"
@@ -512,7 +512,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
               onChange={e => setTenure(Number(e.target.value))}
               className="w-full accent-blue-600"
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
               <span>12</span><span>24</span><span>36</span><span>48</span><span>60</span>
             </div>
           </div>
@@ -529,9 +529,9 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                 onChange={e => setAnnualRate(e.target.value)}
                 className="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
             </div>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-gray-500 mt-1">
               {isAr ? 'النطاق المعتاد: 2.15% – 5%+ (رصيد متناقص)' : 'Typical range: 2.15% – 5%+ (reducing balance)'}
             </p>
           </div>
@@ -649,7 +649,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-xs text-gray-500 mt-2">
               {isAr ? '* الحد الأدنى للراتب التقريبي. يتغير بانتظام، تحقق من البنك مباشرة.' : '* Approximate minimum salary. Subject to change. Verify directly with each bank.'}
             </p>
           </div>
@@ -657,7 +657,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <div className="text-xs text-gray-400 bg-gray-50 rounded-xl p-4 border border-gray-100 leading-relaxed">
+      <div className="text-xs text-gray-500 bg-gray-50 rounded-xl p-4 border border-gray-100 leading-relaxed">
         ⚠️ <strong>{isAr ? 'إخلاء مسؤولية' : 'Disclaimer'}:</strong> {L.disclaimer}
       </div>
     </div>

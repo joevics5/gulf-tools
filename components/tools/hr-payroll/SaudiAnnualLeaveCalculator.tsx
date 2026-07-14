@@ -203,7 +203,7 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
           </label>
           <p className="text-xs text-gray-500 mb-1.5">{lbl.wageHint}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">SAR</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">SAR</span>
             <input
               type="number"
               min="0"
@@ -345,7 +345,7 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+      <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
         ⚠️ {lbl.disclaimer}
       </p>
     </div>

@@ -222,7 +222,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className={labelClass}>{T.salary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={basicSalary} onChange={e => setBasicSalary(e.target.value)}
               placeholder={T.enterAmount}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent transition text-sm" />
@@ -267,7 +267,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
 
         {mode === 'maternity' && (
           <div className="sm:col-span-2">
-            <label className={labelClass}>{T.extraUnpaid} <span className="text-xs font-normal text-gray-400">(max 45)</span></label>
+            <label className={labelClass}>{T.extraUnpaid} <span className="text-xs font-normal text-gray-500">(max 45)</span></label>
             <input type="number" min="0" max="45" value={extraUnpaidDays} onChange={e => setExtraUnpaidDays(e.target.value)}
               placeholder="0" className={inputClass} />
           </div>
@@ -318,7 +318,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
           {/* 90-day progress bar */}
           {!sickResult.inProbation && (
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
                 {isAr ? 'خريطة استخدام الـ ٩٠ يوماً' : '90-Day Entitlement Map'}
               </div>
               <div className="flex rounded-lg overflow-hidden h-6 text-xs">
@@ -330,7 +330,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
                   </div>
                 ))}
               </div>
-              <div className="flex text-xs text-gray-400 mt-1 justify-between">
+              <div className="flex text-xs text-gray-500 mt-1 justify-between">
                 <span>1</span><span>15</span><span>45</span><span>90</span>
               </div>
             </div>
@@ -339,7 +339,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
           {/* Breakdown rows */}
           {!sickResult.inProbation && (
             <div className="space-y-3">
-              <div className="text-xs font-bold uppercase tracking-wider text-gray-400">{isAr ? 'تفاصيل الأيام والمبالغ' : 'Day & Amount Breakdown'}</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{isAr ? 'تفاصيل الأيام والمبالغ' : 'Day & Amount Breakdown'}</div>
 
               <PayRow
                 label={T.fullPay}
@@ -359,12 +359,12 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
                 label={T.unpaidDays}
                 days={sickResult.unpaidDays}
                 amount={0}
-                color="text-gray-400"
+                color="text-gray-500"
                 formula={isAr ? 'لا يوجد استحقاق' : 'No pay'}
               />
 
               <div className="border-t border-gray-200 pt-3 space-y-2">
-                <div className="text-xs font-bold uppercase tracking-wider text-gray-400">{T.remaining}</div>
+                <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{T.remaining}</div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">{isAr ? 'أيام الراتب الكامل المتبقية' : 'Full pay days left'}</span>
                   <span className="font-semibold text-gray-900">{sickResult.remainingFull} {isAr ? 'يوم' : 'days'}</span>
@@ -379,7 +379,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
 
           {/* Note */}
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 text-sm text-blue-700">{T.noteReport}</div>
-          <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">{T.disclaimer}</p>
+          <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">{T.disclaimer}</p>
         </div>
       )}
 
@@ -395,7 +395,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
           </div>
 
           <div className="space-y-3">
-            <div className="text-xs font-bold uppercase tracking-wider text-gray-400">{isAr ? 'تفاصيل الأيام والمبالغ' : 'Day & Amount Breakdown'}</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{isAr ? 'تفاصيل الأيام والمبالغ' : 'Day & Amount Breakdown'}</div>
 
             <PayRow
               label={isAr ? 'أيام الراتب الكامل (١-٤٥)' : 'Full Pay Days (1–45)'}
@@ -416,7 +416,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
                 label={isAr ? 'إجازة إضافية بدون راتب' : 'Extra Unpaid Leave'}
                 days={maternityResult.extraUnpaidDays}
                 amount={0}
-                color="text-gray-400"
+                color="text-gray-500"
                 formula={isAr ? 'بموافقة صاحب العمل — حتى ٤٥ يوماً' : 'Employer approval required — up to 45 days'}
               />
             )}
@@ -427,7 +427,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
             <p>{T.matExtra}</p>
           </div>
 
-          <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">{T.disclaimer}</p>
+          <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">{T.disclaimer}</p>
         </div>
       )}
     </div>
@@ -441,7 +441,7 @@ function PayRow({ label, days, amount, color, formula }: {
     <div className="flex items-start justify-between gap-4">
       <div>
         <div className="text-sm text-gray-700">{label}</div>
-        <div className="text-xs text-gray-400 font-mono mt-0.5">{formula}</div>
+        <div className="text-xs text-gray-500 font-mono mt-0.5">{formula}</div>
         <div className={`text-xs font-semibold mt-0.5 ${color}`}>{days} days</div>
       </div>
       <div className={`text-sm font-bold whitespace-nowrap ${color}`}>

@@ -259,7 +259,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
           <label className="block text-sm font-semibold text-gray-700 mb-1">{lbl.salary}</label>
           <p className="text-xs text-gray-500 mb-1.5">{lbl.salaryHint}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">QAR</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
             <input
               type="number"
               min="0"
@@ -359,7 +359,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
         <div>
           <div className="flex justify-between text-xs text-gray-500 mb-1">
             <span>{isAr ? `مجموع ساعات اليوم: ${usedH.toFixed(1)} / 10` : `Daily hours: ${usedH.toFixed(1)} / 10 max`}</span>
-            <span className={usedH > 10 ? 'text-red-500 font-semibold' : 'text-gray-400'}>
+            <span className={usedH > 10 ? 'text-red-500 font-semibold' : 'text-gray-500'}>
               {usedH > 10 ? (isAr ? 'تجاوز الحد' : 'Exceeds limit') : `${(10 - usedH).toFixed(1)} ${isAr ? 'متبقية' : 'remaining'}`}
             </span>
           </div>
@@ -371,7 +371,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
               style={{ width: `${progressPct}%` }}
             />
           </div>
-          <p className="text-xs text-gray-400 mt-1">{lbl.articleNote}</p>
+          <p className="text-xs text-gray-500 mt-1">{lbl.articleNote}</p>
         </div>
       )}
 
@@ -475,7 +475,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+      <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
         ⚠️ {lbl.disclaimer}
       </p>
     </div>

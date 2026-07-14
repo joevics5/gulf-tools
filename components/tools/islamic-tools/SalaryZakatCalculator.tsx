@@ -268,12 +268,12 @@ export default function SalaryZakatCalculator({ locale }: Props) {
               className={`w-7 h-7 rounded-full text-xs font-bold flex-shrink-0 transition-colors ${
                 i < stepIndex  ? 'bg-emerald-500 text-white cursor-pointer' :
                 i === stepIndex ? 'bg-teal-700 text-white ring-2 ring-teal-300' :
-                'bg-gray-100 text-gray-400 cursor-default'
+                'bg-gray-100 text-gray-500 cursor-default'
               }`}
             >
               {i < stepIndex ? '✓' : i + 1}
             </button>
-            <span className={`hidden sm:block text-xs ml-1 truncate ${i === stepIndex ? 'text-teal-700 font-semibold' : 'text-gray-400'}`}>
+            <span className={`hidden sm:block text-xs ml-1 truncate ${i === stepIndex ? 'text-teal-700 font-semibold' : 'text-gray-500'}`}>
               {s}
             </span>
             {i < STEPS.length - 1 && (
@@ -286,11 +286,11 @@ export default function SalaryZakatCalculator({ locale }: Props) {
       {/* ── Nisab Banner (always visible) ──────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div className={`rounded-xl px-4 py-2.5 border ${nisabBasis === 'silver' ? 'bg-teal-50 border-teal-200' : 'bg-gray-50 border-gray-100'}`}>
-          <p className="text-xs text-gray-400 mb-0.5">{isAr ? 'نصاب الفضة' : 'Silver Nisab'} {L.priceNote}</p>
+          <p className="text-xs text-gray-500 mb-0.5">{isAr ? 'نصاب الفضة' : 'Silver Nisab'} {L.priceNote}</p>
           <p className="font-bold text-gray-800">{fmt(nisabSilverLocal, currMeta.symbol)}</p>
         </div>
         <div className={`rounded-xl px-4 py-2.5 border ${nisabBasis === 'gold' ? 'bg-amber-50 border-amber-200' : 'bg-gray-50 border-gray-100'}`}>
-          <p className="text-xs text-gray-400 mb-0.5">{isAr ? 'نصاب الذهب' : 'Gold Nisab'} {L.priceNote}</p>
+          <p className="text-xs text-gray-500 mb-0.5">{isAr ? 'نصاب الذهب' : 'Gold Nisab'} {L.priceNote}</p>
           <p className="font-bold text-gray-800">{fmt(nisabGoldLocal, currMeta.symbol)}</p>
         </div>
       </div>
@@ -403,7 +403,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
               </div>
               {/* Progress to nisab */}
               <div className="pt-1">
-                <div className="flex justify-between text-xs text-gray-400 mb-1">
+                <div className="flex justify-between text-xs text-gray-500 mb-1">
                   <span>{isAr ? 'تقدم نحو النصاب' : 'Progress to Nisab'}</span>
                   <span>{pct(incomePct)}</span>
                 </div>
@@ -425,7 +425,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
       {step === 'assets' && (
         <div className="space-y-4">
           <SectionTitle isAr={isAr} en="Zakatable Assets" ar="الأصول الزكوية" />
-          <p className="text-xs text-gray-400">{isAr ? 'أدخل القيمة الحالية لكل ما تمتلكه من أصول قابلة للزكاة' : 'Enter current market value of all zakatable holdings'}</p>
+          <p className="text-xs text-gray-500">{isAr ? 'أدخل القيمة الحالية لكل ما تمتلكه من أصول قابلة للزكاة' : 'Enter current market value of all zakatable holdings'}</p>
 
           <NumberField label={L.savings}    symbol={currMeta.symbol} value={savings}    onChange={setSavings} hint={isAr ? 'حساب بنكي، نقد' : 'Bank accounts, cash'} />
           <NumberField label={L.goldValue}  symbol={currMeta.symbol} value={goldValue}  onChange={setGoldValue} hint={isAr ? 'القيمة السوقية الحالية' : 'Current market value'} />
@@ -439,7 +439,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
                 <span className="font-bold text-amber-800">{fmt(totalAssets, currMeta.symbol)}</span>
               </div>
               <div className="pt-1">
-                <div className="flex justify-between text-xs text-gray-400 mb-1">
+                <div className="flex justify-between text-xs text-gray-500 mb-1">
                   <span>{isAr ? 'الأصول مقارنة بالنصاب' : 'Assets vs Nisab'}</span>
                   <span>{pct(wealthPct)}</span>
                 </div>
@@ -530,7 +530,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
 
           {/* Disclaimer */}
           <div className="rounded-xl bg-gray-50 border border-gray-100 px-4 py-3">
-            <p className="text-xs text-gray-400 leading-relaxed">⚠️ {L.disclaimer}</p>
+            <p className="text-xs text-gray-500 leading-relaxed">⚠️ {L.disclaimer}</p>
           </div>
 
           {/* Reset */}
@@ -556,9 +556,9 @@ function NumberField({ label, symbol, value, onChange, hint }: {
   return (
     <div>
       <label className="block text-sm font-semibold text-gray-700 mb-1">{label}</label>
-      {hint && <p className="text-xs text-gray-400 mb-1">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500 mb-1">{hint}</p>}
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">{symbol}</span>
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">{symbol}</span>
         <input
           type="number" min="0" value={value}
           onChange={e => onChange(e.target.value)}
@@ -616,7 +616,7 @@ function StatusCard({ label, meets, meetsLabel, notLabel }: {
   return (
     <div className={`rounded-xl px-4 py-3 border ${meets ? 'bg-emerald-50 border-emerald-200' : 'bg-gray-50 border-gray-100'}`}>
       <p className="text-xs text-gray-500 mb-1">{label}</p>
-      <p className={`text-sm font-bold ${meets ? 'text-emerald-700' : 'text-gray-400'}`}>
+      <p className={`text-sm font-bold ${meets ? 'text-emerald-700' : 'text-gray-500'}`}>
         {meets ? meetsLabel : notLabel}
       </p>
     </div>
@@ -643,7 +643,7 @@ function ResultCard({ title, color, rows, note }: {
             </span>
           </div>
         ))}
-        <p className="text-xs text-gray-400 pt-2 border-t border-gray-50 leading-relaxed">{note}</p>
+        <p className="text-xs text-gray-500 pt-2 border-t border-gray-50 leading-relaxed">{note}</p>
       </div>
     </div>
   )

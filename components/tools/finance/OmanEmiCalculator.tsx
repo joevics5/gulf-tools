@@ -280,7 +280,7 @@ export default function OmanEmiCalculator({ locale }: Props) {
               {t.loanAmount}
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
                 {CURRENCY}
               </span>
               <input
@@ -311,9 +311,9 @@ export default function OmanEmiCalculator({ locale }: Props) {
               onChange={e => setRate(e.target.value)}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
           </div>
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-500">
             {isAr ? 'الحد الأقصى: 6% (البنك المركزي العُماني)' : 'Max 6% per CBO regulations'}
           </p>
         </div>
@@ -333,11 +333,11 @@ export default function OmanEmiCalculator({ locale }: Props) {
               placeholder={t.enterYears}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {isAr ? 'سنة' : 'yr'}
             </span>
           </div>
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-500">
             {isAr ? `الحد الأقصى: ${lt.maxTenure} سنوات` : `Max ${lt.maxTenure} years`}
           </p>
         </div>
@@ -347,13 +347,13 @@ export default function OmanEmiCalculator({ locale }: Props) {
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.salary}
             {mode === 'emi' && (
-              <span className="ml-1 text-xs text-gray-400 font-normal">
+              <span className="ml-1 text-xs text-gray-500 font-normal">
                 ({isAr ? 'لفحص نسبة خدمة الدين' : 'for DBR check'})
               </span>
             )}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {CURRENCY}
             </span>
             <input
@@ -442,7 +442,7 @@ export default function OmanEmiCalculator({ locale }: Props) {
           </div>
 
           {/* Reducing balance note */}
-          <p className="text-xs text-gray-400 pt-1">{t.noteReducing}</p>
+          <p className="text-xs text-gray-500 pt-1">{t.noteReducing}</p>
         </div>
       )}
 
@@ -504,7 +504,7 @@ function AmortTable({
           {preview.map((row, i) =>
             row.month === -1 ? (
               <tr key="ellipsis">
-                <td colSpan={4} className="px-3 py-1.5 text-center text-xs text-gray-400">· · ·</td>
+                <td colSpan={4} className="px-3 py-1.5 text-center text-xs text-gray-500">· · ·</td>
               </tr>
             ) : (
               <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}>

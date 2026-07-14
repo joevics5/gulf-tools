@@ -220,7 +220,7 @@ function MilestoneBar({ schedule, goal, currency }: { schedule: YearRow[]; goal:
     <div className="space-y-2">
       {schedule.map(row => (
         <div key={row.year} className="flex items-center gap-2 text-xs">
-          <span className="w-10 text-gray-400 flex-shrink-0 text-right">
+          <span className="w-10 text-gray-500 flex-shrink-0 text-right">
             {row.year}yr
           </span>
           <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden relative">
@@ -246,7 +246,7 @@ function MilestoneBar({ schedule, goal, currency }: { schedule: YearRow[]; goal:
           </span>
         </div>
       ))}
-      <div className="flex justify-between text-xs text-gray-400 px-12">
+      <div className="flex justify-between text-xs text-gray-500 px-12">
         <span>0%</span><span>25%</span><span>50%</span><span>75%</span>
         <span className="text-emerald-600 font-semibold">Goal</span>
       </div>
@@ -430,7 +430,7 @@ export default function SavingsGoalCalculator({ locale }: Props) {
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.monthlySalary}</label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{cfg.currency}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{cfg.currency}</span>
           <input
             type="number"
             min="0"
@@ -447,7 +447,7 @@ export default function SavingsGoalCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.goalAmount}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{cfg.currency}</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{cfg.currency}</span>
             <input
               type="number"
               min="0"
@@ -463,7 +463,7 @@ export default function SavingsGoalCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.currentSavings}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{cfg.currency}</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{cfg.currency}</span>
             <input
               type="number"
               min="0"
@@ -521,7 +521,7 @@ export default function SavingsGoalCalculator({ locale }: Props) {
             placeholder={`${cfg.typicalSavingsRate.min}–${cfg.typicalSavingsRate.max}`}
             className={`w-full px-4 py-3 border rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition ${errors.annualRate ? 'border-red-400' : 'border-gray-200'}`}
           />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">%</span>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
         </div>
         {errors.annualRate && <p className="text-xs text-red-500 mt-1">{errors.annualRate}</p>}
       </div>
@@ -639,7 +639,7 @@ export default function SavingsGoalCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed">{t.disclaimer}</p>
+      <p className="text-xs text-gray-500 leading-relaxed">{t.disclaimer}</p>
     </div>
   )
 }

@@ -502,7 +502,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
               <option key={r.id} value={r.id}>{isAr ? r.displayName.ar : r.displayName.en}</option>
             ))}
           </select>
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-500">
             {t.typicalRates}: {fmtPct(rules.typicalRateMin)} – {fmtPct(rules.typicalRateMax)} · Min down: {rules.minDownPaymentPercent}% · Max LTV: {rules.maxLTVPercent}%
           </p>
         </div>
@@ -511,7 +511,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.vehiclePrice}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{rules.currency}</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{rules.currency}</span>
             <input
               type="number" min="0" value={vehiclePrice}
               onChange={e => setVehiclePrice(e.target.value)}
@@ -525,7 +525,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.downPayment}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{rules.currency}</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{rules.currency}</span>
             <input
               type="number" min="0" value={downPayment}
               onChange={e => setDownPayment(e.target.value)}
@@ -588,7 +588,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.procFee}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{rules.currency}</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{rules.currency}</span>
             <input
               type="number" min="0" value={processingFee}
               onChange={e => setProcessingFee(e.target.value)}
@@ -742,7 +742,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
           </div>
 
           {/* Disclaimer */}
-          <p className="text-xs text-gray-400 leading-relaxed">
+          <p className="text-xs text-gray-500 leading-relaxed">
             {isAr ? rules.requiredDisclosure_ar : rules.requiredDisclosure_en}
           </p>
         </div>

@@ -90,11 +90,11 @@ function Field({
       <label className="block text-sm font-semibold text-gray-700 mb-1">
         {label}
         {hint && (
-          <span className="ml-2 text-xs font-normal text-gray-400">{hint}</span>
+          <span className="ml-2 text-xs font-normal text-gray-500">{hint}</span>
         )}
       </label>
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">
           {currency}
         </span>
         <input
@@ -132,7 +132,7 @@ function Section({
           <span className="text-lg">{icon}</span>
           {title}
         </span>
-        <span className="text-gray-400 text-xs">{open ? '▲' : '▼'}</span>
+        <span className="text-gray-500 text-xs">{open ? '▲' : '▼'}</span>
       </button>
       {open && <div className="p-5 space-y-4">{children}</div>}
     </div>
@@ -153,10 +153,10 @@ function ResultRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <span className={`text-sm ${muted ? 'text-gray-400' : 'text-gray-600'}`}>{label}</span>
+      <span className={`text-sm ${muted ? 'text-gray-500' : 'text-gray-600'}`}>{label}</span>
       <span
         className={`text-sm font-semibold ${
-          highlight ? 'text-teal-600' : muted ? 'text-gray-400' : 'text-gray-900'
+          highlight ? 'text-teal-600' : muted ? 'text-gray-500' : 'text-gray-900'
         }`}
       >
         {value}
@@ -619,7 +619,7 @@ export default function ZakatCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+      <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
         ⚠️ {t.disclaimer}
       </p>
     </div>

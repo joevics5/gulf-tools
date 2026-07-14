@@ -317,7 +317,7 @@ export default function BahrainGratuityCalculator({ locale }: Props) {
             Monthly Basic Salary
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">
               BHD
             </span>
             <input
@@ -336,10 +336,10 @@ export default function BahrainGratuityCalculator({ locale }: Props) {
         {/* Social Allowance */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            Social Allowance <span className="font-normal text-gray-400">(optional)</span>
+            Social Allowance <span className="font-normal text-gray-500">(optional)</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">
               BHD
             </span>
             <input
@@ -369,7 +369,7 @@ export default function BahrainGratuityCalculator({ locale }: Props) {
         {/* Termination Reason */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            Reason for Leaving <span className="font-normal text-gray-400">(for context)</span>
+            Reason for Leaving <span className="font-normal text-gray-500">(for context)</span>
           </label>
           <select value={inputs.terminationReason} onChange={set('terminationReason')} className={fieldClass(false)}>
             {TERMINATION_OPTIONS.map(o => (

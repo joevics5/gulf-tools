@@ -259,7 +259,7 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
           <label className="block text-sm font-semibold text-gray-700 mb-1">{L.basicSalary}</label>
           <p className="text-xs text-gray-500 mb-1.5">{L.basicNote}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -369,7 +369,7 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
 
               {/* Service duration */}
               <div className="bg-white rounded-xl p-4 border border-gray-100 space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{L.service}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{L.service}</p>
                 <p className="text-gray-900 font-semibold">
                   {dur && `${dur.years} yr${dur.years !== 1 ? 's' : ''}, ${dur.months} mo${dur.months !== 1 ? 's' : ''}, ${dur.days} day${dur.days !== 1 ? 's' : ''}`}
                 </p>

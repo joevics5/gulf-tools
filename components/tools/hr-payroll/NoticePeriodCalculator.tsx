@@ -341,10 +341,10 @@ export default function NoticePeriodCalculator({ locale }: Props) {
         <div className={country === 'qatar' && contractType === 'indefinite' ? '' : 'sm:col-span-2'}>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.salary}
-            <span className="ml-2 text-xs font-normal text-gray-400">({t.salaryHint})</span>
+            <span className="ml-2 text-xs font-normal text-gray-500">({t.salaryHint})</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {rules.currency}
             </span>
             <input
@@ -434,7 +434,7 @@ export default function NoticePeriodCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+      <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
         ⚠️ {t.disclaimer}
       </p>
     </div>

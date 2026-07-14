@@ -255,9 +255,9 @@ export default function CashZakatCalculator({ locale }: Props) {
     return (
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1">{label}</label>
-        {tip && <p className="text-xs text-gray-400 mb-1">{tip}</p>}
+        {tip && <p className="text-xs text-gray-500 mb-1">{tip}</p>}
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">{currency}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">{currency}</span>
           <input
             type="number" min="0" value={value}
             onChange={e => onChange(e.target.value)}
@@ -288,11 +288,11 @@ export default function CashZakatCalculator({ locale }: Props) {
               className={`flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold shrink-0 transition-colors
                 ${i < stepIdx ? 'bg-emerald-600 text-white cursor-pointer hover:bg-emerald-700' :
                   i === stepIdx ? 'bg-emerald-600 text-white' :
-                  'bg-gray-100 text-gray-400'}`}
+                  'bg-gray-100 text-gray-500'}`}
             >
               {i < stepIdx ? '✓' : i + 1}
             </button>
-            <span className={`text-xs font-medium hidden sm:block ${i === stepIdx ? 'text-emerald-700' : 'text-gray-400'}`}>
+            <span className={`text-xs font-medium hidden sm:block ${i === stepIdx ? 'text-emerald-700' : 'text-gray-500'}`}>
               {L.steps[i]}
             </span>
             {i < STEPS.length - 1 && (
@@ -336,7 +336,7 @@ export default function CashZakatCalculator({ locale }: Props) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">{L.customNisab}</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">{currency}</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">{currency}</span>
                 <input type="number" min="0" value={customNisab} onChange={e => setCustomNisab(e.target.value)}
                   placeholder={L.enterAmount} className={inputCls} />
               </div>
@@ -377,7 +377,7 @@ export default function CashZakatCalculator({ locale }: Props) {
         <div className="space-y-3">
           <div>
             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-0.5">{L.assetsTitle}</h3>
-            <p className="text-xs text-gray-400 mb-3">{L.assetsTip}</p>
+            <p className="text-xs text-gray-500 mb-3">{L.assetsTip}</p>
           </div>
 
           <AmountField label={L.cashInHand}     value={cashInHand}     onChange={setCashInHand} />
@@ -412,7 +412,7 @@ export default function CashZakatCalculator({ locale }: Props) {
         <div className="space-y-3">
           <div>
             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-0.5">{L.debtsTitle}</h3>
-            <p className="text-xs text-gray-400 mb-3">{L.debtsTip}</p>
+            <p className="text-xs text-gray-500 mb-3">{L.debtsTip}</p>
           </div>
 
           <AmountField label={L.creditCards}   value={creditCards}   onChange={setCreditCards} />
@@ -455,9 +455,9 @@ export default function CashZakatCalculator({ locale }: Props) {
             <div className="bg-gray-100 rounded-xl p-5 text-gray-700">
               <div className="text-xl font-bold">{L.notEligible}</div>
               <div className="text-sm mt-1 text-gray-500">{L.notEligibleDesc}</div>
-              {!hawlConfirmed && <div className="text-xs mt-2 text-gray-400">→ {L.noHawl}</div>}
+              {!hawlConfirmed && <div className="text-xs mt-2 text-gray-500">→ {L.noHawl}</div>}
               {netZakatable < nisabValue && nisabValue > 0 && (
-                <div className="text-xs mt-1 text-gray-400">→ {L.belowNisab}: {fmt(netZakatable, currency)} / {fmt(nisabValue, currency)}</div>
+                <div className="text-xs mt-1 text-gray-500">→ {L.belowNisab}: {fmt(netZakatable, currency)} / {fmt(nisabValue, currency)}</div>
               )}
             </div>
           )}
@@ -479,7 +479,7 @@ export default function CashZakatCalculator({ locale }: Props) {
           {/* Full breakdown */}
           <div className="bg-gray-50 rounded-2xl p-5 space-y-3 border border-gray-100">
             {/* Assets */}
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{L.assetsTitle}</p>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{L.assetsTitle}</p>
             {[
               [L.cashInHand,     cashInHand],
               [L.currentAccount, currentAccount],
@@ -496,7 +496,7 @@ export default function CashZakatCalculator({ locale }: Props) {
             <div className="border-t border-gray-200" />
 
             {/* Debts */}
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{L.debtsTitle}</p>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">{L.debtsTitle}</p>
             {[
               [L.creditCards,   creditCards],
               [L.loansImminent, loansImminent],
@@ -505,7 +505,7 @@ export default function CashZakatCalculator({ locale }: Props) {
             ].filter(([, v]) => num(v as string) > 0).map(([label, value]) => (
               <BRow key={label as string} label={label as string} value={`− ${fmt(num(value as string), currency)}`} negative />
             ))}
-            {totalDebts === 0 && <p className="text-xs text-gray-400 italic">—</p>}
+            {totalDebts === 0 && <p className="text-xs text-gray-500 italic">—</p>}
             <BRow label={L.totalDebts} value={`− ${fmt(totalDebts, currency)}`} negative />
 
             <div className="border-t border-gray-200" />
@@ -516,7 +516,7 @@ export default function CashZakatCalculator({ locale }: Props) {
           </div>
 
           {/* Disclaimer */}
-          <p className="text-xs text-gray-400">{L.disclaimer}</p>
+          <p className="text-xs text-gray-500">{L.disclaimer}</p>
 
           {/* Actions */}
           <div className="flex gap-3">

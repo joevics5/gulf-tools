@@ -351,7 +351,7 @@ export default function UAELoanAmortizationCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.principal}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input type="number" min="1000" value={principal} onChange={e => setPrincipal(e.target.value)}
               placeholder="100,000"
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -360,7 +360,7 @@ export default function UAELoanAmortizationCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.rate}</label>
           <div className="relative">
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">%</span>
             <input type="number" min="0.1" max="30" step="0.1" value={annualRate} onChange={e => setAnnualRate(e.target.value)}
               placeholder="7.5"
               className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -384,7 +384,7 @@ export default function UAELoanAmortizationCalculator({ locale }: Props) {
         </div>
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {L.tenor} <span className="font-normal text-gray-400">(max {maxT})</span>
+            {L.tenor} <span className="font-normal text-gray-500">(max {maxT})</span>
           </label>
           <input type="number" min="1" max={maxT} value={tenorMonths} onChange={e => setTenorMonths(e.target.value)}
             placeholder={String(loanType === 'mortgage' ? 240 : 36)}
@@ -394,12 +394,12 @@ export default function UAELoanAmortizationCalculator({ locale }: Props) {
 
       {/* Optional fields */}
       <div className="border border-dashed border-gray-200 rounded-xl p-4 space-y-4">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Optional — DBR & Early Repayment</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Optional — DBR & Early Repayment</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.salary}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
               <input type="number" min="0" value={salary} onChange={e => setSalary(e.target.value)}
                 placeholder="20,000"
                 className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -408,7 +408,7 @@ export default function UAELoanAmortizationCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.debts}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
               <input type="number" min="0" value={existingDebts} onChange={e => setExistingDebts(e.target.value)}
                 placeholder="0"
                 className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -485,7 +485,7 @@ export default function UAELoanAmortizationCalculator({ locale }: Props) {
             )}
 
             {/* Regulatory notes */}
-            <div className="text-xs text-gray-400 space-y-0.5 pt-1 border-t border-gray-100">
+            <div className="text-xs text-gray-500 space-y-0.5 pt-1 border-t border-gray-100">
               <p>• {isAr ? 'رسوم المعالجة محدودة بـ 1% من مبلغ القرض (البنك المركزي الإماراتي)' : 'Processing fee capped at 1% of loan amount (CBUAE)'}</p>
               <p>• {isAr ? 'إجمالي الفائدة لا يمكن أن يتجاوز الأصل (حكم المحكمة العليا الإماراتية)' : 'Total interest cannot exceed principal (UAE Supreme Court ruling)'}</p>
               <p>• {isAr ? 'لا يُطبق فائدة مركبة على القروض (المحكمة العليا الإماراتية)' : 'No compound interest applies on loans (UAE Supreme Court)'}</p>
@@ -609,7 +609,7 @@ function EarlyRow({ label, value, positive, negative, sub, bold }: {
     <div className="flex items-start justify-between gap-4 py-1">
       <div>
         <span className={`text-sm ${bold ? 'font-bold text-gray-900' : 'text-gray-600'}`}>{label}</span>
-        {sub && <p className="text-xs text-gray-400">{sub}</p>}
+        {sub && <p className="text-xs text-gray-500">{sub}</p>}
       </div>
       <span className={`text-sm font-semibold ${positive ? 'text-green-700' : negative ? 'text-red-600' : 'text-gray-900'} ${bold ? 'text-base' : ''}`}>
         {value}

@@ -363,7 +363,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.principal}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={principal} onChange={e => setPrincipal(e.target.value)}
               placeholder={L.enterAmount}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
@@ -397,7 +397,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
             <input type="number" min="0.1" max="30" step="0.1" value={rateInput}
               onChange={e => setRateInput(e.target.value)}
               className="w-full pr-10 px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">%</span>
           </div>
         </div>
 
@@ -413,7 +413,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.processingFee}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={processingFee} onChange={e => setProcessingFee(e.target.value)}
               placeholder="0"
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
@@ -424,7 +424,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.otherFees}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={otherFees} onChange={e => setOtherFees(e.target.value)}
               placeholder="0"
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
@@ -435,7 +435,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.extraMonthly}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={extraMonthly} onChange={e => setExtraMonthly(e.target.value)}
               placeholder="0"
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
@@ -458,7 +458,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
               <input type="number" min="0" max="5" step="0.1" value={settleFee}
                 onChange={e => setSettleFee(e.target.value)}
                 className="w-full pr-10 px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">%</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">%</span>
             </div>
           </div>
         )}

@@ -290,12 +290,12 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
               placeholder="e.g. 10"
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition text-lg font-bold"
             />
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 font-medium">
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-medium">
               {isAr ? 'تولة' : 'tola'}
             </span>
           </div>
           {tola && (
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-gray-500 mt-1">
               ≈ {(parseFloat(tola) * TOLA_TO_GRAMS).toFixed(2)}g
             </p>
           )}
@@ -343,7 +343,7 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
         </label>
         {useManual && (
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {currencySymbol}
             </span>
             <input
@@ -464,7 +464,7 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
 
           {/* Disclaimer */}
           <div className="bg-gray-50 px-6 py-4">
-            <p className="text-xs text-gray-400 leading-relaxed">
+            <p className="text-xs text-gray-500 leading-relaxed">
               ⚠️ {L.disclaimer}
             </p>
           </div>

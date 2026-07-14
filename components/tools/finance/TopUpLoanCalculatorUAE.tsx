@@ -262,7 +262,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.income}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={monthlyIncome}
               onChange={e => setMonthlyIncome(e.target.value)}
@@ -276,7 +276,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.instalment}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={existingInstalment}
               onChange={e => setExistingInstalment(e.target.value)}
@@ -290,7 +290,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.cards}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={cardMinimums}
               onChange={e => setCardMinimums(e.target.value)}
@@ -304,7 +304,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.balance}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={remainingBalance}
               onChange={e => setRemainingBalance(e.target.value)}
@@ -329,7 +329,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.desired}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={desiredTopUp}
               onChange={e => setDesiredTopUp(e.target.value)}
@@ -356,7 +356,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
                 : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'
             }`}
           >
-            <span className={`w-4 h-4 rounded flex items-center justify-center text-xs flex-shrink-0 ${value ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-400'}`}>
+            <span className={`w-4 h-4 rounded flex items-center justify-center text-xs flex-shrink-0 ${value ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
               {value ? '✓' : ''}
             </span>
             {label}
@@ -475,7 +475,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
             )}
 
             {/* Disclaimer */}
-            <p className="text-xs text-gray-400 leading-relaxed">{t.disclaimer}</p>
+            <p className="text-xs text-gray-500 leading-relaxed">{t.disclaimer}</p>
           </div>
         )
       })()}

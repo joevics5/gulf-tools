@@ -159,7 +159,7 @@ function Row({ label, value, sub, negative, highlight, note }: RowProps) {
     <div className={`flex items-start justify-between gap-4 ${sub ? 'pl-4' : ''}`}>
       <div>
         <span className={`text-sm ${sub ? 'text-gray-500' : 'text-gray-700'}`}>{label}</span>
-        {note && <p className="text-xs text-gray-400 mt-0.5">{note}</p>}
+        {note && <p className="text-xs text-gray-500 mt-0.5">{note}</p>}
       </div>
       <span className={`text-sm font-semibold whitespace-nowrap ${highlight ? 'text-emerald-600 text-base' : negative ? 'text-red-500' : 'text-gray-900'}`}>
         {value}
@@ -172,7 +172,7 @@ type SectionProps = { title: string; children: React.ReactNode }
 function Section({ title, children }: SectionProps) {
   return (
     <div className="space-y-3">
-      <h4 className="text-xs font-bold uppercase tracking-widest text-gray-400">{title}</h4>
+      <h4 className="text-xs font-bold uppercase tracking-widest text-gray-500">{title}</h4>
       {children}
     </div>
   )
@@ -294,7 +294,7 @@ export default function UAEFinalSettlementCalculator({ locale }: Props) {
           </label>
           <p className="text-xs text-gray-500 mb-1.5">{isAr ? 'الراتب الأساسي فقط — بدون بدلات' : 'Basic only — exclude allowances'}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={inputs.basicSalary} onChange={e => set('basicSalary', e.target.value)} placeholder="e.g. 10000" className={`${inputCls('basicSalary')} pl-12`} />
           </div>
           {errors.basicSalary && <p className="text-xs text-red-500 mt-1">{errors.basicSalary}</p>}
@@ -305,7 +305,7 @@ export default function UAEFinalSettlementCalculator({ locale }: Props) {
           </label>
           <p className="text-xs text-gray-500 mb-1.5">{isAr ? 'للراتب غير المسدد وتعويض الإشعار' : 'Used for unpaid salary & notice compensation'}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={inputs.grossSalary} onChange={e => set('grossSalary', e.target.value)} placeholder={isAr ? 'مساوٍ للأساسي إن تُرك فارغاً' : 'Defaults to basic if blank'} className={`${inputCls('grossSalary')} pl-12`} />
           </div>
         </div>
@@ -364,7 +364,7 @@ export default function UAEFinalSettlementCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{isAr ? 'قيمة التذكرة (درهم)' : 'Air Ticket Value (AED)'}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
               <input type="number" min="0" value={inputs.airTicketAmount} onChange={e => set('airTicketAmount', e.target.value)} placeholder="e.g. 2000" className={`${inputCls('airTicketAmount')} pl-12`} />
             </div>
           </div>
@@ -376,7 +376,7 @@ export default function UAEFinalSettlementCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{isAr ? 'خصومات (سلف، قروض، درهم)' : 'Deductions (loans, advances, AED)'}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={inputs.deductions} onChange={e => set('deductions', e.target.value)} placeholder="0" className={`${inputCls('deductions')} pl-12`} />
           </div>
         </div>
@@ -424,11 +424,11 @@ export default function UAEFinalSettlementCalculator({ locale }: Props) {
 
           {/* Service Duration */}
           <div className="bg-white rounded-xl p-4 border border-gray-100 space-y-1">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400">{isAr ? 'مدة الخدمة' : 'Service Duration'}</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-500">{isAr ? 'مدة الخدمة' : 'Service Duration'}</p>
             <p className="text-gray-900 font-semibold text-sm">
               {dur && `${dur.years} ${isAr ? 'سنة' : 'yr(s)'}, ${dur.months} ${isAr ? 'شهر' : 'mo(s)'}, ${dur.days} ${isAr ? 'يوم' : 'day(s)'}`}
               {(parseFloat(inputs.unpaidAbsenceDays) || 0) > 0 && (
-                <span className="text-gray-400 text-xs ml-2">
+                <span className="text-gray-500 text-xs ml-2">
                   ({isAr ? 'بعد خصم أيام الغياب' : `adjusted for ${inputs.unpaidAbsenceDays} unpaid days`})
                 </span>
               )}

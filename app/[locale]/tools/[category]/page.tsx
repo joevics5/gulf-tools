@@ -98,7 +98,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
             <h1 className="text-3xl sm:text-4xl font-black text-gray-900">{t('name')}</h1>
           </div>
           <p className="text-gray-500 text-lg max-w-2xl">{t('description')}</p>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-gray-500 mt-2">
             {tools.length} {locale === 'ar' ? 'أداة متاحة' : 'tools available'}
           </p>
         </header>
@@ -110,7 +110,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
               <Link
                 key={tool.slug}
                 href={`/${locale}/tools/${category}/${tool.slug}`}
-                className="group bg-white border border-gray-100 rounded-2xl p-5 hover:border-emerald-200 hover:shadow-md transition-all"
+                className="group bg-white border border-gray-200 rounded-2xl p-5 hover:border-emerald-200 hover:shadow-md transition-all"
               >
                 <div className="text-2xl mb-3">
                   {getToolIcon(tool)}
@@ -134,7 +134,7 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
             ))}
           </div>
         ) : (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-20 text-gray-500">
             <div className="text-4xl mb-3">{categoryData.icon}</div>
             <p>{locale === 'ar' ? 'أدوات قريباً' : 'Tools coming soon'}</p>
           </div>

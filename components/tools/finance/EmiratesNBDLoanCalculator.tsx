@@ -136,7 +136,7 @@ function Row({ label, value, sub, neg, highlight, border }: {
     <div className={`flex items-start justify-between gap-4 ${border ? 'pt-3 border-t border-gray-200' : ''}`}>
       <div>
         <div className="text-sm text-gray-600">{label}</div>
-        {sub && <div className="text-xs text-gray-400 mt-0.5">{sub}</div>}
+        {sub && <div className="text-xs text-gray-500 mt-0.5">{sub}</div>}
       </div>
       <span className={`text-sm font-semibold tabular-nums text-right shrink-0 ${highlight ? 'text-emerald-600' : neg ? 'text-red-500' : 'text-gray-900'}`}>
         {value}
@@ -162,7 +162,7 @@ function NumInput({ label, value, onChange, prefix, min, max, step, hint, placeh
       <label className="block text-sm font-semibold text-gray-700 mb-1.5">{label}</label>
       <div className="relative">
         {prefix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 pointer-events-none select-none">{prefix}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500 pointer-events-none select-none">{prefix}</span>
         )}
         <input
           type="number"
@@ -173,7 +173,7 @@ function NumInput({ label, value, onChange, prefix, min, max, step, hint, placeh
           className={`w-full ${prefix ? 'pl-14' : 'pl-4'} pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition bg-white`}
         />
       </div>
-      {hint && <p className="text-xs text-gray-400 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500 mt-1">{hint}</p>}
     </div>
   )
 }
@@ -211,7 +211,7 @@ function DBRBar({ pct }: { pct: number }) {
       </div>
       <div className="relative mt-0.5" style={{ paddingLeft: '50%' }}>
         <div className="absolute left-1/2 -translate-x-1/2 w-px h-2 bg-gray-400" style={{ top: '-10px' }} />
-        <span className="text-xs text-gray-400 absolute left-1/2 -translate-x-1/2 top-0.5">50% limit</span>
+        <span className="text-xs text-gray-500 absolute left-1/2 -translate-x-1/2 top-0.5">50% limit</span>
       </div>
     </div>
   )
@@ -324,7 +324,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
             </button>
           ))}
         </div>
-        <p className="text-xs text-gray-400 mt-1.5">Max loan: {fmtShort(nat.maxPersonal)} · Up to {nat.salaryMultiple}× monthly salary</p>
+        <p className="text-xs text-gray-500 mt-1.5">Max loan: {fmtShort(nat.maxPersonal)} · Up to {nat.salaryMultiple}× monthly salary</p>
       </div>
 
       {/* Salary transfer toggle */}
@@ -369,7 +369,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-red-500 transition">
                 {[12,18,24,36,48].map(m => <option key={m} value={m}>{m} months ({(m/12).toFixed(m%12===0?0:1)} {m===12?'year':'years'})</option>)}
               </select>
-              <p className="text-xs text-gray-400 mt-1">Personal loans: up to 48 months (CBUAE limit)</p>
+              <p className="text-xs text-gray-500 mt-1">Personal loans: up to 48 months (CBUAE limit)</p>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -386,7 +386,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
               </div>
               <input type="number" min={0.5} max={30} step={0.01} value={pRate} onChange={e => setPRate(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 transition bg-white" />
-              <p className="text-xs text-gray-400 mt-1">Emirates NBD from {PERSONAL_RATE_DEFAULT}% reducing · Varies by profile</p>
+              <p className="text-xs text-gray-500 mt-1">Emirates NBD from {PERSONAL_RATE_DEFAULT}% reducing · Varies by profile</p>
             </div>
           </div>
         </div>
@@ -418,7 +418,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
               <div className="w-full px-4 py-3 border border-gray-100 rounded-xl text-sm font-semibold text-red-700 bg-red-50">
                 {carLoanAmount > 0 ? fmt(carLoanAmount) : '—'}
               </div>
-              <p className="text-xs text-gray-400 mt-1">Max 80% of vehicle value (CBUAE)</p>
+              <p className="text-xs text-gray-500 mt-1">Max 80% of vehicle value (CBUAE)</p>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Loan Tenure</label>
@@ -426,7 +426,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-red-500 transition">
                 {[12,24,36,48,60].map(m => <option key={m} value={m}>{m} months ({(m/12).toFixed(m%12===0?0:1)} {m===12?'year':'years'})</option>)}
               </select>
-              <p className="text-xs text-gray-400 mt-1">Car loans: up to 60 months</p>
+              <p className="text-xs text-gray-500 mt-1">Car loans: up to 60 months</p>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Interest Rate (% p.a. — Reducing Balance)</label>
@@ -441,7 +441,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
               </div>
               <input type="number" min={0.5} max={15} step={0.01} value={cRate} onChange={e => setCRate(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 transition bg-white" />
-              <p className="text-xs text-gray-400 mt-1">Emirates NBD car finance from {CAR_RATE_DEFAULT}% · Subject to approval</p>
+              <p className="text-xs text-gray-500 mt-1">Emirates NBD car finance from {CAR_RATE_DEFAULT}% · Subject to approval</p>
             </div>
           </div>
         </div>
@@ -575,7 +575,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
             <div className="border border-gray-200 rounded-2xl overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
                 <h3 className="text-sm font-bold text-gray-900">Repayment Schedule</h3>
-                <span className="text-xs text-gray-400">{result.schedule.length} months total</span>
+                <span className="text-xs text-gray-500">{result.schedule.length} months total</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">

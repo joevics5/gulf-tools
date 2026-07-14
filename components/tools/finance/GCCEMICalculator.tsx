@@ -439,7 +439,7 @@ export default function GCCEMICalculator({ locale }: Props) {
             {t.amount}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {selectedCountry.currency}
             </span>
             <input
@@ -452,7 +452,7 @@ export default function GCCEMICalculator({ locale }: Props) {
             />
           </div>
           {selectedCountry.maxLoanAmount && (
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-gray-500 mt-1">
               max {fmt(selectedCountry.maxLoanAmount, selectedCountry.currency, 0)}
             </p>
           )}
@@ -473,10 +473,10 @@ export default function GCCEMICalculator({ locale }: Props) {
               placeholder="e.g. 6.5"
               className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
           </div>
           {selectedCountry.maxInterestRate && (
-            <p className="text-xs text-gray-400 mt-1">max {selectedCountry.maxInterestRate}%</p>
+            <p className="text-xs text-gray-500 mt-1">max {selectedCountry.maxInterestRate}%</p>
           )}
           {selectedCountry.fixedRateOnly && (
             <p className="text-xs text-amber-500 mt-1">Fixed rate only (Kuwait law)</p>
@@ -497,7 +497,7 @@ export default function GCCEMICalculator({ locale }: Props) {
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           />
           {maxTenorHint && (
-            <p className="text-xs text-gray-400 mt-1">{maxTenorHint}</p>
+            <p className="text-xs text-gray-500 mt-1">{maxTenorHint}</p>
           )}
         </div>
 
@@ -507,7 +507,7 @@ export default function GCCEMICalculator({ locale }: Props) {
             {t.salary}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {selectedCountry.currency}
             </span>
             <input
@@ -519,16 +519,16 @@ export default function GCCEMICalculator({ locale }: Props) {
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
-          <p className="text-xs text-gray-400 mt-1">DBR limit: {selectedCountry.maxDBR * 100}%</p>
+          <p className="text-xs text-gray-500 mt-1">DBR limit: {selectedCountry.maxDBR * 100}%</p>
         </div>
 
         {/* Processing Fee */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.fee} <span className="font-normal text-gray-400">(optional)</span>
+            {t.fee} <span className="font-normal text-gray-500">(optional)</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {selectedCountry.currency}
             </span>
             <input
@@ -541,7 +541,7 @@ export default function GCCEMICalculator({ locale }: Props) {
             />
           </div>
           {selectedCountry.adminFeeMax && (
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-gray-500 mt-1">
               {country === 'oman' ? `Max ${selectedCountry.currency} ${selectedCountry.adminFeeMax}` : `Max ${selectedCountry.currency} ${selectedCountry.adminFeeMax} or 0.5%`}
             </p>
           )}

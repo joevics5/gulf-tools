@@ -272,7 +272,7 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.salary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={salary}
               onChange={e => setSalary(e.target.value)}
@@ -286,7 +286,7 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.loanAmount}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number" min="0" value={loanAmount}
               onChange={e => setLoanAmount(e.target.value)}
@@ -304,7 +304,7 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
             onChange={e => setTermMonths(e.target.value)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
-          <p className="text-xs text-gray-400 mt-1">{isAr ? 'الحد الأقصى القانوني: 48 شهراً' : 'UAE legal max: 48 months'}</p>
+          <p className="text-xs text-gray-500 mt-1">{isAr ? 'الحد الأقصى القانوني: 48 شهراً' : 'UAE legal max: 48 months'}</p>
         </div>
 
         {/* Rate type */}
@@ -336,13 +336,13 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
               onChange={e => setRateInput(e.target.value)}
               className="w-full pr-10 px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">%</span>
           </div>
         </div>
       </div>
 
       {/* Legal note */}
-      <div className="text-xs text-gray-400 bg-blue-50 rounded-lg px-3 py-2 border border-blue-100 flex items-start gap-2">
+      <div className="text-xs text-gray-500 bg-blue-50 rounded-lg px-3 py-2 border border-blue-100 flex items-start gap-2">
         <span className="mt-0.5 text-blue-400">ℹ</span>
         <span>{L.legalDisclosure}</span>
       </div>

@@ -376,6 +376,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
       <SchemaOrg schema={schemas} />
       <Header locale={locale} activePath={`/${locale}/tools`} />
 
+      <div className="bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Breadcrumb items={breadcrumbItems} />
         <div className="mb-4">
@@ -402,7 +403,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
 
             {/* Ad — above tool */}
             <div className="mb-6">
-              <p className="text-xs text-gray-400 text-center mb-1">Advertisement</p>
+              <p className="text-xs text-gray-500 text-center mb-1">Advertisement</p>
               <AdUnit slot={AD_SLOTS.TOOL_BANNER_1} />
             </div>
 
@@ -411,7 +412,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
               {ToolComponent ? (
                 <ToolComponent locale={locale} />
               ) : (
-                <div className="text-center py-16 text-gray-400">
+                <div className="text-center py-16 text-gray-500">
                   <div className="text-4xl mb-3">🔧</div>
                   <p className="font-medium">{tCommon('comingSoon')}</p>
                 </div>
@@ -420,14 +421,14 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
 
             {/* Ad — below tool */}
             <div className="my-6">
-              <p className="text-xs text-gray-400 text-center mb-1">Advertisement</p>
+              <p className="text-xs text-gray-500 text-center mb-1">Advertisement</p>
               <AdUnit slot={AD_SLOTS.TOOL_BANNER_2} />
             </div>
 
             {/* ── Article / SEO content section ── */}
             {toolContent.article_title && articleBody && (
               <section
-                className="mt-10 border border-gray-100 rounded-2xl p-6 sm:p-8 bg-gray-50/60"
+                className="mt-10 border border-gray-200 rounded-2xl p-6 sm:p-8 bg-white"
                 aria-labelledby="article-heading"
               >
                 <h2
@@ -483,7 +484,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
                         className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer font-semibold text-gray-800 hover:bg-gray-50 transition-colors list-none"
                       >
                         <span>{faq.question}</span>
-                        <span className="text-gray-400 text-xl flex-shrink-0 group-open:rotate-45 transition-transform duration-200">
+                        <span className="text-gray-500 text-xl flex-shrink-0 group-open:rotate-45 transition-transform duration-200">
                           +
                         </span>
                       </summary>
@@ -502,7 +503,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
 
             {/* Related tools */}
             {relatedTools.length > 0 && (
-              <div className="bg-white border border-gray-100 rounded-2xl p-5 sticky top-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-5 sticky top-6">
                 <h3 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wide">
                   {tCommon('relatedTools')}
                 </h3>
@@ -535,12 +536,13 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
 
             {/* Sidebar ad */}
             <div>
-              <p className="text-xs text-gray-400 text-center mb-1">Advertisement</p>
+              <p className="text-xs text-gray-500 text-center mb-1">Advertisement</p>
               <AdUnit slot={AD_SLOTS.BANNER} format="autorelaxed" />
             </div>
           </aside>
 
         </div>
+      </div>
       </div>
 
       <Footer locale={locale} />

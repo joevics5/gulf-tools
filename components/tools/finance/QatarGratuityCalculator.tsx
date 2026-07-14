@@ -172,7 +172,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
           </label>
           <p className="text-xs text-gray-500 mb-1.5">{L.salaryHint}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">QAR</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
             <input
               type="number"
               min="0"
@@ -340,7 +340,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
 
           {/* Legal disclaimer */}
           <div className="flex gap-2.5 px-4 py-3 bg-gray-100 rounded-xl border border-gray-200">
-            <span className="text-gray-400 text-base leading-none mt-0.5">⚖️</span>
+            <span className="text-gray-500 text-base leading-none mt-0.5">⚖️</span>
             <p className="text-xs text-gray-500 leading-relaxed">{L.legalNote}</p>
           </div>
         </div>

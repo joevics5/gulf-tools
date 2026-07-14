@@ -330,7 +330,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.outstanding}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input type="number" min="0" value={outstanding} onChange={e => setOutstanding(e.target.value)}
               placeholder="500,000"
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -340,7 +340,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.partialAmount}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
               <input type="number" min="0" value={partialAmount} onChange={e => setPartialAmount(e.target.value)}
                 placeholder="100,000"
                 className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -366,7 +366,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
       {/* Accrued interest inputs — only if next payment provided */}
       {nextPaymentDate && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-dashed border-gray-200 rounded-xl p-4">
-          <p className="sm:col-span-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="sm:col-span-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
             {isAr ? 'حساب الفائدة المستحقة حتى تاريخ التسوية' : 'Accrued Interest Calculation to Settlement Date'}
           </p>
           <div>
@@ -381,7 +381,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.annualRate}</label>
             <div className="relative">
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">%</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">%</span>
               <input type="number" min="0" step="0.1" value={annualRate} onChange={e => setAnnualRate(e.target.value)}
                 placeholder="7.5"
                 className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -396,7 +396,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.bankFee}</label>
             <div className="relative">
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">%</span>
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">%</span>
               <input type="number" min="0" max="10" step="0.05" value={bankFeePercent} onChange={e => setBankFeePercent(e.target.value)}
                 placeholder="1"
                 className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -406,7 +406,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.adminFee}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input type="number" min="0" value={adminFee} onChange={e => setAdminFee(e.target.value)}
               placeholder="0"
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
@@ -508,7 +508,7 @@ export default function UAEEarlySettlementCalculator({ locale }: Props) {
           </div>
 
           {/* Regulatory notes */}
-          <div className="text-xs text-gray-400 space-y-0.5 px-1">
+          <div className="text-xs text-gray-500 space-y-0.5 px-1">
             <p>• {isAr ? 'تم إلغاء رسوم التسوية المبكرة البالغة 3% على الرهن العقاري من قبل البنك المركزي الإماراتي.' : 'CBUAE removed the former 3% early settlement fee on mortgages.'}</p>
             <p>• {isAr ? 'يجب على البنوك الالتزام بشروط العقد الأصلي للعملاء الذين تم تغيير رسومهم بأثر رجعي.' : 'Banks must honour original contract terms where fees were changed retroactively.'}</p>
             <p>• {isAr ? 'الهذه الحاسبة للأغراض الإرشادية فقط. تحقق من البنك الخاص بك للحصول على الرقم النهائي.' : 'This calculator is for guidance only. Confirm the final figure with your bank.'}</p>
@@ -538,7 +538,7 @@ function BRow({
     <div className="flex items-start justify-between gap-4">
       <div>
         <span className={`text-sm ${bold ? 'font-bold text-gray-900' : 'text-gray-600'}`}>{label}</span>
-        {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+        {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
       </div>
       <span className={`text-sm font-semibold whitespace-nowrap ${colors[accent]} ${bold ? 'text-base' : ''}`}>{value}</span>
     </div>

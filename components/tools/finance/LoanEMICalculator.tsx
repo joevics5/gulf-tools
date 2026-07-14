@@ -403,7 +403,7 @@ export default function LoanEMICalculator({ locale }: Props) {
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.amount}</label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
             {cfg.currency}
           </span>
           <input
@@ -435,7 +435,7 @@ export default function LoanEMICalculator({ locale }: Props) {
             placeholder={`${cfg.typicalRates.min}–${cfg.typicalRates.max}`}
             className={`w-full px-4 py-3 border rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition ${errors.rate ? 'border-red-400' : 'border-gray-200'}`}
           />
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">%</span>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
         </div>
         {errors.rate && <p className="text-xs text-red-500 mt-1">{errors.rate}</p>}
       </div>
@@ -483,7 +483,7 @@ export default function LoanEMICalculator({ locale }: Props) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.salary}</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">{cfg.currency}</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">{cfg.currency}</span>
                 <input type="number" min="0" value={salary} onChange={e => setSalary(e.target.value)}
                   className="w-full pl-12 pr-3 py-3 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition" />
               </div>
@@ -492,7 +492,7 @@ export default function LoanEMICalculator({ locale }: Props) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.downPayment}</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">{cfg.currency}</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">{cfg.currency}</span>
                 <input type="number" min="0" value={downPayment} onChange={e => setDownPayment(e.target.value)}
                   className="w-full pl-12 pr-3 py-3 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition" />
               </div>
@@ -501,7 +501,7 @@ export default function LoanEMICalculator({ locale }: Props) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.processingFee}</label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">{cfg.currency}</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">{cfg.currency}</span>
                 <input type="number" min="0" value={processingFee} onChange={e => setProcessingFee(e.target.value)}
                   className="w-full pl-12 pr-3 py-3 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition" />
               </div>
@@ -608,7 +608,7 @@ export default function LoanEMICalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed">{t.disclaimer}</p>
+      <p className="text-xs text-gray-500 leading-relaxed">{t.disclaimer}</p>
     </div>
   )
 }

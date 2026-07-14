@@ -324,7 +324,7 @@ function Field({ label, children, hint }: { label: string; children: React.React
     <div className="space-y-1">
       <label className="block text-xs font-semibold tracking-wide text-gray-500 uppercase">{label}</label>
       {children}
-      {hint && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500">{hint}</p>}
     </div>
   );
 }
@@ -443,11 +443,11 @@ function InvoicePreview({ data, lang }: { data: InvoiceData; lang: Lang }) {
             </div>
             {data.clientAddress && <div className="text-gray-500 text-xs">{data.clientAddress}</div>}
             {data.clientTaxId && (
-              <div className="text-gray-400 text-xs">{isAr ? 'الرقم الضريبي:' : 'Tax ID:'} {data.clientTaxId}</div>
+              <div className="text-gray-500 text-xs">{isAr ? 'الرقم الضريبي:' : 'Tax ID:'} {data.clientTaxId}</div>
             )}
           </div>
           <div className={isAr ? 'mr-auto' : 'ml-auto'}>
-            <div className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">
+            <div className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">
               {isAr ? 'العملة' : 'Currency'}
             </div>
             <div className="font-bold text-gray-700">{data.currency}</div>
@@ -491,7 +491,7 @@ function InvoicePreview({ data, lang }: { data: InvoiceData; lang: Lang }) {
                   <td className="py-2.5 text-center text-gray-600">
                     {item.unitPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </td>
-                  {data.applyTax && <td className="py-2.5 text-center text-gray-400 text-xs">{item.taxRate}%</td>}
+                  {data.applyTax && <td className="py-2.5 text-center text-gray-500 text-xs">{item.taxRate}%</td>}
                   <td className={`py-2.5 font-semibold ${isAr ? 'text-left' : 'text-right'} text-gray-900`}>
                     {lineTotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                   </td>
@@ -531,7 +531,7 @@ function InvoicePreview({ data, lang }: { data: InvoiceData; lang: Lang }) {
         <div className="px-8 pb-6 grid grid-cols-2 gap-4" dir={dir}>
           {data.notes && (
             <div>
-              <div className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">
+              <div className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">
                 {isAr ? 'ملاحظات' : 'Notes'}
               </div>
               <p className="text-xs text-gray-500 whitespace-pre-line">{data.notes}</p>
@@ -539,7 +539,7 @@ function InvoicePreview({ data, lang }: { data: InvoiceData; lang: Lang }) {
           )}
           {(data.bankName || data.iban) && (
             <div>
-              <div className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">
+              <div className="text-xs font-bold tracking-widest text-gray-500 uppercase mb-1">
                 {isAr ? 'تفاصيل الدفع' : 'Payment Details'}
               </div>
               {data.bankName && <p className="text-xs text-gray-600">{data.bankName}</p>}
@@ -581,7 +581,7 @@ function ItemsTable({
   const t = T[lang];
   return (
     <div className="space-y-3">
-      <div className="grid gap-2 text-xs font-semibold text-gray-400 uppercase tracking-wide"
+      <div className="grid gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wide"
         style={{ gridTemplateColumns: applyTax ? '3fr 1fr 1.5fr 1fr 1fr auto' : '3fr 1fr 1.5fr 1fr auto' }}>
         <span>{t.description}</span>
         <span className="text-center">{t.qty}</span>

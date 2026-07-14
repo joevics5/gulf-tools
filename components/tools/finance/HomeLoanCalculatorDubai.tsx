@@ -139,7 +139,7 @@ function StatCard({ label, value, sub, accent = false }: { label: string; value:
     <div className={`rounded-xl p-4 ${accent ? 'bg-rose-600 text-white' : 'bg-white border border-gray-100'}`}>
       <p className={`text-xs font-semibold mb-1 ${accent ? 'text-rose-100' : 'text-gray-500'}`}>{label}</p>
       <p className={`text-xl font-black leading-tight ${accent ? 'text-white' : 'text-gray-900'}`}>{value}</p>
-      {sub && <p className={`text-xs mt-0.5 ${accent ? 'text-rose-200' : 'text-gray-400'}`}>{sub}</p>}
+      {sub && <p className={`text-xs mt-0.5 ${accent ? 'text-rose-200' : 'text-gray-500'}`}>{sub}</p>}
     </div>
   )
 }
@@ -151,7 +151,7 @@ function ResultRow({ label, value, sub, highlight = false, negative = false, bol
     <div className="flex items-start justify-between gap-4 py-2.5 border-b border-gray-50 last:border-0">
       <div>
         <span className={`text-sm ${bold ? 'font-semibold text-gray-800' : 'text-gray-500'}`}>{label}</span>
-        {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+        {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
       </div>
       <span className={`text-sm font-semibold whitespace-nowrap ${highlight ? 'text-emerald-600' : negative ? 'text-red-500' : bold ? 'text-gray-900' : 'text-gray-700'}`}>
         {value}
@@ -223,7 +223,7 @@ function AmortBarChart({ rows }: { rows: AmortizationRow[] }) {
                 <div className="bg-rose-600 w-full" style={{ height: `${pPct}%` }} />
                 <div className="bg-rose-200 w-full" style={{ height: `${100 - pPct}%` }} />
               </div>
-              {byYear.length <= 15 && <span className="text-[8px] text-gray-400 text-center mt-0.5">{b.year}</span>}
+              {byYear.length <= 15 && <span className="text-[8px] text-gray-500 text-center mt-0.5">{b.year}</span>}
             </div>
           )
         })}
@@ -246,7 +246,7 @@ function RateComparison({ loanAmount, years, currentRate }: { loanAmount: number
   })
   return (
     <div>
-      <p className="text-xs text-gray-400 mb-3">Based on your loan amount of {fmtAED(loanAmount)} over {years} years.</p>
+      <p className="text-xs text-gray-500 mb-3">Based on your loan amount of {fmtAED(loanAmount)} over {years} years.</p>
       <div className="overflow-x-auto rounded-xl border border-gray-100">
         <table className="w-full text-xs">
           <thead className="bg-gray-50">
@@ -342,7 +342,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
     setActiveTab('summary')
   }
 
-  const dbrColor = dbrPct === 0 ? 'text-gray-400' : dbrPct <= 35 ? 'text-emerald-600' : dbrPct <= 50 ? 'text-amber-600' : 'text-red-600'
+  const dbrColor = dbrPct === 0 ? 'text-gray-500' : dbrPct <= 35 ? 'text-emerald-600' : dbrPct <= 50 ? 'text-amber-600' : 'text-red-600'
 
   const L = isAr ? {
     title: 'حاسبة قرض المنزل دبي',
@@ -399,7 +399,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
 
       {/* ── Presets ── */}
       <div>
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{L.presets}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">{L.presets}</p>
         <div className="flex flex-wrap gap-2">
           {PRESETS.map(p => (
             <button key={p.label} type="button" onClick={() => applyPreset(p)}
@@ -422,7 +422,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
           <input type="range" min={300000} max={25000000} step={50000}
             value={propertyPrice} onChange={e => setPropertyPrice(Number(e.target.value))}
             className="w-full accent-rose-600" />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5"><span>AED 300K</span><span>AED 25M</span></div>
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5"><span>AED 300K</span><span>AED 25M</span></div>
         </div>
 
         {/* Down Payment */}
@@ -437,7 +437,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
           <input type="range" min={5} max={80} step={1}
             value={downPct} onChange={e => setDownPct(Number(e.target.value))}
             className="w-full accent-rose-600" />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5"><span>5%</span><span>80%</span></div>
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5"><span>5%</span><span>80%</span></div>
           <LTVMeter ltv={ltv} maxLtv={maxLtv} />
         </div>
 
@@ -451,7 +451,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             <input type="range" min={1} max={25} step={1}
               value={loanYears} onChange={e => { setLoanYears(Number(e.target.value)); setAmortPage(1) }}
               className="w-full accent-rose-600" />
-            <div className="flex justify-between text-xs text-gray-400 mt-0.5"><span>1 yr</span><span>25 yrs</span></div>
+            <div className="flex justify-between text-xs text-gray-500 mt-0.5"><span>1 yr</span><span>25 yrs</span></div>
           </div>
           <div>
             <div className="flex justify-between items-center mb-1.5">
@@ -464,7 +464,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             <input type="range" min={2} max={9} step={0.25}
               value={annualRate} onChange={e => setAnnualRate(Number(e.target.value))}
               className="w-full accent-rose-600" />
-            <div className="flex justify-between text-xs text-gray-400 mt-0.5"><span>2%</span><span>9%</span></div>
+            <div className="flex justify-between text-xs text-gray-500 mt-0.5"><span>2%</span><span>9%</span></div>
           </div>
         </div>
 
@@ -516,7 +516,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             <Tooltip text="Enter to see your Debt Burden Ratio (DBR). CBUAE requires total monthly debts ≤ 50% of gross income. A DBR under 35% is considered strong." />
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={monthlyIncome} onChange={e => setMonthlyIncome(e.target.value)}
               placeholder="e.g. 25000"
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-rose-500 transition" />
@@ -560,7 +560,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
           <div className="flex border-t border-b border-gray-100 bg-white overflow-x-auto">
             {(['summary','amortization','comparison','costs'] as const).map(tab => (
               <button key={tab} type="button" onClick={() => setActiveTab(tab)}
-                className={`flex-1 py-3 text-xs font-semibold whitespace-nowrap px-2 transition-colors ${activeTab === tab ? 'text-rose-600 border-b-2 border-rose-600' : 'text-gray-400 hover:text-gray-600'}`}>
+                className={`flex-1 py-3 text-xs font-semibold whitespace-nowrap px-2 transition-colors ${activeTab === tab ? 'text-rose-600 border-b-2 border-rose-600' : 'text-gray-500 hover:text-gray-600'}`}>
                 {tab === 'summary' ? L.tabSum : tab === 'amortization' ? L.tabAmort : tab === 'comparison' ? L.tabComp : L.tabCosts}
               </button>
             ))}
@@ -615,12 +615,12 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
                   <div className="flex items-center justify-between mt-3">
                     <button type="button" onClick={() => setAmortPage(p => Math.max(1, p - 1))} disabled={amortPage === 1}
                       className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors">← Prev</button>
-                    <span className="text-xs text-gray-400">Page {amortPage} of {totalAmortPages}</span>
+                    <span className="text-xs text-gray-500">Page {amortPage} of {totalAmortPages}</span>
                     <button type="button" onClick={() => setAmortPage(p => Math.min(totalAmortPages, p + 1))} disabled={amortPage === totalAmortPages}
                       className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors">Next →</button>
                   </div>
                 )}
-                <p className="text-xs text-gray-400 mt-2">All amounts in AED. Assumes constant interest rate throughout tenure.</p>
+                <p className="text-xs text-gray-500 mt-2">All amounts in AED. Assumes constant interest rate throughout tenure.</p>
               </div>
             )}
 
@@ -641,7 +641,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
                   <ResultRow label={L.totalFees}  value={fmtAED(totalFees)} bold negative />
                   <ResultRow label={L.cashNeeded} sub="Down payment + all estimated fees" value={fmtAED(totalCashNeeded)} bold highlight />
                 </div>
-                <p className="text-xs text-gray-400 mt-3">Excludes: bank processing fees, mortgage life insurance (~0.3–0.6%/yr), building insurance, NOC fees. Actual costs may vary.</p>
+                <p className="text-xs text-gray-500 mt-3">Excludes: bank processing fees, mortgage life insurance (~0.3–0.6%/yr), building insurance, NOC fees. Actual costs may vary.</p>
               </div>
             )}
           </div>

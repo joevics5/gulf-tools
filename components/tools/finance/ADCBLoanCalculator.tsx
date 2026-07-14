@@ -134,7 +134,7 @@ function Row({ label, value, sub, neg, highlight, border }: {
     <div className={`flex items-start justify-between gap-4 ${border ? 'pt-3 border-t border-gray-200' : ''}`}>
       <div>
         <div className="text-sm text-gray-600">{label}</div>
-        {sub && <div className="text-xs text-gray-400">{sub}</div>}
+        {sub && <div className="text-xs text-gray-500">{sub}</div>}
       </div>
       <span className={`text-sm font-semibold tabular-nums text-right ${highlight ? 'text-emerald-600' : neg ? 'text-red-500' : 'text-gray-900'}`}>
         {value}
@@ -161,7 +161,7 @@ function NumInput({ label, value, onChange, prefix, min, max, step, placeholder,
       <label className="block text-sm font-semibold text-gray-700 mb-1.5">{label}</label>
       <div className="relative">
         {prefix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 pointer-events-none">{prefix}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500 pointer-events-none">{prefix}</span>
         )}
         <input
           type="number"
@@ -174,7 +174,7 @@ function NumInput({ label, value, onChange, prefix, min, max, step, placeholder,
           className={`w-full ${prefix ? 'pl-14' : 'pl-4'} pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition bg-white`}
         />
       </div>
-      {hint && <p className="text-xs text-gray-400 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500 mt-1">{hint}</p>}
     </div>
   )
 }
@@ -295,7 +295,7 @@ export default function ADCBLoanCalculator({ locale }: Props) {
             </button>
           ))}
         </div>
-        <p className="text-xs text-gray-400 mt-1.5">
+        <p className="text-xs text-gray-500 mt-1.5">
           Affects max loan ({nat.loanMultiple}× salary), LTV, and eligibility limits.
         </p>
       </div>
@@ -396,7 +396,7 @@ export default function ADCBLoanCalculator({ locale }: Props) {
               <div className="w-full px-4 py-3 border border-gray-100 rounded-xl text-sm font-semibold text-blue-700 bg-blue-50">
                 {mLoanAmount > 0 ? fmt(mLoanAmount) : '—'}
               </div>
-              <p className="text-xs text-gray-400 mt-1">Auto-calculated from property value & down payment</p>
+              <p className="text-xs text-gray-500 mt-1">Auto-calculated from property value & down payment</p>
             </div>
             <NumInput
               label="Tenor (Years)"
@@ -516,7 +516,7 @@ export default function ADCBLoanCalculator({ locale }: Props) {
             <div className="border border-gray-200 rounded-2xl overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
                 <h3 className="text-sm font-bold text-gray-900">Repayment Schedule</h3>
-                <span className="text-xs text-gray-400">{result.schedule.length} months total</span>
+                <span className="text-xs text-gray-500">{result.schedule.length} months total</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">

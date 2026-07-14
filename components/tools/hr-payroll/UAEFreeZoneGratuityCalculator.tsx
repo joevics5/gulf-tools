@@ -332,11 +332,11 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {isAr ? 'الراتب الأساسي الشهري (درهم)' : 'Basic Monthly Salary (AED)'}
           </label>
-          <p className="text-xs text-gray-400 mb-1.5">
+          <p className="text-xs text-gray-500 mb-1.5">
             {isAr ? 'الراتب الأساسي فقط — لا تشمل البدلات والعمولات وبدل الإسكان' : 'Basic salary only — exclude housing, transport, commissions, allowances'}
           </p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -396,7 +396,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
             {isAr ? 'خصومات / مستحقات للشركة (اختياري)' : 'Deductions / Amounts Owed (optional)'}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -476,7 +476,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
 
               {/* Breakdown */}
               <div className="space-y-0">
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
                   {isAr ? 'التفصيل' : 'Breakdown'}
                 </p>
                 {result.breakdown.map((row, i) => (
@@ -484,7 +484,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
                     key={i}
                     className={`flex items-center justify-between gap-4 py-2.5 border-b border-gray-100 last:border-0 ${row.highlight ? 'pt-3' : ''}`}
                   >
-                    <span className={`text-sm ${row.sub ? 'text-gray-400 pl-3' : 'text-gray-600'}`}>{row.label}</span>
+                    <span className={`text-sm ${row.sub ? 'text-gray-500 pl-3' : 'text-gray-600'}`}>{row.label}</span>
                     <span className={`text-sm font-semibold whitespace-nowrap ${
                       row.highlight ? 'text-emerald-600 text-base' : row.negative ? 'text-red-500' : 'text-gray-900'
                     }`}>
@@ -506,7 +506,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
       )}
 
       {/* Zone authority links */}
-      <div className="flex flex-wrap gap-3 text-xs text-gray-400 justify-center">
+      <div className="flex flex-wrap gap-3 text-xs text-gray-500 justify-center">
         {[
           { label: 'JAFZA', url: 'https://www.jafza.ae' },
           { label: 'DMCC', url: 'https://www.dmcc.ae' },
@@ -519,7 +519,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         ))}
       </div>
 
-      <p className="text-xs text-gray-400 text-center">
+      <p className="text-xs text-gray-500 text-center">
         {isAr
           ? 'المصدر: المرسوم الاتحادي بقانون رقم 33 لسنة 2021 | قواعد DIFC للتوظيف 2019'
           : 'Source: Federal Decree-Law No. 33 of 2021 | DIFC Employment Law 2019 (as amended)'}

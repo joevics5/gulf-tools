@@ -219,7 +219,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
   // DBR traffic light
   const dbrColor =
     !result || !parseFloat(income)
-      ? 'text-gray-400'
+      ? 'text-gray-500'
       : result.exceedsDBR
       ? 'text-red-500'
       : result.dbr > config.maxDBR * 0.8
@@ -257,10 +257,10 @@ export default function UAELoanEMICalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.income}
-            <span className="ml-1 font-normal text-gray-400 text-xs">({t.maxLoanNote})</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">({t.maxLoanNote})</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {config.currency}
             </span>
             <input
@@ -278,7 +278,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.loanAmount}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {config.currency}
             </span>
             <input
@@ -292,7 +292,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
           </div>
           {/* Max loan hint */}
           {income && parseFloat(income) > 0 && (
-            <p className="mt-1 text-xs text-gray-400">
+            <p className="mt-1 text-xs text-gray-500">
               Max eligible: {fmt(parseFloat(income) * config.maxMultiplier, config.currency)}
             </p>
           )}
@@ -302,7 +302,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.tenure}
-            <span className="ml-1 font-normal text-gray-400 text-xs">(max {config.maxTenure})</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">(max {config.maxTenure})</span>
           </label>
           <input
             type="number"
@@ -337,7 +337,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.rate}
-            <span className="ml-1 font-normal text-gray-400 text-xs">(reducing balance)</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">(reducing balance)</span>
           </label>
           <input
             type="number"
@@ -370,10 +370,10 @@ export default function UAELoanEMICalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.processingFee}
-            <span className="ml-1 font-normal text-gray-400 text-xs">({t.feeNote})</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">({t.feeNote})</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
               {config.currency}
             </span>
             <input
@@ -449,7 +449,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
               <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-600 font-medium">{t.dbrLabel}</span>
                 <span className={`font-bold ${dbrColor}`}>
-                  {fmtPct(result.dbr)} <span className="font-normal text-gray-400 text-xs">({t.maxAllowed})</span>
+                  {fmtPct(result.dbr)} <span className="font-normal text-gray-500 text-xs">({t.maxAllowed})</span>
                 </span>
               </div>
               {/* Progress bar */}
@@ -461,7 +461,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
                   style={{ width: `${Math.min((result.dbr / config.maxDBR) * 100, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-gray-500">
                 {isAr
                   ? `هذا القسط يستهلك ${fmtPct(result.dbr)} من دخلك الشهري`
                   : `This EMI uses ${fmtPct(result.dbr)} of your monthly income`}
@@ -517,7 +517,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
           </div>
 
           {/* Disclaimer */}
-          <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+          <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
             ⚠️ {t.disclaimer}
           </p>
         </div>

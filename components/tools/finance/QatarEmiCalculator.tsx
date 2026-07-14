@@ -388,7 +388,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
           <div className="sm:col-span-2">
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.principal}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">QAR</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
               <input
                 type="number" min="0" value={principal}
                 onChange={e => setPrincipal(e.target.value)}
@@ -404,7 +404,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
           <div className="sm:col-span-2">
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.desiredEmi}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">QAR</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
               <input
                 type="number" min="0" value={desiredEmi}
                 onChange={e => setDesiredEmi(e.target.value)}
@@ -424,7 +424,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
               onChange={e => setAnnualRate(e.target.value)}
               className="w-full pr-10 px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">%</span>
           </div>
         </div>
 
@@ -442,7 +442,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.salary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">QAR</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
             <input
               type="number" min="0" value={salaryMonthly}
               onChange={e => setSalaryMonthly(e.target.value)}
@@ -456,7 +456,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.otherDebt}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">QAR</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
             <input
               type="number" min="0" value={otherDebt}
               onChange={e => setOtherDebt(e.target.value)}
@@ -468,7 +468,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
       </div>
 
       {/* QCB limits note */}
-      <div className="text-xs text-gray-400 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+      <div className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
         {L.qcbNote} — {isAr ? 'الحد الأقصى للقرض' : 'Max loan'}: {fmt(currentLimits.maxPrincipal)} | {isAr ? 'أقصى مدة' : 'Max tenure'}: {currentLimits.maxTenureMonths} {isAr ? 'شهر' : 'months'} | DSR: {fmtPct(currentLimits.dsrLimit)}
       </div>
 

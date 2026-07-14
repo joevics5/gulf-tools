@@ -251,7 +251,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.carPrice}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -293,7 +293,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.downPayment} — {L.amount}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -313,7 +313,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.loanAmount}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
             <input
               type="text"
               readOnly
@@ -335,9 +335,9 @@ export default function CarLoanEMICalculator({ locale }: Props) {
               onChange={e => setAnnualRate(e.target.value)}
               className="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
-          <p className="text-xs text-gray-400 mt-1">UAE banks: typically 2.15% – 5%+ (reducing balance)</p>
+          <p className="text-xs text-gray-500 mt-1">UAE banks: typically 2.15% – 5%+ (reducing balance)</p>
         </div>
 
         {/* Tenure */}
@@ -354,7 +354,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
             onChange={e => setTenure(Number(e.target.value))}
             className="w-full accent-blue-600 mt-2"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-1">
+          <div className="flex justify-between text-xs text-gray-500 mt-1">
             <span>12</span><span>24</span><span>36</span><span>48</span><span>60</span>
           </div>
         </div>
@@ -363,7 +363,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.income}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -379,7 +379,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.debts}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -510,7 +510,7 @@ export default function CarLoanEMICalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <div className="text-xs text-gray-400 bg-gray-50 rounded-xl p-4 border border-gray-100 leading-relaxed">
+      <div className="text-xs text-gray-500 bg-gray-50 rounded-xl p-4 border border-gray-100 leading-relaxed">
         ⚠️ <strong>Disclaimer:</strong> {L.disclaimer}
       </div>
     </div>

@@ -237,7 +237,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
       {/* Quick Scenarios */}
       <div>
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">{L.quickScenarios}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">{L.quickScenarios}</p>
         <div className="flex flex-wrap gap-2">
           {scenarios.map(s => (
             <button
@@ -259,7 +259,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
           <label className="block text-sm font-semibold text-gray-700 mb-1">{L.salary}</label>
           <p className="text-xs text-gray-500 mb-1.5">{L.salaryHint}</p>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">RO</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">RO</span>
             <input
               type="number"
               min="0"
@@ -414,7 +414,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
                   <div className="rounded-xl border border-gray-200 overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 flex items-center gap-2">
                       <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{L.legacyPeriod}</span>
-                      <span className="text-xs text-gray-400">({fmtYears(result.legacyYears, isAr)})</span>
+                      <span className="text-xs text-gray-500">({fmtYears(result.legacyYears, isAr)})</span>
                     </div>
                     <div className="px-4 py-3">
                       <ResultRow
@@ -430,7 +430,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
                   <div className="rounded-xl border border-gray-200 overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 flex items-center gap-2">
                       <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{L.newPeriod}</span>
-                      <span className="text-xs text-gray-400">({fmtYears(result.newYears, isAr)})</span>
+                      <span className="text-xs text-gray-500">({fmtYears(result.newYears, isAr)})</span>
                     </div>
                     <div className="px-4 py-3">
                       <ResultRow
@@ -466,7 +466,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
           {/* Legal disclaimer */}
           <div className="flex gap-2.5 px-4 py-3 bg-gray-100 rounded-xl border border-gray-200">
-            <span className="text-gray-400 text-base leading-none mt-0.5">⚖️</span>
+            <span className="text-gray-500 text-base leading-none mt-0.5">⚖️</span>
             <p className="text-xs text-gray-500 leading-relaxed">{L.legalNote}</p>
           </div>
         </div>

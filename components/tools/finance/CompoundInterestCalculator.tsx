@@ -149,7 +149,7 @@ function GrowthChart({ schedule, currency }: { schedule: YearRow[]; currency: st
         const interestPct = totalPct - Math.min(totalPct, (row.contributions / max) * 100 * (row.year))
         return (
           <div key={row.year} className="flex items-center gap-2 text-xs">
-            <span className="w-8 text-gray-400 text-right flex-shrink-0">Y{row.year}</span>
+            <span className="w-8 text-gray-500 text-right flex-shrink-0">Y{row.year}</span>
             <div className="flex-1 h-4 bg-gray-100 rounded-full overflow-hidden relative">
               <div
                 className="h-full bg-emerald-600 rounded-full"
@@ -315,7 +315,7 @@ export default function CompoundInterestCalculator({ locale }: Props) {
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.principal}</label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{cfg.currency}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{cfg.currency}</span>
           <input
             type="number"
             min="0"
@@ -346,7 +346,7 @@ export default function CompoundInterestCalculator({ locale }: Props) {
               placeholder={`${cfg.typicalSavingsRate.min}–${cfg.typicalSavingsRate.max}`}
               className={`w-full px-4 py-3 border rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition ${errors.rate ? 'border-red-400' : 'border-gray-200'}`}
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
           </div>
           {errors.rate && <p className="text-xs text-red-500 mt-1">{errors.rate}</p>}
         </div>
@@ -392,7 +392,7 @@ export default function CompoundInterestCalculator({ locale }: Props) {
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.monthlyContrib}</label>
         <div className="relative">
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">{cfg.currency}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">{cfg.currency}</span>
           <input
             type="number"
             min="0"
@@ -505,7 +505,7 @@ export default function CompoundInterestCalculator({ locale }: Props) {
       )}
 
       {/* Disclaimer */}
-      <p className="text-xs text-gray-400 leading-relaxed">{t.disclaimer}</p>
+      <p className="text-xs text-gray-500 leading-relaxed">{t.disclaimer}</p>
     </div>
   )
 }

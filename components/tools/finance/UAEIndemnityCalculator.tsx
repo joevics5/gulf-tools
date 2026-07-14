@@ -298,7 +298,7 @@ export default function UAEIndemnityCalculator({ locale }: Props) {
             <Tooltip text="Basic salary only — excludes housing, transport, bonuses, commissions and all other allowances." />
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">
               AED
             </span>
             <input
@@ -312,7 +312,7 @@ export default function UAEIndemnityCalculator({ locale }: Props) {
             />
           </div>
           {errors.basicSalary && <FieldError msg={errors.basicSalary} />}
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-gray-500 mt-1">
             ⚠ Use basic salary only. Allowances are excluded by law.
           </p>
         </div>
@@ -354,7 +354,7 @@ export default function UAEIndemnityCalculator({ locale }: Props) {
               <Tooltip text="Any advances, loans, or amounts owed to the employer that may be offset from gratuity." />
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400 select-none">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 select-none">AED</span>
               <input
                 type="number"
                 min="0"
@@ -586,7 +586,7 @@ function BreakdownRow({
 }) {
   return (
     <div className="px-5 py-3 flex items-center justify-between gap-4">
-      <span className={`text-sm ${muted ? 'text-gray-400 italic' : 'text-gray-600'}`}>{label}</span>
+      <span className={`text-sm ${muted ? 'text-gray-500 italic' : 'text-gray-600'}`}>{label}</span>
       <span className={`text-sm font-semibold ${negative ? 'text-amber-600' : 'text-gray-900'}`}>
         {value}
       </span>

@@ -238,7 +238,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className={lc}>{T.salary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={basicSalary} onChange={e => setBasicSalary(e.target.value)}
               placeholder={T.enterAmount}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition text-sm" />
@@ -248,10 +248,10 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
         {(mode === 'vacation') && (
           <div className="sm:col-span-2">
             <label className={lc}>{T.gross}
-              <span className="ml-1 text-xs font-normal text-gray-400">— {T.grossHint}</span>
+              <span className="ml-1 text-xs font-normal text-gray-500">— {T.grossHint}</span>
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
               <input type="number" min="0" value={grossSalary} onChange={e => setGrossSalary(e.target.value)}
                 placeholder={T.enterAmount}
                 className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition text-sm" />
@@ -383,7 +383,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
 
           {/* Visual bar */}
           <div className="py-2">
-            <div className="flex justify-between text-xs text-gray-400 mb-1">
+            <div className="flex justify-between text-xs text-gray-500 mb-1">
               <span>{isAr ? 'المستخدمة' : 'Used'}: {accResult.taken}</span>
               <span>{isAr ? 'المستحقة' : 'Accrued'}: {accResult.accrued}</span>
             </div>
@@ -457,7 +457,7 @@ function InfoLine({ label, value, sub, highlight, negative }: {
     <div className="flex items-start justify-between gap-4">
       <div>
         <div className="text-sm text-gray-600">{label}</div>
-        {sub && <div className="text-xs text-gray-400 font-mono mt-0.5">{sub}</div>}
+        {sub && <div className="text-xs text-gray-500 font-mono mt-0.5">{sub}</div>}
       </div>
       <span className={`text-sm font-semibold whitespace-nowrap ${highlight ? 'text-violet-600' : negative ? 'text-red-500' : 'text-gray-900'}`}>
         {value}
@@ -476,6 +476,6 @@ function Note({ text }: { text: string }) {
 
 function Disclaimer({ text }: { text: string }) {
   return (
-    <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-3">{text}</p>
+    <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-3">{text}</p>
   )
 }

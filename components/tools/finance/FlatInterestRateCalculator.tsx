@@ -116,7 +116,7 @@ function MetricCard({ label, value, color = 'default' }: { label: string; value:
   }
   return (
     <div className="bg-gray-50 rounded-xl p-4">
-      <div className="text-xs text-gray-400 mb-1">{label}</div>
+      <div className="text-xs text-gray-500 mb-1">{label}</div>
       <div className={`text-lg font-semibold ${colorMap[color]}`}>{value}</div>
     </div>
   )
@@ -131,7 +131,7 @@ function AmortTable({ rows }: { rows: AmortRow[] }) {
         <thead className="sticky top-0 bg-gray-50">
           <tr>
             {['Month', 'EMI', 'Principal', 'Interest', 'Balance'].map(h => (
-              <th key={h} className="text-left px-3 py-2 text-gray-400 font-medium border-b border-gray-100">
+              <th key={h} className="text-left px-3 py-2 text-gray-500 font-medium border-b border-gray-100">
                 {h}
               </th>
             ))}
@@ -411,7 +411,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
         <div className="sm:col-span-2 space-y-1.5">
           <label className="block text-sm font-semibold text-gray-700">{L.loanAmt}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min={1000}
@@ -434,7 +434,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               className="flex-1 accent-emerald-600"
               aria-label="Loan amount slider"
             />
-            <span className="text-xs text-gray-400 w-10 text-right">{sliderLabel(parseFloat(loanAmt) || 0)}</span>
+            <span className="text-xs text-gray-500 w-10 text-right">{sliderLabel(parseFloat(loanAmt) || 0)}</span>
           </div>
           {errors.loanAmt && <p className="text-xs text-red-500">{errors.loanAmt}</p>}
         </div>
@@ -453,7 +453,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
               aria-label={L.flatRate}
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">%</span>
           </div>
           <div className="flex items-center gap-3 mt-1">
             <input
@@ -466,7 +466,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               className="flex-1 accent-emerald-600"
               aria-label="Flat rate slider"
             />
-            <span className="text-xs text-gray-400 w-10 text-right">{parseFloat(flatRate).toFixed(2)}%</span>
+            <span className="text-xs text-gray-500 w-10 text-right">{parseFloat(flatRate).toFixed(2)}%</span>
           </div>
           {errors.flatRate && <p className="text-xs text-red-500">{errors.flatRate}</p>}
         </div>
@@ -485,7 +485,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
               aria-label={L.tenure}
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-400">mo</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">mo</span>
           </div>
           <div className="flex items-center gap-3 mt-1">
             <input
@@ -498,7 +498,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               className="flex-1 accent-emerald-600"
               aria-label="Tenure slider"
             />
-            <span className="text-xs text-gray-400 w-12 text-right">{tenure} mo</span>
+            <span className="text-xs text-gray-500 w-12 text-right">{tenure} mo</span>
           </div>
           {errors.tenure && <p className="text-xs text-red-500">{errors.tenure}</p>}
         </div>
@@ -529,13 +529,13 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
                     onChange={e => setFeePercent(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">%</span>
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">%</span>
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="block text-xs text-gray-500">{L.feeFixed}</label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">AED</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">AED</span>
                   <input
                     type="number"
                     min={0}
@@ -582,11 +582,11 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
           {/* Flat vs Reducing side-by-side */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-              <span className="text-xs font-medium text-gray-400 bg-gray-200 rounded-full px-2 py-0.5">
+              <span className="text-xs font-medium text-gray-500 bg-gray-200 rounded-full px-2 py-0.5">
                 {isAr ? 'ثابت' : 'Flat rate'}
               </span>
               <div className="text-xl font-bold text-gray-900 mt-2">{fmtAED(results.emiFlat)}</div>
-              <div className="text-xs text-gray-400 mt-1">
+              <div className="text-xs text-gray-500 mt-1">
                 {isAr ? 'إجمالي الفوائد:' : 'Total interest:'} {fmtAED(results.totalIntFlat)}
               </div>
             </div>
@@ -642,7 +642,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
                   className={`px-4 py-2 text-sm font-medium rounded-t-lg border-b-2 transition-colors ${
                     activeTab === tab
                       ? 'border-emerald-500 text-emerald-600'
-                      : 'border-transparent text-gray-400 hover:text-gray-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-600'
                   }`}
                 >
                   {tab === 'chart' ? L.chart : L.amort}
@@ -673,7 +673,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
           </div>
 
           {/* Disclaimer */}
-          <div className="bg-gray-50 rounded-xl px-4 py-3 text-xs text-gray-400 leading-relaxed border border-gray-100">
+          <div className="bg-gray-50 rounded-xl px-4 py-3 text-xs text-gray-500 leading-relaxed border border-gray-100">
             <span className="font-semibold text-gray-500">{isAr ? 'إخلاء المسؤولية: ' : 'Disclaimer: '}</span>
             {L.disclaimer}
           </div>

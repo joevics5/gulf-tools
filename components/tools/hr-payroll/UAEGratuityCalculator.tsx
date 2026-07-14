@@ -262,7 +262,7 @@ export default function UAEGratuityCalculator({ locale }: Props) {
               </button>
             ))}
           </div>
-          <p className="mt-1.5 text-xs text-gray-400">
+          <p className="mt-1.5 text-xs text-gray-500">
             {contractType === 'limited' ? L.limitedNote : L.unlimitedNote}
           </p>
         </div>
@@ -293,7 +293,7 @@ export default function UAEGratuityCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.basicSalary}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -397,7 +397,7 @@ export default function UAEGratuityCalculator({ locale }: Props) {
               {/* Breakdown */}
               {result.breakdown.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">{L.breakdown}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">{L.breakdown}</p>
                   {result.breakdown.map((row, i) => (
                     <div key={i} className="bg-white rounded-xl border border-gray-100 px-4 py-3 text-sm">
                       <div className="font-semibold text-gray-700 mb-1">{row.label}</div>
@@ -417,7 +417,7 @@ export default function UAEGratuityCalculator({ locale }: Props) {
       )}
 
       {/* Bottom disclaimer */}
-      <p className="text-xs text-gray-400 text-center">
+      <p className="text-xs text-gray-500 text-center">
         {isAr
           ? 'المصدر: المرسوم الاتحادي بقانون رقم 33 لسنة 2021 | وزارة الموارد البشرية والتوطين'
           : 'Source: Federal Decree-Law No. 33 of 2021 | Ministry of Human Resources & Emiratisation (MOHRE)'}

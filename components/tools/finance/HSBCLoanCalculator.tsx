@@ -143,7 +143,7 @@ function Row({ label, value, sub, neg, highlight, border }: {
     <div className={`flex items-start justify-between gap-4 ${border ? 'pt-3 border-t border-gray-200' : ''}`}>
       <div>
         <p className="text-sm text-gray-600">{label}</p>
-        {sub && <p className="text-xs text-gray-400 mt-0.5">{sub}</p>}
+        {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
       </div>
       <span className={`text-sm font-semibold tabular-nums shrink-0 text-right ${highlight ? 'text-emerald-600' : neg ? 'text-red-500' : 'text-gray-900'}`}>
         {value}
@@ -173,7 +173,7 @@ function NumInput({ label, value, onChange, prefix, min, max, step, hint, placeh
       <label className="block text-sm font-semibold text-gray-700 mb-1.5">{label}</label>
       <div className="relative">
         {prefix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400 pointer-events-none select-none">{prefix}</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500 pointer-events-none select-none">{prefix}</span>
         )}
         <input
           type="number" min={min} max={max} step={step ?? 1}
@@ -182,7 +182,7 @@ function NumInput({ label, value, onChange, prefix, min, max, step, hint, placeh
           className={`w-full ${prefix ? 'pl-14' : 'pl-4'} pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#DB0011] focus:border-transparent transition bg-white`}
         />
       </div>
-      {hint && <p className="text-xs text-gray-400 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-gray-500 mt-1">{hint}</p>}
     </div>
   )
 }
@@ -223,9 +223,9 @@ function DBRBar({ pct }: { pct: number }) {
         <div className="absolute top-0 bottom-0 w-0.5 bg-gray-500 rounded" style={{ left: '50%' }} />
       </div>
       <div className="flex justify-between mt-1">
-        <span className="text-xs text-gray-400">0%</span>
+        <span className="text-xs text-gray-500">0%</span>
         <span className="text-xs text-gray-500 font-semibold">50% limit</span>
-        <span className="text-xs text-gray-400">100%</span>
+        <span className="text-xs text-gray-500">100%</span>
       </div>
     </div>
   )
@@ -287,7 +287,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
   const salaryNum = parseFloat(salary) || 0
   const eligible = salaryNum >= 7_500 && parseInt(pTenorM) <= 48 && loanAmount <= nat.maxPersonal
   const eligibilityLabel = !salary ? 'Enter salary above to check' : eligible ? '✅ Likely eligible' : '❌ May not qualify — check with HSBC'
-  const eligibilityColor = !salary ? 'text-gray-400' : eligible ? 'text-emerald-600' : 'text-red-500'
+  const eligibilityColor = !salary ? 'text-gray-500' : eligible ? 'text-emerald-600' : 'text-red-500'
 
   function applyPersonalPreset(p: typeof QUICK_PRESETS_PERSONAL[0]) {
     setPAmount(String(p.amount)); setPTenorM(String(p.tenorM)); setPRate(String(PERSONAL_RATE_DEFAULT))
@@ -337,7 +337,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
             </button>
           ))}
         </div>
-        <p className="text-xs text-gray-400 mt-1.5">Max personal loan {fmtShort(nat.maxPersonal)} · Min salary AED 7,500 (HSBC)</p>
+        <p className="text-xs text-gray-500 mt-1.5">Max personal loan {fmtShort(nat.maxPersonal)} · Min salary AED 7,500 (HSBC)</p>
       </div>
 
       {/* ── Salary transfer ── */}
@@ -348,7 +348,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
         </div>
         <span className="text-sm text-gray-600">
           Salary Transfer to HSBC
-          <span className={`ml-1.5 text-xs font-medium ${salaryTransfer ? 'text-emerald-600' : 'text-gray-400'}`}>
+          <span className={`ml-1.5 text-xs font-medium ${salaryTransfer ? 'text-emerald-600' : 'text-gray-500'}`}>
             {salaryTransfer ? '✓ May qualify for lower rates' : 'Standard rates apply'}
           </span>
         </span>
@@ -387,7 +387,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-gray-400 mt-1">Max 48 months (CBUAE)</p>
+              <p className="text-xs text-gray-500 mt-1">Max 48 months (CBUAE)</p>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -396,7 +396,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
               <input type="number" min={PERSONAL_RATE_MIN} max={30} step={0.01}
                 value={pRate} onChange={e => setPRate(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#DB0011] transition bg-white" />
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 HSBC from {PERSONAL_RATE_MIN}% · {salaryTransfer ? 'Salary transfer may lower your rate' : 'Rate may be higher without salary transfer'}
               </p>
             </div>
@@ -432,7 +432,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
               <div className="w-full px-4 py-3 border border-gray-100 rounded-xl text-sm font-semibold text-[#DB0011] bg-red-50">
                 {mLoanAmount > 0 ? fmt(mLoanAmount) : '—'}
               </div>
-              <p className="text-xs text-gray-400 mt-1">Auto-calculated from property value & down payment</p>
+              <p className="text-xs text-gray-500 mt-1">Auto-calculated from property value & down payment</p>
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">Loan Term</label>
@@ -446,7 +446,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
                   </button>
                 ))}
               </div>
-              <p className="text-xs text-gray-400 mt-1">Max 25 years (CBUAE)</p>
+              <p className="text-xs text-gray-500 mt-1">Max 25 years (CBUAE)</p>
             </div>
 
             {/* Rate type */}
@@ -467,7 +467,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
                   <input type="number" min={MORTGAGE_RATE_MIN} max={12} step={0.01}
                     value={mRate} onChange={e => setMRate(e.target.value)}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#DB0011] transition bg-white" />
-                  <p className="text-xs text-gray-400 mt-1">HSBC UAE fixed rates from {MORTGAGE_RATE_MIN}% p.a.</p>
+                  <p className="text-xs text-gray-500 mt-1">HSBC UAE fixed rates from {MORTGAGE_RATE_MIN}% p.a.</p>
                 </>
               ) : (
                 <>
@@ -479,7 +479,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
                       value={mRate} onChange={e => setMRate(e.target.value)} placeholder="Margin %"
                       className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#DB0011] transition bg-white" />
                   </div>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-gray-500 mt-1">
                     Effective rate: {effectiveMortgageRate.toFixed(2)}% p.a. · EIBOR is variable and will change over time.
                   </p>
                   <Alert type="info" text={`EIBOR (Emirates Interbank Offered Rate) rate shown is illustrative (${EIBOR_RATE}%). Your actual rate will fluctuate with EIBOR changes. Monthly repayments on variable-rate mortgages can increase significantly.`} />
@@ -506,13 +506,13 @@ export default function HSBCLoanCalculator({ locale }: Props) {
         <button onClick={() => setShowEligibility(v => !v)}
           className="flex items-center justify-between w-full text-sm font-semibold text-gray-700">
           <span>🔍 Quick Eligibility Check</span>
-          <span className="text-gray-400">{showEligibility ? '▲' : '▼'}</span>
+          <span className="text-gray-500">{showEligibility ? '▲' : '▼'}</span>
         </button>
         {showEligibility && (
           <div className="mt-3 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-600">Min salary (AED 7,500)</span>
-              <span className={salaryNum >= 7_500 || !salary ? (salary ? 'text-emerald-600' : 'text-gray-400') : 'text-red-500'}>
+              <span className={salaryNum >= 7_500 || !salary ? (salary ? 'text-emerald-600' : 'text-gray-500') : 'text-red-500'}>
                 {!salary ? '—' : salaryNum >= 7_500 ? '✅ Met' : '❌ Below minimum'}
               </span>
             </div>
@@ -531,7 +531,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
             <div className={`font-semibold mt-2 pt-2 border-t border-gray-100 ${eligibilityColor}`}>
               {eligibilityLabel}
             </div>
-            <p className="text-xs text-gray-400">This is a rough guide only. HSBC's actual eligibility assessment includes credit score, employment type, liabilities, and other factors.</p>
+            <p className="text-xs text-gray-500">This is a rough guide only. HSBC's actual eligibility assessment includes credit score, employment type, liabilities, and other factors.</p>
           </div>
         )}
       </div>
@@ -601,7 +601,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
                 </span>
               </div>
               <DBRBar pct={result.dbrPct} />
-              <p className="text-xs text-gray-400 mt-2">UAE Central Bank cap: 50% of gross monthly income (all debts combined)</p>
+              <p className="text-xs text-gray-500 mt-2">UAE Central Bank cap: 50% of gross monthly income (all debts combined)</p>
             </div>
           )}
 
@@ -610,7 +610,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
             <div className="border border-gray-200 rounded-2xl overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
                 <h3 className="text-sm font-bold text-gray-900">Repayment Schedule</h3>
-                <span className="text-xs text-gray-400">{result.schedule.length} monthly payments</span>
+                <span className="text-xs text-gray-500">{result.schedule.length} monthly payments</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">

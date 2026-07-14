@@ -292,7 +292,7 @@ export default function GoldZakatCalculator({ locale }: Props) {
                     <span className="text-lg">{h.type === 'investment' ? '🥇' : '💍'}</span>
                     <span className="text-sm font-semibold text-gray-700">
                       {h.type === 'investment' ? L.investment : L.jewellery}
-                      {exempt && <span className="ml-2 text-xs text-gray-400 font-normal">({L.exempt})</span>}
+                      {exempt && <span className="ml-2 text-xs text-gray-500 font-normal">({L.exempt})</span>}
                     </span>
                   </div>
                   {holdings.length > 1 && (
@@ -353,7 +353,7 @@ export default function GoldZakatCalculator({ locale }: Props) {
                 {h.weight && parseFloat(h.weight) > 0 && (
                   <div className="flex gap-4 text-xs text-gray-500">
                     <span>{L.pureLabel}: <span className="font-semibold text-gray-700">{fmtG(pg)}</span></span>
-                    <span>{L.valueLabel}: <span className={`font-semibold ${exempt ? 'text-gray-400 line-through' : 'text-yellow-700'}`}>{fmt(val, currency)}</span></span>
+                    <span>{L.valueLabel}: <span className={`font-semibold ${exempt ? 'text-gray-500 line-through' : 'text-yellow-700'}`}>{fmt(val, currency)}</span></span>
                   </div>
                 )}
               </div>
@@ -450,9 +450,9 @@ export default function GoldZakatCalculator({ locale }: Props) {
               <div key={h.id} className="flex items-center justify-between gap-4 text-sm">
                 <span className="text-gray-500">
                   {h.type === 'investment' ? '🥇' : '💍'} {parseFloat(h.weight || '0').toLocaleString()} {h.unit} {h.karat}K
-                  {h.exempt && <span className="ml-1 text-xs text-gray-400">({L.exempt})</span>}
+                  {h.exempt && <span className="ml-1 text-xs text-gray-500">({L.exempt})</span>}
                 </span>
-                <span className={`font-semibold ${h.exempt ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
+                <span className={`font-semibold ${h.exempt ? 'text-gray-500 line-through' : 'text-gray-900'}`}>
                   {fmtG(h.pureGrams)} · {fmt(h.value, currency)}
                 </span>
               </div>
@@ -465,7 +465,7 @@ export default function GoldZakatCalculator({ locale }: Props) {
             </div>
           </div>
 
-          <p className="text-xs text-gray-400 pt-2 border-t border-gray-100">{L.disclaimer}</p>
+          <p className="text-xs text-gray-500 pt-2 border-t border-gray-100">{L.disclaimer}</p>
         </div>
       )}
     </div>

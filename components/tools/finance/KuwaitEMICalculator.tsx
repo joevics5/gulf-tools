@@ -386,7 +386,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
             ))}
           </select>
           {loanClass !== 'illustrative' && (
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-gray-500 mt-1">
               Max {fmt(LOAN_CLASSES[loanClass].maxAmount, 0)} · {LOAN_CLASSES[loanClass].maxTermMonths} {t.months}
             </p>
           )}
@@ -406,7 +406,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
               <option key={s.value} value={s.value}>{isAr ? s.labelAr : s.label}</option>
             ))}
           </select>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-gray-500 mt-1">
             Salary cap: {dbrLimit * 100}%
           </p>
         </div>
@@ -417,7 +417,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
             {t.salary}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">KD</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">KD</span>
             <input
               type="number"
               min="0"
@@ -435,7 +435,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
             {t.amount}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">KD</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">KD</span>
             <input
               type="number"
               min="0"
@@ -477,9 +477,9 @@ export default function KuwaitEMICalculator({ locale }: Props) {
               placeholder="e.g. 7"
               className="w-full pl-4 pr-10 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
           </div>
-          <p className="text-xs text-gray-400 mt-1">Kuwait max: 7% (CBK)</p>
+          <p className="text-xs text-gray-500 mt-1">Kuwait max: 7% (CBK)</p>
         </div>
 
         {/* Step 6b: Rate type */}

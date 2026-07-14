@@ -208,7 +208,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
 
       {/* Quick Presets */}
       <div>
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">{t.presets}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t.presets}</p>
         <div className="flex flex-wrap gap-2">
           {PRESET_BUTTONS.map(p => (
             <button
@@ -231,7 +231,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.amount}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input
               type="number"
               min={1000}
@@ -247,7 +247,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
             onChange={e => { const v = Number(e.target.value); setAmount(v); setAmountInput(String(v)) }}
             className="w-full mt-2 accent-[#E05C2A] cursor-pointer"
           />
-          <div className="flex justify-between text-xs text-gray-400 mt-0.5">
+          <div className="flex justify-between text-xs text-gray-500 mt-0.5">
             <span>AED 1,000</span><span>AED 500,000</span>
           </div>
           {exceeds20x && (
@@ -259,7 +259,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.income}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input
               type="number"
               min={0}
@@ -312,14 +312,14 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
               className="w-full pr-8 pl-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#E05C2A] focus:border-transparent transition"
               aria-label={t.rate}
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">%</span>
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
           <input
             type="range" min={1} max={60} step={0.25} value={rate}
             onChange={e => { const v = Number(e.target.value); setRate(v); setRateInput(String(v)) }}
             className="w-full mt-2 accent-[#E05C2A] cursor-pointer"
           />
-          <p className="text-xs text-gray-400 mt-0.5">Reducing balance basis</p>
+          <p className="text-xs text-gray-500 mt-0.5">Reducing balance basis</p>
         </div>
 
         {/* Tenure */}
@@ -341,7 +341,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
               </button>
             ))}
           </div>
-          <p className="text-xs text-gray-400 mt-2">Max 48 months (CBUAE standard)</p>
+          <p className="text-xs text-gray-500 mt-2">Max 48 months (CBUAE standard)</p>
         </div>
 
         {/* Processing Fee Toggle */}
@@ -355,7 +355,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
           </button>
           <span className="text-sm font-medium text-gray-700">{t.processingFee}</span>
           {includeProcessingFee && result.processingFee > 0 && (
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-gray-500">
               AED {fmtDec(result.processingFee)} + AED {fmtDec(result.processingFeeVAT)} VAT
             </span>
           )}
@@ -409,7 +409,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
             </div>
 
             {/* Deem-specific note */}
-            <p className="text-xs text-gray-400 border-t border-gray-100 pt-3">
+            <p className="text-xs text-gray-500 border-t border-gray-100 pt-3">
               Based on Deem Finance typical rates (15.99%–39.99% reducing balance). Actual rate depends on your credit profile.
             </p>
           </div>

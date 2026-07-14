@@ -224,7 +224,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
             {isAr ? 'الراتب الأساسي الشهري (درهم) — بدون البدلات' : 'Basic Monthly Salary (AED) — excluding allowances'}
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -306,7 +306,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
             placeholder="0"
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           />
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-500">
             {isAr ? 'الإجازة السنوية: 30 يوماً لكل سنة خدمة' : 'Annual leave entitlement: 30 days per year of service'}
           </p>
         </div>
@@ -376,7 +376,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
 
               {/* Breakdown */}
               <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
                   {isAr ? 'التفصيل' : 'Breakdown'}
                 </p>
                 {result.breakdown.map((row, i) => (
@@ -399,7 +399,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
               </div>
 
               {/* MOHRE link */}
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-xs text-gray-500 text-center">
                 {isAr
                   ? 'للتحقق الرسمي: '
                   : 'Official verification: '}
@@ -418,7 +418,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
       )}
 
       {/* Bottom disclaimer */}
-      <p className="text-xs text-gray-400 text-center">
+      <p className="text-xs text-gray-500 text-center">
         {isAr
           ? 'المصدر: المرسوم الاتحادي بقانون رقم 9 لسنة 2022 بشأن عمال المنازل | وزارة الموارد البشرية والتوطين'
           : 'Source: Federal Decree-Law No. 9 of 2022 on Domestic Workers | Ministry of Human Resources & Emiratisation'}

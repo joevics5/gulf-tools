@@ -113,7 +113,7 @@ export default async function ToolsDirectoryPage({ params }: { params: Promise<P
                 <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 mb-3">
                   {catDesc}
                 </p>
-                <span className="text-xs font-semibold text-gray-400">
+                <span className="text-xs font-semibold text-gray-500">
                   {count} {isAr ? 'أداة' : count === 1 ? 'tool' : 'tools'}
                 </span>
               </Link>

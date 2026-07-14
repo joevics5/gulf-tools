@@ -226,7 +226,7 @@ const getStatus = (dbr: number): StatusKey =>
             <div className="sm:col-span-2">
               <Label>{t.rentalIncome}</Label>
               <AEDInput value={rentalIncome} onChange={setRentalIncome} placeholder="e.g. 5000" />
-              <p className="text-xs text-gray-400 mt-1">Banks apply ~10/12 months for vacancy. Effective monthly: AED {fmt((parseFloat(rentalIncome)||0) * 10/12)}</p>
+              <p className="text-xs text-gray-500 mt-1">Banks apply ~10/12 months for vacancy. Effective monthly: AED {fmt((parseFloat(rentalIncome)||0) * 10/12)}</p>
             </div>
           )}
         </div>
@@ -250,7 +250,7 @@ const getStatus = (dbr: number): StatusKey =>
               <div className="col-span-2 relative">
                 {i === 0 && <Label>{t.debtAmount}</Label>}
                 <div className="relative">
-                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+                  <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
                   <input
                     type="number"
                     min={0}
@@ -283,7 +283,7 @@ const getStatus = (dbr: number): StatusKey =>
           <div className="pt-2 border-t border-gray-100">
             <Label>{t.ccLimit}</Label>
             <AEDInput value={creditCardLimit} onChange={setCreditCardLimit} placeholder="e.g. 30000" />
-            <p className="text-xs text-gray-400 mt-1">{t.ccNote}
+            <p className="text-xs text-gray-500 mt-1">{t.ccNote}
               {creditCardLimit && ` → AED ${fmtDec((parseFloat(creditCardLimit)||0)*0.05)}/mo`}
             </p>
           </div>
@@ -303,7 +303,7 @@ const getStatus = (dbr: number): StatusKey =>
           <div className="space-y-4">
             <button
               onClick={() => setShowProposed(false)}
-              className="text-xs text-gray-400 hover:text-gray-600"
+              className="text-xs text-gray-500 hover:text-gray-600"
             >
               {t.removeProposed}
             </button>
@@ -321,7 +321,7 @@ const getStatus = (dbr: number): StatusKey =>
                     onChange={e => setProposedRate(e.target.value)}
                     className="w-full pr-7 pl-3 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#0A3D7C] focus:border-transparent transition"
                   />
-                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-400 font-bold">%</span>
+                  <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-gray-500 font-bold">%</span>
                 </div>
               </div>
               <div>
@@ -400,7 +400,7 @@ const getStatus = (dbr: number): StatusKey =>
                   style={{ width: `${Math.min(100, results.currentDBR / (results.maxDBR * 100) * 100)}%` }}
                 />
               </div>
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-500 mt-1">
                 <span>0%</span>
                 <span className="font-semibold">Max {(results.maxDBR * 100).toFixed(0)}%</span>
               </div>
@@ -538,7 +538,7 @@ function Label({ children }: { children: React.ReactNode }) {
 function AEDInput({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
     <div className="relative">
-      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-400">AED</span>
+      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
       <input
         type="number"
         min={0}

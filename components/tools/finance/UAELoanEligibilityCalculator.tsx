@@ -297,7 +297,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.income}</label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -308,7 +308,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
             />
           </div>
           {inputs.loanType !== 'car' && (
-            <p className="mt-1 text-xs text-gray-400">
+            <p className="mt-1 text-xs text-gray-500">
               {t.personalCapNote}
               {inputs.income && parseFloat(inputs.income) > 0
                 ? ` — up to ${fmt(parseFloat(inputs.income) * 20)}`
@@ -334,10 +334,10 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.existingDebt}
-            <span className="ml-1 font-normal text-gray-400 text-xs">(optional)</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">(optional)</span>
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
               type="number"
               min="0"
@@ -347,7 +347,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
-          <p className="mt-1 text-xs text-gray-400">{t.existingDebtHint}</p>
+          <p className="mt-1 text-xs text-gray-500">{t.existingDebtHint}</p>
         </div>
 
         {/* Car-specific fields */}
@@ -356,10 +356,10 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                 {t.vehiclePrice}
-                <span className="ml-1 font-normal text-gray-400 text-xs">({t.carLTVNote})</span>
+                <span className="ml-1 font-normal text-gray-500 text-xs">({t.carLTVNote})</span>
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
                 <input
                   type="number"
                   min="0"
@@ -378,10 +378,10 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                 {t.downPayment}
-                <span className="ml-1 font-normal text-gray-400 text-xs">(min 20%)</span>
+                <span className="ml-1 font-normal text-gray-500 text-xs">(min 20%)</span>
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-400">AED</span>
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
                 <input
                   type="number"
                   min="0"
@@ -392,7 +392,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
                 />
               </div>
               {inputs.vehiclePrice && parseFloat(inputs.vehiclePrice) > 0 && (
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-gray-500">
                   Min: {fmt(parseFloat(inputs.vehiclePrice) * 0.2)} (20%)
                 </p>
               )}
@@ -404,7 +404,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.tenure}
-            <span className="ml-1 font-normal text-gray-400 text-xs">(max {maxTenure}m)</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">(max {maxTenure}m)</span>
           </label>
           <input
             type="number"
@@ -437,7 +437,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
             {t.rate}
-            <span className="ml-1 font-normal text-gray-400 text-xs">(reducing balance)</span>
+            <span className="ml-1 font-normal text-gray-500 text-xs">(reducing balance)</span>
           </label>
           <input
             type="number"
@@ -552,7 +552,7 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
           )}
 
           {/* Disclaimer */}
-          <p className="text-xs text-gray-400 leading-relaxed border-t border-gray-100 pt-4">
+          <p className="text-xs text-gray-500 leading-relaxed border-t border-gray-100 pt-4">
             ⚠️ {t.disclaimer}
           </p>
         </div>
@@ -582,7 +582,7 @@ function DBRBar({
     <div className="space-y-1.5">
       <div className="flex justify-between text-sm">
         <span className="text-gray-600">{label}</span>
-        <span className={`font-bold ${textColor}`}>{fmtPct(value)} <span className="text-gray-400 font-normal text-xs">/ 50% max</span></span>
+        <span className={`font-bold ${textColor}`}>{fmtPct(value)} <span className="text-gray-500 font-normal text-xs">/ 50% max</span></span>
       </div>
       <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
         <div className={`h-2.5 rounded-full ${barColor} transition-all`} style={{ width: `${pct}%` }} />
