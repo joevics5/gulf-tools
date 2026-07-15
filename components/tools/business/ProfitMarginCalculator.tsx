@@ -8,18 +8,19 @@ type Country = {
   value: string
   label: string
   currency: string
-  vat: number
-  cit?: number
+  cit: number
 }
 
+// Standard headline corporate income tax rates (simplified — actual liability
+// depends on free zone status, ownership nationality, and thresholds).
 const COUNTRIES: Country[] = [
-  { value: 'uae', label: 'UAE', currency: 'AED', vat: 0.05, cit: 0.09 },
-  { value: 'saudi', label: 'Saudi Arabia', currency: 'SAR', vat: 0.15, cit: 0.20 },
-  { value: 'qatar', label: 'Qatar', currency: 'QAR', vat: 0.05 },
-  { value: 'kuwait', label: 'Kuwait', currency: 'KWD', vat: 0.05 },
-  { value: 'bahrain', label: 'Bahrain', currency: 'BHD', vat: 0.10 },
-  { value: 'oman', label: 'Oman', currency: 'OMR', vat: 0.05 },
-  { value: 'egypt', label: 'Egypt', currency: 'EGP', vat: 0.14 },
+  { value: 'uae', label: 'UAE', currency: 'AED', cit: 0.09 },
+  { value: 'saudi', label: 'Saudi Arabia', currency: 'SAR', cit: 0.20 },
+  { value: 'qatar', label: 'Qatar', currency: 'QAR', cit: 0.10 },
+  { value: 'kuwait', label: 'Kuwait', currency: 'KWD', cit: 0.15 },
+  { value: 'bahrain', label: 'Bahrain', currency: 'BHD', cit: 0 },
+  { value: 'oman', label: 'Oman', currency: 'OMR', cit: 0.15 },
+  { value: 'egypt', label: 'Egypt', currency: 'EGP', cit: 0.225 },
 ]
 
 export default function ProfitMarginCalculator({ locale }: Props) {
@@ -30,6 +31,7 @@ export default function ProfitMarginCalculator({ locale }: Props) {
   const [cogs, setCogs] = useState<string>('')
   const [operatingExpenses, setOperatingExpenses] = useState<string>('')
   const [result, setResult] = useState<any>(null)
+  const [copied, setCopied] = useState(false)
 
   const selectedCountry = COUNTRIES.find(c => c.value === country)!
 
@@ -50,7 +52,7 @@ export default function ProfitMarginCalculator({ locale }: Props) {
     const netMargin = rev > 0 ? (netProfit / rev) * 100 : 0
 
     // Simple estimated tax
-    const estimatedTax = netProfit > 0 ? netProfit * (selectedCountry.cit || 0) : 0
+    const estimatedTax = netProfit > 0 ? netProfit * selectedCountry.cit : 0
     const profitAfterTax = netProfit - estimatedTax
 
     setResult({
@@ -81,6 +83,8 @@ export default function ProfitMarginCalculator({ locale }: Props) {
     afterTax: 'الربح بعد الضريبة',
     reset: 'إعادة تعيين',
     copy: 'نسخ النتائج',
+    copied: 'تم النسخ!',
+    taxNote: 'تقدير مبسط بناءً على معدل الضريبة القياسي. المسؤولية الفعلية تعتمد على هيكل الشركة، والمنطقة الحرة، وجنسية الملكية. استشر مستشارًا ضريبيًا.',
   } : {
     title: 'Profit Margin Calculator',
     revenue: 'Revenue / Sales',
@@ -95,6 +99,8 @@ export default function ProfitMarginCalculator({ locale }: Props) {
     afterTax: 'Profit After Tax',
     reset: 'Reset',
     copy: 'Copy Results',
+    copied: 'Copied!',
+    taxNote: 'Simplified estimate using the standard headline tax rate. Actual liability depends on entity structure, free zone status, and ownership nationality. Consult a tax advisor.',
   }
 
   const copyResults = () => {
@@ -103,7 +109,8 @@ export default function ProfitMarginCalculator({ locale }: Props) {
       ? `هامش الربح الإجمالي: ${result.grossMargin}%\nالربح الصافي: ${result.netMargin}%\n${formatNum(result.netProfit)}`
       : `Gross Margin: ${result.grossMargin}%\nNet Margin: ${result.netMargin}%\n${formatNum(result.netProfit)}`
     navigator.clipboard.writeText(text)
-    alert(isAr ? 'تم النسخ!' : 'Copied!')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   const reset = () => {
@@ -136,35 +143,53 @@ export default function ProfitMarginCalculator({ locale }: Props) {
       <div className="grid grid-cols-1 gap-6">
         <div>
           <label className="block text-sm font-semibold mb-2">{labels.revenue}</label>
-          <input
-            type="number"
-            value={revenue}
-            onChange={(e) => setRevenue(e.target.value)}
-            placeholder="0.00"
-            className="w-full p-4 text-2xl border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500"
-          />
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
+              {selectedCountry.currency}
+            </span>
+            <input
+              type="number"
+              min="0"
+              value={revenue}
+              onChange={(e) => setRevenue(e.target.value)}
+              placeholder="0.00"
+              className="w-full p-4 pl-16 text-2xl border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
         </div>
 
         <div>
           <label className="block text-sm font-semibold mb-2">{labels.cogs}</label>
-          <input
-            type="number"
-            value={cogs}
-            onChange={(e) => setCogs(e.target.value)}
-            placeholder="0.00"
-            className="w-full p-4 text-2xl border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500"
-          />
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
+              {selectedCountry.currency}
+            </span>
+            <input
+              type="number"
+              min="0"
+              value={cogs}
+              onChange={(e) => setCogs(e.target.value)}
+              placeholder="0.00"
+              className="w-full p-4 pl-16 text-2xl border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
         </div>
 
         <div>
           <label className="block text-sm font-semibold mb-2">{labels.opEx}</label>
-          <input
-            type="number"
-            value={operatingExpenses}
-            onChange={(e) => setOperatingExpenses(e.target.value)}
-            placeholder="0.00"
-            className="w-full p-4 text-2xl border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500"
-          />
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
+              {selectedCountry.currency}
+            </span>
+            <input
+              type="number"
+              min="0"
+              value={operatingExpenses}
+              onChange={(e) => setOperatingExpenses(e.target.value)}
+              placeholder="0.00"
+              className="w-full p-4 pl-16 text-2xl border border-gray-200 rounded-2xl focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
         </div>
       </div>
 
@@ -189,8 +214,10 @@ export default function ProfitMarginCalculator({ locale }: Props) {
             <div className="flex justify-between border-t pt-3 font-bold"><span>{labels.afterTax}</span><span>{formatNum(result.profitAfterTax)}</span></div>
           </div>
 
+          <p className="text-xs text-gray-500 bg-white/60 rounded-lg px-3 py-2">{labels.taxNote}</p>
+
           <button onClick={copyResults} className="w-full py-4 bg-emerald-600 text-white font-semibold rounded-2xl">
-            {labels.copy}
+            {copied ? labels.copied : labels.copy}
           </button>
         </div>
       )}

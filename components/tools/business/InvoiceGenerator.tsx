@@ -180,6 +180,14 @@ function addDays(dateStr: string, days: number) {
   return d.toISOString().split('T')[0];
 }
 
+function escapeHtml(s: string) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
 function fmt(n: number, currency: string) {
   return `${currency} ${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -237,6 +245,7 @@ const T = {
     applyTax: 'Apply Tax',
     taxInclusive: 'Prices include tax',
     download: 'Download PDF',
+    downloadDoc: 'Download Word',
     reset: 'Reset',
     copyPaste: 'Copy as text',
     copied: 'Copied!',
@@ -282,6 +291,7 @@ const T = {
     applyTax: 'تطبيق الضريبة',
     taxInclusive: 'الأسعار تشمل الضريبة',
     download: 'تحميل PDF',
+    downloadDoc: 'تحميل Word',
     reset: 'إعادة تعيين',
     copyPaste: 'نسخ كنص',
     copied: 'تم النسخ!',
@@ -599,15 +609,15 @@ function ItemsTable({
             <input type="text" value={item.description} onChange={e => onUpdate(item.id, 'description', e.target.value)}
               placeholder={lang === 'ar' ? 'وصف الخدمة أو المنتج' : 'Service or product description'}
               className="w-full px-2 py-1.5 border border-gray-200 rounded-lg text-sm bg-white" />
-            <input type="number" min="0" value={item.quantity} onChange={e => onUpdate(item.id, 'quantity', parseFloat(e.target.value) || 0)}
+            <input type="number" min="0" value={item.quantity} onChange={e => onUpdate(item.id, 'quantity', Math.max(0, parseFloat(e.target.value) || 0))}
               className="w-full px-2 py-1.5 border border-gray-200 rounded-lg text-sm text-center bg-white" />
-            <input type="number" min="0" value={item.unitPrice} onChange={e => onUpdate(item.id, 'unitPrice', parseFloat(e.target.value) || 0)}
+            <input type="number" min="0" value={item.unitPrice} onChange={e => onUpdate(item.id, 'unitPrice', Math.max(0, parseFloat(e.target.value) || 0))}
               className="w-full px-2 py-1.5 border border-gray-200 rounded-lg text-sm text-center bg-white" />
             {applyTax && (
-              <input type="number" min="0" max="100" value={item.taxRate} onChange={e => onUpdate(item.id, 'taxRate', parseFloat(e.target.value) || 0)}
+              <input type="number" min="0" max="100" value={item.taxRate} onChange={e => onUpdate(item.id, 'taxRate', Math.min(100, Math.max(0, parseFloat(e.target.value) || 0)))}
                 className="w-full px-2 py-1.5 border border-gray-200 rounded-lg text-sm text-center bg-white" />
             )}
-            <input type="number" min="0" max="100" value={item.discount} onChange={e => onUpdate(item.id, 'discount', parseFloat(e.target.value) || 0)}
+            <input type="number" min="0" max="100" value={item.discount} onChange={e => onUpdate(item.id, 'discount', Math.min(100, Math.max(0, parseFloat(e.target.value) || 0)))}
               className="w-full px-2 py-1.5 border border-gray-200 rounded-lg text-sm text-center bg-white" />
             <button onClick={() => onRemove(item.id)} disabled={items.length === 1}
               className="text-gray-300 hover:text-red-400 text-xl">×</button>
@@ -692,7 +702,6 @@ export default function InvoiceGenerator({ locale }: Props) {
       country,
       currency: cfg.currency,
       applyTax: cfg.defaultTaxRate > 0,
-      invoiceNumber: genInvoiceNumber(country),
       items: prev.items.map(item => ({ ...item, taxRate: cfg.defaultTaxRate })),
     }));
   };
@@ -754,14 +763,114 @@ export default function InvoiceGenerator({ locale }: Props) {
     }
   };
 
+  const handleDownloadDoc = () => {
+    const cfg = COUNTRY_CONFIGS[data.country];
+    let subtotal = 0, totalDiscount = 0, totalTax = 0;
+    data.items.forEach(item => {
+      const { afterDiscount, taxAmt, discountAmt, gross } = calcItem(item, data.taxInclusive, data.applyTax);
+      subtotal += gross;
+      totalDiscount += discountAmt;
+      totalTax += taxAmt;
+      void afterDiscount;
+    });
+    const grandTotal = data.taxInclusive
+      ? subtotal - totalDiscount
+      : subtotal - totalDiscount + totalTax;
+
+    const rows = data.items.map(item => {
+      const { lineTotal } = calcItem(item, data.taxInclusive, data.applyTax);
+      return `<tr>
+        <td style="padding:8px;border:1px solid #ddd;">${escapeHtml(item.description || '-')}</td>
+        <td style="padding:8px;border:1px solid #ddd;text-align:center;">${item.quantity}</td>
+        <td style="padding:8px;border:1px solid #ddd;text-align:right;">${fmt(item.unitPrice, data.currency)}</td>
+        ${data.applyTax ? `<td style="padding:8px;border:1px solid #ddd;text-align:center;">${item.taxRate}%</td>` : ''}
+        <td style="padding:8px;border:1px solid #ddd;text-align:right;">${fmt(lineTotal, data.currency)}</td>
+      </tr>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+  <meta charset="utf-8">
+  <title>${escapeHtml(cfg.invoiceLabel)} ${escapeHtml(data.invoiceNumber)}</title>
+  <!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml><![endif]-->
+</head>
+<body style="font-family:Calibri,Arial,sans-serif;color:#222;padding:24px;">
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <tr>
+      <td style="vertical-align:top;">
+        <div style="font-size:20px;font-weight:bold;">${escapeHtml(data.companyName || 'Your Company')}</div>
+        ${data.registrationNumber ? `<div style="font-size:12px;color:#555;">${escapeHtml(cfg.regLabel)}: ${escapeHtml(data.registrationNumber)}</div>` : ''}
+        ${data.address ? `<div style="font-size:12px;color:#555;">${escapeHtml(data.address)}</div>` : ''}
+        ${(data.phone || data.email) ? `<div style="font-size:12px;color:#555;">${[data.phone, data.email].filter(Boolean).map(escapeHtml).join(' · ')}</div>` : ''}
+      </td>
+      <td style="vertical-align:top;text-align:right;">
+        <div style="font-size:22px;font-weight:bold;">${escapeHtml(cfg.invoiceLabel)}</div>
+        <div style="font-size:16px;">#${escapeHtml(data.invoiceNumber)}</div>
+        <div style="font-size:12px;color:#555;">Issued: ${escapeHtml(data.issueDate)}</div>
+        <div style="font-size:12px;color:#555;">Due: ${escapeHtml(data.dueDate)}</div>
+      </td>
+    </tr>
+  </table>
+
+  <div style="margin-bottom:16px;">
+    <div style="font-size:11px;text-transform:uppercase;color:#888;">Bill To</div>
+    <div style="font-size:14px;font-weight:bold;">${escapeHtml(data.clientName || 'Client Name')}</div>
+    ${data.clientAddress ? `<div style="font-size:12px;color:#555;">${escapeHtml(data.clientAddress)}</div>` : ''}
+    ${data.clientTaxId ? `<div style="font-size:12px;color:#555;">Tax ID: ${escapeHtml(data.clientTaxId)}</div>` : ''}
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+    <thead>
+      <tr style="background:#f3f4f6;">
+        <th style="padding:8px;border:1px solid #ddd;text-align:left;">Description</th>
+        <th style="padding:8px;border:1px solid #ddd;">Qty</th>
+        <th style="padding:8px;border:1px solid #ddd;text-align:right;">Unit Price</th>
+        ${data.applyTax ? '<th style="padding:8px;border:1px solid #ddd;">Tax</th>' : ''}
+        <th style="padding:8px;border:1px solid #ddd;text-align:right;">Total</th>
+      </tr>
+    </thead>
+    <tbody>${rows}</tbody>
+  </table>
+
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+    <tr><td style="text-align:right;padding:4px 8px;">Subtotal</td><td style="text-align:right;padding:4px 8px;width:140px;">${fmt(subtotal, data.currency)}</td></tr>
+    ${totalDiscount > 0 ? `<tr><td style="text-align:right;padding:4px 8px;">Discount</td><td style="text-align:right;padding:4px 8px;">-${fmt(totalDiscount, data.currency)}</td></tr>` : ''}
+    ${data.applyTax ? `<tr><td style="text-align:right;padding:4px 8px;">Tax</td><td style="text-align:right;padding:4px 8px;">${fmt(totalTax, data.currency)}</td></tr>` : ''}
+    <tr><td style="text-align:right;padding:8px;font-weight:bold;font-size:16px;border-top:2px solid #333;">Grand Total</td><td style="text-align:right;padding:8px;font-weight:bold;font-size:16px;border-top:2px solid #333;">${fmt(grandTotal, data.currency)}</td></tr>
+  </table>
+
+  ${data.notes ? `<div style="margin-bottom:12px;"><div style="font-size:11px;text-transform:uppercase;color:#888;">Notes</div><div style="font-size:12px;white-space:pre-line;">${escapeHtml(data.notes)}</div></div>` : ''}
+  ${(data.bankName || data.iban) ? `<div><div style="font-size:11px;text-transform:uppercase;color:#888;">Payment Details</div>${data.bankName ? `<div style="font-size:12px;">${escapeHtml(data.bankName)}</div>` : ''}${data.iban ? `<div style="font-size:12px;">${escapeHtml(data.iban)}</div>` : ''}</div>` : ''}
+</body>
+</html>`;
+
+    const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Invoice-${data.invoiceNumber || 'draft'}.doc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const cfg = COUNTRY_CONFIGS[data.country];
 
   return (
     <>
       <style jsx global>{`
         @media print {
-          body > *:not(.printable-invoice) { display: none !important; }
-          .printable-invoice { display: block !important; }
+          body * { visibility: hidden; }
+          .printable-invoice, .printable-invoice * { visibility: visible; }
+          .printable-invoice {
+            display: block !important;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            margin: 0;
+          }
           .no-print { display: none !important; }
         }
       `}</style>
@@ -855,14 +964,9 @@ export default function InvoiceGenerator({ locale }: Props) {
                 </Field>
 
                 <SectionHeader title={t.sectionInvoice} icon="📄" />
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   <Field label={t.invoiceNumber}>
                     <Input value={data.invoiceNumber} onChange={v => set('invoiceNumber', v)} />
-                  </Field>
-                  <Field label={t.currency}>
-                    <Select value={data.currency} onChange={v => set('currency', v)}>
-                      {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
-                    </Select>
                   </Field>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -921,6 +1025,9 @@ export default function InvoiceGenerator({ locale }: Props) {
             <div className="flex gap-3 flex-wrap">
               <button onClick={handlePrint} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl">
                 🖨️ {t.download}
+              </button>
+              <button onClick={handleDownloadDoc} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl">
+                📄 {t.downloadDoc}
               </button>
               <button onClick={handleCopy} className="flex-1 border border-gray-300 py-4 rounded-xl">
                 {copied ? '✓ Copied' : t.copyPaste}
