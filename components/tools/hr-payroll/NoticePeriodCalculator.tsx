@@ -101,11 +101,6 @@ const CONTRACT_TYPES = [
   { value: 'probation',  labelEn: 'During Probation',       labelAr: 'فترة التجربة'     },
 ]
 
-const REASONS = [
-  { value: 'resignation',  labelEn: 'Resignation',  labelAr: 'استقالة'       },
-  { value: 'termination',  labelEn: 'Termination',  labelAr: 'إنهاء العقد'   },
-]
-
 type Result = {
   noticeDays: number
   lastWorkingDate: string
@@ -144,7 +139,6 @@ export default function NoticePeriodCalculator({ locale }: Props) {
 
   const [country, setCountry] = useState('uae')
   const [contractType, setContractType] = useState('indefinite')
-  const [reason, setReason] = useState('resignation')
   const [startDate, setStartDate] = useState('')          // resignation/termination date
   const [monthlySalary, setMonthlySalary] = useState('')  // optional, for pay-in-lieu
   const [serviceYears, setServiceYears] = useState('')    // for Qatar tiered rule
@@ -203,7 +197,6 @@ export default function NoticePeriodCalculator({ locale }: Props) {
   function reset() {
     setCountry('uae')
     setContractType('indefinite')
-    setReason('resignation')
     setStartDate('')
     setMonthlySalary('')
     setServiceYears('')
@@ -216,7 +209,6 @@ export default function NoticePeriodCalculator({ locale }: Props) {
         title: 'حاسبة فترة الإشعار',
         country: 'الدولة',
         contractType: 'نوع العقد',
-        reason: 'سبب الإنهاء',
         startDate: 'تاريخ بدء فترة الإشعار',
         salary: 'الراتب الشهري الأساسي (اختياري)',
         salaryHint: 'لحساب الأجر بدلاً من فترة الإشعار',
@@ -239,7 +231,6 @@ export default function NoticePeriodCalculator({ locale }: Props) {
         title: 'Notice Period Calculator',
         country: 'Country',
         contractType: 'Contract Type',
-        reason: 'Reason',
         startDate: 'Notice Start Date',
         salary: 'Basic Monthly Salary (optional)',
         salaryHint: 'Used to calculate pay in lieu of notice',
@@ -289,22 +280,6 @@ export default function NoticePeriodCalculator({ locale }: Props) {
             {CONTRACT_TYPES.map(c => (
               <option key={c.value} value={c.value}>
                 {isAr ? c.labelAr : c.labelEn}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Reason */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.reason}</label>
-          <select
-            value={reason}
-            onChange={e => setReason(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-          >
-            {REASONS.map(r => (
-              <option key={r.value} value={r.value}>
-                {isAr ? r.labelAr : r.labelEn}
               </option>
             ))}
           </select>

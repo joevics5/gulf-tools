@@ -277,12 +277,28 @@ const COUNTRY_CONFIGS: Record<Country, CountryConfig> = {
       let first5Amount = first5Days * daily
       let after5Amount = after5Days * daily
 
-      // Resignation reduction
+      // Resignation reduction (Kuwait Labour Law Art. 51):
+      // <3 years: no gratuity, 3-5 years: 50%, 5-10 years: 2/3, 10+ years: full
       if (reason === 'resigned') {
-        if (totalYears < 3) { first5Amount *= 0.5; after5Amount *= 0.5 }
-        else if (totalYears < 5) { first5Amount *= 0.75; after5Amount *= 0.75 }
-        warnings.push('Resignation may reduce entitlement under Kuwait Private Sector Labour Law.')
-        warningsAr.push('الاستقالة قد تخفض الاستحقاق وفق قانون العمل الكويتي للقطاع الخاص.')
+        if (totalYears < 3) {
+          first5Amount = 0
+          after5Amount = 0
+          warnings.push('No gratuity entitlement on resignation with less than 3 years of service.')
+          warningsAr.push('لا يوجد استحقاق عند الاستقالة قبل إتمام 3 سنوات خدمة.')
+        } else if (totalYears < 5) {
+          first5Amount *= 0.5
+          after5Amount *= 0.5
+          warnings.push('Resignation with 3–5 years of service: 50% of gratuity applies.')
+          warningsAr.push('الاستقالة بين 3–5 سنوات: 50% من المكافأة فقط.')
+        } else if (totalYears < 10) {
+          first5Amount *= 2 / 3
+          after5Amount *= 2 / 3
+          warnings.push('Resignation with 5–10 years of service: two-thirds of gratuity applies.')
+          warningsAr.push('الاستقالة بين 5–10 سنوات: ثلثا المكافأة فقط.')
+        } else {
+          warnings.push('Resignation with 10+ years of service: full gratuity applies.')
+          warningsAr.push('الاستقالة بعد 10 سنوات فأكثر: كامل المكافأة.')
+        }
       }
 
       const breakdown: GratuityResult['breakdown'] = [
@@ -800,7 +816,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
           cursor: pointer;
           transition: all 0.15s;
         }
-        .gc-btn-secondary:hover { border-color: #9ca3af; color: #374151; }
+        .gc-btn-secondary:hover { border-color: #6b7280; color: #374151; }
 
         /* Results */
         .gc-result {
@@ -885,7 +901,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
         }
         .gc-breakdown-days {
           font-size: 0.75rem;
-          color: #9ca3af;
+          color: #6b7280;
           margin-top: 0.1rem;
         }
 
@@ -930,7 +946,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
         }
         .gc-chip-label {
           font-size: 0.72rem;
-          color: #9ca3af;
+          color: #6b7280;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.04em;
@@ -969,7 +985,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
 
         .gc-salary-hint {
           font-size: 0.75rem;
-          color: #9ca3af;
+          color: #6b7280;
           margin-top: 0.25rem;
         }
       `}</style>

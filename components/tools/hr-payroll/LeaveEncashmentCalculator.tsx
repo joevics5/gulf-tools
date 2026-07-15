@@ -22,7 +22,7 @@ const legalData: Record<string, Rules> = {
     getEntitlement: (years, months) => {
       const totalMonths = years * 12 + months;
       if (years >= 1) return 30;
-      return totalMonths >= 6 ? Math.floor((totalMonths - 6) * 2) : 0;
+      return totalMonths >= 6 ? Math.floor(totalMonths * 2) : 0;
     },
     notes: 'According to UAE Labour Law (MoHRE), leave encashment is calculated on basic salary only and is payable upon termination.',
     notesAr: 'وفقاً لقانون العمل الإماراتي (وزارة الموارد البشرية)، يُحسب صرف الإجازة على أساس الراتب الأساسي فقط ويُدفع عند انتهاء الخدمة.',
@@ -57,6 +57,7 @@ export default function LeaveEncashmentCalculator() {
   const [serviceYears, setServiceYears] = useState(3);
   const [serviceMonths, setServiceMonths] = useState(2);
   const [unusedDays, setUnusedDays] = useState(25);
+  const [copied, setCopied] = useState(false);
 
   const rules = legalData[country];
   const salary = rules.salaryBasis === 'basic' ? basicSalary : grossSalary;
@@ -74,12 +75,13 @@ export default function LeaveEncashmentCalculator() {
       : `Leave Encashment: ${encashmentAmount.toLocaleString()} for ${rules.name}`;
     
     navigator.clipboard.writeText(text);
-    alert(isAr ? 'تم نسخ النتيجة!' : 'Result copied to clipboard!');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8" dir={isAr ? 'rtl' : 'ltr'}>
-      <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-xl p-8 md:p-12">
+      <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
         {/* Country Selector */}
         <div className="mb-10">
           <h3 className="text-xl font-semibold mb-4">{isAr ? 'اختر الدولة' : 'Select Country'}</h3>
@@ -90,7 +92,7 @@ export default function LeaveEncashmentCalculator() {
                 onClick={() => setCountry(key as any)}
                 className={`px-6 py-3 rounded-2xl font-medium transition-all border-2 ${
                   country === key 
-                    ? 'border-blue-600 bg-blue-50 dark:bg-blue-950' 
+                    ? 'border-blue-600 bg-blue-50' 
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -109,8 +111,9 @@ export default function LeaveEncashmentCalculator() {
               </label>
               <input 
                 type="number" 
+                min="0"
                 value={basicSalary} 
-                onChange={(e) => setBasicSalary(Number(e.target.value))} 
+                onChange={(e) => setBasicSalary(Math.max(0, Number(e.target.value) || 0))} 
                 className="w-full p-5 border rounded-2xl text-2xl focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -122,8 +125,9 @@ export default function LeaveEncashmentCalculator() {
                 </label>
                 <input 
                   type="number" 
+                  min="0"
                   value={grossSalary} 
-                  onChange={(e) => setGrossSalary(Number(e.target.value))} 
+                  onChange={(e) => setGrossSalary(Math.max(0, Number(e.target.value) || 0))} 
                   className="w-full p-5 border rounded-2xl text-2xl focus:outline-none focus:border-blue-500"
                 />
               </div>
@@ -134,8 +138,9 @@ export default function LeaveEncashmentCalculator() {
                 <label className="block font-medium mb-2">{isAr ? 'سنوات الخدمة' : 'Years of Service'}</label>
                 <input 
                   type="number" 
+                  min="0"
                   value={serviceYears} 
-                  onChange={(e) => setServiceYears(Number(e.target.value))} 
+                  onChange={(e) => setServiceYears(Math.max(0, Number(e.target.value) || 0))} 
                   className="w-full p-5 border rounded-2xl text-2xl"
                 />
               </div>
@@ -144,7 +149,7 @@ export default function LeaveEncashmentCalculator() {
                 <input 
                   type="number" 
                   value={serviceMonths} 
-                  onChange={(e) => setServiceMonths(Number(e.target.value))} 
+                  onChange={(e) => setServiceMonths(Math.min(11, Math.max(0, Number(e.target.value) || 0)))} 
                   min="0" 
                   max="11"
                   className="w-full p-5 border rounded-2xl text-2xl"
@@ -158,16 +163,17 @@ export default function LeaveEncashmentCalculator() {
               </label>
               <input 
                 type="number" 
+                min="0"
                 value={unusedDays} 
-                onChange={(e) => setUnusedDays(Number(e.target.value))} 
+                onChange={(e) => setUnusedDays(Math.max(0, Number(e.target.value) || 0))} 
                 className="w-full p-5 border rounded-2xl text-2xl focus:outline-none focus:border-blue-500"
               />
             </div>
           </div>
 
           {/* Result Section */}
-          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950 dark:to-teal-950 p-8 md:p-10 rounded-3xl">
-            <h2 className="text-5xl font-bold text-emerald-700 dark:text-emerald-400 mb-2">
+          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 p-8 md:p-10 rounded-3xl">
+            <h2 className="text-5xl font-bold text-emerald-700 mb-2">
               {encashmentAmount.toLocaleString()}
             </h2>
             <p className="text-xl mb-8">{isAr ? 'المبلغ المستحق' : 'Leave Encashment Amount'}</p>
@@ -209,7 +215,7 @@ export default function LeaveEncashmentCalculator() {
             onClick={shareResult}
             className="flex-1 border-2 border-gray-300 hover:border-gray-400 py-5 rounded-2xl font-semibold text-lg transition"
           >
-            {isAr ? '📋 نسخ النتيجة' : '📋 Copy Result'}
+            {copied ? (isAr ? '✓ تم النسخ' : '✓ Copied') : (isAr ? '📋 نسخ النتيجة' : '📋 Copy Result')}
           </button>
         </div>
       </div>

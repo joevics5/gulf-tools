@@ -73,15 +73,18 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
       totalPay = totalDays * dailyRate
 
     } else if (scenario === 'termination') {
-      // Accrued leave on termination: full years + partial year
-      const fullYearDays = entitlementDays * yearsVal
-      const partialDays = (monthsVal / 12) * entitlementDays
+      // Accrued leave on termination: tiered across the 5-year threshold
+      // (21 days/year for years 1-5, 30 days/year after), plus partial year
+      const fullYears = Math.floor(yearsVal)
+      const tieredFullYearDays = Math.min(fullYears, 5) * 21 + Math.max(0, fullYears - 5) * 30
+      const partialTierDays = fullYears >= 5 ? 30 : 21
+      const partialDays = (monthsVal / 12) * partialTierDays
       prorataDays = partialDays
       // If unused days specified, use that; else calculate accrued
       if (unusedVal > 0) {
         totalDays = unusedVal
       } else {
-        totalDays = fullYearDays + partialDays
+        totalDays = tieredFullYearDays + partialDays
       }
       totalPay = totalDays * dailyRate
     }
