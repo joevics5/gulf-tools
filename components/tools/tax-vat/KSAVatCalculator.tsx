@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 type Props = { locale: string }
 
 type Mode = 'excl' | 'incl'
+type SupplyType = 'standard' | 'zero' | 'exempt'
 
 export default function KSAVatCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
@@ -12,6 +13,8 @@ export default function KSAVatCalculator({ locale }: Props) {
 
   const [amount, setAmount] = useState<string>('')
   const [mode, setMode] = useState<Mode>('excl')
+  const [supplyType, setSupplyType] = useState<SupplyType>('standard')
+  const [copied, setCopied] = useState(false)
   const [result, setResult] = useState<{ net: number; vat: number; gross: number } | null>(null)
 
   const labels = isAr
@@ -20,6 +23,10 @@ export default function KSAVatCalculator({ locale }: Props) {
         amount: 'المبلغ (ريال سعودي)',
         modeExcl: 'السعر بدون ضريبة',
         modeIncl: 'السعر شامل الضريبة',
+        supplyType: 'نوع التوريد',
+        standard: 'قياسي (15%)',
+        zero: 'صفرية (0%)',
+        exempt: 'معفاة',
         calculate: 'احسب',
         reset: 'إعادة تعيين',
         net: 'المبلغ الصافي',
@@ -34,6 +41,10 @@ export default function KSAVatCalculator({ locale }: Props) {
         amount: 'Amount (SAR)',
         modeExcl: 'Price Excluding VAT',
         modeIncl: 'Price Including VAT',
+        supplyType: 'Supply Type',
+        standard: 'Standard (15%)',
+        zero: 'Zero-Rated (0%)',
+        exempt: 'Exempt',
         calculate: 'Calculate',
         reset: 'Reset',
         net: 'Net Amount',
@@ -55,19 +66,20 @@ export default function KSAVatCalculator({ locale }: Props) {
     let net = 0
     let vat = 0
     let gross = 0
+    const isZeroOrExempt = supplyType === 'zero' || supplyType === 'exempt'
 
     if (mode === 'excl') {
       net = num
-      vat = num * VAT_RATE
+      vat = isZeroOrExempt ? 0 : num * VAT_RATE
       gross = net + vat
     } else {
       gross = num
-      vat = num / (1 + VAT_RATE) * VAT_RATE
+      vat = isZeroOrExempt ? 0 : num / (1 + VAT_RATE) * VAT_RATE
       net = gross - vat
     }
 
     setResult({ net, vat, gross })
-  }, [amount, mode])
+  }, [amount, mode, supplyType])
 
   const formatSAR = (n: number) =>
     `SAR ${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
@@ -79,12 +91,14 @@ export default function KSAVatCalculator({ locale }: Props) {
       : `Net Amount: ${formatSAR(result.net)}\nVAT Amount: ${formatSAR(result.vat)}\nGross Amount: ${formatSAR(result.gross)}`
     
     navigator.clipboard.writeText(text)
-    alert(isAr ? 'تم نسخ النتائج!' : 'Results copied!')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   const reset = () => {
     setAmount('')
     setMode('excl')
+    setSupplyType('standard')
     setResult(null)
   }
 
@@ -146,6 +160,39 @@ export default function KSAVatCalculator({ locale }: Props) {
         </div>
       </div>
 
+      {/* Supply Type */}
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          {labels.supplyType}
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { value: 'standard', label: labels.standard },
+            { value: 'zero', label: labels.zero },
+            { value: 'exempt', label: labels.exempt },
+          ].map(({ value, label }) => (
+            <button
+              key={value}
+              onClick={() => setSupplyType(value as SupplyType)}
+              className={`py-3 px-4 rounded-xl text-sm font-medium border transition ${
+                supplyType === value
+                  ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+                  : 'border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        {(supplyType === 'zero' || supplyType === 'exempt') && (
+          <p className="mt-2 text-sm text-amber-600">
+            {isAr
+              ? 'سيتم حساب ضريبة القيمة المضافة بـ 0% لهذا النوع من التوريد.'
+              : 'VAT will be calculated at 0% for this supply type.'}
+          </p>
+        )}
+      </div>
+
       {/* Results */}
       {result && (
         <div className="bg-emerald-50 border border-emerald-100 rounded-3xl p-8 space-y-6">
@@ -175,7 +222,7 @@ export default function KSAVatCalculator({ locale }: Props) {
             onClick={copyResults}
             className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl transition"
           >
-            {labels.copy}
+            {copied ? (isAr ? '✓ تم النسخ' : '✓ Copied!') : labels.copy}
           </button>
         </div>
       )}

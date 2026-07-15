@@ -15,6 +15,7 @@ export default function UAEVatCalculator({ locale }: Props) {
   const [amount, setAmount] = useState<string>('')
   const [mode, setMode] = useState<Mode>('excl')
   const [supplyType, setSupplyType] = useState<SupplyType>('standard')
+  const [copied, setCopied] = useState(false)
   const [result, setResult] = useState<{
     net: number
     vat: number
@@ -96,7 +97,8 @@ export default function UAEVatCalculator({ locale }: Props) {
       : `Net Amount: ${formatAED(result.net)}\nVAT Amount: ${formatAED(result.vat)}\nGross Amount: ${formatAED(result.gross)}`
     
     navigator.clipboard.writeText(text)
-    alert(isAr ? 'تم نسخ النتائج!' : 'Results copied!')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   const reset = () => {
@@ -229,7 +231,7 @@ export default function UAEVatCalculator({ locale }: Props) {
             onClick={copyResults}
             className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl transition"
           >
-            {labels.copy}
+            {copied ? (isAr ? '✓ تم النسخ' : '✓ Copied!') : labels.copy}
           </button>
         </div>
       )}
