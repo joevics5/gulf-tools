@@ -885,6 +885,7 @@ export default function ADCBEMICalculator({ locale = 'en' }: { locale?: string }
             <div className="disclaimers">
               <h4>ADCB Loan Disclaimers — UAE Central Bank Compliant</h4>
               <ul>
+                <li>This tool is independent and not affiliated with, endorsed by, or sponsored by ADCB.</li>
                 <li>ADCB personal loan rates start from 6.49% p.a. (reducing balance). Published APR range: 5.48% – 20.99%. Actual rate depends on credit profile.</li>
                 <li>Interest is calculated on the daily outstanding balance per UAE Central Bank directives (reducing balance method, not flat rate).</li>
                 <li>Tenure: 6–48 months for expatriates; up to 60 months for UAE nationals.</li>

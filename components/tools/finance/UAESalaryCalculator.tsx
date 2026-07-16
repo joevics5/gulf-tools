@@ -559,7 +559,7 @@ const styles = `
   display: block; font-size: .8rem; font-weight: 600;
   color: #374151; margin-bottom: .5rem; letter-spacing: .01em;
 }
-.field-hint { font-weight: 400; color: #9ca3af; font-size: .75rem; margin-left: .5rem; }
+.field-hint { font-weight: 400; color: #6b7280; font-size: .75rem; margin-left: .5rem; }
 .field-note { font-size: .73rem; color: #6b7280; margin-top: .3rem; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media(max-width:480px) { .two-col { grid-template-columns: 1fr; } }
@@ -682,17 +682,17 @@ const styles = `
 .tabs { display: flex; border-bottom: 2px solid #f3f4f6; margin-bottom: 1rem; }
 .tab {
   padding: .5rem 1rem; font-size: .82rem; font-weight: 600;
-  color: #9ca3af; background: none; border: none; cursor: pointer;
+  color: #6b7280; background: none; border: none; cursor: pointer;
   border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .15s;
 }
 .tab-active { color: #059669; border-bottom-color: #059669; }
 
 /* Table */
 .breakdown-table { font-size: .875rem; }
-.table-head { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #9ca3af; margin: .75rem 0 .4rem; }
+.table-head { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #6b7280; margin: .75rem 0 .4rem; }
 .result-row { display: flex; justify-content: space-between; padding: .35rem 0; border-bottom: 1px solid #f9fafb; color: #374151; }
 .row-bold  { font-weight: 700; color: #111827; }
-.row-muted { color: #9ca3af; }
+.row-muted { color: #6b7280; }
 .val-neg   { color: #ef4444; }
 .val-accent { color: #f59e0b; font-weight: 600; }
 .net-row {
@@ -706,7 +706,7 @@ const styles = `
 .rates-row { display: flex; gap: .75rem; margin-top: 1rem; }
 .rate-box { flex: 1; background: #f9fafb; border-radius: 10px; padding: .75rem; text-align: center; }
 .rate-val   { font-size: .85rem; font-weight: 700; color: #111827; }
-.rate-label { font-size: .7rem; color: #9ca3af; margin-top: .2rem; }
+.rate-label { font-size: .7rem; color: #6b7280; margin-top: .2rem; }
 
 /* Gratuity */
 .gratuity-hero { text-align: center; background: #f0fdf4; border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
@@ -721,7 +721,7 @@ const styles = `
 .info-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: .75rem 1rem; font-size: .8rem; color: #1e40af; line-height: 1.55; margin-top: .75rem; }
 
 /* Disclaimer */
-.disclaimer { font-size: .72rem; color: #9ca3af; margin-top: 1rem; line-height: 1.55; }
+.disclaimer { font-size: .72rem; color: #6b7280; margin-top: 1rem; line-height: 1.55; }
 .disclaimer a { color: #059669; text-decoration: none; }
 .disclaimer a:hover { text-decoration: underline; }
 `

@@ -559,6 +559,7 @@ export default function ADCBLoanCalculator({ locale }: Props) {
             <p className="font-semibold">⚖️ Important Disclaimer</p>
             <p>This calculator provides illustrative estimates only. Actual rates, approval, fees, and terms depend on ADCB's credit assessment, AECB credit bureau check, documentation, and prevailing market conditions.</p>
             <p>Processing fee of 1.05% (plus 5% VAT) and other charges may apply. Rates shown are indicative — starting from {tab === 'personal' ? PERSONAL_RATE_MIN : MORTGAGE_RATE_MIN}% p.a. and subject to change.</p>
+            <p>This tool is independent and not affiliated with, endorsed by, or sponsored by ADCB.</p>
             <p>DBR and LTV checks are based on UAE Central Bank guidelines. This tool is not a loan offer or commitment by ADCB. Visit <strong>adcb.com</strong> or contact ADCB directly for a personalised quote.</p>
           </div>
         </div>

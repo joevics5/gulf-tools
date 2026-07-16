@@ -207,7 +207,7 @@ function ProgressRing({ pct, label, sublabel }: { pct: number; label: string; su
       <g transform="rotate(90, 50, 50)">
         <text x="50" y="45" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#059669">{Math.round(pct)}%</text>
         <text x="50" y="57" textAnchor="middle" fontSize="6" fill="#6b7280">{label}</text>
-        <text x="50" y="66" textAnchor="middle" fontSize="5.5" fill="#9ca3af">{sublabel}</text>
+        <text x="50" y="66" textAnchor="middle" fontSize="5.5" fill="#6b7280">{sublabel}</text>
       </g>
     </svg>
   )

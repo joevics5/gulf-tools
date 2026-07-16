@@ -550,7 +550,7 @@ export default function ADCBMortgageCalculator({ locale }: Props) {
           {/* Disclaimer */}
           <div className="border-t border-gray-200 pt-4">
             <p className="text-xs text-gray-500 leading-relaxed">
-              <strong className="text-gray-500">Disclaimer:</strong> This calculator is for illustrative and educational purposes only. Results are not a quote, pre-approval, or commitment by ADCB. Actual rates, LTV, eligibility, and terms are subject to ADCB credit assessment, AECB check, property valuation, UAE Central Bank regulations, and individual T&Cs. Rates shown are indicative and subject to change. Islamic finance profit rates follow Murabaha/Ijara structures; consult ADCB for exact terms. Non-residents and self-employed applicants may face additional conditions. Always verify directly with ADCB.
+              <strong className="text-gray-500">Disclaimer:</strong> This tool is independent and not affiliated with, endorsed by, or sponsored by ADCB. It is for illustrative and educational purposes only. Results are not a quote, pre-approval, or commitment by ADCB. Actual rates, LTV, eligibility, and terms are subject to ADCB credit assessment, AECB check, property valuation, UAE Central Bank regulations, and individual T&Cs. Rates shown are indicative and subject to change. Islamic finance profit rates follow Murabaha/Ijara structures; consult ADCB for exact terms. Non-residents and self-employed applicants may face additional conditions. Always verify directly with ADCB.
             </p>
           </div>
         </div>

@@ -649,7 +649,7 @@ export default function HSBCLoanCalculator({ locale }: Props) {
           {/* Disclaimer */}
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-600 space-y-2">
             <p className="font-semibold text-gray-800">⚖️ Important Disclaimer</p>
-            <p>This is an indicative calculator for illustration purposes only. It does not constitute a quote, offer, approval, or financial advice. Actual HSBC UAE rates, fees, eligibility, and repayment amounts depend on your individual credit profile, AECB credit score, employment type, salary transfer status, and HSBC's prevailing terms and conditions.</p>
+            <p>This tool is independent and not affiliated with, endorsed by, or sponsored by HSBC. It is an indicative calculator for illustration purposes only. It does not constitute a quote, offer, approval, or financial advice. Actual HSBC UAE rates, fees, eligibility, and repayment amounts depend on your individual credit profile, AECB credit score, employment type, salary transfer status, and HSBC's prevailing terms and conditions.</p>
             <p>Personal loan rates shown are indicative, starting from {PERSONAL_RATE_MIN}% p.a. (reducing balance). Mortgage rates start from {MORTGAGE_RATE_MIN}% p.a. A processing fee of approximately 1% (plus 5% UAE VAT) applies. For EIBOR-linked mortgages, monthly repayments will vary as EIBOR changes.</p>
             <p>DBR and LTV checks are based on UAE Central Bank regulatory guidelines. Minimum monthly income for HSBC UAE personal loans is approximately AED 7,500. Visit <strong>hsbc.ae</strong> or contact HSBC directly for personalised quotations and formal product terms.</p>
           </div>

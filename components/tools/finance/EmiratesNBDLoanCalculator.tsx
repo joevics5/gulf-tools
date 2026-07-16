@@ -614,6 +614,7 @@ export default function EmiratesNBDLoanCalculator({ locale }: Props) {
           {/* Disclaimer */}
           <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-600 space-y-1.5">
             <p className="font-semibold text-gray-800">⚖️ Important Disclaimer</p>
+            <p>This tool is independent and not affiliated with, endorsed by, or sponsored by Emirates NBD.</p>
             <p>This tool provides illustrative estimates only and is not a loan offer, commitment, or financial advice. Actual Emirates NBD rates, fees, and approval depend on your credit profile, AECB credit score, employment status, salary transfer arrangement, and prevailing market conditions.</p>
             <p>Interest rates shown are indicative, starting from {tab === 'personal' ? PERSONAL_RATE_DEFAULT : CAR_RATE_DEFAULT}% p.a. on a reducing balance basis. A processing fee of 1.05% (plus 5% VAT) and other charges may apply. DBR and eligibility checks are based on UAE Central Bank guidelines (Regulation No. 29/2011).</p>
             <p>Visit <strong>emiratesnbd.com</strong> for official rates, Key Facts Statements, and to apply. Results are for guidance only.</p>

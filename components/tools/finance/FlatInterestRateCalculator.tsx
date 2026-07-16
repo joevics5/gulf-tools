@@ -223,14 +223,14 @@ function BalanceChart({ flatRows, reducingRows }: { flatRows: AmortRow[]; reduci
           },
           scales: {
             x: {
-              title: { display: true, text: 'Month', color: '#9ca3af', font: { size: 11 } },
-              ticks: { color: '#9ca3af', font: { size: 10 }, maxTicksLimit: 10, autoSkip: true },
+              title: { display: true, text: 'Month', color: '#6b7280', font: { size: 11 } },
+              ticks: { color: '#6b7280', font: { size: 10 }, maxTicksLimit: 10, autoSkip: true },
               grid: { color: 'rgba(156,163,175,0.15)' },
             },
             y: {
-              title: { display: true, text: 'Outstanding (AED)', color: '#9ca3af', font: { size: 11 } },
+              title: { display: true, text: 'Outstanding (AED)', color: '#6b7280', font: { size: 11 } },
               ticks: {
-                color: '#9ca3af',
+                color: '#6b7280',
                 font: { size: 10 },
                 callback: (v: unknown) => {
                   const n = v as number
