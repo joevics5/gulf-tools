@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo, useEffect, useCallback } from 'react'
+import { FALLBACK_GOLD_USD_PER_GRAM, FALLBACK_SILVER_USD_PER_GRAM } from '@/lib/constants/metalPrices'
 
 type Props = { locale: string }
 
@@ -34,8 +35,8 @@ const FX_TO_USD: Record<string, number> = {
 // ─── Nisab weights (grams of pure metal)
 const NISAB_GRAMS = { gold: 85, silver: 595 }
 
-// ─── Fallback spot prices per gram in USD (updated at build time)
-const FALLBACK_SPOT_USD_PER_GRAM = { gold: 98.5, silver: 0.97 }
+// ─── Fallback spot prices per gram in USD (see lib/constants/metalPrices.ts)
+const FALLBACK_SPOT_USD_PER_GRAM = { gold: FALLBACK_GOLD_USD_PER_GRAM, silver: FALLBACK_SILVER_USD_PER_GRAM }
 
 // ─── Gold purity multipliers
 const GOLD_PURITY: Record<string, number> = {

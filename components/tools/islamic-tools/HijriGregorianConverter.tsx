@@ -540,7 +540,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
             }}
           />
 
-          <div style={{ textAlign: 'center', fontSize: 11, color: '#9ca3af', margin: '4px 0 14px' }}>
+          <div style={{ textAlign: 'center', fontSize: 11, color: '#6b7280', margin: '4px 0 14px' }}>
             {isAr ? 'أو أدخل يدوياً' : 'or enter manually'}
           </div>
 

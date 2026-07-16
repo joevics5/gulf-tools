@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { FALLBACK_GOLD_USD_PER_GRAM } from '@/lib/constants/metalPrices'
 
 type Props = { locale: string }
 
@@ -82,7 +83,7 @@ async function fetchPrices(): Promise<PriceData> {
     }
   } catch {
     return {
-      pricePerGram24K: 106.1,
+      pricePerGram24K: FALLBACK_GOLD_USD_PER_GRAM,
       rates: { USD: 1, AED: 3.67, SAR: 3.75, QAR: 3.64, KWD: 0.307, BHD: 0.376, OMR: 0.385, EGP: 48.5, GBP: 0.79, EUR: 0.92 },
       updatedAt: 'cached',
       live: false,
@@ -113,7 +114,7 @@ export default function GoldZakatCalculator({ locale }: Props) {
 
   // ── Derived ────────────────────────────────────────────────────────────────
   const rate = prices?.rates[currency] ?? 1
-  const pricePerGram = (prices?.pricePerGram24K ?? 106.1) * rate
+  const pricePerGram = (prices?.pricePerGram24K ?? FALLBACK_GOLD_USD_PER_GRAM) * rate
 
   const calcHoldings = useCallback(() => {
     return holdings.map(h => {

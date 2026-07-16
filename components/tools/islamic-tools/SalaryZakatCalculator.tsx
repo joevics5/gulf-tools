@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { FALLBACK_GOLD_USD_PER_GRAM, FALLBACK_SILVER_USD_PER_GRAM } from '@/lib/constants/metalPrices'
 
 type Props = { locale: string }
 
@@ -9,9 +10,9 @@ const NISAB_SILVER_GRAMS = 612.36
 const NISAB_GOLD_GRAMS   = 87.48
 const ZAKAT_RATE         = 0.025
 
-// Fallback spot prices in USD
-const FALLBACK_SILVER_USD = 0.90  // per gram
-const FALLBACK_GOLD_USD   = 97.0  // per gram
+// Fallback spot prices in USD (see lib/constants/metalPrices.ts)
+const FALLBACK_SILVER_USD = FALLBACK_SILVER_USD_PER_GRAM  // per gram
+const FALLBACK_GOLD_USD   = FALLBACK_GOLD_USD_PER_GRAM    // per gram
 
 const CURRENCIES = [
   { value: 'SAR', label: 'SAR — Saudi Riyal',     symbol: 'SAR', usd: 0.2667 },

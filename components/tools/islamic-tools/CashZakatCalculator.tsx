@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { FALLBACK_GOLD_USD_PER_GRAM, FALLBACK_SILVER_USD_PER_GRAM } from '@/lib/constants/metalPrices'
 
 type Props = { locale: string }
 
@@ -41,8 +42,8 @@ async function fetchPrices(): Promise<PriceData> {
     ])
     const metalData = await metalRes.json()
     const fxData    = await fxRes.json()
-    const goldOz    = metalData.find((d: { metal: string; price: number }) => d.metal === 'gold')?.price   ?? 3300
-    const silverOz  = metalData.find((d: { metal: string; price: number }) => d.metal === 'silver')?.price ?? 38
+    const goldOz    = metalData.find((d: { metal: string; price: number }) => d.metal === 'gold')?.price   ?? FALLBACK_GOLD_USD_PER_GRAM * TROY_OZ_TO_GRAM
+    const silverOz  = metalData.find((d: { metal: string; price: number }) => d.metal === 'silver')?.price ?? FALLBACK_SILVER_USD_PER_GRAM * TROY_OZ_TO_GRAM
     return {
       goldPerGram:   goldOz   / TROY_OZ_TO_GRAM,
       silverPerGram: silverOz / TROY_OZ_TO_GRAM,
@@ -52,8 +53,8 @@ async function fetchPrices(): Promise<PriceData> {
     }
   } catch {
     return {
-      goldPerGram:   106.1,
-      silverPerGram: 1.22,
+      goldPerGram:   FALLBACK_GOLD_USD_PER_GRAM,
+      silverPerGram: FALLBACK_SILVER_USD_PER_GRAM,
       rates: { USD: 1, AED: 3.67, SAR: 3.75, QAR: 3.64, KWD: 0.307, BHD: 0.376, OMR: 0.385, EGP: 48.5, GBP: 0.79, EUR: 0.92 },
       live: false,
       updatedAt: 'cached',

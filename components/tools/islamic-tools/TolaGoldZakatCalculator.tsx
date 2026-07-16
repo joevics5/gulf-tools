@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { FALLBACK_GOLD_USD_PER_GRAM } from '@/lib/constants/metalPrices'
 
 type Props = { locale: string }
 
@@ -32,9 +33,6 @@ const CURRENCIES = [
 
 const QUICK_PRESETS = [7.5, 10, 20, 24, 30, 40, 50]
 
-// AED/gram fallback (24K gold). Live fetch will override.
-const FALLBACK_PRICE_AED_PER_GRAM = 330
-
 // FX rates vs AED (approximate; updated via free API on load)
 const FALLBACK_FX: Record<string, number> = {
   AED: 1,
@@ -47,6 +45,10 @@ const FALLBACK_FX: Record<string, number> = {
   PKR: 75.8,
   USD: 0.272,
 }
+
+// AED/gram fallback (24K gold), derived from the shared USD fallback.
+// See lib/constants/metalPrices.ts. Live fetch will override.
+const FALLBACK_PRICE_AED_PER_GRAM = FALLBACK_GOLD_USD_PER_GRAM / FALLBACK_FX.USD
 
 function fmt(n: number, currency: string, decimals = 2) {
   return `${currency} ${n.toLocaleString('en-US', {
