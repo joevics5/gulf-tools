@@ -1,5 +1,5 @@
 // 📁 app/[locale]/page.tsx
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -20,6 +20,7 @@ export async function generateMetadata({
   params: Promise<Params>
 }) {
   const { locale } = await params
+  setRequestLocale(locale)
   return generateHomepageMetadata(locale)
 }
 
@@ -128,6 +129,7 @@ export default async function HomePage({
 }) {
   const { locale } = await params
   const isAr = locale === 'ar'
+  setRequestLocale(locale)
 
   const t = await getTranslations({ locale, namespace: 'homepage' })
   const tNav = await getTranslations({ locale, namespace: 'nav' })

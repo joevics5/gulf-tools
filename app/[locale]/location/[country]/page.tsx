@@ -1,5 +1,5 @@
 // 📁 app/[locale]/location/[country]/page.tsx
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getToolsByCountry } from '@/lib/registry/tools'
@@ -57,6 +57,7 @@ const countryFacts: Record<string, { currency: string; vat: string; taxNote: { e
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { locale, country } = await params
+  setRequestLocale(locale)
   const info = countryNames[country]
   if (!info) return {}
   const name = locale === 'ar' ? info.ar : info.en
@@ -73,6 +74,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 export default async function LocationPage({ params }: { params: Promise<Params> }) {
   const { locale, country } = await params
   const isAr = locale === 'ar'
+  setRequestLocale(locale)
 
   const location = LOCATIONS.find(l => l.slug === country)
   if (!location) notFound()

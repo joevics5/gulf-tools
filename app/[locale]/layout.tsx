@@ -1,5 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/lib/i18n/routing'
 import { Cairo } from 'next/font/google'
@@ -31,6 +31,13 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as any)) {
     notFound()
   }
+
+  // Enable static rendering: writes the locale to next-intl's per-request
+  // store so getTranslations/getMessages/etc. read it from there instead of
+  // from headers() — reading headers() would opt every page under this
+  // layout into dynamic rendering (and throws DYNAMIC_SERVER_USAGE under
+  // ISR/revalidate). Must run before any other next-intl call.
+  setRequestLocale(locale)
 
   const messages = await getMessages()
   const isRTL = locale === 'ar'

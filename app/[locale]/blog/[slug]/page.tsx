@@ -3,7 +3,7 @@
 
 // 📁 app/[locale]/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -32,6 +32,7 @@ const BASE_URL = 'https://gulftools.jobmeter.app'
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params
+  setRequestLocale(locale)
   let article
   try {
     article = await getArticleBySlug(slug, locale)
@@ -111,6 +112,7 @@ const categoryIcons: Record<string, string> = {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params
+  setRequestLocale(locale)
   const isAr = locale === 'ar'
 
   let article

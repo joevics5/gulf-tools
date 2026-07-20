@@ -1,5 +1,5 @@
 // 📁 app/[locale]/location/page.tsx
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { LOCATIONS } from '@/lib/registry/locations'
 import { getToolsByCountry } from '@/lib/registry/tools'
@@ -24,6 +24,7 @@ const countryMeta: Record<string, { en: string; ar: string; flag: string; desc: 
 
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { locale } = await params
+  setRequestLocale(locale)
   return {
     title: locale === 'ar' ? 'الأدوات حسب الدولة | Gulf Tools' : 'Tools by Country | Gulf Tools',
     description: locale === 'ar'
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
 export default async function LocationIndexPage({ params }: { params: Promise<Params> }) {
   const { locale } = await params
   const isAr = locale === 'ar'
+  setRequestLocale(locale)
 
   const tNav = await getTranslations({ locale, namespace: 'nav' })
   const BASE_URL = 'https://gulftools.jobmeter.app'
