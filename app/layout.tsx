@@ -93,12 +93,6 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <head>
-        {/* AdSense account verification */}
-        <meta
-          name="google-adsense-account"
-          content="ca-pub-1119289641389825"
-        />
-
         {/* Admaven */}
         <meta name="admaven-placement" content="Bqjw8rHw7" />
 
@@ -107,17 +101,6 @@ export default function RootLayout({
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preconnect"
-          href="https://pagead2.googlesyndication.com"
-        />
-
-        {/* AdSense script */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1119289641389825"
           crossOrigin="anonymous"
         />
 
