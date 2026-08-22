@@ -1,11 +1,11 @@
 /**
- * All AdSense slot IDs in one place.
+ * All ad slot IDs in one place.
  * Import the slot you need; never hardcode slot IDs in page files.
  *
- * Publisher ID: ca-pub-1119289641389825
+ * Note: AdSense has been disabled site-wide (see components/ads/AdUnit.tsx,
+ * which is now a no-op). These slot keys are kept only because page files
+ * still reference them when rendering <AdUnit />.
  */
-
-export const AD_CLIENT = 'ca-pub-1119289641389825'
 
 export const AD_SLOTS = {
   /** Auto-responsive — top of tool/category/location pages */
