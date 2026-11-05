@@ -5,8 +5,9 @@
 import { buildSitemapXml, xmlResponse } from '@/lib/sitemap/xml'
 import { CATEGORIES } from '@/lib/registry/categories'
 
-const BASE_URL = 'https://gulftools.jobmeter.app'
-const locales  = ['en', 'ar'] as const
+import { BASE_URL } from '@/lib/i18n/locales'
+import { routing } from '@/lib/i18n/routing'
+const locales  = routing.locales
 
 export async function GET() {
   const entries = CATEGORIES.flatMap(category =>

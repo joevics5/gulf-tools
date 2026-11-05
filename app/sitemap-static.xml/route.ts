@@ -4,8 +4,9 @@
 
 import { buildSitemapXml, xmlResponse } from '@/lib/sitemap/xml'
 
-const BASE_URL = 'https://gulftools.jobmeter.app'
-const locales  = ['en', 'ar'] as const
+import { BASE_URL } from '@/lib/i18n/locales'
+import { routing } from '@/lib/i18n/routing'
+const locales  = routing.locales
 
 // All static page paths (relative, without locale prefix)
 const STATIC_PATHS = [

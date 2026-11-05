@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 
-const BASE_URL = 'https://gulftools.jobmeter.app'
+import { BASE_URL, languageAlternates, ogLocale } from '@/lib/i18n/locales'
 
 export async function generateToolMetadata(
   locale: string,
@@ -14,18 +14,14 @@ export async function generateToolMetadata(
     description: t('metaDescription'),
     alternates: {
       canonical: `${BASE_URL}/${locale}/tools/${categorySlug}/${toolSlug}`,
-      languages: {
-        en: `${BASE_URL}/en/tools/${categorySlug}/${toolSlug}`,
-        ar: `${BASE_URL}/ar/tools/${categorySlug}/${toolSlug}`,
-        'x-default': `${BASE_URL}/en/tools/${categorySlug}/${toolSlug}`,
-      },
+      languages: languageAlternates(`/tools/${categorySlug}/${toolSlug}`),
     },
     openGraph: {
       title: t('title'),
       description: t('metaDescription'),
       url: `${BASE_URL}/${locale}/tools/${categorySlug}/${toolSlug}`,
       siteName: 'Gulf Tools',
-      locale: locale === 'ar' ? 'ar_AE' : 'en_AE',
+      locale: ogLocale(locale),
       type: 'website' as const,
       images: [
         {
@@ -79,7 +75,7 @@ export async function generateCategoryMetadata(
       description: t('description'),
       url: `${BASE_URL}/${locale}/tools/${categorySlug}`,
       siteName: 'Gulf Tools',
-      locale: locale === 'ar' ? 'ar_AE' : 'en_AE',
+      locale: ogLocale(locale),
       type: 'website' as const,
     },
     robots: { index: true, follow: true },
@@ -105,7 +101,7 @@ export async function generateHomepageMetadata(locale: string) {
       description: t('siteDescription'),
       url: `${BASE_URL}/${locale}`,
       siteName: 'Gulf Tools',
-      locale: locale === 'ar' ? 'ar_AE' : 'en_AE',
+      locale: ogLocale(locale),
       type: 'website' as const,
       images: [
         {
@@ -143,7 +139,7 @@ export function generateBlogIndexMetadata(locale: string) {
       description,
       url: `${BASE_URL}/${locale}/blog`,
       siteName: 'Gulf Tools',
-      locale: locale === 'ar' ? 'ar_AE' : 'en_AE',
+      locale: ogLocale(locale),
       type: 'website' as const,
       images: [
         {

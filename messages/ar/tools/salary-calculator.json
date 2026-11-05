@@ -1,0 +1,31 @@
+{
+  "labels": {
+    "gross": "الراتب الشهري الإجمالي",
+    "country": "الدولة",
+    "nationality": "الجنسية",
+    "calculate": "احسب",
+    "reset": "إعادة تعيين",
+    "results": "النتائج",
+    "netMonthly": "صافي الراتب الشهري",
+    "grossSalary": "الراتب الإجمالي",
+    "deductions": "الخصومات",
+    "annualGross": "الراتب الإجمالي السنوي",
+    "annualNet": "صافي الراتب السنوي",
+    "noDeductions": "لا توجد خصومات إلزامية",
+    "gosi": "اشتراك التأمينات الاجتماعية",
+    "enterAmount": "أدخل المبلغ"
+  },
+  "countries": {
+    "uae": "الإمارات",
+    "saudi": "السعودية",
+    "qatar": "قطر",
+    "kuwait": "الكويت",
+    "bahrain": "البحرين",
+    "oman": "عُمان",
+    "egypt": "مصر"
+  },
+  "nationalities": {
+    "expat": "وافد / غير مواطن",
+    "national": "مواطن خليجي"
+  }
+}

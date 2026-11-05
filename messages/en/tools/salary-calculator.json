@@ -1,0 +1,31 @@
+{
+  "labels": {
+    "gross": "Gross Monthly Salary",
+    "country": "Country",
+    "nationality": "Nationality",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "netMonthly": "Net Monthly Salary",
+    "grossSalary": "Gross Salary",
+    "deductions": "Deductions",
+    "annualGross": "Annual Gross",
+    "annualNet": "Annual Net",
+    "noDeductions": "No mandatory deductions",
+    "gosi": "Social Insurance (GOSI)",
+    "enterAmount": "Enter amount"
+  },
+  "countries": {
+    "uae": "UAE",
+    "saudi": "Saudi Arabia",
+    "qatar": "Qatar",
+    "kuwait": "Kuwait",
+    "bahrain": "Bahrain",
+    "oman": "Oman",
+    "egypt": "Egypt"
+  },
+  "nationalities": {
+    "expat": "Expatriate / Non-national",
+    "national": "GCC National"
+  }
+}

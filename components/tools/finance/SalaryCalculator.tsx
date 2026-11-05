@@ -1,23 +1,21 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
 const COUNTRIES = [
-  { value: 'uae',     label: 'UAE',          currency: 'AED', gosi: false },
-  { value: 'saudi',   label: 'Saudi Arabia', currency: 'SAR', gosi: true  },
-  { value: 'qatar',   label: 'Qatar',        currency: 'QAR', gosi: false },
-  { value: 'kuwait',  label: 'Kuwait',       currency: 'KWD', gosi: false },
-  { value: 'bahrain', label: 'Bahrain',      currency: 'BHD', gosi: false },
-  { value: 'oman',    label: 'Oman',         currency: 'OMR', gosi: false },
-  { value: 'egypt',   label: 'Egypt',        currency: 'EGP', gosi: false },
+  { value: 'uae',     currency: 'AED', gosi: false },
+  { value: 'saudi',   currency: 'SAR', gosi: true  },
+  { value: 'qatar',   currency: 'QAR', gosi: false },
+  { value: 'kuwait',  currency: 'KWD', gosi: false },
+  { value: 'bahrain', currency: 'BHD', gosi: false },
+  { value: 'oman',    currency: 'OMR', gosi: false },
+  { value: 'egypt',   currency: 'EGP', gosi: false },
 ]
 
-const NATIONALITIES = [
-  { value: 'expat',   label: 'Expatriate / Non-national' },
-  { value: 'national', label: 'GCC National' },
-]
+const NATIONALITIES = ['expat', 'national'] as const
 
 type Result = {
   grossMonthly: number
@@ -33,8 +31,10 @@ function formatNum(n: number, currency: string) {
   return `${currency} ${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
-export default function SalaryCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+// `locale` is still passed by the tool page; strings come from useTranslations.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function SalaryCalculator(_props: Props) {
+  const t = useTranslations('tool')
 
   const [gross, setGross] = useState('')
   const [country, setCountry] = useState('uae')
@@ -84,38 +84,6 @@ export default function SalaryCalculator({ locale }: Props) {
     setResult(null)
   }
 
-  const labels = isAr
-    ? {
-        gross: 'الراتب الشهري الإجمالي',
-        country: 'الدولة',
-        nationality: 'الجنسية',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        results: 'النتائج',
-        netMonthly: 'صافي الراتب الشهري',
-        deductions: 'الخصومات',
-        annualGross: 'الراتب الإجمالي السنوي',
-        annualNet: 'صافي الراتب السنوي',
-        noDeductions: 'لا توجد خصومات إلزامية',
-        gosi: 'اشتراك التأمينات الاجتماعية',
-        enterAmount: 'أدخل المبلغ',
-      }
-    : {
-        gross: 'Gross Monthly Salary',
-        country: 'Country',
-        nationality: 'Nationality',
-        calculate: 'Calculate',
-        reset: 'Reset',
-        results: 'Your Results',
-        netMonthly: 'Net Monthly Salary',
-        deductions: 'Deductions',
-        annualGross: 'Annual Gross',
-        annualNet: 'Annual Net',
-        noDeductions: 'No mandatory deductions',
-        gosi: 'Social Insurance (GOSI)',
-        enterAmount: 'Enter amount',
-      }
-
   return (
     <div className="space-y-6">
       {/* Inputs */}
@@ -123,7 +91,7 @@ export default function SalaryCalculator({ locale }: Props) {
         {/* Gross salary */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {labels.gross}
+            {t('labels.gross')}
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
@@ -134,7 +102,7 @@ export default function SalaryCalculator({ locale }: Props) {
               min="0"
               value={gross}
               onChange={e => setGross(e.target.value)}
-              placeholder={labels.enterAmount}
+              placeholder={t('labels.enterAmount')}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -143,7 +111,7 @@ export default function SalaryCalculator({ locale }: Props) {
         {/* Country */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {labels.country}
+            {t('labels.country')}
           </label>
           <select
             value={country}
@@ -151,7 +119,7 @@ export default function SalaryCalculator({ locale }: Props) {
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
             {COUNTRIES.map(c => (
-              <option key={c.value} value={c.value}>{c.label}</option>
+              <option key={c.value} value={c.value}>{t(`countries.${c.value}`)}</option>
             ))}
           </select>
         </div>
@@ -159,7 +127,7 @@ export default function SalaryCalculator({ locale }: Props) {
         {/* Nationality */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {labels.nationality}
+            {t('labels.nationality')}
           </label>
           <select
             value={nationality}
@@ -167,7 +135,7 @@ export default function SalaryCalculator({ locale }: Props) {
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
             {NATIONALITIES.map(n => (
-              <option key={n.value} value={n.value}>{n.label}</option>
+              <option key={n} value={n}>{t(`nationalities.${n}`)}</option>
             ))}
           </select>
         </div>
@@ -179,24 +147,24 @@ export default function SalaryCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {labels.calculate}
+          {t('labels.calculate')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {labels.reset}
+          {t('labels.reset')}
         </button>
       </div>
 
       {/* Results */}
       {result && (
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
-          <h3 className="font-bold text-gray-900">{labels.results}</h3>
+          <h3 className="font-bold text-gray-900">{t('labels.results')}</h3>
 
           {/* Net monthly — hero result */}
           <div className="bg-emerald-600 rounded-xl p-4 text-white">
-            <div className="text-sm opacity-80 mb-1">{labels.netMonthly}</div>
+            <div className="text-sm opacity-80 mb-1">{t('labels.netMonthly')}</div>
             <div className="text-3xl font-black">
               {formatNum(result.netMonthly, result.currency)}
             </div>
@@ -205,11 +173,11 @@ export default function SalaryCalculator({ locale }: Props) {
           {/* Breakdown */}
           <div className="space-y-3">
             <ResultRow
-              label={isAr ? 'الراتب الإجمالي' : 'Gross Salary'}
+              label={t('labels.grossSalary')}
               value={formatNum(result.grossMonthly, result.currency)}
             />
             <ResultRow
-              label={result.gosiDeducted ? labels.gosi : labels.noDeductions}
+              label={result.gosiDeducted ? t('labels.gosi') : t('labels.noDeductions')}
               value={result.deductions > 0
                 ? `− ${formatNum(result.deductions, result.currency)}`
                 : '—'}
@@ -217,11 +185,11 @@ export default function SalaryCalculator({ locale }: Props) {
             />
             <div className="border-t border-gray-200 pt-3">
               <ResultRow
-                label={labels.annualGross}
+                label={t('labels.annualGross')}
                 value={formatNum(result.annualGross, result.currency)}
               />
               <ResultRow
-                label={labels.annualNet}
+                label={t('labels.annualNet')}
                 value={formatNum(result.annualNet, result.currency)}
                 highlight
               />

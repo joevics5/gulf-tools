@@ -13,6 +13,9 @@ import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
 import { BackButton } from '@/components/layout/BackButton'
 import { ToolWrapper } from '@/components/tools/ToolWrapper'
+import { ToolMessages } from '@/components/tools/ToolMessages'
+import { routing } from '@/lib/i18n/routing'
+import { BASE_URL, isRtl, languageAlternates, ogLocale } from '@/lib/i18n/locales'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import AdUnit from '@/components/ads/AdUnit'
@@ -80,9 +83,8 @@ export const revalidate = 86400
 // ─── Static params ────────────────────────────────────────────────────────────
 
 export async function generateStaticParams() {
-  const locales = ['en', 'ar']
   return TOOLS.flatMap(tool =>
-    locales.map(locale => ({
+    routing.locales.map(locale => ({
       locale,
       category: tool.category,
       tool:     tool.slug,
@@ -104,7 +106,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   }
   if (!toolContent) return {}
 
-  const BASE_URL = 'https://gulftools.jobmeter.app'
   const url      = `${BASE_URL}/${locale}/tools/${category}/${toolSlug}`
 
   return {
@@ -112,18 +113,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     description: toolContent.meta_description ?? toolContent.description ?? '',
     alternates: {
       canonical: url,
-      languages: {
-        en:          `${BASE_URL}/en/tools/${category}/${toolSlug}`,
-        ar:          `${BASE_URL}/ar/tools/${category}/${toolSlug}`,
-        'x-default': `${BASE_URL}/en/tools/${category}/${toolSlug}`,
-      },
+      languages: languageAlternates(`/tools/${category}/${toolSlug}`),
     },
     openGraph: {
       title:       toolContent.title,
       description: toolContent.meta_description ?? toolContent.description ?? '',
       url,
       siteName: 'Gulf Tools',
-      locale:   locale === 'ar' ? 'ar_AE' : 'en_AE',
+      locale:   ogLocale(locale),
       type:     'website' as const,
       images:   [{ url: `${BASE_URL}/og/tools/${toolSlug}.png`, width: 1200, height: 630 }],
     },
@@ -330,11 +327,10 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
   const tCommon = await getTranslations({ locale, namespace: 'common' })
 
   // ── Data ──
-  const BASE_URL     = 'https://gulftools.jobmeter.app'
   const toolUrl      = `${BASE_URL}/${locale}/tools/${category}/${toolSlug}`
   const ToolComponent = await loadToolComponent(toolSlug)
   const relatedTools  = getRelatedTools(tool)
-  const isRtl         = locale === 'ar'
+  const rtl           = isRtl(locale)
 
   const faqs = (toolContent.faq ?? []).map((item: { q: string; a: string }) => ({
     question: item.q,
@@ -388,7 +384,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 mt-2">
 
           {/* ── Main column ── */}
-          <main className="min-w-0" dir={isRtl ? 'rtl' : 'ltr'}>
+          <main className="min-w-0" dir={rtl ? 'rtl' : 'ltr'}>
 
             {/* Tool header */}
             <div className="mb-6">
@@ -412,7 +408,9 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
             {/* Interactive tool */}
             <ToolWrapper>
               {ToolComponent ? (
-                <ToolComponent locale={locale} />
+                <ToolMessages locale={locale} toolSlug={toolSlug}>
+                  <ToolComponent locale={locale} />
+                </ToolMessages>
               ) : (
                 <div className="text-center py-16 text-gray-500">
                   <div className="text-4xl mb-3">🔧</div>
@@ -501,7 +499,7 @@ export default async function ToolPage({ params }: { params: Promise<Params> }) 
           </main>
 
           {/* ── Sidebar ── */}
-          <aside className="space-y-6" dir={isRtl ? 'rtl' : 'ltr'}>
+          <aside className="space-y-6" dir={rtl ? 'rtl' : 'ltr'}>
 
             {/* Related tools */}
             {relatedTools.length > 0 && (

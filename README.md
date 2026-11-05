@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gulf Tools
 
-## Getting Started
+Free calculators and guides for the Gulf region (UAE, Saudi Arabia, Qatar, Kuwait,
+Bahrain, Oman, Egypt), in English and Arabic.
 
-First, run the development server:
+Next.js (App Router) · next-intl · Supabase · Tailwind 4
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev            # http://localhost:3000 (redirects to /en)
+npm run lint
+npm run check:messages # en/ar tool strings have identical keys
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Supabase connection details go in `.env.local` (see `lib/supabase/client.ts` for the
+variable names).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Layout
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | What |
+|---|---|
+| `lib/registry/` | Tools, categories, locations — the single source of truth |
+| `app/[locale]/tools/[category]/[tool]/page.tsx` | The one template every tool renders through |
+| `components/tools/<category>/` | Tool components |
+| `messages/<locale>.json` | Site-wide UI strings |
+| `messages/<locale>/tools/<slug>.json` | Per-tool UI strings |
+| `lib/i18n/` | Locale routing, per-locale metadata, tool message loading |
+| `lib/supabase/` | Tool SEO copy and blog content (`tool_translations`, `articles`) |
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributor rules and the per-page checklist are in [CLAUDE.md](./CLAUDE.md).
