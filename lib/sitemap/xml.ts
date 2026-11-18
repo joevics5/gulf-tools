@@ -6,7 +6,8 @@ export type SitemapEntry = {
   lastModified?: Date | string
   changeFrequency?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
   priority?: number
-  alternates?: { en: string; ar: string }
+  /** hreflang -> URL. An x-default is added (from the first entry) if missing. */
+  alternates?: Record<string, string>
 }
 
 function formatDate(date: Date | string | undefined): string {
@@ -27,9 +28,12 @@ function buildUrl(entry: SitemapEntry): string {
     lines.push(`    <priority>${entry.priority.toFixed(1)}</priority>`)
   }
   if (entry.alternates) {
-    lines.push(`    <xhtml:link rel="alternate" hreflang="en" href="${entry.alternates.en}"/>`)
-    lines.push(`    <xhtml:link rel="alternate" hreflang="ar" href="${entry.alternates.ar}"/>`)
-    lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${entry.alternates.en}"/>`)
+    const { 'x-default': explicitDefault, ...langs } = entry.alternates
+    for (const [lang, href] of Object.entries(langs)) {
+      lines.push(`    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+    }
+    const def = explicitDefault ?? langs.en ?? Object.values(langs)[0]
+    if (def) lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${def}"/>`)
   }
   lines.push('  </url>')
   return lines.join('\n')

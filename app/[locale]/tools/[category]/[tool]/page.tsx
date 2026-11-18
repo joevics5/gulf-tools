@@ -8,14 +8,14 @@ import {
   generateFAQSchema,
   generateBreadcrumbSchema,
 } from '@/lib/schema/schemas'
-import { getToolTranslation } from '@/lib/supabase/queries'
+import { getToolLocales, getToolTranslation } from '@/lib/supabase/queries'
 import { SchemaOrg } from '@/components/seo/SchemaOrg'
 import { Breadcrumb } from '@/components/layout/Breadcrumb'
 import { BackButton } from '@/components/layout/BackButton'
 import { ToolWrapper } from '@/components/tools/ToolWrapper'
 import { ToolMessages } from '@/components/tools/ToolMessages'
 import { routing } from '@/lib/i18n/routing'
-import { BASE_URL, isRtl, languageAlternates, ogLocale } from '@/lib/i18n/locales'
+import { BASE_URL, defaultOgImage, isRtl, languageAlternates, ogLocale } from '@/lib/i18n/locales'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import AdUnit from '@/components/ads/AdUnit'
@@ -106,14 +106,24 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   }
   if (!toolContent) return {}
 
-  const url      = `${BASE_URL}/${locale}/tools/${category}/${toolSlug}`
+  const url = `${BASE_URL}/${locale}/tools/${category}/${toolSlug}`
+
+  // getToolTranslation falls back to English when a locale has no row. That page
+  // is a duplicate of the English one: keep it out of the index and out of hreflang.
+  const isFallback = toolContent.locale !== locale
+  let realLocales: readonly string[] = routing.locales
+  try {
+    realLocales = await getToolLocales(toolSlug)
+  } catch {
+    // keep the full list if the lookup fails
+  }
 
   return {
     title:       `${toolContent.title} | Gulf Tools`,
     description: toolContent.meta_description ?? toolContent.description ?? '',
     alternates: {
       canonical: url,
-      languages: languageAlternates(`/tools/${category}/${toolSlug}`),
+      ...(isFallback ? {} : { languages: languageAlternates(`/tools/${category}/${toolSlug}`, realLocales) }),
     },
     openGraph: {
       title:       toolContent.title,
@@ -122,14 +132,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
       siteName: 'Gulf Tools',
       locale:   ogLocale(locale),
       type:     'website' as const,
-      images:   [{ url: `${BASE_URL}/og/tools/${toolSlug}.png`, width: 1200, height: 630 }],
+      images:   [defaultOgImage(locale, toolContent.title)],
     },
     twitter: {
       card:        'summary_large_image' as const,
       title:       toolContent.title,
       description: toolContent.meta_description ?? toolContent.description ?? '',
     },
-    robots: { index: true, follow: true },
+    robots: isFallback ? { index: false, follow: true } : { index: true, follow: true },
   }
 }
 

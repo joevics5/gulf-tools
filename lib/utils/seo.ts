@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 
-import { BASE_URL, languageAlternates, ogLocale, pageAlternates } from '@/lib/i18n/locales'
+import { BASE_URL, defaultOgImage, languageAlternates, ogLocale, pageAlternates } from '@/lib/i18n/locales'
 
 export async function generateToolMetadata(
   locale: string,
@@ -23,14 +23,7 @@ export async function generateToolMetadata(
       siteName: 'Gulf Tools',
       locale: ogLocale(locale),
       type: 'website' as const,
-      images: [
-        {
-          url: `${BASE_URL}/og/tools/${toolSlug}.png`,
-          width: 1200,
-          height: 630,
-          alt: t('title'),
-        },
-      ],
+      images: [defaultOgImage(locale, t('title'))],
     },
     twitter: {
       card: 'summary_large_image' as const,
@@ -89,14 +82,7 @@ export async function generateHomepageMetadata(locale: string) {
       siteName: 'Gulf Tools',
       locale: ogLocale(locale),
       type: 'website' as const,
-      images: [
-        {
-          url: `${BASE_URL}/og/homepage.png`,
-          width: 1200,
-          height: 630,
-          alt: 'Gulf Tools',
-        },
-      ],
+      images: [defaultOgImage(locale)],
     },
     robots: { index: true, follow: true },
   }
@@ -120,14 +106,7 @@ export function generateBlogIndexMetadata(locale: string) {
       siteName: 'Gulf Tools',
       locale: ogLocale(locale),
       type: 'website' as const,
-      images: [
-        {
-          url: `${BASE_URL}/og/blog-default.png`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      images: [defaultOgImage(locale, title)],
     },
     twitter: {
       card: 'summary_large_image' as const,

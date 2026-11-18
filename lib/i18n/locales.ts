@@ -29,12 +29,19 @@ const normalizePath = (path: string) => {
   return p === '/' ? '' : p
 }
 
-/** hreflang map for a path that exists in every locale, including x-default. */
-export function languageAlternates(pathWithoutLocale: string) {
+/**
+ * hreflang map for a path, including x-default. Pass `locales` to list only the
+ * languages that really exist for the page (e.g. untranslated tools are left out).
+ */
+export function languageAlternates(
+  pathWithoutLocale: string,
+  locales: readonly string[] = routing.locales
+) {
   const path = normalizePath(pathWithoutLocale)
+  const def = locales.includes(routing.defaultLocale) ? routing.defaultLocale : locales[0]
   return {
-    ...Object.fromEntries(routing.locales.map(l => [l, `${BASE_URL}/${l}${path}`])),
-    'x-default': `${BASE_URL}/${routing.defaultLocale}${path}`,
+    ...Object.fromEntries(locales.map(l => [l, `${BASE_URL}/${l}${path}`])),
+    ...(def ? { 'x-default': `${BASE_URL}/${def}${path}` } : {}),
   }
 }
 
@@ -48,4 +55,13 @@ export function pageAlternates(locale: string, pathWithoutLocale: string) {
     canonical: `${BASE_URL}/${locale}${normalizePath(pathWithoutLocale)}`,
     languages: languageAlternates(pathWithoutLocale),
   }
+}
+
+/**
+ * Default Open Graph image (1200x630) for pages without a dedicated one.
+ * public/og/default-<locale>.jpg; unknown locales fall back to the default locale.
+ */
+export function defaultOgImage(locale: string, alt = 'Gulf Tools') {
+  const l = routing.locales.includes(locale as Locale) ? locale : routing.defaultLocale
+  return { url: `${BASE_URL}/og/default-${l}.jpg`, width: 1200, height: 630, alt }
 }

@@ -193,3 +193,16 @@ export async function getToolTranslation(
 
   return data as ToolTranslation
 }
+/**
+ * Locales that have their own tool_translations row for one tool (no fallback).
+ * Used to emit hreflang / sitemap entries only for pages with real content.
+ */
+export async function getToolLocales(slug: string): Promise<string[]> {
+  const supabase = createSupabasePublicClient()
+  const { data, error } = await supabase
+    .from('tool_translations')
+    .select('locale')
+    .eq('tool_slug', slug)
+  if (error || !data) throw new Error(error?.message ?? 'getToolLocales failed')
+  return data.map((r: { locale: string }) => r.locale)
+}
