@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -224,7 +226,7 @@ function AmortizationChart({ rows }: { rows: AmortizationRow[] }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function UAEMortgageCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   // Inputs
   const [propertyPrice, setPropertyPrice] = useState(1500000)
@@ -322,68 +324,9 @@ export default function UAEMortgageCalculator({ locale }: Props) {
     setResult(null)
   }
 
-  const L = isAr
-    ? {
-        propPrice: 'سعر العقار (درهم)',
-        downPct: 'نسبة الدفعة الأولى',
-        downAmt: 'مبلغ الدفعة الأولى',
-        term: 'مدة القرض (سنوات)',
-        rate: 'معدل الفائدة السنوي',
-        borrower: 'نوع المقترض',
-        purpose: 'الغرض من العقار',
-        income: 'الدخل الشهري (درهم) — اختياري',
-        otherDebts: 'ديون شهرية أخرى (درهم)',
-        reset: 'إعادة تعيين',
-        results: 'نتائج حاسبة الرهن العقاري',
-        loanAmt: 'مبلغ القرض',
-        emi: 'الدفعة الشهرية (EMI)',
-        totalRepay: 'إجمالي المبلغ المُسدَّد',
-        totalInterest: 'إجمالي الفوائد',
-        ltv: 'نسبة القرض إلى القيمة (LTV)',
-        dbr: 'نسبة عبء الديون (DBR)',
-        stressDbr: 'DBR بعد اختبار الإجهاد (+2%)',
-        maxPrice: 'أقصى سعر عقار يمكن تحمّله',
-        disclaimer: 'التقديرات لأغراض إعلامية فقط. الشروط الفعلية تعتمد على موافقة البنك وتحقق الدخل. راجع مستشارًا مرخصًا.',
-        tabResults: 'النتائج',
-        tabAmort: 'جدول السداد',
-        tabCosts: 'التكاليف الإضافية',
-        dld: 'رسوم دائرة الأراضي (4%)',
-        agent: 'عمولة الوكيل (2%)',
-        reg: 'رسوم التسجيل',
-        totalCash: 'إجمالي النقد المطلوب',
-      }
-    : {
-        propPrice: 'Property Price (AED)',
-        downPct: 'Down Payment',
-        downAmt: 'Down Payment Amount',
-        term: 'Loan Term (Years)',
-        rate: 'Annual Interest Rate',
-        borrower: 'Borrower Type',
-        purpose: 'Property Purpose',
-        income: 'Monthly Income (AED) — optional',
-        otherDebts: 'Other Monthly Debts (AED)',
-        reset: 'Reset',
-        results: 'Mortgage Calculation Results',
-        loanAmt: 'Loan Amount',
-        emi: 'Monthly Payment (EMI)',
-        totalRepay: 'Total Repayment',
-        totalInterest: 'Total Interest',
-        ltv: 'Loan-to-Value (LTV)',
-        dbr: 'Debt Burden Ratio (DBR)',
-        stressDbr: 'Stress-Test DBR (+2% rate)',
-        maxPrice: 'Max Affordable Property Price',
-        disclaimer: 'Estimates for informational purposes only. Actual terms depend on bank approval, credit check & income verification. Consult a licensed advisor. Not financial advice.',
-        tabResults: 'Results',
-        tabAmort: 'Amortization',
-        tabCosts: 'Additional Costs',
-        dld: 'DLD Transfer Fee (4%)',
-        agent: "Agent's Fee (2%)",
-        reg: 'Registration Fee',
-        totalCash: 'Total Cash Required',
-      }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── INPUTS ── */}
       <div className="space-y-5">
@@ -391,7 +334,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
         {/* Property Price */}
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label className="text-sm font-semibold text-gray-700">{L.propPrice}</label>
+            <label className="text-sm font-semibold text-gray-700">{tt('propPrice')}</label>
             <span className="text-sm font-bold text-emerald-600">{fmtAED(propertyPrice)}</span>
           </div>
           <input
@@ -409,7 +352,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
         <div>
           <div className="flex justify-between items-center mb-1.5">
             <label className="text-sm font-semibold text-gray-700">
-              {L.downPct}
+              {tt('downPct')}
               <Tooltip text={`Max LTV for selected profile: ${maxLtv}%. Minimum down payment: ${100 - maxLtv}%.`} />
             </label>
             <span className="text-sm font-bold text-emerald-600">{downPaymentPct}% — {fmtAED(downPaymentAED)}</span>
@@ -433,7 +376,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-gray-700">{L.term}</label>
+              <label className="text-sm font-semibold text-gray-700">{tt('term')}</label>
               <span className="text-sm font-bold text-emerald-600">{loanTerm} yrs</span>
             </div>
             <input
@@ -446,7 +389,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
           </div>
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-gray-700">{L.rate}
+              <label className="text-sm font-semibold text-gray-700">{tt('rate')}
                 <Tooltip text="EIBOR-linked mortgages in UAE typically range 4–6%. Fixed rates may differ. Last updated: 2025." />
               </label>
               <span className="text-sm font-bold text-emerald-600">{annualRate}%</span>
@@ -478,7 +421,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
         {/* Borrower Type + Purpose */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.borrower}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('borrower')}</label>
             <select
               value={borrowerType}
               onChange={e => setBorrowerType(e.target.value as BorrowerType)}
@@ -490,7 +433,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.purpose}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('purpose')}</label>
             <select
               value={purpose}
               onChange={e => setPurpose(e.target.value as PropertyPurpose)}
@@ -515,7 +458,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
         {/* Optional: Income + Debts */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.income}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('income')}</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
               <input
@@ -528,7 +471,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.otherDebts}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('otherDebts')}</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">AED</span>
               <input
@@ -550,7 +493,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
           onClick={reset}
           className="px-5 py-2.5 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors text-sm"
         >
-          ↺ {L.reset}
+          ↺ {tt('reset')}
         </button>
       </div>
 
@@ -560,7 +503,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
 
           {/* Hero EMI */}
           <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 p-6 text-white">
-            <div className="text-sm opacity-80 mb-1">{L.emi}</div>
+            <div className="text-sm opacity-80 mb-1">{tt('emi')}</div>
             <div className="text-4xl font-black tracking-tight">{fmtAEDDec(result.monthlyEMI)}</div>
             <div className="text-sm opacity-70 mt-1">/month for {loanTerm} years</div>
 
@@ -582,7 +525,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
                 onClick={() => setActiveTab(tab)}
                 className={`flex-1 py-3 text-xs font-semibold transition-colors ${activeTab === tab ? 'text-emerald-600 border-b-2 border-emerald-600' : 'text-gray-500 hover:text-gray-700'}`}
               >
-                {tab === 'results' ? L.tabResults : tab === 'amortization' ? L.tabAmort : L.tabCosts}
+                {tab === 'results' ? tt('tabResults') : tab === 'amortization' ? tt('tabAmort') : tt('tabCosts')}
               </button>
             ))}
           </div>
@@ -592,14 +535,14 @@ export default function UAEMortgageCalculator({ locale }: Props) {
             {/* ── Tab: Results ── */}
             {activeTab === 'results' && (
               <div className="space-y-1 divide-y divide-gray-100">
-                <ResultRow label={L.loanAmt} value={fmtAED(result.loanAmount)} />
-                <ResultRow label={L.totalRepay} value={fmtAED(result.totalRepayment)} />
-                <ResultRow label={L.totalInterest} value={fmtAED(result.totalInterest)} negative />
+                <ResultRow label={tt('loanAmt')} value={fmtAED(result.loanAmount)} />
+                <ResultRow label={tt('totalRepay')} value={fmtAED(result.totalRepayment)} />
+                <ResultRow label={tt('totalInterest')} value={fmtAED(result.totalInterest)} negative />
 
                 {/* LTV bar */}
                 <div className="pt-3 pb-1">
                   <div className="flex justify-between mb-1">
-                    <span className="text-sm text-gray-600">{L.ltv}</span>
+                    <span className="text-sm text-gray-600">{tt('ltv')}</span>
                     <span className="text-sm font-semibold text-gray-900">{fmtPct(result.ltv)} / max {maxLtv}%</span>
                   </div>
                   <ProgressBar value={result.ltv} max={maxLtv} status={result.ltvStatus} />
@@ -610,7 +553,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
                   <>
                     <div className="pt-1 pb-1">
                       <div className="flex justify-between mb-1">
-                        <span className="text-sm text-gray-600">{L.dbr}
+                        <span className="text-sm text-gray-600">{tt('dbr')}
                           <Tooltip text="CBUAE mandates max 50% DBR. Includes all monthly debt obligations vs gross income." />
                         </span>
                         <span className="text-sm font-semibold">{fmtPct(result.dbr)}</span>
@@ -618,14 +561,14 @@ export default function UAEMortgageCalculator({ locale }: Props) {
                       <ProgressBar value={result.dbr} max={50} status={result.dbrStatus} />
                     </div>
                     <ResultRow
-                      label={L.stressDbr}
+                      label={tt('stressDbr')}
                       sub="CBUAE stress test: +2% rate scenario"
                       value={fmtPct(result.stressDbr)}
                       negative={result.stressDbr > 50}
                     />
                     {result.maxAffordablePrice > 0 && (
                       <ResultRow
-                        label={L.maxPrice}
+                        label={tt('maxPrice')}
                         sub="Based on 50% DBR limit & your income"
                         value={fmtAED(result.maxAffordablePrice)}
                         highlight
@@ -673,12 +616,12 @@ export default function UAEMortgageCalculator({ locale }: Props) {
             {/* ── Tab: Additional Costs ── */}
             {activeTab === 'costs' && (
               <div className="space-y-1 divide-y divide-gray-100">
-                <ResultRow label={L.downAmt} value={fmtAED(downPaymentAED)} />
-                <ResultRow label={L.dld} sub="Dubai Land Department transfer fee" value={fmtAED(result.dldFee)} negative />
-                <ResultRow label={L.agent} sub="Typical agent commission estimate" value={fmtAED(result.agentFee)} negative />
-                <ResultRow label={L.reg} sub="DLD registration fee (AED 2K / 4K)" value={fmtAED(result.registrationFee)} negative />
+                <ResultRow label={tt('downAmt')} value={fmtAED(downPaymentAED)} />
+                <ResultRow label={tt('dld')} sub="Dubai Land Department transfer fee" value={fmtAED(result.dldFee)} negative />
+                <ResultRow label={tt('agent')} sub="Typical agent commission estimate" value={fmtAED(result.agentFee)} negative />
+                <ResultRow label={tt('reg')} sub="DLD registration fee (AED 2K / 4K)" value={fmtAED(result.registrationFee)} negative />
                 <div className="pt-2">
-                  <ResultRow label={L.totalCash} sub="Down payment + all estimated fees" value={fmtAED(result.totalCashNeeded)} highlight />
+                  <ResultRow label={tt('totalCash')} sub="Down payment + all estimated fees" value={fmtAED(result.totalCashNeeded)} highlight />
                 </div>
                 <p className="text-xs text-gray-500 pt-2">
                   Fees are estimates. Mortgage registration, valuation, and insurance fees are not included. Actual costs may vary.
@@ -690,7 +633,7 @@ export default function UAEMortgageCalculator({ locale }: Props) {
           {/* Disclaimer */}
           <div className="mx-5 mb-5 bg-amber-50 border border-amber-100 rounded-xl p-3">
             <p className="text-xs text-amber-700">
-              ⚠️ <strong>Disclaimer:</strong> {L.disclaimer}
+              ⚠️ <strong>Disclaimer:</strong> {tt('disclaimer')}
             </p>
           </div>
         </div>

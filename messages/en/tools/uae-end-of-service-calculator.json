@@ -1,0 +1,30 @@
+{
+  "basicSalary": "Basic Monthly Salary (AED)",
+  "basicNote": "Basic salary only — exclude allowances, housing, commissions",
+  "startDate": "Joining Date",
+  "endDate": "End of Service Date",
+  "contractType": "Contract Type",
+  "limited": "Limited (Fixed-Term)",
+  "unlimited": "Unlimited (Legacy)",
+  "reason": "Reason for Separation",
+  "termination": "Termination by Employer",
+  "resignation": "Resignation by Employee",
+  "expiry": "Contract Expiry / End of Term",
+  "mutual": "Mutual Agreement",
+  "calculate": "Calculate Gratuity",
+  "reset": "Reset",
+  "results": "End of Service Gratuity",
+  "service": "Service Duration",
+  "dailyRate": "Daily Rate",
+  "entitlement": "Entitlement Type",
+  "subtotal": "Subtotal Before Adjustments",
+  "cap": "2-Year Cap Applied",
+  "total": "Total Gratuity",
+  "notEligible": "Not eligible for gratuity — minimum 1 year of continuous service required (Article 51).",
+  "disclaimer": "This tool provides estimates based on UAE Federal Decree-Law No. 33 of 2021 and Cabinet Resolution No. 1 of 2022. It is not legal advice. Free zone employees (DIFC, ADGM) may follow different rules. Verify with MOHRE or a qualified professional.",
+  "payment": "Gratuity must be paid within 14 days of end of service.",
+  "inline": {
+    "disclaimer": "Disclaimer",
+    "note_unlimited_contracts_resignation_leg": "Note: Unlimited contracts + resignation — legacy partial entitlement rules apply (1/3 for 1–3 yrs, 2/3 for 3–5 yrs, full after 5 yrs)."
+  }
+}

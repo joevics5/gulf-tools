@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -146,8 +147,8 @@ function fmt(n: number) {
   return `AED ${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 }
 
-export default function UAEEndOfServiceCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function UAEEndOfServiceCalculator(_props: Props) {
+  const t = useTranslations('tool')
 
   const [inputs, setInputs] = useState<Inputs>({
     basicSalary: '',
@@ -188,59 +189,6 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
     setErrors({})
   }
 
-  const L = isAr
-    ? {
-        basicSalary: 'الراتب الأساسي الشهري (درهم)',
-        basicNote: 'الراتب الأساسي فقط — لا تشمل البدلات أو السكن أو العمولات',
-        startDate: 'تاريخ الانضمام',
-        endDate: 'تاريخ انتهاء الخدمة',
-        contractType: 'نوع العقد',
-        limited: 'عقد محدد المدة',
-        unlimited: 'عقد غير محدد المدة (قديم)',
-        reason: 'سبب إنهاء الخدمة',
-        termination: 'إنهاء من صاحب العمل',
-        resignation: 'استقالة الموظف',
-        expiry: 'انتهاء مدة العقد',
-        mutual: 'اتفاق مشترك',
-        calculate: 'احسب المكافأة',
-        reset: 'إعادة تعيين',
-        results: 'نتيجة مكافأة نهاية الخدمة',
-        service: 'مدة الخدمة',
-        dailyRate: 'الأجر اليومي',
-        entitlement: 'نوع الاستحقاق',
-        subtotal: 'المجموع قبل التعديل',
-        cap: 'الحد الأقصى (24 شهر)',
-        total: 'إجمالي المكافأة',
-        notEligible: 'لا يحق لك الحصول على مكافأة نهاية الخدمة — الحد الأدنى سنة واحدة من الخدمة.',
-        disclaimer: 'هذه الأداة تقدير استرشادي استناداً إلى المرسوم الاتحادي بقانون رقم 33 لسنة 2021. ليست مشورة قانونية. تحقق مع وزارة الموارد البشرية أو مستشار قانوني.',
-        payment: 'يجب دفع المكافأة خلال 14 يوماً من انتهاء الخدمة.',
-      }
-    : {
-        basicSalary: 'Basic Monthly Salary (AED)',
-        basicNote: 'Basic salary only — exclude allowances, housing, commissions',
-        startDate: 'Joining Date',
-        endDate: 'End of Service Date',
-        contractType: 'Contract Type',
-        limited: 'Limited (Fixed-Term)',
-        unlimited: 'Unlimited (Legacy)',
-        reason: 'Reason for Separation',
-        termination: 'Termination by Employer',
-        resignation: 'Resignation by Employee',
-        expiry: 'Contract Expiry / End of Term',
-        mutual: 'Mutual Agreement',
-        calculate: 'Calculate Gratuity',
-        reset: 'Reset',
-        results: 'End of Service Gratuity',
-        service: 'Service Duration',
-        dailyRate: 'Daily Rate',
-        entitlement: 'Entitlement Type',
-        subtotal: 'Subtotal Before Adjustments',
-        cap: '2-Year Cap Applied',
-        total: 'Total Gratuity',
-        notEligible: 'Not eligible for gratuity — minimum 1 year of continuous service required (Article 51).',
-        disclaimer: 'This tool provides estimates based on UAE Federal Decree-Law No. 33 of 2021 and Cabinet Resolution No. 1 of 2022. It is not legal advice. Free zone employees (DIFC, ADGM) may follow different rules. Verify with MOHRE or a qualified professional.',
-        payment: 'Gratuity must be paid within 14 days of end of service.',
-      }
 
   const dur = result?.serviceDuration
 
@@ -248,7 +196,7 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
     <div className="space-y-6">
       {/* Disclaimer */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-        <strong>⚠ {isAr ? 'تنبيه' : 'Disclaimer'}:</strong> {L.disclaimer}
+        <strong>⚠ {t('inline.disclaimer')}:</strong> {t('disclaimer')}
       </div>
 
       {/* Inputs */}
@@ -256,8 +204,8 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
 
         {/* Basic Salary */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1">{L.basicSalary}</label>
-          <p className="text-xs text-gray-500 mb-1.5">{L.basicNote}</p>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">{t('basicSalary')}</label>
+          <p className="text-xs text-gray-500 mb-1.5">{t('basicNote')}</p>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
@@ -274,7 +222,7 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
 
         {/* Start Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.startDate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('startDate')}</label>
           <input
             type="date"
             value={inputs.startDate}
@@ -286,7 +234,7 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
 
         {/* End Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.endDate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('endDate')}</label>
           <input
             type="date"
             value={inputs.endDate}
@@ -298,29 +246,29 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
 
         {/* Contract Type */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.contractType}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('contractType')}</label>
           <select
             value={inputs.contractType}
             onChange={e => set('contractType', e.target.value as ContractType)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
-            <option value="limited">{L.limited}</option>
-            <option value="unlimited">{L.unlimited}</option>
+            <option value="limited">{t('limited')}</option>
+            <option value="unlimited">{t('unlimited')}</option>
           </select>
         </div>
 
         {/* Reason */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.reason}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('reason')}</label>
           <select
             value={inputs.separationReason}
             onChange={e => set('separationReason', e.target.value as SeparationReason)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
-            <option value="termination">{L.termination}</option>
-            <option value="resignation">{L.resignation}</option>
-            <option value="expiry">{L.expiry}</option>
-            <option value="mutual">{L.mutual}</option>
+            <option value="termination">{t('termination')}</option>
+            <option value="resignation">{t('resignation')}</option>
+            <option value="expiry">{t('expiry')}</option>
+            <option value="mutual">{t('mutual')}</option>
           </select>
         </div>
       </div>
@@ -328,9 +276,7 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
       {/* Unlimited resignation info */}
       {inputs.contractType === 'unlimited' && inputs.separationReason === 'resignation' && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 text-sm text-blue-800">
-          {isAr
-            ? 'ملاحظة: عقود غير محددة المدة + استقالة — تطبق قواعد الاستحقاق الجزئي القديمة (1/3 للسنة الأولى حتى 3 سنوات، 2/3 من 3 إلى 5 سنوات، كامل بعد 5 سنوات).'
-            : 'Note: Unlimited contracts + resignation — legacy partial entitlement rules apply (1/3 for 1–3 yrs, 2/3 for 3–5 yrs, full after 5 yrs).'}
+          {t('inline.note_unlimited_contracts_resignation_leg')}
         </div>
       )}
 
@@ -340,36 +286,36 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {L.calculate}
+          {t('calculate')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {L.reset}
+          {t('reset')}
         </button>
       </div>
 
       {/* Results */}
       {result && (
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
-          <h3 className="font-bold text-gray-900">{L.results}</h3>
+          <h3 className="font-bold text-gray-900">{t('results')}</h3>
 
           {!result.isEligible ? (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-800 text-sm">
-              {L.notEligible}
+              {t('notEligible')}
             </div>
           ) : (
             <>
               {/* Hero result */}
               <div className="bg-emerald-600 rounded-xl p-4 text-white">
-                <div className="text-sm opacity-80 mb-1">{L.total}</div>
+                <div className="text-sm opacity-80 mb-1">{t('total')}</div>
                 <div className="text-3xl font-black">{fmt(result.finalGratuity)}</div>
               </div>
 
               {/* Service duration */}
               <div className="bg-white rounded-xl p-4 border border-gray-100 space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{L.service}</p>
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{t('service')}</p>
                 <p className="text-gray-900 font-semibold">
                   {dur && `${dur.years} yr${dur.years !== 1 ? 's' : ''}, ${dur.months} mo${dur.months !== 1 ? 's' : ''}, ${dur.days} day${dur.days !== 1 ? 's' : ''}`}
                 </p>
@@ -377,8 +323,8 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
 
               {/* Breakdown rows */}
               <div className="space-y-3">
-                <Row label={L.dailyRate} value={fmt(result.dailyRate)} />
-                <Row label={L.entitlement} value={result.reductionLabel} />
+                <Row label={t('dailyRate')} value={fmt(result.dailyRate)} />
+                <Row label={t('entitlement')} value={result.reductionLabel} />
 
                 {result.breakdown.map((b, i) => (
                   <Row key={i} label={b.label} value={fmt(b.amount)} sub />
@@ -392,17 +338,17 @@ export default function UAEEndOfServiceCalculator({ locale }: Props) {
                 )}
 
                 <div className="border-t border-gray-200 pt-3 space-y-2">
-                  <Row label={L.subtotal} value={fmt(result.subtotal)} />
+                  <Row label={t('subtotal')} value={fmt(result.subtotal)} />
                   {result.cappedAt !== null && (
-                    <Row label={L.cap} value={fmt(result.cappedAt)} negative />
+                    <Row label={t('cap')} value={fmt(result.cappedAt)} negative />
                   )}
-                  <Row label={L.total} value={fmt(result.finalGratuity)} highlight />
+                  <Row label={t('total')} value={fmt(result.finalGratuity)} highlight />
                 </div>
               </div>
 
               {/* Payment timeline note */}
               <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-800">
-                ✓ {L.payment}
+                ✓ {t('payment')}
               </div>
             </>
           )}

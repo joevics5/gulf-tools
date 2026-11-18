@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale?: string }
 
@@ -31,6 +33,7 @@ const STATUS_CONFIG = {
 
 export default function DBRCalculator({ locale = 'en' }: Props) {
   const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   // Income
   const [income, setIncome] = useState('')
@@ -121,110 +124,37 @@ const getStatus = (dbr: number): StatusKey =>
     }
   }, [income, income2, jointMode, isPensioner, debtEntries, creditCardLimit, rentalIncome, includeRental, proposedAmount, proposedRate, proposedTenure, isMortgage, stressRate])
 
-  const t = isAr ? {
-    title: 'حاسبة نسبة الاستدانة (DBR)',
-    incomeSection: 'بيانات الدخل',
-    grossIncome: 'الراتب الإجمالي الشهري (AED)',
-    pensioner: 'متقاعد / ذو معاش',
-    national: 'مواطن إماراتي',
-    joint: 'طلب مشترك (زوجين)',
-    income2: 'دخل المتقدم الثاني (AED)',
-    rentalToggle: 'إضافة دخل إيجاري',
-    rentalIncome: 'الإيجار الشهري (AED)',
-    debtsSection: 'الالتزامات الشهرية الحالية',
-    addDebt: '+ إضافة التزام',
-    debtLabel: 'الوصف',
-    debtAmount: 'القسط الشهري (AED)',
-    ccLimit: 'إجمالي حدود بطاقات الائتمان (AED)',
-    ccNote: '5% من الحد يُحتسب كالتزام شهري',
-    proposedSection: 'القرض أو التمويل المقترح',
-    addProposed: '+ إضافة قرض مقترح',
-    removeProposed: '− إزالة',
-    proposedAmount: 'مبلغ القرض (AED)',
-    proposedRate: 'معدل الفائدة السنوي (%)',
-    proposedTenure: 'المدة (أشهر)',
-    mortgageToggle: 'هذا قرض عقاري (تحليل إجهاد)',
-    stressRate: 'نسبة الإجهاد المضافة (%)',
-    currentDBR: 'نسبة DBR الحالية',
-    projectedDBR: 'نسبة DBR المتوقعة',
-    stressedDBR: 'نسبة DBR تحت الإجهاد',
-    maxAllowed: 'الحد الأقصى المسموح',
-    headroom: 'مساحة الاقتراض المتاحة',
-    breakdown: 'تفاصيل الحساب',
-    effectiveIncome: 'الدخل الفعّال',
-    existingDebt: 'الالتزامات الحالية',
-    ccObligation: 'الالتزام الشهري للبطاقات',
-    proposedEMI: 'القسط الشهري المقترح',
-    totalDebt: 'إجمالي الالتزامات',
-    disclaimer: 'هذه الأداة للأغراض التوضيحية وفق إرشادات المصرف المركزي الإماراتي (حد DBR 50%). تجري البنوك فحوصات إضافية عبر الاتحاد الائتماني (AECB) وقد تطبّق معايير داخلية أكثر صرامة. هذه الأداة ليست نصيحة مالية.',
-  } : {
-    title: 'Debt Burden Ratio (DBR) Calculator',
-    incomeSection: 'Income',
-    grossIncome: 'Gross Monthly Income (AED)',
-    pensioner: 'Pensioner / Retiree',
-    national: 'UAE National',
-    joint: 'Joint Application',
-    income2: 'Second Applicant Income (AED)',
-    rentalToggle: 'Add Rental Income',
-    rentalIncome: 'Monthly Rental Income (AED)',
-    debtsSection: 'Existing Monthly Obligations',
-    addDebt: '+ Add Obligation',
-    debtLabel: 'Description',
-    debtAmount: 'Monthly EMI (AED)',
-    ccLimit: 'Total Credit Card Limit(s) (AED)',
-    ccNote: '5% of limit counted as monthly obligation (UAE bank standard)',
-    proposedSection: 'Proposed New Loan',
-    addProposed: '+ Add Proposed Loan',
-    removeProposed: '− Remove',
-    proposedAmount: 'Loan Amount (AED)',
-    proposedRate: 'Annual Interest Rate (%)',
-    proposedTenure: 'Tenure (Months)',
-    mortgageToggle: 'This is a mortgage (stress test)',
-    stressRate: 'Stress Rate Add-on (%)',
-    currentDBR: 'Current DBR',
-    projectedDBR: 'Projected DBR',
-    stressedDBR: 'Stressed DBR',
-    maxAllowed: 'Max Allowed Monthly Debt',
-    headroom: 'Borrowing Headroom',
-    breakdown: 'Calculation Breakdown',
-    effectiveIncome: 'Effective Income',
-    existingDebt: 'Existing Obligations',
-    ccObligation: 'Credit Card Obligation',
-    proposedEMI: 'Proposed Monthly EMI',
-    totalDebt: 'Total Monthly Debt',
-    disclaimer: 'This is an estimate based on CBUAE guidelines (50% max DBR; 30% for pensioners). Banks perform final AECB credit bureau checks and may apply stricter internal policies. Not financial advice.',
-  }
 
   const currentCfg   = STATUS_CONFIG[results.currentStatus]
   const projectedCfg = STATUS_CONFIG[results.projectedStatus]
 
   return (
-    <div className="space-y-7 font-sans" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-7 font-sans" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── INCOME SECTION ── */}
-      <Section title={t.incomeSection}>
+      <Section title={t('incomeSection')}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">
-            <Label>{t.grossIncome}</Label>
+            <Label>{t('grossIncome')}</Label>
             <AEDInput value={income} onChange={setIncome} placeholder="e.g. 15000" />
           </div>
 
           {/* Toggles */}
-          <Toggle label={t.pensioner} checked={isPensioner} onChange={setIsPensioner} />
-          <Toggle label={t.national}  checked={isNational}  onChange={setIsNational}  />
-          <Toggle label={t.joint}     checked={jointMode}    onChange={setJointMode}   />
+          <Toggle label={t('pensioner')} checked={isPensioner} onChange={setIsPensioner} />
+          <Toggle label={t('national')}  checked={isNational}  onChange={setIsNational}  />
+          <Toggle label={t('joint')}     checked={jointMode}    onChange={setJointMode}   />
 
           {jointMode && (
             <div className="sm:col-span-2">
-              <Label>{t.income2}</Label>
+              <Label>{t('income2')}</Label>
               <AEDInput value={income2} onChange={setIncome2} placeholder="e.g. 10000" />
             </div>
           )}
 
-          <Toggle label={t.rentalToggle} checked={includeRental} onChange={setIncludeRental} />
+          <Toggle label={t('rentalToggle')} checked={includeRental} onChange={setIncludeRental} />
           {includeRental && (
             <div className="sm:col-span-2">
-              <Label>{t.rentalIncome}</Label>
+              <Label>{t('rentalIncome')}</Label>
               <AEDInput value={rentalIncome} onChange={setRentalIncome} placeholder="e.g. 5000" />
               <p className="text-xs text-gray-500 mt-1">Banks apply ~10/12 months for vacancy. Effective monthly: AED {fmt((parseFloat(rentalIncome)||0) * 10/12)}</p>
             </div>
@@ -233,12 +163,12 @@ const getStatus = (dbr: number): StatusKey =>
       </Section>
 
       {/* ── EXISTING DEBTS ── */}
-      <Section title={t.debtsSection}>
+      <Section title={t('debtsSection')}>
         <div className="space-y-3">
           {debtEntries.map((e, i) => (
             <div key={e.id} className="grid grid-cols-5 gap-2 items-end">
               <div className="col-span-3">
-                {i === 0 && <Label>{t.debtLabel}</Label>}
+                {i === 0 && <Label>{t('debtLabel')}</Label>}
                 <input
                   type="text"
                   value={e.label}
@@ -248,7 +178,7 @@ const getStatus = (dbr: number): StatusKey =>
                 />
               </div>
               <div className="col-span-2 relative">
-                {i === 0 && <Label>{t.debtAmount}</Label>}
+                {i === 0 && <Label>{t('debtAmount')}</Label>}
                 <div className="relative">
                   <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
                   <input
@@ -276,14 +206,14 @@ const getStatus = (dbr: number): StatusKey =>
             onClick={addDebtEntry}
             className="text-sm font-semibold text-[#0A3D7C] hover:underline"
           >
-            {t.addDebt}
+            {t('addDebt')}
           </button>
 
           {/* Credit card */}
           <div className="pt-2 border-t border-gray-100">
-            <Label>{t.ccLimit}</Label>
+            <Label>{t('ccLimit')}</Label>
             <AEDInput value={creditCardLimit} onChange={setCreditCardLimit} placeholder="e.g. 30000" />
-            <p className="text-xs text-gray-500 mt-1">{t.ccNote}
+            <p className="text-xs text-gray-500 mt-1">{t('ccNote')}
               {creditCardLimit && ` → AED ${fmtDec((parseFloat(creditCardLimit)||0)*0.05)}/mo`}
             </p>
           </div>
@@ -291,13 +221,13 @@ const getStatus = (dbr: number): StatusKey =>
       </Section>
 
       {/* ── PROPOSED LOAN ── */}
-      <Section title={t.proposedSection}>
+      <Section title={t('proposedSection')}>
         {!showProposed ? (
           <button
             onClick={() => setShowProposed(true)}
             className="text-sm font-semibold text-[#0A3D7C] hover:underline"
           >
-            {t.addProposed}
+            {t('addProposed')}
           </button>
         ) : (
           <div className="space-y-4">
@@ -305,15 +235,15 @@ const getStatus = (dbr: number): StatusKey =>
               onClick={() => setShowProposed(false)}
               className="text-xs text-gray-500 hover:text-gray-600"
             >
-              {t.removeProposed}
+              {t('removeProposed')}
             </button>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="sm:col-span-3">
-                <Label>{t.proposedAmount}</Label>
+                <Label>{t('proposedAmount')}</Label>
                 <AEDInput value={proposedAmount} onChange={setProposedAmount} placeholder="e.g. 200000" />
               </div>
               <div>
-                <Label>{t.proposedRate}</Label>
+                <Label>{t('proposedRate')}</Label>
                 <div className="relative">
                   <input
                     type="number" min={0} max={60} step={0.25}
@@ -325,7 +255,7 @@ const getStatus = (dbr: number): StatusKey =>
                 </div>
               </div>
               <div>
-                <Label>{t.proposedTenure}</Label>
+                <Label>{t('proposedTenure')}</Label>
                 <input
                   type="number" min={1} max={300}
                   value={proposedTenure}
@@ -344,12 +274,12 @@ const getStatus = (dbr: number): StatusKey =>
             </div>
 
             {/* Mortgage stress test */}
-            <Toggle label={t.mortgageToggle} checked={isMortgage} onChange={setIsMortgage} />
+            <Toggle label={t('mortgageToggle')} checked={isMortgage} onChange={setIsMortgage} />
             {isMortgage && (
               <div className="bg-amber-50 border border-amber-100 rounded-xl p-4 space-y-3">
                 <p className="text-xs font-semibold text-amber-700">CBUAE Mortgage Stress Test</p>
                 <div className="flex items-center gap-4">
-                  <Label>{t.stressRate}</Label>
+                  <Label>{t('stressRate')}</Label>
                   <div className="flex gap-2">
                     {[2, 3, 4].map(v => (
                       <button
@@ -384,7 +314,7 @@ const getStatus = (dbr: number): StatusKey =>
           <div className={`rounded-2xl border ${currentCfg.border} ${currentCfg.bg} overflow-hidden`}>
             {/* Hero */}
             <div className="px-6 py-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">{t.currentDBR}</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">{t('currentDBR')}</p>
               <div className="flex items-end gap-3">
                 <span className={`text-5xl font-black ${currentCfg.color}`}>
                   {results.currentDBR.toFixed(1)}%
@@ -409,11 +339,11 @@ const getStatus = (dbr: number): StatusKey =>
             {/* Max allowed + headroom */}
             <div className="border-t border-gray-100 grid grid-cols-2 divide-x divide-gray-100 bg-white/60">
               <div className="px-4 py-3">
-                <p className="text-xs text-gray-500">{t.maxAllowed}</p>
+                <p className="text-xs text-gray-500">{t('maxAllowed')}</p>
                 <p className="font-bold text-sm text-gray-800">AED {fmt(results.maxAllowed)}/mo</p>
               </div>
               <div className="px-4 py-3">
-                <p className="text-xs text-gray-500">{t.headroom}</p>
+                <p className="text-xs text-gray-500">{t('headroom')}</p>
                 <p className={`font-bold text-sm ${results.headroom > 0 ? 'text-emerald-600' : 'text-red-500'}`}>
                   AED {fmt(results.headroom)}/mo
                 </p>
@@ -426,7 +356,7 @@ const getStatus = (dbr: number): StatusKey =>
             <div className={`rounded-2xl border ${projectedCfg.border} ${projectedCfg.bg} px-6 py-5 space-y-3`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">{t.projectedDBR}</p>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-1">{t('projectedDBR')}</p>
                   <div className="flex items-end gap-3">
                     <span className={`text-4xl font-black ${projectedCfg.color}`}>
                       {results.projectedDBR.toFixed(1)}%
@@ -453,7 +383,7 @@ const getStatus = (dbr: number): StatusKey =>
               {/* Stressed DBR */}
               {isMortgage && results.stressedDBR > 0 && (
                 <div className="mt-2 pt-3 border-t border-gray-200">
-                  <p className="text-xs font-semibold text-amber-700 mb-1">{t.stressedDBR} (+{stressRate}%)</p>
+                  <p className="text-xs font-semibold text-amber-700 mb-1">{t('stressedDBR')} (+{stressRate}%)</p>
                   <div className="flex items-center gap-3">
                     <span className={`text-2xl font-black ${results.stressedDBR >= results.maxDBR * 100 ? 'text-red-600' : 'text-amber-600'}`}>
                       {results.stressedDBR.toFixed(1)}%
@@ -473,28 +403,28 @@ const getStatus = (dbr: number): StatusKey =>
           {/* Breakdown table */}
           <div className="rounded-xl border border-gray-100 overflow-hidden">
             <div className="bg-gray-50 px-4 py-2.5">
-              <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">{t.breakdown}</p>
+              <p className="text-xs font-bold text-gray-600 uppercase tracking-widest">{t('breakdown')}</p>
             </div>
             <table className="w-full text-sm">
               <tbody>
-                <BRow label={t.effectiveIncome}  value={`AED ${fmt(results.effectiveIncome)}`} bold />
+                <BRow label={t('effectiveIncome')}  value={`AED ${fmt(results.effectiveIncome)}`} bold />
                 {results.existingEMIs > 0 && (
-                  <BRow label={t.existingDebt}   value={`AED ${fmt(results.existingEMIs)}`} negative />
+                  <BRow label={t('existingDebt')}   value={`AED ${fmt(results.existingEMIs)}`} negative />
                 )}
                 {results.ccObligation > 0 && (
-                  <BRow label={t.ccObligation}   value={`AED ${fmtDec(results.ccObligation)}`} negative />
+                  <BRow label={t('ccObligation')}   value={`AED ${fmtDec(results.ccObligation)}`} negative />
                 )}
                 {results.hasProposed && (
-                  <BRow label={t.proposedEMI}    value={`AED ${fmtDec(results.proposedEMI)}`} negative />
+                  <BRow label={t('proposedEMI')}    value={`AED ${fmtDec(results.proposedEMI)}`} negative />
                 )}
-                <BRow label={t.totalDebt}        value={`AED ${fmt(results.projectedTotal)}`} border />
+                <BRow label={t('totalDebt')}        value={`AED ${fmt(results.projectedTotal)}`} border />
                 <BRow
-                  label={`${t.currentDBR} (${isAr ? 'بدون قرض مقترح' : 'without proposed'})`}
+                  label={`${t('currentDBR')} (${t('inline.without_proposed')})`}
                   value={`${results.currentDBR.toFixed(2)}%`}
                   accent
                 />
                 {results.hasProposed && (
-                  <BRow label={t.projectedDBR} value={`${results.projectedDBR.toFixed(2)}%`} accent />
+                  <BRow label={t('projectedDBR')} value={`${results.projectedDBR.toFixed(2)}%`} accent />
                 )}
               </tbody>
             </table>
@@ -511,7 +441,7 @@ const getStatus = (dbr: number): StatusKey =>
       {/* ── DISCLAIMER ── */}
       <div className="rounded-xl bg-gray-50 border border-gray-100 p-4 text-xs text-gray-500 leading-relaxed space-y-1.5">
         <p className="font-semibold text-gray-600">Important Disclaimer</p>
-        <p>{t.disclaimer}</p>
+        <p>{t('disclaimer')}</p>
         <p>CBUAE rules: DBR ≤ 50% gross income · Pensioners ≤ 30% · Credit cards: 5% of limit · Mortgages: stress test +2–4% · Reducing balance method.</p>
       </div>
     </div>

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -114,7 +116,7 @@ function ResultCard({
 // ─── Main Component ──────────────────────────────────────────────────────────
 
 export default function CarLoanEligibilityCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   // Inputs
   const [salary, setSalary] = useState('')
@@ -205,117 +207,43 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
   const hasInputs = salaryNum > 0 && carPriceNum > 0
 
   // Labels
-  const L = isAr
-    ? {
-        salary: 'الراتب الشهري الإجمالي (AED)',
-        salaryTip: 'راتبك الكامل قبل أي خصومات. يستخدم البنك هذا الرقم لحساب نسبة الدين.',
-        employment: 'طبيعة العمل',
-        salaried: 'موظف',
-        selfEmployed: 'عمل حر',
-        age: 'العمر (سنة)',
-        ageTip: 'يشترط معظم البنوك أن يكون عمرك بين 21 و65 عاماً عند انتهاء القرض.',
-        resident: 'مقيم في الإمارات؟',
-        yes: 'نعم',
-        no: 'لا',
-        existingDebts: 'الديون الشهرية الحالية (AED)',
-        debtsTip: 'مجموع أقساط القروض والحد الأدنى لبطاقات الائتمان الشهرية.',
-        carPrice: 'سعر السيارة (AED)',
-        downPct: 'الدفعة الأولى %',
-        downAmt: 'الدفعة الأولى (AED)',
-        carType: 'نوع السيارة',
-        newCar: 'جديدة',
-        usedCar: 'مستعملة',
-        tenure: 'مدة القرض (شهر)',
-        rate: 'معدل الفائدة السنوي (%)',
-        verdict: 'نتيجة الأهلية',
-        eligible: 'مؤهل على الأرجح',
-        borderline: 'أهلية محدودة',
-        ineligible: 'غير مؤهل',
-        emi: 'القسط الشهري',
-        loanAmt: 'مبلغ القرض',
-        dbrLabel: 'نسبة الدين (DBR)',
-        maxLoan: 'الحد الأقصى للقرض',
-        totalInterest: 'إجمالي الفائدة',
-        recommendations: 'التوصيات',
-        disclaimer: 'هذه الأداة للتقدير فقط. يعتمد القرار النهائي على مكتب الاتحاد للمعلومات الائتمانية (AECB) وسياسة البنك الداخلية. استشر بنكاً مرخصاً.',
-        nonResidentWarning: 'تمويل السيارات في الإمارات يستلزم إقامة سارية المفعول.',
-        enterAmount: 'أدخل المبلغ',
-        minSalaryWarning: 'تشترط معظم البنوك حداً أدنى للراتب يبلغ 5,000 درهم.',
-      }
-    : {
-        salary: 'Gross Monthly Salary (AED)',
-        salaryTip: 'Your full salary before any deductions. Banks use this to calculate your Debt Burden Ratio (DBR).',
-        employment: 'Employment Type',
-        salaried: 'Salaried',
-        selfEmployed: 'Self-Employed',
-        age: 'Age (years)',
-        ageTip: 'Most UAE banks require you to be 21–65 years old, with the loan fully repaid by age 65.',
-        resident: 'UAE Resident?',
-        yes: 'Yes',
-        no: 'No',
-        existingDebts: 'Existing Monthly Debts (AED)',
-        debtsTip: 'Total of all existing loan EMIs + credit card minimum payments per month.',
-        carPrice: 'Car Value / Price (AED)',
-        downPct: 'Down Payment %',
-        downAmt: 'Down Payment (AED)',
-        carType: 'Car Type',
-        newCar: 'New',
-        usedCar: 'Used',
-        tenure: 'Loan Tenure (months)',
-        rate: 'Annual Interest Rate (%)',
-        verdict: 'Eligibility Result',
-        eligible: 'Likely Eligible',
-        borderline: 'Borderline — Adjustments Needed',
-        ineligible: 'Likely Not Eligible',
-        emi: 'Monthly Installment',
-        loanAmt: 'Loan Amount',
-        dbrLabel: 'Debt Burden Ratio (DBR)',
-        maxLoan: 'Max Affordable Loan',
-        totalInterest: 'Total Interest',
-        recommendations: 'Recommendations',
-        disclaimer:
-          'This is an estimate based on CBUAE Regulation No. 29/2011 and typical bank practices. Actual approval depends on your AECB credit score, employment history, bank policy, and other factors. Consult a licensed bank or financial institution.',
-        nonResidentWarning: 'UAE car finance requires a valid UAE residence visa.',
-        enterAmount: 'Enter amount',
-        minSalaryWarning: 'Most banks require a minimum monthly salary of AED 5,000.',
-      }
 
   const verdictConfig = {
     eligible: {
       bg: 'bg-emerald-600',
       icon: '✅',
       border: 'border-emerald-200',
-      text: L.eligible,
+      text: tt('eligible'),
     },
     borderline: {
       bg: 'bg-amber-500',
       icon: '⚠️',
       border: 'border-amber-200',
-      text: L.borderline,
+      text: tt('borderline'),
     },
     ineligible: {
       bg: 'bg-red-600',
       icon: '❌',
       border: 'border-red-200',
-      text: L.ineligible,
+      text: tt('ineligible'),
     },
   }
 
   const verdict = hasInputs ? verdictConfig[result.status] : null
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Section: Personal & Employment */}
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
-          {isAr ? 'المعلومات الشخصية والوظيفية' : 'Personal & Employment'}
+          {tt('inline.personal_employment')}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
           {/* Salary */}
           <div className="sm:col-span-2">
-            <FieldLabel text={L.salary} tip={L.salaryTip} />
+            <FieldLabel text={tt('salary')} tip={tt('salaryTip')} />
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
@@ -323,18 +251,18 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                 min="0"
                 value={salary}
                 onChange={e => setSalary(e.target.value)}
-                placeholder={L.enterAmount}
+                placeholder={tt('enterAmount')}
                 className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
               />
             </div>
             {salaryNum > 0 && salaryNum < 5000 && (
-              <p className="text-xs text-amber-600 mt-1 font-medium">⚠ {L.minSalaryWarning}</p>
+              <p className="text-xs text-amber-600 mt-1 font-medium">⚠ {tt('minSalaryWarning')}</p>
             )}
           </div>
 
           {/* Employment Type */}
           <div>
-            <FieldLabel text={L.employment} />
+            <FieldLabel text={tt('employment')} />
             <div className="flex gap-2 p-1 bg-gray-100 rounded-xl">
               {(['salaried', 'self-employed'] as EmploymentType[]).map(t => (
                 <button
@@ -344,7 +272,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                     employmentType === t ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500'
                   }`}
                 >
-                  {t === 'salaried' ? L.salaried : L.selfEmployed}
+                  {t === 'salaried' ? tt('salaried') : tt('selfEmployed')}
                 </button>
               ))}
             </div>
@@ -352,7 +280,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
           {/* Age */}
           <div>
-            <FieldLabel text={L.age} tip={L.ageTip} />
+            <FieldLabel text={tt('age')} tip={tt('ageTip')} />
             <input
               type="number"
               min="18"
@@ -366,7 +294,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
           {/* UAE Resident */}
           <div>
-            <FieldLabel text={L.resident} />
+            <FieldLabel text={tt('resident')} />
             <div className="flex gap-2 p-1 bg-gray-100 rounded-xl">
               {[true, false].map(v => (
                 <button
@@ -376,18 +304,18 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                     isUAEResident === v ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500'
                   }`}
                 >
-                  {v ? L.yes : L.no}
+                  {v ? tt('yes') : tt('no')}
                 </button>
               ))}
             </div>
             {!isUAEResident && (
-              <p className="text-xs text-red-500 mt-1 font-medium">⚠ {L.nonResidentWarning}</p>
+              <p className="text-xs text-red-500 mt-1 font-medium">⚠ {tt('nonResidentWarning')}</p>
             )}
           </div>
 
           {/* Existing Debts */}
           <div>
-            <FieldLabel text={L.existingDebts} tip={L.debtsTip} />
+            <FieldLabel text={tt('existingDebts')} tip={tt('debtsTip')} />
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
@@ -406,13 +334,13 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
       {/* Section: Vehicle Details */}
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
-          {isAr ? 'تفاصيل السيارة' : 'Vehicle Details'}
+          {tt('inline.vehicle_details')}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
           {/* Car Type Toggle */}
           <div className="sm:col-span-2">
-            <FieldLabel text={L.carType} />
+            <FieldLabel text={tt('carType')} />
             <div className="flex gap-2 p-1 bg-gray-100 rounded-xl w-fit">
               {(['new', 'used'] as CarType[]).map(t => (
                 <button
@@ -422,7 +350,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                     carType === t ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500'
                   }`}
                 >
-                  {t === 'new' ? L.newCar : L.usedCar}
+                  {t === 'new' ? tt('newCar') : tt('usedCar')}
                 </button>
               ))}
             </div>
@@ -430,7 +358,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
           {/* Car Price */}
           <div className="sm:col-span-2">
-            <FieldLabel text={L.carPrice} />
+            <FieldLabel text={tt('carPrice')} />
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
@@ -446,7 +374,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
           {/* Down Payment % */}
           <div>
-            <FieldLabel text={L.downPct} />
+            <FieldLabel text={tt('downPct')} />
             <div className="space-y-2">
               <input
                 type="range"
@@ -473,7 +401,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
           {/* Down Payment AED */}
           <div>
-            <FieldLabel text={L.downAmt} />
+            <FieldLabel text={tt('downAmt')} />
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">AED</span>
               <input
@@ -492,16 +420,16 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
       {/* Section: Loan Parameters */}
       <div>
         <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">
-          {isAr ? 'شروط القرض' : 'Loan Parameters'}
+          {tt('inline.loan_parameters')}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
           {/* Tenure */}
           <div>
-            <FieldLabel text={`${L.tenure}: `} />
+            <FieldLabel text={`${tt('tenure')}: `} />
             <div className="flex items-center gap-2 mb-2">
               <span className="text-blue-600 font-bold">{tenure}</span>
-              <span className="text-sm text-gray-500">{isAr ? 'شهر' : 'months'}</span>
+              <span className="text-sm text-gray-500">{tt('inline.months')}</span>
             </div>
             <input
               type="range"
@@ -519,7 +447,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
           {/* Rate */}
           <div>
-            <FieldLabel text={L.rate} />
+            <FieldLabel text={tt('rate')} />
             <div className="relative">
               <input
                 type="number"
@@ -532,7 +460,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              {isAr ? 'النطاق المعتاد: 2.15% – 5%+ (رصيد متناقص)' : 'Typical range: 2.15% – 5%+ (reducing balance)'}
+              {tt('inline.typical_range_2_15_5_reducing_balance')}
             </p>
           </div>
         </div>
@@ -547,7 +475,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
             <div className="flex items-center gap-3">
               <span className="text-3xl">{verdict!.icon}</span>
               <div>
-                <div className="text-xs opacity-75 uppercase tracking-widest mb-0.5">{L.verdict}</div>
+                <div className="text-xs opacity-75 uppercase tracking-widest mb-0.5">{tt('verdict')}</div>
                 <div className="text-xl font-black">{verdict!.text}</div>
               </div>
             </div>
@@ -556,29 +484,29 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           {/* Metric Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <ResultCard
-              label={L.emi}
+              label={tt('emi')}
               value={result.emi > 0 ? `AED ${fmt(result.emi, 0)}` : '—'}
-              sub={isAr ? 'شهرياً' : '/month'}
+              sub={tt('inline.month')}
               accent="blue"
             />
             <ResultCard
-              label={L.loanAmt}
+              label={tt('loanAmt')}
               value={result.loanAmount > 0 ? `AED ${fmt(result.loanAmount, 0)}` : '—'}
             />
             <ResultCard
-              label={L.dbrLabel}
+              label={tt('dbrLabel')}
               value={salaryNum > 0 ? `${fmt(result.dbr, 1)}%` : '—'}
-              sub={isAr ? 'الحد الأقصى 50%' : 'Max allowed: 50%'}
+              sub={tt('inline.max_allowed_50')}
               accent={result.dbr > 50 ? 'red' : result.dbr > 40 ? 'amber' : 'green'}
             />
             <ResultCard
-              label={L.maxLoan}
+              label={tt('maxLoan')}
               value={result.maxLoan > 0 ? `AED ${fmt(result.maxLoan, 0)}` : '—'}
-              sub={isAr ? 'بناءً على دخلك' : 'Based on your income'}
+              sub={tt('inline.based_on_your_income')}
               accent="green"
             />
             <ResultCard
-              label={L.totalInterest}
+              label={tt('totalInterest')}
               value={result.totalInterest > 0 ? `AED ${fmt(result.totalInterest, 0)}` : '—'}
               accent="amber"
             />
@@ -588,8 +516,8 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           {salaryNum > 0 && (
             <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100">
               <div className="flex justify-between text-xs font-semibold text-gray-500 mb-2">
-                <span>{isAr ? 'نسبة الدين الحالية' : 'Your DBR'}: {fmt(result.dbr, 1)}%</span>
-                <span>{isAr ? 'الحد الأقصى' : 'Max'}: 50%</span>
+                <span>{tt('inline.your_dbr')}: {fmt(result.dbr, 1)}%</span>
+                <span>{tt('inline.max')}: 50%</span>
               </div>
               <div className="relative h-4 bg-gray-200 rounded-full overflow-hidden">
                 {/* Existing debts */}
@@ -609,9 +537,9 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
                 <div className="absolute top-0 h-full w-0.5 bg-red-500" style={{ left: '50%' }} />
               </div>
               <div className="flex gap-4 text-xs text-gray-500 mt-2">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-amber-400 inline-block" />{isAr ? 'ديون حالية' : 'Existing debts'}</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-blue-500 inline-block" />{isAr ? 'قسط السيارة' : 'Car EMI'}</span>
-                <span className="flex items-center gap-1"><span className="w-0.5 h-3 bg-red-500 inline-block" />{isAr ? 'الحد الأقصى' : '50% limit'}</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-amber-400 inline-block" />{tt('inline.existing_debts')}</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-blue-500 inline-block" />{tt('inline.car_emi')}</span>
+                <span className="flex items-center gap-1"><span className="w-0.5 h-3 bg-red-500 inline-block" />{tt('inline.50_limit')}</span>
               </div>
             </div>
           )}
@@ -619,7 +547,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           {/* Recommendations */}
           {result.recommendations.length > 0 && (
             <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 space-y-2">
-              <div className="text-sm font-bold text-blue-800 mb-3">💡 {L.recommendations}</div>
+              <div className="text-sm font-bold text-blue-800 mb-3">💡 {tt('recommendations')}</div>
               {result.recommendations.map((rec, i) => (
                 <div key={i} className="flex gap-2 text-sm text-blue-700">
                   <span className="mt-0.5 text-blue-400 shrink-0">→</span>
@@ -632,7 +560,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
           {/* Bank Reference Note */}
           <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
             <div className="text-xs font-semibold text-gray-600 mb-1">
-              {isAr ? 'مرجع البنوك الرئيسية' : 'Major UAE Bank Reference (Approximate)'}
+              {tt('inline.major_uae_bank_reference_approximate')}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs text-gray-500">
               {[
@@ -650,7 +578,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
               ))}
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              {isAr ? '* الحد الأدنى للراتب التقريبي. يتغير بانتظام، تحقق من البنك مباشرة.' : '* Approximate minimum salary. Subject to change. Verify directly with each bank.'}
+              {tt('inline.approximate_minimum_salary_subject_to_ch')}
             </p>
           </div>
         </div>
@@ -658,7 +586,7 @@ export default function CarLoanEligibilityCalculator({ locale }: Props) {
 
       {/* Disclaimer */}
       <div className="text-xs text-gray-500 bg-gray-50 rounded-xl p-4 border border-gray-100 leading-relaxed">
-        ⚠️ <strong>{isAr ? 'إخلاء مسؤولية' : 'Disclaimer'}:</strong> {L.disclaimer}
+        ⚠️ <strong>{tt('inline.disclaimer')}:</strong> {tt('disclaimer')}
       </div>
     </div>
   )

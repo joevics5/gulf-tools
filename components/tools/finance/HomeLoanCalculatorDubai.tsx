@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -276,7 +278,7 @@ function RateComparison({ loanAmount, years, currentRate }: { loanAmount: number
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function HomeLoanCalculatorDubai({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   // Core inputs
   const [propertyPrice, setPropertyPrice] = useState(2000000)
@@ -344,62 +346,13 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
 
   const dbrColor = dbrPct === 0 ? 'text-gray-500' : dbrPct <= 35 ? 'text-emerald-600' : dbrPct <= 50 ? 'text-amber-600' : 'text-red-600'
 
-  const L = isAr ? {
-    title: 'حاسبة قرض المنزل دبي',
-    propPrice: 'قيمة العقار (درهم)',
-    down: 'الدفعة الأولى',
-    term: 'مدة القرض',
-    rate: 'معدل الفائدة السنوي',
-    nationality: 'الجنسية',
-    purpose: 'الغرض من العقار',
-    income: 'الدخل الشهري (درهم) — اختياري',
-    presets: 'إعدادات سريعة',
-    reset: 'إعادة التعيين',
-    emi: 'القسط الشهري (EMI)',
-    loanAmt: 'مبلغ القرض',
-    totalRepay: 'إجمالي السداد',
-    totalInt: 'إجمالي الفوائد',
-    dbr: 'نسبة القسط من الدخل',
-    tabSum: 'الملخص', tabAmort: 'جدول الإطفاء', tabComp: 'مقارنة المعدلات', tabCosts: 'التكاليف الإضافية',
-    dld: 'رسوم دائرة الأراضي (4%)',
-    mortReg: 'تسجيل الرهن (0.25% + 290)',
-    agent: 'عمولة الوكيل (2%)',
-    val: 'رسوم التقييم',
-    totalFees: 'إجمالي الرسوم',
-    cashNeeded: 'إجمالي النقد المطلوب',
-    disclaimer: 'هذه أداة تعليمية تقديرية فقط. لا تمثل عرض قرض أو ضمانًا للأهلية. الشروط الفعلية تعتمد على تقييم البنك وملف المقترض والمعدلات الحالية. راجع بنكًا مرخصًا أو مستشارًا ماليًا.',
-  } : {
-    title: 'Home Loan Calculator Dubai',
-    propPrice: 'Property Value (AED)',
-    down: 'Down Payment',
-    term: 'Loan Tenure',
-    rate: 'Annual Interest Rate',
-    nationality: 'Nationality / Residency',
-    purpose: 'Property Purpose',
-    income: 'Monthly Income (AED) — optional',
-    presets: 'Quick Presets',
-    reset: '↺ Reset',
-    emi: 'Monthly EMI',
-    loanAmt: 'Home Loan Amount',
-    totalRepay: 'Total Repayment',
-    totalInt: 'Total Interest',
-    dbr: 'EMI as % of Income',
-    tabSum: 'Summary', tabAmort: 'Amortization', tabComp: 'Rate Comparison', tabCosts: 'Buying Costs',
-    dld: 'DLD Transfer Fee (4%)',
-    mortReg: 'Mortgage Registration (0.25% + AED 290)',
-    agent: "Agent's Commission (2%)",
-    val: 'Property Valuation Fee',
-    totalFees: 'Total Fees',
-    cashNeeded: 'Total Cash Required',
-    disclaimer: 'This is an educational estimation tool only. Calculations are indicative using the standard reducing balance formula. Actual offers depend on bank assessment, credit profile, property valuation, and current rates. Not financial advice. Consult a licensed bank or financial advisor.',
-  }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Presets ── */}
       <div>
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">{L.presets}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">{t('presets')}</p>
         <div className="flex flex-wrap gap-2">
           {PRESETS.map(p => (
             <button key={p.label} type="button" onClick={() => applyPreset(p)}
@@ -416,7 +369,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
         {/* Property Value */}
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label className="text-sm font-semibold text-gray-700">{L.propPrice}</label>
+            <label className="text-sm font-semibold text-gray-700">{t('propPrice')}</label>
             <span className="text-sm font-bold text-rose-600">{fmtAED(propertyPrice)}</span>
           </div>
           <input type="range" min={300000} max={25000000} step={50000}
@@ -429,7 +382,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
         <div>
           <div className="flex justify-between items-center mb-1.5">
             <label className="text-sm font-semibold text-gray-700">
-              {L.down}
+              {t('down')}
               <Tooltip text="CBUAE guidelines require minimum 15–20% for UAE nationals, 20%+ for expats (first home ≤ AED 5M). Higher amounts reduce your EMI and total interest." />
             </label>
             <span className="text-sm font-bold text-rose-600">{downPct}% — {fmtAED(downPaymentAED)}</span>
@@ -445,7 +398,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-gray-700">{L.term}</label>
+              <label className="text-sm font-semibold text-gray-700">{t('term')}</label>
               <span className="text-sm font-bold text-rose-600">{loanYears} years</span>
             </div>
             <input type="range" min={1} max={25} step={1}
@@ -456,7 +409,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
           <div>
             <div className="flex justify-between items-center mb-1.5">
               <label className="text-sm font-semibold text-gray-700">
-                {L.rate}
+                {t('rate')}
                 <Tooltip text="UAE home loan rates are EIBOR-linked, typically 3.5–5.5% in 2025. Use presets below for common bank rates, or slide to your quoted rate." />
               </label>
               <span className="text-sm font-bold text-rose-600">{annualRate.toFixed(2)}%</span>
@@ -481,7 +434,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
         {/* Nationality + Purpose */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.nationality}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('nationality')}</label>
             <select value={nationality} onChange={e => setNationality(e.target.value as NationalityType)}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition">
               <option value="uae-national">UAE National</option>
@@ -490,7 +443,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.purpose}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('purpose')}</label>
             <select value={purpose} onChange={e => setPurpose(e.target.value as PropertyPurpose)}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 transition">
               <option value="first-home">First Home</option>
@@ -512,7 +465,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
         {/* Income */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {L.income}
+            {t('income')}
             <Tooltip text="Enter to see your Debt Burden Ratio (DBR). CBUAE requires total monthly debts ≤ 50% of gross income. A DBR under 35% is considered strong." />
           </label>
           <div className="relative">
@@ -528,7 +481,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
       <div className="flex justify-end">
         <button type="button" onClick={reset}
           className="text-sm px-5 py-2.5 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors">
-          {L.reset}
+          {t('reset')}
         </button>
       </div>
 
@@ -539,13 +492,13 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
           {/* Hero grid */}
           <div className="p-5 grid grid-cols-2 gap-3">
             <div className="col-span-2">
-              <StatCard label={L.emi} value={fmtAEDDec(emi)} sub={`${loanYears} yrs · ${annualRate}% · reducing balance`} accent />
+              <StatCard label={t('emi')} value={fmtAEDDec(emi)} sub={`${loanYears} yrs · ${annualRate}% · reducing balance`} accent />
             </div>
-            <StatCard label={L.loanAmt}    value={fmtAED(loanAmount)} />
-            <StatCard label={L.totalRepay} value={fmtAED(totalRepayment)} />
-            <StatCard label={L.totalInt}   value={fmtAED(totalInterest)} />
+            <StatCard label={t('loanAmt')}    value={fmtAED(loanAmount)} />
+            <StatCard label={t('totalRepay')} value={fmtAED(totalRepayment)} />
+            <StatCard label={t('totalInt')}   value={fmtAED(totalInterest)} />
             <StatCard
-              label={L.dbr}
+              label={t('dbr')}
               value={dbrPct > 0 ? fmtPct(dbrPct) : '—'}
               sub={dbrPct > 0 ? (dbrPct > 50 ? '⚠ Exceeds 50% CBUAE limit' : dbrPct > 35 ? 'Approaching limit' : '✓ Within limits') : 'Enter income to calculate'}
             />
@@ -561,7 +514,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             {(['summary','amortization','comparison','costs'] as const).map(tab => (
               <button key={tab} type="button" onClick={() => setActiveTab(tab)}
                 className={`flex-1 py-3 text-xs font-semibold whitespace-nowrap px-2 transition-colors ${activeTab === tab ? 'text-rose-600 border-b-2 border-rose-600' : 'text-gray-500 hover:text-gray-600'}`}>
-                {tab === 'summary' ? L.tabSum : tab === 'amortization' ? L.tabAmort : tab === 'comparison' ? L.tabComp : L.tabCosts}
+                {tab === 'summary' ? t('tabSum') : tab === 'amortization' ? t('tabAmort') : tab === 'comparison' ? t('tabComp') : t('tabCosts')}
               </button>
             ))}
           </div>
@@ -571,13 +524,13 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             {/* ── Summary ── */}
             {activeTab === 'summary' && (
               <div>
-                <ResultRow label={L.loanAmt}    value={fmtAED(loanAmount)} bold />
+                <ResultRow label={t('loanAmt')}    value={fmtAED(loanAmount)} bold />
                 <ResultRow label="Down Payment"  value={`${fmtAED(downPaymentAED)} (${downPct}%)`} />
-                <ResultRow label={L.totalRepay}  value={fmtAED(totalRepayment)} />
-                <ResultRow label={L.totalInt}    value={fmtAED(totalInterest)} negative />
+                <ResultRow label={t('totalRepay')}  value={fmtAED(totalRepayment)} />
+                <ResultRow label={t('totalInt')}    value={fmtAED(totalInterest)} negative />
                 <ResultRow label="LTV Ratio"     value={fmtPct(ltv)} sub={`CBUAE max: ${maxLtv}%`} negative={ltv > maxLtv} />
                 {dbrPct > 0 && (
-                  <ResultRow label={L.dbr} value={fmtPct(dbrPct)}
+                  <ResultRow label={t('dbr')} value={fmtPct(dbrPct)}
                     sub="Max 50% per CBUAE guidelines"
                     negative={dbrPct > 50} highlight={dbrPct <= 35} />
                 )}
@@ -633,13 +586,13 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
             {activeTab === 'costs' && (
               <div>
                 <ResultRow label="Down Payment"  value={fmtAED(downPaymentAED)} bold />
-                <ResultRow label={L.dld}          sub="Mandatory fee to Dubai Land Department" value={fmtAED(dldFee)} negative />
-                <ResultRow label={L.mortReg}      sub="DLD mortgage registration (must be registered)" value={fmtAED(mortgageRegFee)} negative />
-                <ResultRow label={L.agent}        sub="Typical buyer-side commission estimate" value={fmtAED(agentFee)} negative />
-                <ResultRow label={L.val}          sub="Bank-approved valuation before approval" value={fmtAED(valuationFee)} negative />
+                <ResultRow label={t('dld')}          sub="Mandatory fee to Dubai Land Department" value={fmtAED(dldFee)} negative />
+                <ResultRow label={t('mortReg')}      sub="DLD mortgage registration (must be registered)" value={fmtAED(mortgageRegFee)} negative />
+                <ResultRow label={t('agent')}        sub="Typical buyer-side commission estimate" value={fmtAED(agentFee)} negative />
+                <ResultRow label={t('val')}          sub="Bank-approved valuation before approval" value={fmtAED(valuationFee)} negative />
                 <div className="pt-2 mt-1 border-t-2 border-gray-100">
-                  <ResultRow label={L.totalFees}  value={fmtAED(totalFees)} bold negative />
-                  <ResultRow label={L.cashNeeded} sub="Down payment + all estimated fees" value={fmtAED(totalCashNeeded)} bold highlight />
+                  <ResultRow label={t('totalFees')}  value={fmtAED(totalFees)} bold negative />
+                  <ResultRow label={t('cashNeeded')} sub="Down payment + all estimated fees" value={fmtAED(totalCashNeeded)} bold highlight />
                 </div>
                 <p className="text-xs text-gray-500 mt-3">Excludes: bank processing fees, mortgage life insurance (~0.3–0.6%/yr), building insurance, NOC fees. Actual costs may vary.</p>
               </div>
@@ -649,7 +602,7 @@ export default function HomeLoanCalculatorDubai({ locale }: Props) {
           {/* Disclaimer */}
           <div className="mx-5 mb-5 bg-amber-50 border border-amber-100 rounded-xl p-3.5">
             <p className="text-xs text-amber-700 leading-relaxed">
-              ⚠️ <strong>Disclaimer:</strong> {L.disclaimer}
+              ⚠️ <strong>Disclaimer:</strong> {t('disclaimer')}
             </p>
           </div>
         </div>
