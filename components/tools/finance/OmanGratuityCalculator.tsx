@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -116,6 +117,7 @@ function fmtYears(y: number, isAr: boolean) {
 
 export default function OmanGratuityCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   const todayStr = new Date().toISOString().split('T')[0]
 
@@ -164,72 +166,11 @@ export default function OmanGratuityCalculator({ locale }: Props) {
     setResult(null)
   }
 
-  const L = isAr ? {
-    salary: 'الراتب الأساسي الشهري',
-    salaryHint: 'الراتب الأساسي فقط — لا يشمل أي بدلات',
-    startDate: 'تاريخ بدء العمل',
-    endDate: 'تاريخ انتهاء الخدمة',
-    nationality: 'فئة الموظف',
-    expat: 'وافد / غير خاضع لنظام الحماية الاجتماعية',
-    omani: 'عُماني (قد يخضع للتأمين الاجتماعي)',
-    termination: 'سبب انتهاء الخدمة',
-    standard: 'استقالة / إنهاء عقد (الحالة العادية)',
-    misconduct: 'إنهاء بسبب سوء السلوك الجسيم',
-    unpaidLeave: 'أيام الإجازة غير المدفوعة (للخصم)',
-    quickScenarios: 'سيناريوهات سريعة',
-    calculate: 'احسب المكافأة',
-    reset: 'إعادة تعيين',
-    results: 'نتيجة الحساب',
-    totalGratuity: 'إجمالي مكافأة نهاية الخدمة',
-    legacyPeriod: 'مرحلة ما قبل 31 يوليو 2023',
-    newPeriod: 'مرحلة ما بعد 31 يوليو 2023',
-    splitNote: 'يتم الحساب بصورة مزدوجة لأن خدمتك تمتد عبر تاريخ تغيير القانون (31 يوليو 2023).',
-    preview: 'مدة الخدمة التقديرية:',
-    eligible: 'مستحق للمكافأة',
-    notEligible: 'غير مستحق للمكافأة',
-    omaniNote: 'قد يخضع الموظفون العُمانيون لنظام التأمين الاجتماعي بدلاً من أو إضافةً إلى مكافأة نهاية الخدمة. تحقق من وضعك مع صاحب العمل.',
-    misconductWarning: 'تحذير: قد تُصادر مكافأة نهاية الخدمة في حالات الإنهاء بسبب سوء السلوك الجسيم.',
-    savingsNote: 'ملاحظة: يُرتقب تطبيق نظام ادخار جديد يحل محل المكافأة المقطوعة لبعض الوافدين خلال 3 سنوات من 2023.',
-    legalNote: 'هذا تقدير استرشادي بموجب قانون العمل العُماني (المرسوم الملكي 53/2023، المادة 61). للمشورة الملزمة، تواصل مع وزارة العمل العُمانية أو استشر محامياً متخصصاً.',
-    enterAmount: 'أدخل المبلغ',
-    totalYears: 'إجمالي سنوات الخدمة',
-    dailyRate: 'الأجر اليومي',
-  } : {
-    salary: 'Basic Monthly Salary',
-    salaryHint: 'Basic salary only — exclude all allowances',
-    startDate: 'Employment Start Date',
-    endDate: 'Last Working Day',
-    nationality: 'Employee Category',
-    expat: 'Expatriate / Not under Social Protection',
-    omani: 'Omani National (may be under social insurance)',
-    termination: 'Reason for Leaving',
-    standard: 'Standard (Resignation / Termination)',
-    misconduct: 'Terminated for gross misconduct',
-    unpaidLeave: 'Unpaid Leave Days (to exclude)',
-    quickScenarios: 'Quick Scenarios',
-    calculate: 'Calculate Gratuity',
-    reset: 'Reset',
-    results: 'Your Gratuity Estimate',
-    totalGratuity: 'Total End-of-Service Gratuity',
-    legacyPeriod: 'Period before 31 Jul 2023 (old law)',
-    newPeriod: 'Period from 31 Jul 2023 (new law)',
-    splitNote: 'Your service spans the law change date of 31 July 2023. The calculator automatically applies two different rates.',
-    preview: 'Estimated service duration:',
-    eligible: 'Eligible for gratuity',
-    notEligible: 'Not eligible',
-    omaniNote: 'Omani nationals may be covered under the Social Protection Law and receive pension benefits instead of or in addition to gratuity. Confirm your status with your employer.',
-    misconductWarning: 'Warning: Gratuity may be forfeited in cases of termination for gross misconduct.',
-    savingsNote: 'Note: A new savings scheme is expected to replace lump-sum gratuity for some expatriates within 3 years of the 2023 law. Current rules apply until then.',
-    legalNote: 'This is an estimate under Oman Labour Law (Royal Decree 53/2023, Article 61). For binding advice, consult the Ministry of Labour or a qualified legal professional.',
-    enterAmount: 'e.g. 400',
-    totalYears: 'Total service years',
-    dailyRate: 'Daily basic rate',
-  }
 
   const scenarios = [
-    { label: isAr ? '5 سنوات — وافد — 2020–2025' : '5 yrs expat 2020–2025', start: '2020-01-01', end: '2025-01-01', nat: 'expat' as NationalityType },
-    { label: isAr ? '3 سنوات — بعد 2023' : '3 yrs post-2023', start: '2023-08-01', end: '2026-08-01', nat: 'expat' as NationalityType },
-    { label: isAr ? '8 سنوات — ممتدة عبر 2023' : '8 yrs spanning 2023', start: '2017-01-01', end: '2025-01-01', nat: 'expat' as NationalityType },
+    { label: tt('inline.5_yrs_expat_2020_2025'), start: '2020-01-01', end: '2025-01-01', nat: 'expat' as NationalityType },
+    { label: tt('inline.3_yrs_post_2023'), start: '2023-08-01', end: '2026-08-01', nat: 'expat' as NationalityType },
+    { label: tt('inline.8_yrs_spanning_2023'), start: '2017-01-01', end: '2025-01-01', nat: 'expat' as NationalityType },
   ]
 
   return (
@@ -237,7 +178,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
       {/* Quick Scenarios */}
       <div>
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">{L.quickScenarios}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">{tt('quickScenarios')}</p>
         <div className="flex flex-wrap gap-2">
           {scenarios.map(s => (
             <button
@@ -256,8 +197,8 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
         {/* Basic Salary */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1">{L.salary}</label>
-          <p className="text-xs text-gray-500 mb-1.5">{L.salaryHint}</p>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">{tt('salary')}</label>
+          <p className="text-xs text-gray-500 mb-1.5">{tt('salaryHint')}</p>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">RO</span>
             <input
@@ -266,7 +207,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
               step="0.001"
               value={basicSalary}
               onChange={e => setBasicSalary(e.target.value)}
-              placeholder={L.enterAmount}
+              placeholder={tt('enterAmount')}
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -274,7 +215,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
         {/* Start Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.startDate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('startDate')}</label>
           <input
             type="date"
             value={startDate}
@@ -286,7 +227,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
         {/* End Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.endDate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('endDate')}</label>
           <input
             type="date"
             value={endDate}
@@ -299,7 +240,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
         {/* Live preview */}
         {livePreview && (
           <div className="sm:col-span-2 flex items-center gap-2 px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl">
-            <span className="text-xs text-emerald-700 font-medium">{L.preview}</span>
+            <span className="text-xs text-emerald-700 font-medium">{tt('preview')}</span>
             <span className="text-sm font-bold text-emerald-800">{livePreview}</span>
           </div>
         )}
@@ -308,26 +249,26 @@ export default function OmanGratuityCalculator({ locale }: Props) {
         {isSplit && (
           <div className="sm:col-span-2 flex gap-3 px-4 py-3 bg-violet-50 border border-violet-200 rounded-xl">
             <span className="text-violet-500 text-base leading-none mt-0.5">⚡</span>
-            <p className="text-sm text-violet-800">{L.splitNote}</p>
+            <p className="text-sm text-violet-800">{tt('splitNote')}</p>
           </div>
         )}
 
         {/* Nationality */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.nationality}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('nationality')}</label>
           <select
             value={nationality}
             onChange={e => setNationality(e.target.value as NationalityType)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
-            <option value="expat">{L.expat}</option>
-            <option value="omani">{L.omani}</option>
+            <option value="expat">{tt('expat')}</option>
+            <option value="omani">{tt('omani')}</option>
           </select>
         </div>
 
         {/* Unpaid Leave */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.unpaidLeave}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('unpaidLeave')}</label>
           <input
             type="number"
             min="0"
@@ -339,7 +280,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
         {/* Termination Type */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.termination}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{tt('termination')}</label>
           <div className="flex gap-2 p-1 bg-gray-100 rounded-xl">
             {(['standard', 'misconduct'] as TerminationType[]).map(t => (
               <button
@@ -349,7 +290,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
                   terminationType === t ? 'bg-white shadow text-emerald-700' : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
-                {t === 'standard' ? L.standard : L.misconduct}
+                {t === 'standard' ? tt('standard') : tt('misconduct')}
               </button>
             ))}
           </div>
@@ -360,13 +301,13 @@ export default function OmanGratuityCalculator({ locale }: Props) {
       {nationality === 'omani' && (
         <div className="flex gap-3 px-4 py-3 bg-blue-50 border border-blue-100 rounded-xl">
           <span className="text-blue-500 text-base leading-none mt-0.5">ℹ️</span>
-          <p className="text-sm text-blue-800">{L.omaniNote}</p>
+          <p className="text-sm text-blue-800">{tt('omaniNote')}</p>
         </div>
       )}
       {terminationType === 'misconduct' && (
         <div className="flex gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl">
           <span className="text-amber-500 text-base leading-none mt-0.5">⚠️</span>
-          <p className="text-sm text-amber-800">{L.misconductWarning}</p>
+          <p className="text-sm text-amber-800">{tt('misconductWarning')}</p>
         </div>
       )}
 
@@ -376,13 +317,13 @@ export default function OmanGratuityCalculator({ locale }: Props) {
           onClick={handleCalculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {L.calculate}
+          {tt('calculate')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {L.reset}
+          {tt('reset')}
         </button>
       </div>
 
@@ -390,9 +331,9 @@ export default function OmanGratuityCalculator({ locale }: Props) {
       {result && (
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-gray-900">{L.results}</h3>
+            <h3 className="font-bold text-gray-900">{tt('results')}</h3>
             <span className={`text-xs font-semibold px-3 py-1 rounded-full ${result.eligible ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
-              {result.eligible ? L.eligible : L.notEligible}
+              {result.eligible ? tt('eligible') : tt('notEligible')}
             </span>
           </div>
 
@@ -400,25 +341,25 @@ export default function OmanGratuityCalculator({ locale }: Props) {
             <>
               {/* Hero */}
               <div className="bg-emerald-600 rounded-xl p-4 text-white">
-                <div className="text-sm opacity-80 mb-1">{L.totalGratuity}</div>
+                <div className="text-sm opacity-80 mb-1">{tt('totalGratuity')}</div>
                 <div className="text-3xl font-black">{fmt(result.totalGratuity)}</div>
               </div>
 
               {/* Breakdown */}
               <div className="space-y-3">
-                <ResultRow label={L.totalYears} value={fmtYears(result.totalYears, isAr)} />
-                <ResultRow label={L.dailyRate} value={fmt(result.dailyRate)} />
+                <ResultRow label={tt('totalYears')} value={fmtYears(result.totalYears, isAr)} />
+                <ResultRow label={tt('dailyRate')} value={fmt(result.dailyRate)} />
 
                 {/* Split breakdown — only show both rows if both periods exist */}
                 {result.legacyYears > 0 && (
                   <div className="rounded-xl border border-gray-200 overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 flex items-center gap-2">
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{L.legacyPeriod}</span>
+                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{tt('legacyPeriod')}</span>
                       <span className="text-xs text-gray-500">({fmtYears(result.legacyYears, isAr)})</span>
                     </div>
                     <div className="px-4 py-3">
                       <ResultRow
-                        label={isAr ? 'الأجر اليومي × 15 يوم (أول 3 سنوات) ثم 30 يوم' : '15 days/yr (first 3), then 30 days/yr'}
+                        label={tt('inline.15_days_yr_first_3_then_30_days_yr')}
                         value={fmt(result.legacyGratuity)}
                         highlight
                       />
@@ -429,12 +370,12 @@ export default function OmanGratuityCalculator({ locale }: Props) {
                 {result.newYears > 0 && (
                   <div className="rounded-xl border border-gray-200 overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 flex items-center gap-2">
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{L.newPeriod}</span>
+                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{tt('newPeriod')}</span>
                       <span className="text-xs text-gray-500">({fmtYears(result.newYears, isAr)})</span>
                     </div>
                     <div className="px-4 py-3">
                       <ResultRow
-                        label={isAr ? 'راتب شهر كامل × سنوات الخدمة (المادة 61)' : '1 full month × years of service (Art. 61)'}
+                        label={tt('inline.1_full_month_years_of_service_art_61')}
                         value={fmt(result.newGratuity)}
                         highlight
                       />
@@ -444,7 +385,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
 
                 <div className="border-t border-gray-200 pt-3">
                   <ResultRow
-                    label={isAr ? 'إجمالي المكافأة المستحقة' : 'Total gratuity entitlement'}
+                    label={tt('inline.total_gratuity_entitlement')}
                     value={fmt(result.totalGratuity)}
                     highlight
                   />
@@ -454,12 +395,12 @@ export default function OmanGratuityCalculator({ locale }: Props) {
               {/* Savings scheme note */}
               <div className="flex gap-2.5 px-3 py-2.5 bg-amber-50 border border-amber-100 rounded-xl">
                 <span className="text-amber-500 text-sm leading-none mt-0.5">🔔</span>
-                <p className="text-xs text-amber-800">{L.savingsNote}</p>
+                <p className="text-xs text-amber-800">{tt('savingsNote')}</p>
               </div>
             </>
           ) : (
             <div className="bg-red-50 border border-red-100 rounded-xl p-4">
-              <div className="font-semibold text-red-700 mb-1">{L.notEligible}</div>
+              <div className="font-semibold text-red-700 mb-1">{tt('notEligible')}</div>
               <p className="text-sm text-red-600">{result.message}</p>
             </div>
           )}
@@ -467,7 +408,7 @@ export default function OmanGratuityCalculator({ locale }: Props) {
           {/* Legal disclaimer */}
           <div className="flex gap-2.5 px-4 py-3 bg-gray-100 rounded-xl border border-gray-200">
             <span className="text-gray-500 text-base leading-none mt-0.5">⚖️</span>
-            <p className="text-xs text-gray-500 leading-relaxed">{L.legalNote}</p>
+            <p className="text-xs text-gray-500 leading-relaxed">{tt('legalNote')}</p>
           </div>
         </div>
       )}

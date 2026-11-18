@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -122,6 +123,7 @@ function maxAffordableTerm(principal: number, salary: number, dbr: number, annua
 
 export default function KuwaitEMICalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   const [loanClass, setLoanClass] = useState<LoanClass>('consumer')
   const [employment, setEmployment] = useState('employee')
@@ -280,79 +282,6 @@ export default function KuwaitEMICalculator({ locale }: Props) {
     setAmortization([])
   }
 
-  const t = isAr
-    ? {
-        loanClass: 'نوع القرض',
-        employment: 'الوضع الوظيفي',
-        salary: 'صافي الراتب الشهري (للتحقق من الأعباء)',
-        amount: 'مبلغ القرض',
-        term: 'المدة (بالأشهر)',
-        rate: 'معدل الفائدة السنوي (%)',
-        rateType: 'نوع المعدل',
-        calc: 'احسب القسط',
-        reset: 'إعادة تعيين',
-        results: 'النتائج',
-        emi: 'القسط الشهري المقدر',
-        totalPayable: 'إجمالي المستحق',
-        totalInterest: 'إجمالي الفائدة',
-        maxAllowedAmt: 'أقصى مبلغ مسموح',
-        maxAllowedTerm: 'أقصى مدة مسموحة',
-        dbrStatus: 'نسبة العبء المالي',
-        compliant: '✅ ضمن الحدود القانونية',
-        blocked: '🚫 يتجاوز الحدود القانونية',
-        illustrative: '⚠️ توضيحي فقط',
-        violations: 'المخالفات القانونية',
-        suggestion: 'أقرب قيم ممكنة قانونياً',
-        suggestedAmt: 'أقصى مبلغ ممكن',
-        suggestedTerm: 'أقصى مدة ممكنة',
-        suggestedEMI: 'القسط المقترح',
-        showSchedule: 'عرض جدول السداد',
-        hideSchedule: 'إخفاء جدول السداد',
-        month: 'الشهر',
-        principal: 'الأصل',
-        interest: 'الفائدة',
-        balance: 'الرصيد',
-        legalNote: 'ملاحظة قانونية',
-        enterAmt: 'أدخل المبلغ',
-        estimate: 'تقدير — ليس عرضاً ملزماً من البنك.',
-        months: 'شهراً',
-      }
-    : {
-        loanClass: 'Loan Category',
-        employment: 'Employment Status',
-        salary: 'Net Monthly Salary (for DBR check)',
-        amount: 'Loan Amount',
-        term: 'Term (months)',
-        rate: 'Annual Interest Rate (%)',
-        rateType: 'Rate Type',
-        calc: 'Calculate EMI',
-        reset: 'Reset',
-        results: 'Results',
-        emi: 'Estimated Monthly Installment',
-        totalPayable: 'Total Payable',
-        totalInterest: 'Total Interest',
-        maxAllowedAmt: 'Max Allowed Amount',
-        maxAllowedTerm: 'Max Allowed Term',
-        dbrStatus: 'Debt Burden Ratio',
-        compliant: '✅ Within legal limits',
-        blocked: '🚫 Exceeds Kuwait legal limits',
-        illustrative: '⚠️ Illustrative only',
-        violations: 'Rule Violations',
-        suggestion: 'Nearest Compliant Values',
-        suggestedAmt: 'Max Affordable Amount',
-        suggestedTerm: 'Max Affordable Term',
-        suggestedEMI: 'Suggested Installment',
-        showSchedule: 'Show Amortization Schedule',
-        hideSchedule: 'Hide Schedule',
-        month: 'Month',
-        principal: 'Principal',
-        interest: 'Interest',
-        balance: 'Balance',
-        legalNote: 'Legal Note',
-        enterAmt: 'Enter amount',
-        estimate: 'Estimate only — not a binding bank offer.',
-        months: 'months',
-      }
 
   const statusColor = (s?: ComplianceStatus) => {
     if (s === 'compliant') return 'bg-emerald-100 text-emerald-700'
@@ -374,7 +303,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 1: Loan category */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.loanClass}
+            {t('loanClass')}
           </label>
           <select
             value={loanClass}
@@ -387,7 +316,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
           </select>
           {loanClass !== 'illustrative' && (
             <p className="text-xs text-gray-500 mt-1">
-              Max {fmt(LOAN_CLASSES[loanClass].maxAmount, 0)} · {LOAN_CLASSES[loanClass].maxTermMonths} {t.months}
+              Max {fmt(LOAN_CLASSES[loanClass].maxAmount, 0)} · {LOAN_CLASSES[loanClass].maxTermMonths} {t('months')}
             </p>
           )}
         </div>
@@ -395,7 +324,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 2: Employment status */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.employment}
+            {t('employment')}
           </label>
           <select
             value={employment}
@@ -414,7 +343,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 3: Salary */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.salary}
+            {t('salary')}
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">KD</span>
@@ -423,7 +352,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
               min="0"
               value={salary}
               onChange={e => setSalary(e.target.value)}
-              placeholder={t.enterAmt}
+              placeholder={t('enterAmt')}
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -432,7 +361,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 4: Loan amount */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.amount}
+            {t('amount')}
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">KD</span>
@@ -441,7 +370,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
               min="0"
               value={amount}
               onChange={e => setAmount(e.target.value)}
-              placeholder={t.enterAmt}
+              placeholder={t('enterAmt')}
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -450,7 +379,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 5: Term */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.term}
+            {t('term')}
           </label>
           <input
             type="number"
@@ -465,7 +394,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 6a: Rate */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.rate}
+            {t('rate')}
           </label>
           <div className="relative">
             <input
@@ -485,7 +414,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
         {/* Step 6b: Rate type */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {t.rateType}
+            {t('rateType')}
           </label>
           <select
             value={rateType}
@@ -508,13 +437,13 @@ export default function KuwaitEMICalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {t.calc}
+          {t('calc')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {t.reset}
+          {t('reset')}
         </button>
       </div>
 
@@ -522,19 +451,19 @@ export default function KuwaitEMICalculator({ locale }: Props) {
       {result && (
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h3 className="font-bold text-gray-900">{t.results}</h3>
+            <h3 className="font-bold text-gray-900">{t('results')}</h3>
             <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColor(result.status)}`}>
               {result.status === 'compliant'
-                ? t.compliant
+                ? t('compliant')
                 : result.status === 'blocked'
-                ? t.blocked
-                : t.illustrative}
+                ? t('blocked')
+                : t('illustrative')}
             </span>
           </div>
 
           {/* Hero EMI */}
           <div className={`${heroColor(result.status)} rounded-xl p-4 text-white`}>
-            <div className="text-sm opacity-80 mb-1">{t.emi}</div>
+            <div className="text-sm opacity-80 mb-1">{t('emi')}</div>
             <div className="text-3xl font-black">{fmt(result.emi)}</div>
             {rateType === 'flat' && (
               <div className="text-xs opacity-70 mt-1">Flat rate — illustrative display only</div>
@@ -544,7 +473,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
           {/* Violations — shown before breakdown if blocked */}
           {result.violations.length > 0 && (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 space-y-2">
-              <p className="text-sm font-bold text-red-800">{t.violations}</p>
+              <p className="text-sm font-bold text-red-800">{t('violations')}</p>
               {(isAr ? result.violationMessagesAr : result.violationMessages).map((msg, i) => (
                 <p key={i} className="text-xs text-red-700">🚫 {msg}</p>
               ))}
@@ -554,34 +483,34 @@ export default function KuwaitEMICalculator({ locale }: Props) {
           {/* Nearest compliant suggestion */}
           {result.suggestion && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 space-y-3">
-              <p className="text-sm font-bold text-emerald-800">{t.suggestion}</p>
-              <Row label={t.suggestedAmt} value={fmt(result.suggestion.maxAffordableAmount)} highlight />
-              <Row label={t.suggestedTerm} value={`${result.suggestion.maxAffordableTerm} ${t.months}`} />
-              <Row label={t.suggestedEMI} value={fmt(result.suggestion.suggestedEMI)} highlight />
+              <p className="text-sm font-bold text-emerald-800">{t('suggestion')}</p>
+              <Row label={t('suggestedAmt')} value={fmt(result.suggestion.maxAffordableAmount)} highlight />
+              <Row label={t('suggestedTerm')} value={`${result.suggestion.maxAffordableTerm} ${t('months')}`} />
+              <Row label={t('suggestedEMI')} value={fmt(result.suggestion.suggestedEMI)} highlight />
             </div>
           )}
 
           {/* Breakdown */}
           <div className="space-y-3">
-            <Row label={isAr ? 'أصل القرض' : 'Loan Principal'} value={fmt(result.principal)} />
-            <Row label={t.totalInterest} value={fmt(result.totalInterest)} negative />
+            <Row label={t('inline.loan_principal')} value={fmt(result.principal)} />
+            <Row label={t('totalInterest')} value={fmt(result.totalInterest)} negative />
             <div className="border-t border-gray-200 pt-3">
-              <Row label={t.totalPayable} value={fmt(result.totalPayable)} highlight />
+              <Row label={t('totalPayable')} value={fmt(result.totalPayable)} highlight />
             </div>
           </div>
 
           {/* Legal limits strip */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-white border border-gray-200 rounded-xl p-3 text-center">
-              <div className="text-xs text-gray-500 mb-1">{t.maxAllowedAmt}</div>
+              <div className="text-xs text-gray-500 mb-1">{t('maxAllowedAmt')}</div>
               <div className="text-sm font-bold text-gray-800">
                 {isFinite(result.maxAllowedAmount) ? fmt(result.maxAllowedAmount, 0) : '—'}
               </div>
             </div>
             <div className="bg-white border border-gray-200 rounded-xl p-3 text-center">
-              <div className="text-xs text-gray-500 mb-1">{t.maxAllowedTerm}</div>
+              <div className="text-xs text-gray-500 mb-1">{t('maxAllowedTerm')}</div>
               <div className="text-sm font-bold text-gray-800">
-                {isFinite(result.maxAllowedTerm) ? `${result.maxAllowedTerm} ${t.months}` : '—'}
+                {isFinite(result.maxAllowedTerm) ? `${result.maxAllowedTerm} ${t('months')}` : '—'}
               </div>
             </div>
           </div>
@@ -590,7 +519,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
           {result.dbrUsed > 0 && (
             <div className="bg-white border border-gray-200 rounded-xl p-4">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-xs font-semibold text-gray-600">{t.dbrStatus}</span>
+                <span className="text-xs font-semibold text-gray-600">{t('dbrStatus')}</span>
                 <span className={`text-xs font-bold ${result.dbrUsed > result.dbrLimit ? 'text-red-600' : 'text-emerald-600'}`}>
                   {(result.dbrUsed * 100).toFixed(1)}% / {result.dbrLimit * 100}% limit
                 </span>
@@ -606,11 +535,11 @@ export default function KuwaitEMICalculator({ locale }: Props) {
 
           {/* Legal note */}
           <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 space-y-1">
-            <p className="text-xs font-semibold text-blue-700">{t.legalNote}</p>
+            <p className="text-xs font-semibold text-blue-700">{t('legalNote')}</p>
             <p className="text-xs text-blue-600">
               {isAr ? LOAN_CLASSES[result.loanClass].noteAr : LOAN_CLASSES[result.loanClass].note}
             </p>
-            <p className="text-xs text-blue-500 italic">{t.estimate}</p>
+            <p className="text-xs text-blue-500 italic">{t('estimate')}</p>
           </div>
 
           {/* Amortization toggle */}
@@ -618,7 +547,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
             onClick={() => setShowSchedule(v => !v)}
             className="w-full py-2 text-sm font-semibold text-emerald-600 hover:text-emerald-700 border border-emerald-200 rounded-xl transition-colors"
           >
-            {showSchedule ? t.hideSchedule : t.showSchedule}
+            {showSchedule ? t('hideSchedule') : t('showSchedule')}
           </button>
 
           {showSchedule && amortization.length > 0 && (
@@ -626,7 +555,7 @@ export default function KuwaitEMICalculator({ locale }: Props) {
               <table className="min-w-full text-xs">
                 <thead className="bg-gray-100 text-gray-600">
                   <tr>
-                    {[t.month, t.principal, t.interest, t.balance].map(h => (
+                    {[t('month'), t('principal'), t('interest'), t('balance')].map(h => (
                       <th key={h} className="px-3 py-2 text-right font-semibold">{h}</th>
                     ))}
                   </tr>

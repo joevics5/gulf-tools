@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -264,6 +266,7 @@ function BalanceChart({ flatRows, reducingRows }: { flatRows: AmortRow[]; reduci
 
 export default function FlatInterestRateCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   // Inputs
   const [loanAmt, setLoanAmt] = useState('100000')
@@ -285,11 +288,11 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
     const P = parseFloat(loanAmt)
     const r = parseFloat(flatRate)
     const n = parseInt(tenure)
-    if (!P || P < 1000) errs.loanAmt = isAr ? 'الحد الأدنى 1,000 درهم' : 'Minimum AED 1,000'
-    if (!r || r <= 0 || r > 15) errs.flatRate = isAr ? 'معدل بين 0.01 و 15' : 'Rate must be 0.01–15%'
-    if (!n || n < 6 || n > 60) errs.tenure = isAr ? 'مدة 6–60 شهرًا' : 'Tenure must be 6–60 months'
+    if (!P || P < 1000) errs.loanAmt = t('inline.minimum_aed_1_000')
+    if (!r || r <= 0 || r > 15) errs.flatRate = t('inline.rate_must_be_0_01_15')
+    if (!n || n < 6 || n > 60) errs.tenure = t('inline.tenure_must_be_6_60_months')
     return errs
-  }, [loanAmt, flatRate, tenure, isAr])
+  }, [loanAmt, flatRate, tenure, t])
 
   const calculate = useCallback(() => {
     const errs = validate()
@@ -345,56 +348,9 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
     setReducingAmort([])
   }
 
-  const L = isAr
-    ? {
-        title: 'حاسبة معدل الفائدة الثابت — الإمارات',
-        subtitle: 'قارن بين طريقة الفائدة الثابتة والرصيد المتناقص. يُلزم مصرف الإمارات المركزي البنوك بالإفصاح عن المعدل الفعلي.',
-        loanAmt: 'مبلغ القرض (درهم)',
-        flatRate: 'معدل الفائدة الثابت (%)',
-        tenure: 'مدة القرض (أشهر)',
-        fee: 'إضافة رسوم المعالجة',
-        feePercent: 'رسوم المعالجة (%)',
-        feeFixed: 'أو مبلغ ثابت (درهم)',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        flatEMI: 'القسط الشهري (ثابت)',
-        reducingEMI: 'القسط الشهري (متناقص)',
-        effectiveRate: 'المعدل الفعلي السنوي',
-        totalRepay: 'إجمالي المبلغ المسدد',
-        totalInterest: 'إجمالي الفوائد',
-        savings: 'الوفر (الرصيد المتناقص)',
-        breakdown: 'التفاصيل الكاملة',
-        chart: 'مخطط الرصيد',
-        amort: 'جدول الاستهلاك',
-        exportCSV: 'تصدير CSV',
-        disclaimer: 'هذه الأداة للأغراض التوضيحية والتعليمية فقط. النتائج تقريبية ولا تُعدّ استشارة مالية. تعتمد شروط القرض الفعلية على البنك وملفك الائتماني واتفاقيتك الموقّعة. استشر بنكك أو مستشارًا ماليًا مرخّصًا. لا توجد أي صلة بأي بنك أو مصرف الإمارات المركزي (CBUAE).',
-      }
-    : {
-        title: 'Flat Interest Rate Calculator — UAE',
-        subtitle: 'Compare flat rate vs reducing balance loans. Per CBUAE regulations, banks must disclose the effective (reducing balance) rate alongside any quoted flat rate.',
-        loanAmt: 'Loan amount (AED)',
-        flatRate: 'Flat interest rate (%)',
-        tenure: 'Loan tenure (months)',
-        fee: 'Include processing fee',
-        feePercent: 'Processing fee (%)',
-        feeFixed: 'Or fixed amount (AED)',
-        calculate: 'Calculate',
-        reset: 'Reset',
-        flatEMI: 'Monthly EMI (flat)',
-        reducingEMI: 'Monthly EMI (reducing)',
-        effectiveRate: 'Effective annual rate',
-        totalRepay: 'Total repayment',
-        totalInterest: 'Total interest',
-        savings: 'Savings (reducing)',
-        breakdown: 'Full breakdown',
-        chart: 'Balance chart',
-        amort: 'Amortization table',
-        exportCSV: 'Export CSV',
-        disclaimer: 'This tool is for illustrative and educational purposes only. Results are approximate and do not constitute financial advice. Actual loan terms, rates, EMIs and fees depend on your bank, credit profile and signed agreement. Consult your bank or a licensed financial advisor before making any decisions. Not affiliated with any bank or the Central Bank of UAE (CBUAE). CBUAE requires banks to disclose the effective rate alongside any flat rate.',
-      }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* CBUAE regulatory badge */}
       <div className="flex items-center gap-2 text-xs text-emerald-700 bg-emerald-50 rounded-xl px-4 py-2 w-fit">
@@ -409,7 +365,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
 
         {/* Loan amount */}
         <div className="sm:col-span-2 space-y-1.5">
-          <label className="block text-sm font-semibold text-gray-700">{L.loanAmt}</label>
+          <label className="block text-sm font-semibold text-gray-700">{t('loanAmt')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input
@@ -420,7 +376,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               value={loanAmt}
               onChange={e => setLoanAmt(e.target.value)}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-              aria-label={L.loanAmt}
+              aria-label={t('loanAmt')}
             />
           </div>
           <div className="flex items-center gap-3 mt-1">
@@ -441,7 +397,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
 
         {/* Flat rate */}
         <div className="space-y-1.5">
-          <label className="block text-sm font-semibold text-gray-700">{L.flatRate}</label>
+          <label className="block text-sm font-semibold text-gray-700">{t('flatRate')}</label>
           <div className="relative">
             <input
               type="number"
@@ -451,7 +407,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               value={flatRate}
               onChange={e => setFlatRate(e.target.value)}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-              aria-label={L.flatRate}
+              aria-label={t('flatRate')}
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">%</span>
           </div>
@@ -473,7 +429,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
 
         {/* Tenure */}
         <div className="space-y-1.5">
-          <label className="block text-sm font-semibold text-gray-700">{L.tenure}</label>
+          <label className="block text-sm font-semibold text-gray-700">{t('tenure')}</label>
           <div className="relative">
             <input
               type="number"
@@ -483,7 +439,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               value={tenure}
               onChange={e => setTenure(e.target.value)}
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
-              aria-label={L.tenure}
+              aria-label={t('tenure')}
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">mo</span>
           </div>
@@ -512,13 +468,13 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
               onChange={e => setUseFee(e.target.checked)}
               className="accent-emerald-600 w-4 h-4"
             />
-            {L.fee}
+            {t('fee')}
           </label>
 
           {useFee && (
             <div className="grid grid-cols-2 gap-4 mt-3">
               <div className="space-y-1">
-                <label className="block text-xs text-gray-500">{L.feePercent}</label>
+                <label className="block text-xs text-gray-500">{t('feePercent')}</label>
                 <div className="relative">
                   <input
                     type="number"
@@ -533,7 +489,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
                 </div>
               </div>
               <div className="space-y-1">
-                <label className="block text-xs text-gray-500">{L.feeFixed}</label>
+                <label className="block text-xs text-gray-500">{t('feeFixed')}</label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-500">AED</span>
                   <input
@@ -556,13 +512,13 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {L.calculate}
+          {t('calculate')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {L.reset}
+          {t('reset')}
         </button>
       </div>
 
@@ -572,10 +528,10 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
 
           {/* Hero EMI */}
           <div className="bg-emerald-600 rounded-2xl p-5 text-white">
-            <div className="text-sm opacity-75 mb-1">{L.flatEMI}</div>
+            <div className="text-sm opacity-75 mb-1">{t('flatEMI')}</div>
             <div className="text-4xl font-black tracking-tight">{fmtAED(results.emiFlat)}</div>
             <div className="text-sm opacity-60 mt-1">
-              {results.tenureMonths} {isAr ? 'قسطًا شهريًا' : 'monthly payments'} · {fmtPct(results.flatRate)} {isAr ? 'معدل ثابت' : 'flat rate'}
+              {results.tenureMonths} {t('inline.monthly_payments')} · {fmtPct(results.flatRate)} {t('inline.flat_rate')}
             </div>
           </div>
 
@@ -583,20 +539,20 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
               <span className="text-xs font-medium text-gray-500 bg-gray-200 rounded-full px-2 py-0.5">
-                {isAr ? 'ثابت' : 'Flat rate'}
+                {t('inline.flat_rate_2')}
               </span>
               <div className="text-xl font-bold text-gray-900 mt-2">{fmtAED(results.emiFlat)}</div>
               <div className="text-xs text-gray-500 mt-1">
-                {isAr ? 'إجمالي الفوائد:' : 'Total interest:'} {fmtAED(results.totalIntFlat)}
+                {t('inline.total_interest')} {fmtAED(results.totalIntFlat)}
               </div>
             </div>
             <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
               <span className="text-xs font-medium text-emerald-700 bg-emerald-100 rounded-full px-2 py-0.5">
-                {isAr ? 'متناقص' : 'Reducing'}
+                {t('inline.reducing')}
               </span>
               <div className="text-xl font-bold text-emerald-700 mt-2">{fmtAED(results.emiReducing)}</div>
               <div className="text-xs text-emerald-500 mt-1">
-                {isAr ? 'إجمالي الفوائد:' : 'Total interest:'} {fmtAED(results.totalIntReducing)}
+                {t('inline.total_interest')} {fmtAED(results.totalIntReducing)}
               </div>
             </div>
           </div>
@@ -611,25 +567,25 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
 
           {/* Metric cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <MetricCard label={L.effectiveRate} value={fmtPct(results.effectiveRate)} color="info" />
-            <MetricCard label={L.totalRepay} value={fmtAED(results.totalRepay)} />
-            <MetricCard label={L.totalInterest} value={fmtAED(results.totalIntFlat)} color="danger" />
-            <MetricCard label={L.savings} value={fmtAED(results.savings)} color="success" />
+            <MetricCard label={t('effectiveRate')} value={fmtPct(results.effectiveRate)} color="info" />
+            <MetricCard label={t('totalRepay')} value={fmtAED(results.totalRepay)} />
+            <MetricCard label={t('totalInterest')} value={fmtAED(results.totalIntFlat)} color="danger" />
+            <MetricCard label={t('savings')} value={fmtAED(results.savings)} color="success" />
           </div>
 
           {/* Full breakdown */}
           <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100 space-y-1">
-            <h3 className="font-bold text-gray-900 mb-3 text-sm">{L.breakdown}</h3>
-            <ResultRow label={isAr ? 'أصل القرض' : 'Loan principal'} value={fmtAED(results.principal)} />
-            <ResultRow label={isAr ? 'معدل الفائدة الثابت' : 'Flat interest rate'} value={fmtPct(results.flatRate)} />
-            <ResultRow label={isAr ? 'المدة' : 'Tenure'} value={`${results.tenureMonths} ${isAr ? 'شهرًا' : 'months'} (${(results.tenureMonths / 12).toFixed(1)} ${isAr ? 'سنوات' : 'yrs'})`} />
-            <ResultRow label={isAr ? 'إجمالي الفوائد (ثابت)' : 'Total interest (flat)'} value={fmtAED(results.totalIntFlat)} negative />
+            <h3 className="font-bold text-gray-900 mb-3 text-sm">{t('breakdown')}</h3>
+            <ResultRow label={t('inline.loan_principal')} value={fmtAED(results.principal)} />
+            <ResultRow label={t('inline.flat_interest_rate')} value={fmtPct(results.flatRate)} />
+            <ResultRow label={t('inline.tenure')} value={`${results.tenureMonths} ${t('inline.months')} (${(results.tenureMonths / 12).toFixed(1)} ${t('inline.yrs')})`} />
+            <ResultRow label={t('inline.total_interest_flat')} value={fmtAED(results.totalIntFlat)} negative />
             {results.totalFee > 0 && (
-              <ResultRow label={isAr ? 'رسوم المعالجة' : 'Processing fee'} value={fmtAED(results.totalFee)} negative />
+              <ResultRow label={t('inline.processing_fee')} value={fmtAED(results.totalFee)} negative />
             )}
-            <ResultRow label={isAr ? 'إجمالي المسدد' : 'Total repayment'} value={fmtAED(results.totalRepay)} highlight />
-            <ResultRow label={isAr ? 'القسط الشهري' : 'Monthly EMI'} value={fmtAED(results.emiFlat)} highlight />
-            <ResultRow label={isAr ? 'المعدل الفعلي السنوي' : 'Effective annual rate'} value={fmtPct(results.effectiveRate)} />
+            <ResultRow label={t('inline.total_repayment')} value={fmtAED(results.totalRepay)} highlight />
+            <ResultRow label={t('inline.monthly_emi')} value={fmtAED(results.emiFlat)} highlight />
+            <ResultRow label={t('inline.effective_annual_rate')} value={fmtPct(results.effectiveRate)} />
           </div>
 
           {/* Chart / Amort tabs */}
@@ -645,7 +601,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
                       : 'border-transparent text-gray-500 hover:text-gray-600'
                   }`}
                 >
-                  {tab === 'chart' ? L.chart : L.amort}
+                  {tab === 'chart' ? t('chart') : t('amort')}
                 </button>
               ))}
             </div>
@@ -664,7 +620,7 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
                     </svg>
-                    {L.exportCSV}
+                    {t('exportCSV')}
                   </button>
                 </div>
                 <AmortTable rows={flatAmort} />
@@ -674,8 +630,8 @@ export default function FlatInterestRateCalculator({ locale }: Props) {
 
           {/* Disclaimer */}
           <div className="bg-gray-50 rounded-xl px-4 py-3 text-xs text-gray-500 leading-relaxed border border-gray-100">
-            <span className="font-semibold text-gray-500">{isAr ? 'إخلاء المسؤولية: ' : 'Disclaimer: '}</span>
-            {L.disclaimer}
+            <span className="font-semibold text-gray-500">{t('inline.disclaimer')}</span>
+            {t('disclaimer')}
           </div>
         </div>
       )}

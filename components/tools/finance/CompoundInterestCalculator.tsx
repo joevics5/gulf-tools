@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -209,6 +211,7 @@ function PieChart({ principal, contributions, interest }: { principal: number; c
 // ─── Component ─────────────────────────────────────────────────────────────────
 export default function CompoundInterestCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   const [country, setCountry] = useState('uae')
   const [principal, setPrincipal] = useState('')
@@ -225,11 +228,11 @@ export default function CompoundInterestCalculator({ locale }: Props) {
   function validate() {
     const errs: Record<string, string> = {}
     if (!parseFloat(principal) || parseFloat(principal) <= 0)
-      errs.principal = isAr ? 'أدخل مبلغاً صحيحاً' : 'Enter a valid amount'
+      errs.principal = tt('inline.enter_a_valid_amount')
     if (!parseFloat(rate) || parseFloat(rate) <= 0 || parseFloat(rate) > 100)
-      errs.rate = isAr ? 'أدخل نسبة بين 0 و100' : 'Enter a rate between 0 and 100'
+      errs.rate = tt('inline.enter_a_rate_between_0_and_100')
     if (!parseFloat(years) || parseFloat(years) < 1 || parseFloat(years) > 50)
-      errs.years = isAr ? 'أدخل مدة بين 1 و50 سنة' : 'Enter a period between 1 and 50 years'
+      errs.years = tt('inline.enter_a_period_between_1_and_50_years')
     return errs
   }
 
@@ -259,42 +262,40 @@ export default function CompoundInterestCalculator({ locale }: Props) {
   }
 
   const t = {
-    country: isAr ? 'الدولة' : 'Country',
-    principal: isAr ? 'المبلغ الأولي (رأس المال)' : 'Initial Amount (Principal)',
-    rate: isAr ? 'معدل الفائدة السنوي (%)' : 'Annual Interest Rate (%)',
-    years: isAr ? 'مدة الاستثمار (سنوات)' : 'Investment Period (Years)',
-    frequency: isAr ? 'تكرار المضاعفة' : 'Compounding Frequency',
-    monthlyContrib: isAr ? 'إضافة شهرية (اختياري)' : 'Monthly Contribution (Optional)',
-    calculate: isAr ? 'احسب' : 'Calculate',
-    reset: isAr ? 'إعادة تعيين' : 'Reset',
-    results: isAr ? 'نتائجك' : 'Your Results',
-    finalBalance: isAr ? 'الرصيد النهائي' : 'Final Balance',
-    totalContrib: isAr ? 'إجمالي المساهمات' : 'Total Contributions',
-    totalInterest: isAr ? 'إجمالي الفوائد المكتسبة' : 'Total Interest Earned',
-    interestRatio: isAr ? 'نسبة النمو' : 'Growth Ratio',
-    doubling: isAr ? 'قاعدة 72 — مدة مضاعفة رأس المال' : 'Rule of 72 — Doubling Time',
+    country: tt('inline.country'),
+    principal: tt('inline.initial_amount_principal'),
+    rate: tt('inline.annual_interest_rate'),
+    years: tt('inline.investment_period_years'),
+    frequency: tt('inline.compounding_frequency'),
+    monthlyContrib: tt('inline.monthly_contribution_optional'),
+    calculate: tt('inline.calculate'),
+    reset: tt('inline.reset'),
+    results: tt('inline.your_results'),
+    finalBalance: tt('inline.final_balance'),
+    totalContrib: tt('inline.total_contributions'),
+    totalInterest: tt('inline.total_interest_earned'),
+    interestRatio: tt('inline.growth_ratio'),
+    doubling: tt('inline.rule_of_72_doubling_time'),
     doublingYears: (y: number) => isAr ? `~${y} سنة بهذا المعدل` : `~${y} years at this rate`,
-    growthChart: isAr ? 'مخطط النمو السنوي' : 'Year-by-Year Growth',
-    schedule: isAr ? 'جدول الفوائد المركبة' : 'Compound Interest Schedule',
-    hideSchedule: isAr ? 'إخفاء الجدول' : 'Hide Schedule',
-    showSchedule: isAr ? 'عرض الجدول' : 'Show Schedule',
-    year: isAr ? 'السنة' : 'Year',
-    startBal: isAr ? 'الرصيد الافتتاحي' : 'Opening Balance',
-    added: isAr ? 'المضاف' : 'Added',
-    interest: isAr ? 'الفائدة' : 'Interest',
-    endBal: isAr ? 'الرصيد الختامي' : 'Closing Balance',
+    growthChart: tt('inline.year_by_year_growth'),
+    schedule: tt('inline.compound_interest_schedule'),
+    hideSchedule: tt('inline.hide_schedule'),
+    showSchedule: tt('inline.show_schedule'),
+    year: tt('inline.year'),
+    startBal: tt('inline.opening_balance'),
+    added: tt('inline.added'),
+    interest: tt('inline.interest'),
+    endBal: tt('inline.closing_balance'),
     typicalRate: isAr
       ? `معدلات الادخار الشائعة في ${cfg.labelAr}: ${cfg.typicalSavingsRate.min}–${cfg.typicalSavingsRate.max}%`
       : `Typical savings rates in ${cfg.label}: ${cfg.typicalSavingsRate.min}–${cfg.typicalSavingsRate.max}%`,
     countryNote: isAr ? cfg.notesAr : cfg.notes,
-    enter: isAr ? 'أدخل' : 'Enter',
-    disclaimer: isAr
-      ? 'هذه أداة تقدير فقط. النتائج الفعلية تختلف حسب المنتج المالي والبنك والأسواق. الحسابات تتم في متصفحك.'
-      : 'Estimation tool only. Actual returns vary by product, bank, and market conditions. Calculations happen in your browser.',
+    enter: tt('inline.enter'),
+    disclaimer: tt('inline.estimation_tool_only_actual_returns_vary'),
   }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Country ── */}
       <div>
@@ -439,9 +440,9 @@ export default function CompoundInterestCalculator({ locale }: Props) {
               interest={result.totalInterest}
             />
             <div className="flex-1 w-full space-y-2">
-              <BreakRow label={isAr ? 'رأس المال الأولي' : 'Initial Principal'} value={fmt(parseFloat(principal), result.currency)} color="text-emerald-700" dot="bg-emerald-600" />
+              <BreakRow label={tt('inline.initial_principal')} value={fmt(parseFloat(principal), result.currency)} color="text-emerald-700" dot="bg-emerald-600" />
               {(parseFloat(monthlyContrib) || 0) > 0 && (
-                <BreakRow label={isAr ? 'مجموع الإضافات الشهرية' : 'Total Monthly Contributions'} value={fmt((parseFloat(monthlyContrib) || 0) * Math.round(parseFloat(years)) * 12, result.currency)} color="text-emerald-500" dot="bg-emerald-300" />
+                <BreakRow label={tt('inline.total_monthly_contributions')} value={fmt((parseFloat(monthlyContrib) || 0) * Math.round(parseFloat(years)) * 12, result.currency)} color="text-emerald-500" dot="bg-emerald-300" />
               )}
               <BreakRow label={t.totalInterest} value={fmt(result.totalInterest, result.currency)} color="text-red-500" dot="bg-red-300" />
               <div className="border-t border-gray-200 pt-2">
