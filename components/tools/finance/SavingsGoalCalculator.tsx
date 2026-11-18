@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -257,6 +259,7 @@ function MilestoneBar({ schedule, goal, currency }: { schedule: YearRow[]; goal:
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function SavingsGoalCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   const [country, setCountry] = useState('uae')
   const [goalPreset, setGoalPreset] = useState(0)
@@ -285,15 +288,15 @@ export default function SavingsGoalCalculator({ locale }: Props) {
   function validate() {
     const errs: Record<string, string> = {}
     if (!parseFloat(goalAmount) || parseFloat(goalAmount) <= 0)
-      errs.goalAmount = isAr ? 'أدخل مبلغ هدف صحيحاً' : 'Enter a valid goal amount'
+      errs.goalAmount = tt('inline.enter_a_valid_goal_amount')
     const months = targetUnit === 'years'
       ? parseFloat(targetMonths) * 12
       : parseFloat(targetMonths)
     if (!months || months < 1 || months > 600)
-      errs.targetMonths = isAr ? 'أدخل مدة بين شهر و50 سنة' : 'Enter a period between 1 month and 50 years'
+      errs.targetMonths = tt('inline.enter_a_period_between_1_month_and_50_ye')
     const rate = parseFloat(annualRate)
     if (isNaN(rate) || rate < 0 || rate > 50)
-      errs.annualRate = isAr ? 'أدخل معدلاً بين 0 و50%' : 'Enter a rate between 0 and 50%'
+      errs.annualRate = tt('inline.enter_a_rate_between_0_and_50')
     return errs
   }
 
@@ -338,50 +341,48 @@ export default function SavingsGoalCalculator({ locale }: Props) {
   }
 
   const t = {
-    country: isAr ? 'الدولة' : 'Country',
-    goalPreset: isAr ? 'نوع الهدف' : 'Goal Type',
-    goalAmount: isAr ? 'مبلغ الهدف المستهدف' : 'Savings Goal Amount',
-    currentSavings: isAr ? 'مدخراتك الحالية (اختياري)' : 'Current Savings (Optional)',
-    targetMonths: isAr ? 'المدة الزمنية للوصول للهدف' : 'Time to Reach Goal',
-    months: isAr ? 'شهور' : 'Months',
-    years: isAr ? 'سنوات' : 'Years',
-    annualRate: isAr ? 'معدل عائد الادخار السنوي (%)' : 'Annual Savings Return Rate (%)',
-    monthlySalary: isAr ? 'راتبك الشهري (اختياري)' : 'Monthly Salary (Optional)',
-    calculate: isAr ? 'احسب' : 'Calculate',
-    reset: isAr ? 'إعادة تعيين' : 'Reset',
-    results: isAr ? 'خطة ادخارك' : 'Your Savings Plan',
-    monthlyRequired: isAr ? 'ادخار شهري مطلوب' : 'Monthly Savings Required',
-    totalContrib: isAr ? 'إجمالي مساهماتك' : 'Total Your Contributions',
-    totalInterest: isAr ? 'إجمالي فوائد مكتسبة' : 'Total Interest Earned',
-    finalBalance: isAr ? 'الرصيد عند الهدف' : 'Balance at Goal Date',
-    goalReached: isAr ? 'الهدف محقق' : 'Goal Reached',
-    savingsRatio: isAr ? 'من راتبك الشهري' : 'of your monthly salary',
-    feasible: isAr ? '✓ قابل للتحقيق ضمن راتبك' : '✓ Feasible within your salary',
-    infeasible: isAr ? '⚠ يتجاوز 80% من راتبك — فكّر في تمديد المدة' : '⚠ Exceeds 80% of salary — consider extending timeline',
+    country: tt('inline.country'),
+    goalPreset: tt('inline.goal_type'),
+    goalAmount: tt('inline.savings_goal_amount'),
+    currentSavings: tt('inline.current_savings_optional'),
+    targetMonths: tt('inline.time_to_reach_goal'),
+    months: tt('inline.months'),
+    years: tt('inline.years'),
+    annualRate: tt('inline.annual_savings_return_rate'),
+    monthlySalary: tt('inline.monthly_salary_optional'),
+    calculate: tt('inline.calculate'),
+    reset: tt('inline.reset'),
+    results: tt('inline.your_savings_plan'),
+    monthlyRequired: tt('inline.monthly_savings_required'),
+    totalContrib: tt('inline.total_your_contributions'),
+    totalInterest: tt('inline.total_interest_earned'),
+    finalBalance: tt('inline.balance_at_goal_date'),
+    goalReached: tt('inline.goal_reached'),
+    savingsRatio: tt('inline.of_your_monthly_salary'),
+    feasible: tt('inline.feasible_within_your_salary'),
+    infeasible: tt('inline.exceeds_80_of_salary_consider_extending_'),
     emergencyNote: (n: number, cur: string) =>
       isAr
         ? `صندوق طوارئ موصى به (${cfg.emergencyMonths} أشهر): ${cur} ${fmtShort(n)}`
         : `Recommended emergency fund (${cfg.emergencyMonths} months): ${cur} ${fmtShort(n)}`,
-    progressLabel: isAr ? 'نحو الهدف' : 'to goal',
-    yearsLabel: isAr ? 'سنوات' : 'years',
-    milestones: isAr ? 'تقدم سنة بسنة' : 'Year-by-Year Progress',
-    schedule: isAr ? 'جدول الادخار التفصيلي' : 'Detailed Savings Schedule',
-    showSchedule: isAr ? 'عرض الجدول' : 'Show Schedule',
-    hideSchedule: isAr ? 'إخفاء الجدول' : 'Hide Schedule',
-    yearCol: isAr ? 'السنة' : 'Year',
-    openCol: isAr ? 'افتتاحي' : 'Opening',
-    contribCol: isAr ? 'المضاف' : 'Added',
-    intCol: isAr ? 'الفائدة' : 'Interest',
-    closeCol: isAr ? 'ختامي' : 'Closing',
-    progCol: isAr ? 'التقدم' : 'Progress',
+    progressLabel: tt('inline.to_goal'),
+    yearsLabel: tt('inline.years_2'),
+    milestones: tt('inline.year_by_year_progress'),
+    schedule: tt('inline.detailed_savings_schedule'),
+    showSchedule: tt('inline.show_schedule'),
+    hideSchedule: tt('inline.hide_schedule'),
+    yearCol: tt('inline.year'),
+    openCol: tt('inline.opening'),
+    contribCol: tt('inline.added'),
+    intCol: tt('inline.interest'),
+    closeCol: tt('inline.closing'),
+    progCol: tt('inline.progress'),
     typicalRate: isAr
       ? `معدلات الادخار الشائعة في ${cfg.labelAr}: ${cfg.typicalSavingsRate.min}–${cfg.typicalSavingsRate.max}%`
       : `Typical savings rates in ${cfg.label}: ${cfg.typicalSavingsRate.min}–${cfg.typicalSavingsRate.max}%`,
     countryNote: isAr ? cfg.notesAr : cfg.notes,
-    enter: isAr ? 'أدخل' : 'Enter',
-    disclaimer: isAr
-      ? 'هذه أداة تقدير تخطيطية فقط. العوائد الفعلية تختلف حسب المنتج والبنك والأسواق. الحسابات تتم في متصفحك.'
-      : 'Planning estimate only. Actual returns vary by product, bank, and market conditions. Calculations happen in your browser.',
+    enter: tt('inline.enter'),
+    disclaimer: tt('inline.planning_estimate_only_actual_returns_va'),
   }
 
   const progressPct = result
@@ -389,7 +390,7 @@ export default function SavingsGoalCalculator({ locale }: Props) {
     : 0
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Country ── */}
       <div>
@@ -576,12 +577,12 @@ export default function SavingsGoalCalculator({ locale }: Props) {
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <ProgressRing
               pct={progressPct}
-              label={isAr ? 'مدخر حالياً' : 'saved now'}
-              sublabel={isAr ? 'نحو الهدف' : 'toward goal'}
+              label={tt('inline.saved_now')}
+              sublabel={tt('inline.toward_goal')}
             />
             <div className="flex-1 w-full space-y-2">
-              <SRow label={isAr ? 'هدف الادخار' : 'Savings Goal'} value={fmt(parseFloat(goalAmount), result.currency)} color="text-gray-900" />
-              <SRow label={isAr ? 'مدخرات حالية' : 'Current Savings'} value={fmt(parseFloat(currentSavings) || 0, result.currency)} color="text-gray-600" />
+              <SRow label={tt('inline.savings_goal')} value={fmt(parseFloat(goalAmount), result.currency)} color="text-gray-900" />
+              <SRow label={tt('inline.current_savings')} value={fmt(parseFloat(currentSavings) || 0, result.currency)} color="text-gray-600" />
               <SRow label={t.totalContrib} value={fmt(result.totalSaved, result.currency)} color="text-emerald-600" />
               <SRow label={t.totalInterest} value={fmt(result.totalInterest, result.currency)} color="text-red-400" />
               <div className="border-t border-gray-200 pt-2">

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -190,6 +192,7 @@ function fmtShort(n: number) {
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function LoanEMICalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   const [country, setCountry] = useState('uae')
   const [loanType, setLoanType] = useState('personal')
@@ -213,16 +216,16 @@ export default function LoanEMICalculator({ locale }: Props) {
     const P = parseFloat(amount)
     const r = parseFloat(rate)
     const t = parseFloat(tenure)
-    if (!P || P <= 0) errs.amount = isAr ? 'أدخل مبلغ صحيح' : 'Enter a valid amount'
-    if (!r || r <= 0 || r > 100) errs.rate = isAr ? 'أدخل نسبة صحيحة' : 'Enter a valid rate (0–100)'
-    if (!t || t <= 0) errs.tenure = isAr ? 'أدخل مدة صحيحة' : 'Enter a valid tenure'
+    if (!P || P <= 0) errs.amount = tt('inline.enter_a_valid_amount')
+    if (!r || r <= 0 || r > 100) errs.rate = tt('inline.enter_a_valid_rate_0_100')
+    if (!t || t <= 0) errs.tenure = tt('inline.enter_a_valid_tenure')
     const months = tenureUnit === 'years' ? t * 12 : t
     if (months > cfg.maxTenure)
       errs.tenure = isAr
         ? `الحد الأقصى ${cfg.maxTenure} شهراً في ${cfg.labelAr}`
         : `Max tenure in ${cfg.label} is ${cfg.maxTenure} months`
     return errs
-  }, [amount, rate, tenure, tenureUnit, cfg, isAr])
+  }, [amount, rate, tenure, tenureUnit, cfg, isAr, tt])
 
   function calculate() {
     const errs = validate()
@@ -298,51 +301,49 @@ export default function LoanEMICalculator({ locale }: Props) {
   }
 
   const t = {
-    title: isAr ? 'حاسبة القسط الشهري' : 'Loan EMI Calculator',
-    amount: isAr ? 'مبلغ القرض' : 'Loan Amount',
-    rate: isAr ? 'معدل الفائدة (% سنوياً)' : 'Interest / Profit Rate (% p.a.)',
-    tenure: isAr ? 'مدة القرض' : 'Loan Tenure',
-    months: isAr ? 'شهور' : 'Months',
-    years: isAr ? 'سنوات' : 'Years',
-    country: isAr ? 'الدولة' : 'Country',
-    loanType: isAr ? 'نوع القرض' : 'Loan Type',
-    calcMode: isAr ? 'طريقة الاحتساب' : 'Calculation Method',
-    salary: isAr ? 'راتبك الشهري (اختياري)' : 'Monthly Salary (optional)',
-    downPayment: isAr ? 'الدفعة الأولى (اختياري)' : 'Down Payment (optional)',
-    processingFee: isAr ? 'رسوم المعالجة (اختياري)' : 'Processing Fee (optional)',
-    advanced: isAr ? 'خيارات متقدمة' : 'Advanced Options',
-    calculate: isAr ? 'احسب' : 'Calculate',
-    reset: isAr ? 'إعادة تعيين' : 'Reset',
-    results: isAr ? 'نتائجك' : 'Your Results',
-    monthlyEMI: isAr ? 'القسط الشهري' : 'Monthly EMI',
-    totalPayment: isAr ? 'إجمالي المدفوعات' : 'Total Payment',
-    totalInterest: isAr ? 'إجمالي الفوائد' : 'Total Interest / Profit',
-    principal: isAr ? 'أصل القرض' : 'Principal Amount',
-    dbr: isAr ? 'نسبة عبء الدين' : 'Debt Burden Ratio',
+    title: tt('inline.loan_emi_calculator'),
+    amount: tt('inline.loan_amount'),
+    rate: tt('inline.interest_profit_rate_p_a'),
+    tenure: tt('inline.loan_tenure'),
+    months: tt('inline.months'),
+    years: tt('inline.years'),
+    country: tt('inline.country'),
+    loanType: tt('inline.loan_type'),
+    calcMode: tt('inline.calculation_method'),
+    salary: tt('inline.monthly_salary_optional'),
+    downPayment: tt('inline.down_payment_optional'),
+    processingFee: tt('inline.processing_fee_optional'),
+    advanced: tt('inline.advanced_options'),
+    calculate: tt('inline.calculate'),
+    reset: tt('inline.reset'),
+    results: tt('inline.your_results'),
+    monthlyEMI: tt('inline.monthly_emi'),
+    totalPayment: tt('inline.total_payment'),
+    totalInterest: tt('inline.total_interest_profit'),
+    principal: tt('inline.principal_amount'),
+    dbr: tt('inline.debt_burden_ratio'),
     dbrWarn: isAr
       ? `تجاوزت نسبة الدين ${cfg.dbr}% — الحد الموصى به في ${cfg.labelAr}`
       : `EMI exceeds ${cfg.dbr}% DBR limit recommended in ${cfg.label}`,
-    dbrOk: isAr ? 'ضمن الحدود الموصى بها' : 'Within recommended limits',
-    schedule: isAr ? 'جدول الاستهلاك' : 'Amortization Schedule',
-    hideSchedule: isAr ? 'إخفاء الجدول' : 'Hide Schedule',
-    showSchedule: isAr ? 'عرض الجدول' : 'Show Schedule',
-    month: isAr ? 'الشهر' : 'Month',
-    payment: isAr ? 'القسط' : 'Payment',
-    interestCol: isAr ? 'الفائدة' : 'Interest',
-    principalCol: isAr ? 'الأصل' : 'Principal',
-    balance: isAr ? 'الرصيد' : 'Balance',
-    disclaimer: isAr
-      ? 'هذه أداة تقدير فقط. الشروط الفعلية تختلف حسب البنك وملفك الائتماني. الحسابات تتم في متصفحك فقط.'
-      : 'Estimation tool only. Actual terms vary by bank and credit profile. Calculations happen in your browser.',
+    dbrOk: tt('inline.within_recommended_limits'),
+    schedule: tt('inline.amortization_schedule'),
+    hideSchedule: tt('inline.hide_schedule'),
+    showSchedule: tt('inline.show_schedule'),
+    month: tt('inline.month'),
+    payment: tt('inline.payment'),
+    interestCol: tt('inline.interest'),
+    principalCol: tt('inline.principal'),
+    balance: tt('inline.balance'),
+    disclaimer: tt('inline.estimation_tool_only_actual_terms_vary_b'),
     countryNote: isAr ? cfg.notesAr : cfg.notes,
     typicalRate: isAr
       ? `المعدلات الشائعة في ${cfg.labelAr}: ${cfg.typicalRates.min}–${cfg.typicalRates.max}%`
       : `Typical rates in ${cfg.label}: ${cfg.typicalRates.min}–${cfg.typicalRates.max}%`,
-    enter: isAr ? 'أدخل' : 'Enter',
+    enter: tt('inline.enter'),
   }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Row 1: Country + Loan Type ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -392,9 +393,7 @@ export default function LoanEMICalculator({ locale }: Props) {
         </div>
         {calcMode === 'islamic' && (
           <p className="mt-2 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">
-            {isAr
-              ? 'يُعرض القسط كـ"قسط شهري" وليس "فائدة". التقديرات استرشادية فقط.'
-              : 'Installment shown as "Monthly Payment" not "interest". Estimates are illustrative only.'}
+            {tt('inline.installment_shown_as_monthly_payment_not')}
           </p>
         )}
       </div>

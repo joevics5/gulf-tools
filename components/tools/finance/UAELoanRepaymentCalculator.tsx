@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -172,6 +173,7 @@ type Result = {
 
 export default function UAELoanRepaymentCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   // Inputs
   const [principal,     setPrincipal]     = useState('')
@@ -235,8 +237,8 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
       : null
 
     const disclosureMethod = rateType === 'flat'
-      ? (isAr ? 'الرصيد المتناقص (مُحوَّل من المعدل الثابت — تقدير مقارن)' : 'Reducing Balance (converted from flat rate — comparison estimate)')
-      : (isAr ? 'الرصيد المتناقص (المعيار القانوني في الإمارات)' : 'Reducing Balance (UAE legal disclosure standard)')
+      ? (t('inline.reducing_balance_converted_from_flat_rat'))
+      : (t('inline.reducing_balance_uae_legal_disclosure_st'))
 
     setResult({
       reducingRate, emi, totalPayment, totalInterest, schedule,
@@ -260,87 +262,6 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
   }
 
   // i18n
-  const L = isAr ? {
-    principal: 'مبلغ القرض (درهم)',
-    rate: 'معدل الفائدة السنوي (%)',
-    rateType: 'نوع المعدل',
-    reducing: 'رصيد متناقص',
-    flat: 'معدل ثابت',
-    term: 'مدة القرض (بالأشهر)',
-    processingFee: 'رسوم المعالجة (درهم) — اختياري',
-    otherFees: 'رسوم أخرى (درهم) — اختياري',
-    extraMonthly: 'دفع إضافي شهري (درهم) — اختياري',
-    settleMonth: 'شهر التسوية المبكرة — اختياري',
-    settleFee: 'رسوم التسوية المبكرة (%)',
-    calculate: 'احسب',
-    reset: 'إعادة تعيين',
-    emi: 'القسط الشهري',
-    totalPayment: 'إجمالي المدفوعات',
-    totalInterest: 'إجمالي الفائدة',
-    reducingRateUsed: 'المعدل المُطبَّق (رصيد متناقص)',
-    flatRateEquiv: 'المعدل الثابت المكافئ (تقريبي)',
-    flatEmi: 'القسط بالمعدل الثابت',
-    flatTotalInterest: 'الفائدة الإجمالية — المعدل الثابت',
-    apr: 'المعدل السنوي الفعّال (APR)',
-    totalFees: 'إجمالي الرسوم',
-    disclosureBasis: 'أساس الاحتساب',
-    legalNote: 'يحظر القانون الإماراتي الفائدة المركبة. يُفصح البنك على أساس الرصيد المتناقص وفق المعيار القانوني.',
-    flatNote: 'المعدل الثابت — للمقارنة فقط، ليس الأساس القانوني للإفصاح في الإمارات',
-    earlyTitle: 'تسوية مبكرة',
-    outstandingPrincipal: 'الأصل المتبقي',
-    settleFeeAmt: 'رسوم التسوية',
-    totalSettlement: 'إجمالي مبلغ التسوية',
-    interestSaved: 'فائدة موفّرة',
-    showFull: 'عرض جدول الاستهلاك الكامل',
-    showSummary: 'عرض ملخص الجدول',
-    hideSchedule: 'إخفاء الجدول',
-    month: 'الشهر', opening: 'افتتاحي', interest: 'فائدة',
-    principalCol: 'أصل', closing: 'ختامي', cumInterest: 'فائدة تراكمية',
-    enterAmount: 'أدخل المبلغ',
-    months: 'شهراً',
-    actualTerm: 'المدة الفعلية (مع دفعات إضافية)',
-    comparisonPanel: 'مقارنة المعدل الثابت مقابل الرصيد المتناقص',
-  } : {
-    principal: 'Loan Amount (AED)',
-    rate: 'Annual Interest Rate (%)',
-    rateType: 'Rate Type',
-    reducing: 'Reducing Balance',
-    flat: 'Flat Rate',
-    term: 'Loan Term (Months)',
-    processingFee: 'Processing Fee (AED) — optional',
-    otherFees: 'Other Fees (AED) — optional',
-    extraMonthly: 'Extra Monthly Payment (AED) — optional',
-    settleMonth: 'Early Settlement Month — optional',
-    settleFee: 'Early Settlement Fee (%)',
-    calculate: 'Calculate',
-    reset: 'Reset',
-    emi: 'Monthly Installment',
-    totalPayment: 'Total Repayment',
-    totalInterest: 'Total Interest',
-    reducingRateUsed: 'Rate Applied (Reducing Balance)',
-    flatRateEquiv: 'Flat Rate Equivalent (approx.)',
-    flatEmi: 'Flat Rate Installment',
-    flatTotalInterest: 'Total Interest — Flat Rate',
-    apr: 'Effective APR (incl. fees)',
-    totalFees: 'Total Fees',
-    disclosureBasis: 'Calculation Method',
-    legalNote: 'UAE law prohibits compound interest. Bank disclosures use reducing balance as the legal standard.',
-    flatNote: 'Flat Rate — comparison only, not the legal disclosure basis for UAE loans',
-    earlyTitle: 'Early Settlement',
-    outstandingPrincipal: 'Outstanding Principal',
-    settleFeeAmt: 'Settlement Fee',
-    totalSettlement: 'Total Settlement Amount',
-    interestSaved: 'Interest Saved',
-    showFull: 'Show Full Amortisation Schedule',
-    showSummary: 'Show Summary (yearly)',
-    hideSchedule: 'Hide Schedule',
-    month: 'Month', opening: 'Opening', interest: 'Interest',
-    principalCol: 'Principal', closing: 'Closing', cumInterest: 'Cum. Interest',
-    enterAmount: 'Enter amount',
-    months: 'months',
-    actualTerm: 'Actual Term (with extra payments)',
-    comparisonPanel: 'Flat Rate vs Reducing Balance Comparison',
-  }
 
   // Yearly summary: take every 12th row + last
   const yearlySummary = result?.schedule.filter((r, i) =>
@@ -353,7 +274,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
       {/* Legal note banner */}
       <div className="text-xs text-gray-500 bg-blue-50 rounded-lg px-3 py-2 border border-blue-100 flex items-start gap-2">
         <span className="text-blue-400 mt-0.5">ℹ</span>
-        <span>{L.legalNote}</span>
+        <span>{t('legalNote')}</span>
       </div>
 
       {/* Inputs */}
@@ -361,38 +282,38 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
         {/* Principal */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.principal}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('principal')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={principal} onChange={e => setPrincipal(e.target.value)}
-              placeholder={L.enterAmount}
+              placeholder={t('enterAmount')}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
           </div>
         </div>
 
         {/* Rate type toggle */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.rateType}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('rateType')}</label>
           <div className="flex gap-1 bg-gray-100 p-1 rounded-xl">
             {(['reducing', 'flat'] as RateType[]).map(rt => (
               <button key={rt} onClick={() => setRateType(rt)}
                 className={`flex-1 py-2 px-3 rounded-lg text-sm font-semibold transition-colors ${
                   rateType === rt ? 'bg-white text-blue-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                 }`}>
-                {rt === 'reducing' ? L.reducing : L.flat}
+                {rt === 'reducing' ? t('reducing') : t('flat')}
               </button>
             ))}
           </div>
           {rateType === 'flat' && (
             <p className="text-xs text-amber-600 mt-1.5 flex items-center gap-1">
-              <span>⚠</span><span>{L.flatNote}</span>
+              <span>⚠</span><span>{t('flatNote')}</span>
             </p>
           )}
         </div>
 
         {/* Rate */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.rate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('rate')}</label>
           <div className="relative">
             <input type="number" min="0.1" max="30" step="0.1" value={rateInput}
               onChange={e => setRateInput(e.target.value)}
@@ -403,7 +324,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
         {/* Term */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.term}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('term')}</label>
           <input type="number" min="1" max="360" value={termMonths}
             onChange={e => setTermMonths(e.target.value)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
@@ -411,7 +332,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
         {/* Processing fee */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.processingFee}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('processingFee')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={processingFee} onChange={e => setProcessingFee(e.target.value)}
@@ -422,7 +343,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
         {/* Other fees */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.otherFees}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('otherFees')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={otherFees} onChange={e => setOtherFees(e.target.value)}
@@ -433,7 +354,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
         {/* Extra monthly payment */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.extraMonthly}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('extraMonthly')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
             <input type="number" min="0" value={extraMonthly} onChange={e => setExtraMonthly(e.target.value)}
@@ -444,16 +365,16 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
         {/* Early settlement month */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.settleMonth}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('settleMonth')}</label>
           <input type="number" min="1" value={settleMonth} onChange={e => setSettleMonth(e.target.value)}
-            placeholder={isAr ? 'مثال: 12' : 'e.g. 12'}
+            placeholder={t('inline.e_g_12')}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
         </div>
 
         {/* Settlement fee % */}
         {settleMonth && (
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.settleFee}</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('settleFee')}</label>
             <div className="relative">
               <input type="number" min="0" max="5" step="0.1" value={settleFee}
                 onChange={e => setSettleFee(e.target.value)}
@@ -468,11 +389,11 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
       <div className="flex gap-3">
         <button onClick={calculate}
           className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
-          {L.calculate}
+          {t('calculate')}
         </button>
         <button onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors">
-          {L.reset}
+          {t('reset')}
         </button>
       </div>
 
@@ -487,7 +408,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
           {/* Hero EMI */}
           <div className="bg-blue-600 rounded-xl p-4 text-white">
-            <div className="text-sm opacity-80 mb-1">{L.emi}</div>
+            <div className="text-sm opacity-80 mb-1">{t('emi')}</div>
             <div className="text-3xl font-black">{fmt(result.emi)}</div>
             <div className="text-xs opacity-70 mt-1">
               {isAr ? `× ${result.actualMonths} شهراً` : `× ${result.actualMonths} months`}
@@ -496,58 +417,58 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
 
           {/* Core breakdown */}
           <div className="space-y-3">
-            <Row label={isAr ? 'مبلغ القرض' : 'Loan Amount'} value={fmt(parseFloat(principal))} />
-            <Row label={L.totalInterest}   value={fmt(result.totalInterest)} negative />
+            <Row label={t('inline.loan_amount')} value={fmt(parseFloat(principal))} />
+            <Row label={t('totalInterest')}   value={fmt(result.totalInterest)} negative />
             {result.totalFees > 0 && (
-              <Row label={L.totalFees}     value={fmt(result.totalFees)} negative />
+              <Row label={t('totalFees')}     value={fmt(result.totalFees)} negative />
             )}
             <div className="border-t border-gray-200 pt-3">
-              <Row label={L.totalPayment}  value={fmt(result.totalPayment)} highlight />
+              <Row label={t('totalPayment')}  value={fmt(result.totalPayment)} highlight />
             </div>
           </div>
 
           {/* Rate summary */}
           <div className="border-t border-gray-200 pt-3 space-y-2">
-            <Row label={L.reducingRateUsed} value={fmtPct(result.reducingRate)} />
+            <Row label={t('reducingRateUsed')} value={fmtPct(result.reducingRate)} />
             {result.apr !== null && (
-              <Row label={L.apr} value={fmtPct(result.apr)} />
+              <Row label={t('apr')} value={fmtPct(result.apr)} />
             )}
             {result.extraMonthly > 0 && (
-              <Row label={L.actualTerm}
-                value={`${result.actualMonths} ${L.months}`} />
+              <Row label={t('actualTerm')}
+                value={`${result.actualMonths} ${t('months')}`} />
             )}
           </div>
 
           {/* ── Flat vs Reducing comparison panel ── */}
           <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 space-y-2">
             <p className="text-xs font-bold text-amber-700 uppercase tracking-wide">
-              {L.comparisonPanel}
+              {t('comparisonPanel')}
             </p>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-              <span className="text-gray-500">{isAr ? 'المعدل' : 'Rate'}</span>
-              <span className="text-gray-500 text-right">{isAr ? 'الثابت' : 'Flat'}</span>
-              <span className="font-semibold text-gray-900">{L.reducing}</span>
-              <span className="font-semibold text-right">{L.flat}</span>
+              <span className="text-gray-500">{t('inline.rate')}</span>
+              <span className="text-gray-500 text-right">{t('inline.flat')}</span>
+              <span className="font-semibold text-gray-900">{t('reducing')}</span>
+              <span className="font-semibold text-right">{t('flat')}</span>
 
-              <span className="text-gray-600">{isAr ? 'المعدل السنوي' : 'Annual Rate'}</span>
+              <span className="text-gray-600">{t('inline.annual_rate')}</span>
               <span className="text-gray-600 text-right"> </span>
               <span className="font-semibold text-blue-700">{fmtPct(result.reducingRate)}</span>
               <span className="font-semibold text-right text-amber-700">{fmtPct(result.flatRate)}</span>
 
-              <span className="text-gray-600">{isAr ? 'القسط الشهري' : 'Monthly EMI'}</span>
+              <span className="text-gray-600">{t('inline.monthly_emi')}</span>
               <span className="text-gray-600 text-right"> </span>
               <span className="font-semibold text-blue-700">{fmt(result.emi)}</span>
               <span className="font-semibold text-right text-amber-700">{fmt(result.flatEmi)}</span>
 
-              <span className="text-gray-600">{isAr ? 'إجمالي الفائدة' : 'Total Interest'}</span>
+              <span className="text-gray-600">{t('inline.total_interest')}</span>
               <span className="text-gray-600 text-right"> </span>
               <span className="font-semibold text-blue-700">{fmt(result.totalInterest)}</span>
               <span className="font-semibold text-right text-amber-700">{fmt(result.flatTotalInterest)}</span>
             </div>
             <p className="text-xs text-amber-600 mt-1">
               {result.rateEnteredType === 'flat'
-                ? (isAr ? '⚠ أدخلت معدلاً ثابتاً. يُعرض الرصيد المتناقص كتقدير مُحوَّل. الرصيد المتناقص هو الأساس القانوني في الإمارات.' : '⚠ You entered a flat rate. Reducing balance is shown as a converted estimate. Reducing balance is the UAE legal disclosure basis.')
-                : (isAr ? 'ℹ المعدل الثابت أعلاه تقريبي للمقارنة فقط.' : 'ℹ Flat rate above is approximate, for comparison only.')}
+                ? (t('inline.you_entered_a_flat_rate_reducing_balance'))
+                : (t('inline.flat_rate_above_is_approximate_for_compa'))}
             </p>
           </div>
 
@@ -555,19 +476,17 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
           {result.earlySettlementData && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 space-y-2">
               <p className="text-xs font-bold text-emerald-700 uppercase tracking-wide">
-                {L.earlyTitle} — {isAr ? 'الشهر' : 'Month'} {settleMonth}
+                {t('earlyTitle')} — {t('inline.month')} {settleMonth}
               </p>
-              <Row label={L.outstandingPrincipal} value={fmt(result.earlySettlementData.outstandingPrincipal)} />
-              <Row label={L.settleFeeAmt}         value={fmt(result.earlySettlementData.fee)} negative />
+              <Row label={t('outstandingPrincipal')} value={fmt(result.earlySettlementData.outstandingPrincipal)} />
+              <Row label={t('settleFeeAmt')}         value={fmt(result.earlySettlementData.fee)} negative />
               <div className="border-t border-emerald-200 pt-2">
-                <Row label={L.totalSettlement}    value={fmt(result.earlySettlementData.totalSettlement)} highlight />
-                <Row label={L.interestSaved}      value={fmt(result.earlySettlementData.interestSaved)}
+                <Row label={t('totalSettlement')}    value={fmt(result.earlySettlementData.totalSettlement)} highlight />
+                <Row label={t('interestSaved')}      value={fmt(result.earlySettlementData.interestSaved)}
                   highlight />
               </div>
               <p className="text-xs text-emerald-600">
-                {isAr
-                  ? 'مبلغ التسوية = الأصل المتبقي + الرسوم فقط. لا فائدة مستقبلية غير مكتسبة وفقاً للقانون الإماراتي.'
-                  : 'Settlement = outstanding principal + fee only. No future unearned interest per UAE law.'}
+                {t('inline.settlement_outstanding_principal_fee_onl')}
               </p>
             </div>
           )}
@@ -577,12 +496,12 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
             <button
               onClick={() => setScheduleView(v => v === 'summary' ? 'none' : 'summary')}
               className="w-full text-sm text-blue-700 font-semibold py-2 border border-blue-200 rounded-xl hover:bg-blue-50 transition-colors">
-              {scheduleView === 'summary' ? L.hideSchedule : L.showSummary}
+              {scheduleView === 'summary' ? t('hideSchedule') : t('showSummary')}
             </button>
             <button
               onClick={() => setScheduleView(v => v === 'full' ? 'none' : 'full')}
               className="w-full text-sm text-blue-700 font-semibold py-2 border border-blue-200 rounded-xl hover:bg-blue-50 transition-colors">
-              {scheduleView === 'full' ? L.hideSchedule : L.showFull}
+              {scheduleView === 'full' ? t('hideSchedule') : t('showFull')}
             </button>
           </div>
 
@@ -592,7 +511,7 @@ export default function UAELoanRepaymentCalculator({ locale }: Props) {
               <table className="w-full text-xs text-gray-700">
                 <thead className="bg-gray-100 text-gray-500 font-semibold">
                   <tr>
-                    {[L.month, L.opening, L.interest, L.principalCol, L.closing, L.cumInterest].map(h => (
+                    {[t('month'), t('opening'), t('interest'), t('principalCol'), t('closing'), t('cumInterest')].map(h => (
                       <th key={h} className="px-3 py-2 text-right whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
