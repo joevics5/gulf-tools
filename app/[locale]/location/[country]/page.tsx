@@ -1,4 +1,5 @@
 // 📁 app/[locale]/location/[country]/page.tsx
+import { pageAlternates } from '@/lib/i18n/locales'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -62,6 +63,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   if (!info) return {}
   const name = locale === 'ar' ? info.ar : info.en
   return {
+    alternates: pageAlternates(locale, `/location/${country}`),
     title: locale === 'ar'
       ? `أدوات ${name} المجانية | Gulf Tools`
       : `Free Tools for ${name} | Gulf Tools`,

@@ -7,10 +7,9 @@ const siteUrl = 'https://gulftools.jobmeter.app'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: 'Gulf Tools — Free Online tools for UAE, Saudi Arabia & the Gulf',
-    template: '%s | Gulf Tools',
-  },
+  // Plain string on purpose: pages already end their titles with "| Gulf Tools",
+  // so a title.template here would double the suffix.
+  title: 'Gulf Tools — Free Online tools for UAE, Saudi Arabia & the Gulf',
   description:
     'Free online tools and calculators built for the Gulf — salary, gratuity, VAT, zakat, loan EMI and more for UAE, Saudi Arabia, Qatar, Kuwait, Bahrain, Oman and Egypt.',
   keywords: [
@@ -76,9 +75,6 @@ export const metadata: Metadata = {
         type: 'image/png',
       },
     ],
-  },
-  alternates: {
-    canonical: siteUrl,
   },
   formatDetection: {
     telephone: false,

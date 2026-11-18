@@ -1,4 +1,5 @@
 // 📁 app/[locale]/about/page.tsx
+import { pageAlternates } from '@/lib/i18n/locales'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
@@ -12,6 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { locale } = await params
   setRequestLocale(locale)
   return {
+    alternates: pageAlternates(locale, '/about'),
     title:
       locale === 'ar'
         ? 'من نحن | Gulf Tools'

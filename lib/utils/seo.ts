@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 
-import { BASE_URL, languageAlternates, ogLocale } from '@/lib/i18n/locales'
+import { BASE_URL, languageAlternates, ogLocale, pageAlternates } from '@/lib/i18n/locales'
 
 export async function generateToolMetadata(
   locale: string,
@@ -62,14 +62,7 @@ export async function generateCategoryMetadata(
   return {
     title: `${t('name')} Tools | Gulf Tools`,
     description: t('description'),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/tools/${categorySlug}`,
-      languages: {
-        en: `${BASE_URL}/en/tools/${categorySlug}`,
-        ar: `${BASE_URL}/ar/tools/${categorySlug}`,
-        'x-default': `${BASE_URL}/en/tools/${categorySlug}`,
-      },
-    },
+    alternates: pageAlternates(locale, `/tools/${categorySlug}`),
     openGraph: {
       title: `${t('name')} Tools`,
       description: t('description'),
@@ -88,14 +81,7 @@ export async function generateHomepageMetadata(locale: string) {
   return {
     title: t('siteName'),
     description: t('siteDescription'),
-    alternates: {
-      canonical: `${BASE_URL}/${locale}`,
-      languages: {
-        en: `${BASE_URL}/en`,
-        ar: `${BASE_URL}/ar`,
-        'x-default': `${BASE_URL}/en`,
-      },
-    },
+    alternates: pageAlternates(locale, ``),
     openGraph: {
       title: t('siteName'),
       description: t('siteDescription'),
@@ -126,14 +112,7 @@ export function generateBlogIndexMetadata(locale: string) {
   return {
     title,
     description,
-    alternates: {
-      canonical: `${BASE_URL}/${locale}/blog`,
-      languages: {
-        en: `${BASE_URL}/en/blog`,
-        ar: `${BASE_URL}/ar/blog`,
-        'x-default': `${BASE_URL}/en/blog`,
-      },
-    },
+    alternates: pageAlternates(locale, `/blog`),
     openGraph: {
       title,
       description,

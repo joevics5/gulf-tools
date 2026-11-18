@@ -2,6 +2,7 @@
 
 
 // 📁 app/[locale]/blog/[slug]/page.tsx
+import { pageAlternates } from '@/lib/i18n/locales'
 import { notFound } from 'next/navigation'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
@@ -47,14 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   return {
     title: `${t.title} | Gulf Tools`,
     description: t.meta_description ?? t.excerpt ?? '',
-    alternates: {
-      canonical: url,
-      languages: {
-        en: `${BASE_URL}/en/blog/${slug}`,
-        ar: `${BASE_URL}/ar/blog/${slug}`,
-        'x-default': `${BASE_URL}/en/blog/${slug}`,
-      },
-    },
+    alternates: pageAlternates(locale, `/blog/${slug}`),
     openGraph: {
       title: t.title,
       description: t.meta_description ?? t.excerpt ?? '',

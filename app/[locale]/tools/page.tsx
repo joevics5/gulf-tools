@@ -1,4 +1,5 @@
 // 📁 app/[locale]/tools/page.tsx
+import { pageAlternates } from '@/lib/i18n/locales'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { Header } from '@/components/layout/Header'
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   const { locale } = await params
   setRequestLocale(locale)
   return {
+    alternates: pageAlternates(locale, '/tools'),
     title: locale === 'ar' ? 'جميع الأدوات | Gulf Tools' : 'All Tools | Gulf Tools',
     description: locale === 'ar'
       ? 'تصفح أكثر من 50 أداة مجانية مصممة لدول الخليج'
