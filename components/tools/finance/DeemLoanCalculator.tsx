@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale?: string }
 
@@ -89,7 +91,7 @@ const PRESET_BUTTONS = [
 ]
 
 export default function DeemLoanCalculator({ locale = 'en' }: Props) {
-  const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   const [amount, setAmount] = useState(50000)
   const [amountInput, setAmountInput] = useState('50000')
@@ -141,74 +143,13 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
 
   const scheduleRows = showFullSchedule ? result.schedule : result.schedule.slice(0, 6)
 
-  const t = isAr
-    ? {
-        presets: 'سيناريوهات سريعة',
-        amount: 'مبلغ القرض (AED)',
-        income: 'دخلك الشهري (AED)',
-        rate: 'معدل الفائدة السنوي (%)',
-        tenure: 'مدة القرض (أشهر)',
-        processingFee: 'تضمين رسوم المعالجة (~1%)',
-        ratePresets: 'شرائح مشرق النموذجية',
-        monthly: 'القسط الشهري',
-        totalRepay: 'إجمالي السداد',
-        totalInterest: 'إجمالي الفوائد',
-        feeTotal: 'رسوم المعالجة + VAT',
-        totalCost: 'إجمالي التكلفة',
-        schedule: 'جدول الاستهلاك',
-        showFull: 'عرض كامل',
-        hideFull: 'إخفاء',
-        month: 'الشهر',
-        payment: 'القسط',
-        principal: 'الأصل',
-        interest: 'الفائدة',
-        balance: 'الرصيد',
-        compare: 'مقارنة السيناريوهات',
-        scenario1: 'السيناريو الأول',
-        scenario2: 'السيناريو الثاني',
-        maxEligible: 'الحد الأقصى المؤهل (20× الدخل)',
-        warn20x: '⚠ يتجاوز 20× دخلك الشهري — حد المصرف المركزي',
-        warnDBR: '⚠ القسط يتجاوز 50% من دخلك — قد يُرفض وفق قواعد الـDBR',
-        warnIncome: '⚠ الدخل أقل من AED 5,000 — قد يؤثر على الأهلية',
-        disclaimer: 'هذه الأداة للأغراض التوضيحية فقط وغير تابعة لشركة Deem Finance. المعدلات النموذجية: 15.99%–39.99% رصيد متناقص. تخضع الشروط الفعلية والموافقة لتقييم Deem Finance LLC المرخصة من المصرف المركزي الإماراتي.',
-      }
-    : {
-        presets: 'Quick Scenarios',
-        amount: 'Loan Amount (AED)',
-        income: 'Monthly Income (AED)',
-        rate: 'Annual Interest Rate (%)',
-        tenure: 'Loan Tenure (Months)',
-        processingFee: 'Include Processing Fee (~1%)',
-        ratePresets: 'Deem typical rate tiers',
-        monthly: 'Monthly Installment',
-        totalRepay: 'Total Repayment',
-        totalInterest: 'Total Interest',
-        feeTotal: 'Processing Fee + VAT',
-        totalCost: 'Total Cost of Loan',
-        schedule: 'Amortization Schedule',
-        showFull: 'Show Full Schedule',
-        hideFull: 'Collapse',
-        month: 'Month',
-        payment: 'Payment',
-        principal: 'Principal',
-        interest: 'Interest',
-        balance: 'Balance',
-        compare: 'Compare Scenarios',
-        scenario1: 'Scenario A',
-        scenario2: 'Scenario B',
-        maxEligible: 'Max Eligible (20× income)',
-        warn20x: '⚠ Exceeds 20× monthly income — CBUAE maximum',
-        warnDBR: '⚠ Installment exceeds 50% of income — may breach DBR limit',
-        warnIncome: '⚠ Income below AED 5,000 — may affect eligibility',
-        disclaimer: 'This tool is for illustrative purposes only. Not affiliated with Deem Finance LLC. Typical Deem rates: 15.99%–39.99% p.a. (reducing balance). Actual terms, approval, and rates are determined solely by Deem Finance LLC, regulated by the UAE Central Bank (CBUAE). Processing fee ~1% (min AED 500, max AED 2,500) + 5% VAT. Visit deem.io for official figures.',
-      }
 
   return (
-    <div className="space-y-6 font-sans" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6 font-sans" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Quick Presets */}
       <div>
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t.presets}</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">{t('presets')}</p>
         <div className="flex flex-wrap gap-2">
           {PRESET_BUTTONS.map(p => (
             <button
@@ -229,7 +170,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
 
         {/* Loan Amount */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.amount}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('amount')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input
@@ -239,7 +180,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
               value={amountInput}
               onChange={e => handleAmountInput(e.target.value)}
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#E05C2A] focus:border-transparent transition"
-              aria-label={t.amount}
+              aria-label={t('amount')}
             />
           </div>
           <input
@@ -251,13 +192,13 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
             <span>AED 1,000</span><span>AED 500,000</span>
           </div>
           {exceeds20x && (
-            <p className="mt-1.5 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{t.warn20x}</p>
+            <p className="mt-1.5 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{t('warn20x')}</p>
           )}
         </div>
 
         {/* Monthly Income */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.income}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('income')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input
@@ -266,7 +207,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
               value={incomeInput}
               onChange={e => handleIncomeInput(e.target.value)}
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#E05C2A] focus:border-transparent transition"
-              aria-label={t.income}
+              aria-label={t('income')}
             />
           </div>
           <input
@@ -276,17 +217,17 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
           />
           {income > 0 && (
             <p className="mt-1 text-xs text-gray-500">
-              {t.maxEligible}: <strong className="text-gray-800">AED {fmt(maxEligible)}</strong>
+              {t('maxEligible')}: <strong className="text-gray-800">AED {fmt(maxEligible)}</strong>
             </p>
           )}
           {incomeLow && (
-            <p className="mt-1 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">{t.warnIncome}</p>
+            <p className="mt-1 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">{t('warnIncome')}</p>
           )}
         </div>
 
         {/* Rate */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.rate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('rate')}</label>
           {/* Rate preset buttons */}
           <div className="flex gap-2 mb-2">
             {RATE_PRESETS.map(p => (
@@ -310,7 +251,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
               value={rateInput}
               onChange={e => handleRateInput(e.target.value)}
               className="w-full pr-8 pl-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#E05C2A] focus:border-transparent transition"
-              aria-label={t.rate}
+              aria-label={t('rate')}
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
@@ -324,7 +265,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
 
         {/* Tenure */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.tenure}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('tenure')}</label>
           <div className="grid grid-cols-4 gap-2 mt-1">
             {TENURE_OPTIONS.map(m => (
               <button
@@ -349,11 +290,11 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
           <button
             onClick={() => setIncludeProcessingFee(v => !v)}
             className={`relative w-10 h-5 rounded-full transition-colors duration-300 ${includeProcessingFee ? 'bg-[#E05C2A]' : 'bg-gray-200'}`}
-            aria-label={t.processingFee}
+            aria-label={t('processingFee')}
           >
             <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${includeProcessingFee ? 'left-5' : 'left-0.5'}`} />
           </button>
-          <span className="text-sm font-medium text-gray-700">{t.processingFee}</span>
+          <span className="text-sm font-medium text-gray-700">{t('processingFee')}</span>
           {includeProcessingFee && result.processingFee > 0 && (
             <span className="text-xs text-gray-500">
               AED {fmtDec(result.processingFee)} + AED {fmtDec(result.processingFeeVAT)} VAT
@@ -364,7 +305,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
 
       {/* DBR Warning */}
       {exceedsDBR && (
-        <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{t.warnDBR}</p>
+        <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{t('warnDBR')}</p>
       )}
 
       {/* Results */}
@@ -372,7 +313,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
         <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
           {/* Hero EMI */}
           <div className="bg-gradient-to-br from-[#1C1C2E] via-[#2D1B14] to-[#1C1C2E] px-6 py-5 text-white">
-            <p className="text-xs text-white/50 uppercase tracking-widest font-medium mb-1">{t.monthly}</p>
+            <p className="text-xs text-white/50 uppercase tracking-widest font-medium mb-1">{t('monthly')}</p>
             <p className="text-4xl font-black tracking-tight">AED {fmtDec(result.emi)}</p>
             <p className="text-xs text-white/40 mt-1">
               {rate}% p.a. reducing balance · {tenure} months
@@ -382,12 +323,12 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
           <div className="bg-white p-5 space-y-4">
             {/* Stats grid */}
             <div className="grid grid-cols-2 gap-4">
-              <Stat label={t.totalRepay} value={`AED ${fmt(result.totalRepayment)}`} />
-              <Stat label={t.totalInterest} value={`AED ${fmt(result.totalInterest)}`} accent />
+              <Stat label={t('totalRepay')} value={`AED ${fmt(result.totalRepayment)}`} />
+              <Stat label={t('totalInterest')} value={`AED ${fmt(result.totalInterest)}`} accent />
               {includeProcessingFee && (
-                <Stat label={t.feeTotal} value={`AED ${fmtDec(result.processingFee + result.processingFeeVAT)}`} />
+                <Stat label={t('feeTotal')} value={`AED ${fmtDec(result.processingFee + result.processingFeeVAT)}`} />
               )}
-              <Stat label={t.totalCost} value={`AED ${fmt(result.totalCost)}`} bold />
+              <Stat label={t('totalCost')} value={`AED ${fmt(result.totalCost)}`} bold />
             </div>
 
             {/* Principal vs Interest bar */}
@@ -420,19 +361,19 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
       {result.schedule.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-gray-900 text-sm">{t.schedule}</h3>
+            <h3 className="font-bold text-gray-900 text-sm">{t('schedule')}</h3>
             <button
               onClick={() => setShowFullSchedule(v => !v)}
               className="text-xs font-semibold text-[#E05C2A] hover:underline"
             >
-              {showFullSchedule ? t.hideFull : t.showFull}
+              {showFullSchedule ? t('hideFull') : t('showFull')}
             </button>
           </div>
           <div className="rounded-xl border border-gray-100 overflow-hidden text-xs">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  {[t.month, t.payment, t.principal, t.interest, t.balance].map(h => (
+                  {[t('month'), t('payment'), t('principal'), t('interest'), t('balance')].map(h => (
                     <th key={h} className="px-3 py-2.5 text-left font-semibold text-gray-500 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -460,20 +401,20 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
           className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-[#E05C2A] transition-colors"
         >
           <span className="text-lg">{showComparison ? '−' : '+'}</span>
-          {t.compare}
+          {t('compare')}
         </button>
 
         {showComparison && (
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="rounded-xl border border-[#E05C2A]/30 bg-orange-50/30 p-4 space-y-3">
-              <p className="font-bold text-sm text-gray-800">{t.scenario1} — Current</p>
+              <p className="font-bold text-sm text-gray-800">{t('scenario1')} — Current</p>
               <Stat label="Rate" value={`${rate}%`} />
               <Stat label="Tenure" value={`${tenure} months`} />
-              <Stat label={t.monthly} value={`AED ${fmtDec(result.emi)}`} accent />
-              <Stat label={t.totalInterest} value={`AED ${fmt(result.totalInterest)}`} />
+              <Stat label={t('monthly')} value={`AED ${fmtDec(result.emi)}`} accent />
+              <Stat label={t('totalInterest')} value={`AED ${fmt(result.totalInterest)}`} />
             </div>
             <div className="rounded-xl border border-gray-200 bg-gray-50/50 p-4 space-y-3">
-              <p className="font-bold text-sm text-gray-800">{t.scenario2}</p>
+              <p className="font-bold text-sm text-gray-800">{t('scenario2')}</p>
               <div>
                 <label className="block text-xs text-gray-500 mb-1">Rate (%)</label>
                 <input
@@ -490,8 +431,8 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
                 />
               </div>
-              <Stat label={t.monthly} value={`AED ${fmtDec(compResult.emi)}`} accent />
-              <Stat label={t.totalInterest} value={`AED ${fmt(compResult.totalInterest)}`} />
+              <Stat label={t('monthly')} value={`AED ${fmtDec(compResult.emi)}`} accent />
+              <Stat label={t('totalInterest')} value={`AED ${fmt(compResult.totalInterest)}`} />
               {compResult.emi > 0 && result.emi > 0 && (
                 <p className={`text-xs font-semibold ${compResult.emi < result.emi ? 'text-emerald-600' : 'text-red-500'}`}>
                   {compResult.emi < result.emi
@@ -507,7 +448,7 @@ export default function DeemLoanCalculator({ locale = 'en' }: Props) {
       {/* Disclaimer */}
       <div className="rounded-xl bg-gray-50 border border-gray-100 p-4 text-xs text-gray-500 leading-relaxed space-y-1.5">
         <p className="font-semibold text-gray-600">Important Disclaimer</p>
-        <p>{t.disclaimer}</p>
+        <p>{t('disclaimer')}</p>
         <p>CBUAE rules: max loan = 20× monthly income · max tenure 48 months · monthly installments ≤ 50% of income · reducing balance method.</p>
       </div>
 

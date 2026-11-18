@@ -32,7 +32,6 @@ function formatNum(n: number, currency: string) {
 }
 
 // `locale` is still passed by the tool page; strings come from useTranslations.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function SalaryCalculator(_props: Props) {
   const t = useTranslations('tool')
 

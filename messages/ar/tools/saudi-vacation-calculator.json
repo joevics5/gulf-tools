@@ -1,0 +1,25 @@
+{
+  "inline": {
+    "advance_vacation_pay": "أجر إجازة مدفوع مقدماً",
+    "unused_leave_compensation": "تعويض إجازة غير مستخدمة",
+    "prorated_leave_pay": "إجازة محسوبة بالتناسب",
+    "calculation_type": "نوع الحساب",
+    "total_monthly_wage": "الأجر الشهري الإجمالي",
+    "basic_regular_allowances": "أدخل الأجر",
+    "country": "الدولة",
+    "years_of_service": "سنوات الخدمة",
+    "leave_days": "أيام الإجازة المطلوبة",
+    "days": "أيام",
+    "months_worked_this_year": "أشهر العمل هذا العام",
+    "calculate": "احسب",
+    "reset": "إعادة",
+    "monthly_wage": "الأجر الشهري",
+    "daily_rate": "المعدل اليومي",
+    "leave_entitlement": "أيام الاستحقاق",
+    "days_2": "يوم",
+    "prorated_days": "أيام بالتناسب",
+    "days_applied": "الأيام المحتسبة",
+    "total_vacation_pay": "إجمالي أجر الإجازة",
+    "this_tool_provides_estimates_only_and_do": "هذه الأداة للحساب التقديري فقط وليست استشارة قانونية. راجع وزارة الموارد البشرية أو مستشاراً قانونياً للتحقق."
+  }
+}

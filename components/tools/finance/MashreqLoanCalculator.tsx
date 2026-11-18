@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale?: string }
 
@@ -75,7 +77,7 @@ const PRESET_BUTTONS = [
 const TENURE_OPTIONS = [12, 24, 36, 48, 60]
 
 export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
-  const isAr = locale === 'ar'
+  const t = useTranslations('tool')
 
   const [amount, setAmount] = useState(500000)
   const [amountInput, setAmountInput] = useState('500000')
@@ -113,72 +115,13 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
 
   const scheduleRows = showFullSchedule ? result.schedule : result.schedule.slice(0, 6)
 
-  const t = isAr ? {
-    title: 'حاسبة قروض مشرق',
-    subtitle: 'الإمارات العربية المتحدة',
-    conventional: 'تقليدي',
-    islamic: 'إسلامي',
-    amount: 'مبلغ القرض (AED)',
-    rate: 'معدل الفائدة السنوي (%)',
-    profitRate: 'معدل الربح السنوي (%)',
-    tenure: 'مدة القرض (أشهر)',
-    monthly: 'القسط الشهري',
-    totalRepay: 'إجمالي السداد',
-    totalInterest: 'إجمالي الفائدة',
-    totalProfit: 'إجمالي الربح',
-    schedule: 'جدول السداد',
-    showFull: 'عرض الجدول كاملاً',
-    hideFull: 'إخفاء',
-    month: 'الشهر',
-    payment: 'القسط',
-    principal: 'الأصل',
-    interest: 'الفائدة',
-    balance: 'الرصيد المتبقي',
-    salary: 'راتبك الشهري (AED) — اختياري',
-    maxEligible: 'الحد الأقصى المؤهل',
-    warning50: '⚠ يتجاوز القسط 50% من راتبك — قد يُرفض وفق قواعد المصرف المركزي',
-    warning48: '⚠ تتجاوز المدة 48 شهراً — الحد المعتاد وفق قواعد المصرف المركزي',
-    compare: 'مقارنة السيناريوهات',
-    scenario1: 'السيناريو الأول',
-    scenario2: 'السيناريو الثاني',
-    disclaimer: 'هذه الأداة للأغراض التوضيحية فقط وغير تابعة لبنك مشرق. المعدلات والشروط الفعلية تخضع لتقييم الائتمان والجهة وتحويل الراتب. الشروط والأحكام سارية.',
-  } : {
-    title: 'Mashreq Loan Calculator',
-    subtitle: 'UAE',
-    conventional: 'Conventional',
-    islamic: 'Islamic',
-    amount: 'Loan Amount (AED)',
-    rate: 'Annual Interest Rate (%)',
-    profitRate: 'Annual Profit Rate (%)',
-    tenure: 'Loan Tenure (Months)',
-    monthly: 'Monthly Installment',
-    totalRepay: 'Total Repayment',
-    totalInterest: 'Total Interest Paid',
-    totalProfit: 'Total Profit Paid',
-    schedule: 'Amortization Schedule',
-    showFull: 'Show Full Schedule',
-    hideFull: 'Collapse',
-    month: 'Month',
-    payment: 'Payment',
-    principal: 'Principal',
-    interest: 'Interest',
-    balance: 'Balance',
-    salary: 'Your Monthly Salary (AED) — optional',
-    maxEligible: 'Max Eligible (20× salary)',
-    warning50: '⚠ Installment exceeds 50% of salary — may not qualify per CBUAE rules',
-    warning48: '⚠ Tenure exceeds 48 months — standard CBUAE limit for personal loans',
-    compare: 'Compare Scenarios',
-    scenario1: 'Scenario A',
-    scenario2: 'Scenario B',
-    disclaimer: 'This tool is for illustrative purposes only and is not affiliated with Mashreq Bank. Actual rates, approval, and terms depend on your credit profile, employer, and Mashreq Bank\'s assessment. Terms & conditions apply. Consult Mashreq Bank or a financial advisor for personalised advice.',
-  }
 
   return (
-    <div className="space-y-6 font-sans" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6 font-sans" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Islamic / Conventional Toggle */}
       <div className="flex items-center gap-3">
-        <span className={`text-sm font-semibold ${!isIslamic ? 'text-[#C8960C]' : 'text-gray-500'}`}>{t.conventional}</span>
+        <span className={`text-sm font-semibold ${!isIslamic ? 'text-[#C8960C]' : 'text-gray-500'}`}>{t('conventional')}</span>
         <button
           onClick={() => setIsIslamic(v => !v)}
           aria-label="Toggle Islamic mode"
@@ -186,7 +129,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
         >
           <span className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${isIslamic ? 'left-7' : 'left-1'}`} />
         </button>
-        <span className={`text-sm font-semibold ${isIslamic ? 'text-emerald-600' : 'text-gray-500'}`}>{t.islamic}</span>
+        <span className={`text-sm font-semibold ${isIslamic ? 'text-emerald-600' : 'text-gray-500'}`}>{t('islamic')}</span>
       </div>
 
       {/* Quick Presets */}
@@ -206,7 +149,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {/* Loan Amount */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.amount}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('amount')}</label>
           <div className="flex items-center gap-3">
             <div className="relative flex-1">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
@@ -217,7 +160,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
                 value={amountInput}
                 onChange={e => handleAmountInput(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#C8960C] focus:border-transparent transition"
-                aria-label={t.amount}
+                aria-label={t('amount')}
               />
             </div>
           </div>
@@ -239,7 +182,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
         {/* Rate */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isIslamic ? t.profitRate : t.rate}
+            {isIslamic ? t('profitRate') : t('rate')}
           </label>
           <div className="relative">
             <input
@@ -250,7 +193,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
               value={rateInput}
               onChange={e => handleRateInput(e.target.value)}
               className="w-full pr-8 pl-4 py-3 border border-gray-200 rounded-xl text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-[#C8960C] focus:border-transparent transition"
-              aria-label={isIslamic ? t.profitRate : t.rate}
+              aria-label={isIslamic ? t('profitRate') : t('rate')}
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-500">%</span>
           </div>
@@ -270,7 +213,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
 
         {/* Tenure */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.tenure}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('tenure')}</label>
           <div className="flex flex-wrap gap-2 mt-1">
             {TENURE_OPTIONS.map(m => (
               <button
@@ -288,13 +231,13 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
             ))}
           </div>
           {tenureWarning && (
-            <p className="mt-2 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">{t.warning48}</p>
+            <p className="mt-2 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">{t('warning48')}</p>
           )}
         </div>
 
         {/* Optional salary */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-semibold text-gray-500 mb-1.5">{t.salary}</label>
+          <label className="block text-sm font-semibold text-gray-500 mb-1.5">{t('salary')}</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-500">AED</span>
             <input
@@ -304,17 +247,17 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
               onChange={e => setSalary(e.target.value)}
               placeholder="e.g. 15000"
               className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#C8960C] focus:border-transparent transition text-sm"
-              aria-label={t.salary}
+              aria-label={t('salary')}
             />
           </div>
           {maxEligible !== null && (
             <p className="mt-1.5 text-xs text-gray-500">
-              {t.maxEligible}: <strong className="text-gray-800">AED {fmt(maxEligible)}</strong>
+              {t('maxEligible')}: <strong className="text-gray-800">AED {fmt(maxEligible)}</strong>
               {amount > maxEligible && <span className="text-red-500 ml-2">⚠ Exceeds 20× salary limit</span>}
             </p>
           )}
           {dtiWarning && (
-            <p className="mt-1 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">{t.warning50}</p>
+            <p className="mt-1 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">{t('warning50')}</p>
           )}
         </div>
       </div>
@@ -324,7 +267,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
         <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
           {/* Hero EMI */}
           <div className="bg-gradient-to-br from-[#1A1A2E] to-[#16213E] px-6 py-5 text-white">
-            <p className="text-sm text-white/60 mb-1 uppercase tracking-widest font-medium">{t.monthly}</p>
+            <p className="text-sm text-white/60 mb-1 uppercase tracking-widest font-medium">{t('monthly')}</p>
             <p className="text-4xl font-black tracking-tight">
               AED {fmtDec(result.emi)}
             </p>
@@ -333,8 +276,8 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
           <div className="bg-white p-5 space-y-4">
             {/* Stats row */}
             <div className="grid grid-cols-2 gap-4">
-              <Stat label={t.totalRepay} value={`AED ${fmt(result.totalRepayment)}`} />
-              <Stat label={isIslamic ? t.totalProfit : t.totalInterest} value={`AED ${fmt(result.totalInterest)}`} accent />
+              <Stat label={t('totalRepay')} value={`AED ${fmt(result.totalRepayment)}`} />
+              <Stat label={isIslamic ? t('totalProfit') : t('totalInterest')} value={`AED ${fmt(result.totalInterest)}`} accent />
             </div>
 
             {/* Pie-style bar */}
@@ -362,19 +305,19 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
       {result.schedule.length > 0 && (
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-gray-900 text-sm">{t.schedule}</h3>
+            <h3 className="font-bold text-gray-900 text-sm">{t('schedule')}</h3>
             <button
               onClick={() => setShowFullSchedule(v => !v)}
               className="text-xs font-semibold text-[#C8960C] hover:underline"
             >
-              {showFullSchedule ? t.hideFull : t.showFull}
+              {showFullSchedule ? t('hideFull') : t('showFull')}
             </button>
           </div>
           <div className="rounded-xl border border-gray-100 overflow-hidden text-xs">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  {[t.month, t.payment, t.principal, isIslamic ? 'Profit' : t.interest, t.balance].map(h => (
+                  {[t('month'), t('payment'), t('principal'), isIslamic ? 'Profit' : t('interest'), t('balance')].map(h => (
                     <th key={h} className="px-3 py-2.5 text-left font-semibold text-gray-500 whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -402,22 +345,22 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
           className="flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-[#C8960C] transition-colors"
         >
           <span className="text-lg">{showComparison ? '−' : '+'}</span>
-          {t.compare}
+          {t('compare')}
         </button>
 
         {showComparison && (
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Scenario A */}
             <div className="rounded-xl border border-[#C8960C]/30 bg-amber-50/30 p-4 space-y-3">
-              <p className="font-bold text-sm text-gray-800">{t.scenario1} — Current</p>
+              <p className="font-bold text-sm text-gray-800">{t('scenario1')} — Current</p>
               <Stat label="Rate" value={`${rate}%`} />
               <Stat label="Tenure" value={`${tenure} months`} />
-              <Stat label={t.monthly} value={`AED ${fmtDec(result.emi)}`} accent />
-              <Stat label={t.totalInterest} value={`AED ${fmt(result.totalInterest)}`} />
+              <Stat label={t('monthly')} value={`AED ${fmtDec(result.emi)}`} accent />
+              <Stat label={t('totalInterest')} value={`AED ${fmt(result.totalInterest)}`} />
             </div>
             {/* Scenario B */}
             <div className="rounded-xl border border-gray-200 bg-gray-50/50 p-4 space-y-3">
-              <p className="font-bold text-sm text-gray-800">{t.scenario2}</p>
+              <p className="font-bold text-sm text-gray-800">{t('scenario2')}</p>
               <div>
                 <label className="block text-xs text-gray-500 mb-1">Rate (%)</label>
                 <input
@@ -441,8 +384,8 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gray-300"
                 />
               </div>
-              <Stat label={t.monthly} value={`AED ${fmtDec(compResult.emi)}`} accent />
-              <Stat label={t.totalInterest} value={`AED ${fmt(compResult.totalInterest)}`} />
+              <Stat label={t('monthly')} value={`AED ${fmtDec(compResult.emi)}`} accent />
+              <Stat label={t('totalInterest')} value={`AED ${fmt(compResult.totalInterest)}`} />
               {compResult.emi > 0 && result.emi > 0 && (
                 <p className={`text-xs font-semibold ${compResult.emi < result.emi ? 'text-emerald-600' : 'text-red-500'}`}>
                   {compResult.emi < result.emi
@@ -458,7 +401,7 @@ export default function MashreqLoanCalculator({ locale = 'en' }: Props) {
       {/* CBUAE Disclaimer */}
       <div className="rounded-xl bg-gray-50 border border-gray-100 p-4 text-xs text-gray-500 leading-relaxed space-y-1.5">
         <p className="font-semibold text-gray-600">Important Disclaimer</p>
-        <p>{t.disclaimer}</p>
+        <p>{t('disclaimer')}</p>
         <p>Maximum personal loan: 20× monthly salary. Max tenure: generally 48 months (CBUAE). Monthly deductions capped at ~50% of income. Reducing balance method, 365-day year.</p>
       </div>
 

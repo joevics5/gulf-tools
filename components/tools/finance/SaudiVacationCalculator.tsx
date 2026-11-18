@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -256,7 +258,8 @@ function ResultRow({
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function SaudiVacationCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
-  const dir = isAr ? 'rtl' : 'ltr'
+  const t = useTranslations('tool')
+  const dir = isRtl(locale) ? 'rtl' : 'ltr'
 
   const [countryVal, setCountryVal] = useState('saudi')
   const [wage, setWage] = useState('')
@@ -316,9 +319,9 @@ export default function SaudiVacationCalculator({ locale }: Props) {
   }
 
   const scenarioLabel = {
-    advance: isAr ? 'أجر إجازة مدفوع مقدماً' : 'Advance Vacation Pay',
-    accrued: isAr ? 'تعويض إجازة غير مستخدمة' : 'Unused Leave Compensation',
-    prorated: isAr ? 'إجازة محسوبة بالتناسب' : 'Prorated Leave Pay',
+    advance: t('inline.advance_vacation_pay'),
+    accrued: t('inline.unused_leave_compensation'),
+    prorated: t('inline.prorated_leave_pay'),
   }[scenario]
 
   return (
@@ -327,7 +330,7 @@ export default function SaudiVacationCalculator({ locale }: Props) {
       {/* Scenario Tabs */}
       <div>
         <label className="block text-xs font-semibold uppercase tracking-widest text-stone-500 mb-2">
-          {isAr ? 'نوع الحساب' : 'Calculation Type'}
+          {t('inline.calculation_type')}
         </label>
         <div className="flex gap-1.5 bg-stone-100 p-1 rounded-xl">
           {SCENARIOS.map(s => (
@@ -345,23 +348,23 @@ export default function SaudiVacationCalculator({ locale }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="sm:col-span-2">
           <InputField
-            label={isAr ? 'الأجر الشهري الإجمالي' : 'Total Monthly Wage'}
+            label={t('inline.total_monthly_wage')}
             prefix={country.currency}
             value={wage}
             onChange={setWage}
-            placeholder={isAr ? 'أدخل الأجر' : 'Basic + regular allowances'}
+            placeholder={t('inline.basic_regular_allowances')}
           />
         </div>
 
         <SelectField
-          label={isAr ? 'الدولة' : 'Country'}
+          label={t('inline.country')}
           value={countryVal}
           onChange={setCountryVal}
           options={COUNTRIES.map(c => ({ value: c.value, label: isAr ? c.labelAr : c.label }))}
         />
 
         <InputField
-          label={isAr ? 'سنوات الخدمة' : 'Years of Service'}
+          label={t('inline.years_of_service')}
           value={years}
           onChange={setYears}
           placeholder="e.g. 3.5"
@@ -371,17 +374,17 @@ export default function SaudiVacationCalculator({ locale }: Props) {
         />
 
         <InputField
-          label={isAr ? 'أيام الإجازة المطلوبة' : 'Leave Days'}
+          label={t('inline.leave_days')}
           value={leaveDays}
           onChange={setLeaveDays}
-          placeholder={isAr ? 'أيام' : 'Days'}
+          placeholder={t('inline.days')}
           min={1}
           max={365}
         />
 
         {scenario === 'prorated' && (
           <InputField
-            label={isAr ? 'أشهر العمل هذا العام' : 'Months Worked This Year'}
+            label={t('inline.months_worked_this_year')}
             value={months}
             onChange={setMonths}
             placeholder="1–12"
@@ -404,13 +407,13 @@ export default function SaudiVacationCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-sm shadow-amber-200"
         >
-          {isAr ? 'احسب' : 'Calculate'}
+          {t('inline.calculate')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3.5 border border-stone-200 text-stone-600 hover:bg-stone-50 font-semibold rounded-xl transition-colors"
         >
-          {isAr ? 'إعادة' : 'Reset'}
+          {t('inline.reset')}
         </button>
       </div>
 
@@ -435,31 +438,31 @@ export default function SaudiVacationCalculator({ locale }: Props) {
           {/* Breakdown rows */}
           <div className="divide-y divide-stone-100">
             <ResultRow
-              label={isAr ? 'الأجر الشهري' : 'Monthly Wage'}
+              label={t('inline.monthly_wage')}
               value={fmt(result.totalPay / result.leaveDays * (country.divisor), result.currency)}
             />
             <ResultRow
-              label={isAr ? 'المعدل اليومي' : 'Daily Rate'}
+              label={t('inline.daily_rate')}
               sub={`Monthly ÷ ${country.divisor}`}
               value={fmt(result.dailyRate, result.currency)}
             />
             <ResultRow
-              label={isAr ? 'أيام الاستحقاق' : 'Leave Entitlement'}
-              value={`${result.entitledDays} ${isAr ? 'يوم' : 'days'}`}
+              label={t('inline.leave_entitlement')}
+              value={`${result.entitledDays} ${t('inline.days_2')}`}
             />
             {result.proratedDays !== undefined && (
               <ResultRow
-                label={isAr ? 'أيام بالتناسب' : 'Prorated Days'}
+                label={t('inline.prorated_days')}
                 sub={`${result.monthsWorked} months / 12`}
-                value={`${result.proratedDays} ${isAr ? 'يوم' : 'days'}`}
+                value={`${result.proratedDays} ${t('inline.days_2')}`}
               />
             )}
             <ResultRow
-              label={isAr ? 'الأيام المحتسبة' : 'Days Applied'}
-              value={`${result.leaveDays} ${isAr ? 'يوم' : 'days'}`}
+              label={t('inline.days_applied')}
+              value={`${result.leaveDays} ${t('inline.days_2')}`}
             />
             <ResultRow
-              label={isAr ? 'إجمالي أجر الإجازة' : 'Total Vacation Pay'}
+              label={t('inline.total_vacation_pay')}
               value={fmt(result.totalPay, result.currency)}
               highlight
             />
@@ -468,9 +471,7 @@ export default function SaudiVacationCalculator({ locale }: Props) {
           {/* Disclaimer */}
           <div className="mt-4 pt-4 border-t border-stone-200">
             <p className="text-xs text-stone-400 leading-relaxed">
-              {isAr
-                ? 'هذه الأداة للحساب التقديري فقط وليست استشارة قانونية. راجع وزارة الموارد البشرية أو مستشاراً قانونياً للتحقق.'
-                : 'This tool provides estimates only and does not constitute legal advice. Verify with the Ministry of Human Resources (HRSD) or a qualified legal advisor.'}
+              {t('inline.this_tool_provides_estimates_only_and_do')}
             </p>
           </div>
         </div>

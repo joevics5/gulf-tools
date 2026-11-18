@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -215,7 +217,7 @@ function AmortChart({ rows }: { rows: AmortizationRow[] }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tt = useTranslations('tool')
 
   // Core inputs
   const [propertyPrice, setPropertyPrice] = useState(2000000)
@@ -306,52 +308,9 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
     ? result.dbrPct <= 35 ? 'emerald' : result.dbrPct <= 50 ? 'amber' : 'red'
     : 'emerald'
 
-  const L = isAr ? {
-    propPrice: 'سعر العقار (درهم)',
-    down: 'الدفعة الأولى',
-    term: 'مدة القرض (سنوات)',
-    rate: 'معدل الفائدة السنوي',
-    employment: 'نوع التوظيف',
-    income: 'الدخل الشهري (درهم) — اختياري',
-    reset: 'إعادة التعيين لقيم غير المقيمين',
-    emi: 'الدفعة الشهرية',
-    loanAmt: 'مبلغ القرض',
-    totalRepay: 'إجمالي المبلغ المُسدَّد',
-    totalInt: 'إجمالي الفوائد',
-    dbr: 'نسبة العبء على الدخل',
-    tabRes: 'النتائج', tabAmort: 'جدول الإطفاء', tabCosts: 'التكاليف', tabCompare: 'المقارنة',
-    dld: 'رسوم نقل دائرة الأراضي (4%)',
-    mortReg: 'رسوم تسجيل الرهن (0.25% + 290)',
-    agent: 'عمولة الوكيل (2%)',
-    val: 'رسوم التقييم',
-    extraTotal: 'إجمالي الرسوم الإضافية',
-    cashNeeded: 'إجمالي النقد المطلوب',
-    disclaimer: 'هذه الأداة للأغراض التوضيحية فقط وليست عرض قرض أو ضماناً للأهلية. الشروط الفعلية تعتمد على سياسات البنك وملف المقترض واللوائح الحالية. استشر بنكاً مرخصاً أو مستشاراً ماليًا.',
-  } : {
-    propPrice: 'Property Price (AED)',
-    down: 'Down Payment',
-    term: 'Loan Term (Years)',
-    rate: 'Annual Interest Rate',
-    employment: 'Employment Type',
-    income: 'Monthly Income (AED) — optional',
-    reset: '↺ Reset to Non-Resident Defaults',
-    emi: 'Monthly Payment (EMI)',
-    loanAmt: 'Loan Amount',
-    totalRepay: 'Total Repayment',
-    totalInt: 'Total Interest Paid',
-    dbr: 'EMI as % of Income',
-    tabRes: 'Results', tabAmort: 'Amortization', tabCosts: 'Extra Costs', tabCompare: 'Compare',
-    dld: 'DLD Transfer Fee (4%)',
-    mortReg: 'Mortgage Registration (0.25% + AED 290)',
-    agent: "Agent's Fee (2%)",
-    val: 'Property Valuation Fee',
-    extraTotal: 'Total Additional Fees',
-    cashNeeded: 'Total Cash Required at Purchase',
-    disclaimer: 'This is an estimation tool for illustrative purposes only. It does not constitute financial advice, a loan offer, or eligibility guarantee. Actual terms depend on the bank, your credit profile, income verification, nationality, and current regulations. Consult a licensed bank or financial advisor. Non-resident mortgage availability and terms vary significantly by lender.',
-  }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Non-Resident Notice Banner ── */}
       <div className="bg-sky-50 border border-sky-200 rounded-2xl p-4 flex gap-3">
@@ -372,7 +331,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
         {/* Property Price */}
         <div>
           <div className="flex justify-between items-center mb-1.5">
-            <label className="text-sm font-semibold text-slate-700">{L.propPrice}</label>
+            <label className="text-sm font-semibold text-slate-700">{tt('propPrice')}</label>
             <span className="text-sm font-bold text-emerald-600">{fmtAED(propertyPrice)}</span>
           </div>
           <input type="range" min={500000} max={15000000} step={50000}
@@ -385,7 +344,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
         <div>
           <div className="flex justify-between items-center mb-1.5">
             <label className="text-sm font-semibold text-slate-700">
-              {L.down}
+              {tt('down')}
               <Tooltip text="Non-residents typically need 35–50%+ down payment. The CBUAE caps LTV at ~60% for non-residents, but banks may require more depending on your profile." />
             </label>
             <span className="text-sm font-bold text-emerald-600">{downPct}% — {fmtAED(downPaymentAED)}</span>
@@ -403,7 +362,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-semibold text-slate-700">{L.term}</label>
+              <label className="text-sm font-semibold text-slate-700">{tt('term')}</label>
               <span className="text-sm font-bold text-emerald-600">{loanTerm} yrs</span>
             </div>
             <input type="range" min={5} max={MAX_TENURE} step={1}
@@ -414,7 +373,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
           <div>
             <div className="flex justify-between items-center mb-1.5">
               <label className="text-sm font-semibold text-slate-700">
-                {L.rate}
+                {tt('rate')}
                 <Tooltip text="Non-resident rates in Dubai are typically 4.5–6.5% p.a. (EIBOR + bank margin). Rates fluctuate with global monetary policy. Last updated: 2025." />
               </label>
               <span className="text-sm font-bold text-emerald-600">{annualRate.toFixed(2)}%</span>
@@ -440,7 +399,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
         {/* Employment + Income */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-1.5">{L.employment}</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">{tt('employment')}</label>
             <select value={employmentType} onChange={e => setEmploymentType(e.target.value as EmploymentType)}
               className="w-full px-4 py-3 border border-slate-200 rounded-xl text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
               <option value="salaried">Salaried Employee</option>
@@ -449,7 +408,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
           </div>
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-              {L.income}
+              {tt('income')}
               <Tooltip text="Banks typically require a minimum AED 15,000–25,000/month equivalent. Income from your home country is accepted with proper documentation." />
             </label>
             <div className="relative">
@@ -466,7 +425,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
       <div className="flex justify-end">
         <button type="button" onClick={resetDefaults}
           className="text-sm px-5 py-2.5 border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold rounded-xl transition-colors">
-          {L.reset}
+          {tt('reset')}
         </button>
       </div>
 
@@ -476,7 +435,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
 
           {/* Hero */}
           <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 text-white">
-            <p className="text-sm opacity-60 mb-1">{L.emi}</p>
+            <p className="text-sm opacity-60 mb-1">{tt('emi')}</p>
             <p className="text-4xl font-black tracking-tight">{fmtAEDDec(result.monthlyEMI)}</p>
             <p className="text-sm opacity-50 mt-1">per month · {loanTerm} year term · {annualRate}% p.a.</p>
             {result.dbrPct > 0 && (
@@ -497,7 +456,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
             {(['results','amortization','costs','compare'] as const).map(tab => (
               <button key={tab} type="button" onClick={() => setActiveTab(tab)}
                 className={`flex-1 py-3 text-xs font-semibold whitespace-nowrap transition-colors px-2 ${activeTab === tab ? 'text-emerald-600 border-b-2 border-emerald-600' : 'text-slate-400 hover:text-slate-600'}`}>
-                {tab === 'results' ? L.tabRes : tab === 'amortization' ? L.tabAmort : tab === 'costs' ? L.tabCosts : L.tabCompare}
+                {tab === 'results' ? tt('tabRes') : tab === 'amortization' ? tt('tabAmort') : tab === 'costs' ? tt('tabCosts') : tt('tabCompare')}
               </button>
             ))}
           </div>
@@ -507,15 +466,15 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
             {/* ── Results tab ── */}
             {activeTab === 'results' && (
               <div>
-                <ResultRow label={L.loanAmt}    value={fmtAED(result.loanAmount)} bold />
-                <ResultRow label={L.totalRepay}  value={fmtAED(result.totalRepayment)} />
-                <ResultRow label={L.totalInt}    value={fmtAED(result.totalInterest)} negative />
+                <ResultRow label={tt('loanAmt')}    value={fmtAED(result.loanAmount)} bold />
+                <ResultRow label={tt('totalRepay')}  value={fmtAED(result.totalRepayment)} />
+                <ResultRow label={tt('totalInt')}    value={fmtAED(result.totalInterest)} negative />
                 <ResultRow label="LTV Ratio"
                   sub={`Non-resident CBUAE cap: ~${NON_RESIDENT_MAX_LTV}%`}
                   value={fmtPct(result.ltv)}
                   negative={result.ltv > NON_RESIDENT_MAX_LTV} />
                 {result.dbrPct > 0 && (
-                  <ResultRow label={L.dbr}
+                  <ResultRow label={tt('dbr')}
                     sub="CBUAE max 50% recommended"
                     value={fmtPct(result.dbrPct)}
                     negative={result.dbrPct > 50}
@@ -559,13 +518,13 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
             {activeTab === 'costs' && (
               <div>
                 <ResultRow label="Down Payment"     value={fmtAED(downPaymentAED)} bold />
-                <ResultRow label={L.dld}   sub="Dubai Land Department mandatory transfer fee" value={fmtAED(result.dldTransferFee)} negative />
-                <ResultRow label={L.mortReg} sub="DLD mortgage registration (must be registered)" value={fmtAED(result.mortgageRegFee)} negative />
-                <ResultRow label={L.agent} sub="Typical agent commission (confirm with agent)" value={fmtAED(result.agentFee)} negative />
-                <ResultRow label={L.val}   sub="Property valuation by bank-approved valuer" value={fmtAED(result.valuationFee)} negative />
+                <ResultRow label={tt('dld')}   sub="Dubai Land Department mandatory transfer fee" value={fmtAED(result.dldTransferFee)} negative />
+                <ResultRow label={tt('mortReg')} sub="DLD mortgage registration (must be registered)" value={fmtAED(result.mortgageRegFee)} negative />
+                <ResultRow label={tt('agent')} sub="Typical agent commission (confirm with agent)" value={fmtAED(result.agentFee)} negative />
+                <ResultRow label={tt('val')}   sub="Property valuation by bank-approved valuer" value={fmtAED(result.valuationFee)} negative />
                 <div className="mt-2 pt-2 border-t-2 border-slate-200">
-                  <ResultRow label={L.extraTotal} value={fmtAED(result.totalExtraCosts)} bold negative />
-                  <ResultRow label={L.cashNeeded}
+                  <ResultRow label={tt('extraTotal')} value={fmtAED(result.totalExtraCosts)} bold negative />
+                  <ResultRow label={tt('cashNeeded')}
                     sub="Down payment + all estimated fees"
                     value={fmtAED(result.totalCashNeeded)} bold highlight />
                 </div>
@@ -592,7 +551,7 @@ export default function DubaiNonResidentMortgageCalculator({ locale }: Props) {
           {/* Disclaimer */}
           <div className="mx-5 mb-5 bg-amber-50 border border-amber-100 rounded-xl p-3.5">
             <p className="text-xs text-amber-700 leading-relaxed">
-              ⚠️ <strong>Disclaimer:</strong> {L.disclaimer}
+              ⚠️ <strong>Disclaimer:</strong> {tt('disclaimer')}
             </p>
           </div>
         </div>

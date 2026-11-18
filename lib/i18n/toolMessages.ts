@@ -1,4 +1,5 @@
 import 'server-only'
+import { TOOL_MESSAGE_ALIASES } from './toolMessageAliases'
 
 /**
  * Per-tool UI strings live in messages/<locale>/tools/<slug>.json.
@@ -20,8 +21,9 @@ export async function loadToolMessages(
     return null
   }
 
+  const file = TOOL_MESSAGE_ALIASES[toolSlug] ?? toolSlug
   try {
-    return (await import(`@/messages/${locale}/tools/${toolSlug}.json`)).default
+    return (await import(`@/messages/${locale}/tools/${file}.json`)).default
   } catch {
     return null
   }

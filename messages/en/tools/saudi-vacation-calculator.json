@@ -1,0 +1,25 @@
+{
+  "inline": {
+    "advance_vacation_pay": "Advance Vacation Pay",
+    "unused_leave_compensation": "Unused Leave Compensation",
+    "prorated_leave_pay": "Prorated Leave Pay",
+    "calculation_type": "Calculation Type",
+    "total_monthly_wage": "Total Monthly Wage",
+    "basic_regular_allowances": "Basic + regular allowances",
+    "country": "Country",
+    "years_of_service": "Years of Service",
+    "leave_days": "Leave Days",
+    "days": "Days",
+    "months_worked_this_year": "Months Worked This Year",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "monthly_wage": "Monthly Wage",
+    "daily_rate": "Daily Rate",
+    "leave_entitlement": "Leave Entitlement",
+    "days_2": "days",
+    "prorated_days": "Prorated Days",
+    "days_applied": "Days Applied",
+    "total_vacation_pay": "Total Vacation Pay",
+    "this_tool_provides_estimates_only_and_do": "This tool provides estimates only and does not constitute legal advice. Verify with the Ministry of Human Resources (HRSD) or a qualified legal advisor."
+  }
+}

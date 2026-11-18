@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -64,8 +65,8 @@ function calculateGratuity(
   }
 }
 
-export default function QatarGratuityCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function QatarGratuityCalculator(_props: Props) {
+  const t = useTranslations('tool')
 
   const todayStr = new Date().toISOString().split('T')[0]
 
@@ -86,10 +87,10 @@ export default function QatarGratuityCalculator({ locale }: Props) {
     if (e <= s) { setServiceDuration(''); return }
     const { fullYears, fractionalMonths } = dateDiffDetailed(s, e, parseInt(excludedMonths) || 0)
     const parts = []
-    if (fullYears > 0) parts.push(`${fullYears} ${fullYears === 1 ? (isAr ? 'سنة' : 'year') : (isAr ? 'سنوات' : 'years')}`)
-    if (fractionalMonths > 0) parts.push(`${fractionalMonths} ${isAr ? 'شهر' : 'mo'}`)
-    setServiceDuration(parts.join(', ') || (isAr ? 'أقل من شهر' : 'Less than 1 month'))
-  }, [startDate, endDate, excludedMonths, isAr])
+    if (fullYears > 0) parts.push(`${fullYears} ${fullYears === 1 ? (t('inline.year')) : (t('inline.years'))}`)
+    if (fractionalMonths > 0) parts.push(`${fractionalMonths} ${t('inline.mo')}`)
+    setServiceDuration(parts.join(', ') || (t('inline.less_than_1_month')))
+  }, [startDate, endDate, excludedMonths, t])
 
   function calculate() {
     const salary = parseFloat(basicSalary)
@@ -109,57 +110,6 @@ export default function QatarGratuityCalculator({ locale }: Props) {
     setServiceDuration('')
   }
 
-  const L = isAr
-    ? {
-        title: 'حاسبة مكافأة نهاية الخدمة - قطر',
-        salary: 'الراتب الأساسي الشهري',
-        salaryHint: 'لا يشمل البدلات أو المكافآت',
-        startDate: 'تاريخ بدء العمل',
-        endDate: 'تاريخ انتهاء الخدمة',
-        nationality: 'جنسية الموظف',
-        expat: 'وافد / غير قطري',
-        qatari: 'مواطن قطري',
-        excludedMonths: 'الإجازات غير المدفوعة (بالأشهر)',
-        misconduct: 'إنهاء بسبب سوء السلوك الجسيم (المادة 61)',
-        calculate: 'احسب المكافأة',
-        reset: 'إعادة تعيين',
-        results: 'نتيجة الحساب',
-        totalGratuity: 'إجمالي مكافأة نهاية الخدمة',
-        servicePeriod: 'مدة الخدمة',
-        dailyRate: 'الأجر اليومي',
-        perYear: 'المكافأة السنوية (21 يوم)',
-        notEligible: 'غير مستحق للمكافأة',
-        misconductWarning: 'تحذير: قد تُصادر المكافأة في حالات الإنهاء بسبب سوء السلوك الجسيم.',
-        qatariNote: 'ملاحظة: قد يستفيد المواطنون القطريون من نظام التأمين الاجتماعي بدلاً من أو إضافةً إلى مكافأة نهاية الخدمة.',
-        legalNote: 'هذا تقدير استرشادي بناءً على قانون العمل القطري رقم 14 لسنة 2004، المادة 54. استشر المختص القانوني للحصول على مشورة ملزمة.',
-        preview: 'مدة الخدمة المقدرة:',
-        enterAmount: 'أدخل المبلغ',
-      }
-    : {
-        title: 'Qatar End-of-Service Gratuity Calculator',
-        salary: 'Basic Monthly Salary',
-        salaryHint: 'Excluding allowances, bonuses, overtime',
-        startDate: 'Employment Start Date',
-        endDate: 'Last Working Day',
-        nationality: 'Employee Nationality',
-        expat: 'Expatriate / Non-Qatari',
-        qatari: 'Qatari National',
-        excludedMonths: 'Unpaid Leave (months to exclude)',
-        misconduct: 'Termination due to gross misconduct (Art. 61)',
-        calculate: 'Calculate Gratuity',
-        reset: 'Reset',
-        results: 'Your Gratuity Estimate',
-        totalGratuity: 'Total End-of-Service Gratuity',
-        servicePeriod: 'Service Period',
-        dailyRate: 'Daily Basic Rate',
-        perYear: 'Gratuity Per Year (21 days)',
-        notEligible: 'Not Eligible for Gratuity',
-        misconductWarning: 'Warning: Gratuity may be forfeited in cases of termination for gross misconduct under Article 61.',
-        qatariNote: 'Note: Qatari nationals may receive benefits under the Social Insurance Law instead of or in addition to end-of-service gratuity.',
-        legalNote: 'This is an estimate based on minimum legal requirements under Qatar Labour Law No. 14 of 2004, Art. 54. Actual entitlement depends on your contract and specific circumstances. Consult ADLSA or a legal professional for binding advice.',
-        preview: 'Estimated service duration:',
-        enterAmount: 'e.g. 5000',
-      }
 
   return (
     <div className="space-y-6">
@@ -168,9 +118,9 @@ export default function QatarGratuityCalculator({ locale }: Props) {
         {/* Basic Salary */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1">
-            {L.salary}
+            {t('salary')}
           </label>
-          <p className="text-xs text-gray-500 mb-1.5">{L.salaryHint}</p>
+          <p className="text-xs text-gray-500 mb-1.5">{t('salaryHint')}</p>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">QAR</span>
             <input
@@ -178,7 +128,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
               min="0"
               value={basicSalary}
               onChange={e => setBasicSalary(e.target.value)}
-              placeholder={L.enterAmount}
+              placeholder={t('enterAmount')}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -186,7 +136,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
 
         {/* Start Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.startDate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('startDate')}</label>
           <input
             type="date"
             value={startDate}
@@ -198,7 +148,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
 
         {/* End Date */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.endDate}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('endDate')}</label>
           <input
             type="date"
             value={endDate}
@@ -211,27 +161,27 @@ export default function QatarGratuityCalculator({ locale }: Props) {
         {/* Service Duration Preview */}
         {serviceDuration && (
           <div className="sm:col-span-2 flex items-center gap-2 px-4 py-2.5 bg-emerald-50 border border-emerald-100 rounded-xl">
-            <span className="text-xs text-emerald-700 font-medium">{L.preview}</span>
+            <span className="text-xs text-emerald-700 font-medium">{t('preview')}</span>
             <span className="text-sm font-bold text-emerald-800">{serviceDuration}</span>
           </div>
         )}
 
         {/* Nationality */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.nationality}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('nationality')}</label>
           <select
             value={nationality}
             onChange={e => setNationality(e.target.value)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
-            <option value="expat">{L.expat}</option>
-            <option value="qatari">{L.qatari}</option>
+            <option value="expat">{t('expat')}</option>
+            <option value="qatari">{t('qatari')}</option>
           </select>
         </div>
 
         {/* Excluded Months */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{L.excludedMonths}</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t('excludedMonths')}</label>
           <input
             type="number"
             min="0"
@@ -251,7 +201,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
               onChange={e => setMisconduct(e.target.checked)}
               className="mt-0.5 w-4 h-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
             />
-            <span className="text-sm text-gray-600">{L.misconduct}</span>
+            <span className="text-sm text-gray-600">{t('misconduct')}</span>
           </label>
         </div>
       </div>
@@ -260,7 +210,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
       {misconduct && (
         <div className="flex gap-3 px-4 py-3 bg-amber-50 border border-amber-200 rounded-xl">
           <span className="text-amber-500 text-base leading-none mt-0.5">⚠️</span>
-          <p className="text-sm text-amber-800">{L.misconductWarning}</p>
+          <p className="text-sm text-amber-800">{t('misconductWarning')}</p>
         </div>
       )}
 
@@ -268,7 +218,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
       {nationality === 'qatari' && (
         <div className="flex gap-3 px-4 py-3 bg-blue-50 border border-blue-100 rounded-xl">
           <span className="text-blue-500 text-base leading-none mt-0.5">ℹ️</span>
-          <p className="text-sm text-blue-800">{L.qatariNote}</p>
+          <p className="text-sm text-blue-800">{t('qatariNote')}</p>
         </div>
       )}
 
@@ -278,53 +228,53 @@ export default function QatarGratuityCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {L.calculate}
+          {t('calculate')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {L.reset}
+          {t('reset')}
         </button>
       </div>
 
       {/* Results */}
       {result && (
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
-          <h3 className="font-bold text-gray-900">{L.results}</h3>
+          <h3 className="font-bold text-gray-900">{t('results')}</h3>
 
           {result.eligible ? (
             <>
               {/* Hero result */}
               <div className="bg-emerald-600 rounded-xl p-4 text-white">
-                <div className="text-sm opacity-80 mb-1">{L.totalGratuity}</div>
+                <div className="text-sm opacity-80 mb-1">{t('totalGratuity')}</div>
                 <div className="text-3xl font-black">{formatNum(result.totalGratuity)}</div>
                 {misconduct && (
-                  <div className="mt-2 text-xs bg-white/20 rounded-lg px-3 py-1.5">⚠️ {isAr ? 'قابل للمصادرة بسبب سوء السلوك' : 'May be forfeited due to misconduct'}</div>
+                  <div className="mt-2 text-xs bg-white/20 rounded-lg px-3 py-1.5">⚠️ {t('inline.may_be_forfeited_due_to_misconduct')}</div>
                 )}
               </div>
 
               {/* Breakdown */}
               <div className="space-y-3">
                 <ResultRow
-                  label={L.servicePeriod}
-                  value={`${result.fullYears}y ${result.fractionalMonths}mo (${result.serviceYears.toFixed(2)} ${isAr ? 'سنة' : 'yrs'})`}
+                  label={t('servicePeriod')}
+                  value={`${result.fullYears}y ${result.fractionalMonths}mo (${result.serviceYears.toFixed(2)} ${t('inline.yrs')})`}
                 />
                 <ResultRow
-                  label={isAr ? 'الراتب الأساسي الشهري' : 'Basic Monthly Salary'}
+                  label={t('inline.basic_monthly_salary')}
                   value={formatNum(parseFloat(basicSalary))}
                 />
                 <ResultRow
-                  label={L.dailyRate}
-                  value={`${formatNum(result.dailyRate)} ${isAr ? '÷ 30 يوم' : '÷ 30 days'}`}
+                  label={t('dailyRate')}
+                  value={`${formatNum(result.dailyRate)} ${t('inline.30_days')}`}
                 />
                 <ResultRow
-                  label={L.perYear}
+                  label={t('perYear')}
                   value={`${formatNum(result.gratuityPerYear)} × ${result.serviceYears.toFixed(2)}`}
                 />
                 <div className="border-t border-gray-200 pt-3">
                   <ResultRow
-                    label={isAr ? 'إجمالي المكافأة المستحقة' : 'Total Gratuity Entitlement'}
+                    label={t('inline.total_gratuity_entitlement')}
                     value={formatNum(result.totalGratuity)}
                     highlight
                   />
@@ -333,7 +283,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
             </>
           ) : (
             <div className="bg-red-50 border border-red-100 rounded-xl p-4">
-              <div className="font-semibold text-red-700 mb-1">{L.notEligible}</div>
+              <div className="font-semibold text-red-700 mb-1">{t('notEligible')}</div>
               <p className="text-sm text-red-600">{result.message}</p>
             </div>
           )}
@@ -341,7 +291,7 @@ export default function QatarGratuityCalculator({ locale }: Props) {
           {/* Legal disclaimer */}
           <div className="flex gap-2.5 px-4 py-3 bg-gray-100 rounded-xl border border-gray-200">
             <span className="text-gray-500 text-base leading-none mt-0.5">⚖️</span>
-            <p className="text-xs text-gray-500 leading-relaxed">{L.legalNote}</p>
+            <p className="text-xs text-gray-500 leading-relaxed">{t('legalNote')}</p>
           </div>
         </div>
       )}
