@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -80,7 +82,7 @@ function fmtAED(n: number) {
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function CarLoanEMICalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   // Inputs
   const [carPrice, setCarPrice] = useState('100000')
@@ -150,82 +152,44 @@ export default function CarLoanEMICalculator({ locale }: Props) {
   const interestPct = 100 - principalPct
 
   // Labels
-  const L = isAr
-    ? {
-        title: 'حاسبة قرض السيارة — الإمارات',
-        carPrice: 'سعر السيارة (AED)',
-        downPayment: 'الدفعة الأولى',
-        pct: 'النسبة %',
-        amount: 'المبلغ (AED)',
-        loanAmount: 'مبلغ القرض',
-        rate: 'معدل الفائدة / الربح السنوي (%)',
-        tenure: 'مدة القرض (شهر)',
-        mode: 'نوع التمويل',
-        conventional: 'تقليدي',
-        islamic: 'إسلامي (مرابحة)',
-        income: 'الدخل الشهري (AED) — اختياري',
-        debts: 'الديون الشهرية الحالية (AED) — اختياري',
-        installment: 'القسط الشهري',
-        totalInterest: 'إجمالي الفائدة / الربح',
-        totalRepayable: 'إجمالي المبلغ المسترد',
-        schedule: 'جدول السداد',
-        hideSchedule: 'إخفاء الجدول',
-        showSchedule: 'عرض الجدول',
-        month: 'الشهر',
-        openBal: 'الرصيد الافتتاحي',
-        interest: 'الفائدة',
-        principal: 'الأصل',
-        emi: 'القسط',
-        closeBal: 'الرصيد الختامي',
-        dbrWarning: 'تحذير: نسبة الدين',
-        dbrOk: 'نسبة الدين',
-        disclaimer: 'هذه الأداة للتقدير فقط. تعتمد العروض الفعلية على موافقة البنك والتقييم الائتماني. استشر بنكاً مرخصاً.',
-        ltvWarning: 'تحذير: الحد الأقصى للتمويل هو 80% من قيمة السيارة وفق اشتراطات البنك المركزي الإماراتي.',
-        prev: 'السابق',
-        next: 'التالي',
-        principal2: 'الأصل',
-        interest2: 'الفائدة',
-      }
-    : {
-        title: 'Car Loan EMI Calculator UAE',
-        carPrice: 'Car Price (AED)',
-        downPayment: 'Down Payment',
-        pct: 'Percentage %',
-        amount: 'Amount (AED)',
-        loanAmount: 'Loan Amount',
-        rate: mode === 'islamic' ? 'Annual Profit Rate (%)' : 'Annual Interest Rate (%)',
-        tenure: 'Loan Tenure (months)',
-        mode: 'Finance Type',
-        conventional: 'Conventional',
-        islamic: 'Islamic (Murabaha)',
-        income: 'Monthly Income (AED) — optional',
-        debts: 'Existing Monthly Debts (AED) — optional',
-        installment: mode === 'islamic' ? 'Monthly Installment' : 'Monthly EMI',
-        totalInterest: mode === 'islamic' ? 'Total Profit' : 'Total Interest',
-        totalRepayable: 'Total Amount Payable',
-        schedule: 'Repayment Schedule',
-        hideSchedule: 'Hide Schedule',
-        showSchedule: 'View Amortization Schedule',
-        month: 'Month',
-        openBal: 'Opening Balance',
-        interest: mode === 'islamic' ? 'Profit' : 'Interest',
-        principal: 'Principal',
-        emi: 'Installment',
-        closeBal: 'Closing Balance',
-        dbrWarning: 'DBR Warning',
-        dbrOk: 'Debt Burden Ratio',
-        disclaimer:
-          'This is an estimation tool based on standard reducing balance formulas as required by CBUAE Regulation No. 29/2011. Actual offers depend on bank approval, credit score, salary, vehicle type, and terms. Consult licensed banks or finance companies in the UAE.',
-        ltvWarning:
-          'Warning: CBUAE regulations cap car loan financing at 80% of vehicle value (minimum 20% down payment).',
-        prev: 'Prev',
-        next: 'Next',
-        principal2: 'Principal',
-        interest2: mode === 'islamic' ? 'Profit' : 'Interest',
-      }
+  const L = {
+    title: tl('L.title'),
+    carPrice: tl('L.carPrice'),
+    downPayment: tl('L.downPayment'),
+    pct: tl('L.pct'),
+    amount: tl('L.amount'),
+    loanAmount: tl('L.loanAmount'),
+    rate: mode === 'islamic' ? tl('L.rate_if') : tl('L.rate_else'),
+    tenure: tl('L.tenure'),
+    mode: tl('L.mode'),
+    conventional: tl('L.conventional'),
+    islamic: tl('L.islamic'),
+    income: tl('L.income'),
+    debts: tl('L.debts'),
+    installment: mode === 'islamic' ? tl('L.installment_if') : tl('L.installment_else'),
+    totalInterest: mode === 'islamic' ? tl('L.totalInterest_if') : tl('L.totalInterest_else'),
+    totalRepayable: tl('L.totalRepayable'),
+    schedule: tl('L.schedule'),
+    hideSchedule: tl('L.hideSchedule'),
+    showSchedule: tl('L.showSchedule'),
+    month: tl('L.month'),
+    openBal: tl('L.openBal'),
+    interest: mode === 'islamic' ? tl('L.interest_if') : tl('L.interest_else'),
+    principal: tl('L.principal'),
+    emi: tl('L.emi'),
+    closeBal: tl('L.closeBal'),
+    dbrWarning: tl('L.dbrWarning'),
+    dbrOk: tl('L.dbrOk'),
+    disclaimer: tl('L.disclaimer'),
+    ltvWarning: tl('L.ltvWarning'),
+    prev: tl('L.prev'),
+    next: tl('L.next'),
+    principal2: tl('L.principal2'),
+    interest2: mode === 'islamic' ? tl('L.interest2_if') : tl('L.interest2_else'),
+  }
 
   return (
-    <div className="space-y-6 font-sans" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6 font-sans" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Mode Toggle */}
       <div className="flex gap-2 p-1 bg-gray-100 rounded-xl w-fit">

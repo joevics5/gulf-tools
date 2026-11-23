@@ -4,4 +4,5 @@
  * Only list aliases here; a slug with its own file needs no entry.
  */
 export const TOOL_MESSAGE_ALIASES: Record<string, string> = {
+  'oman-loan-calculator': 'oman-emi-calculator',
 }

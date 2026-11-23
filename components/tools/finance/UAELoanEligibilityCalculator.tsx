@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -64,8 +65,8 @@ const MAX_DBR = 0.5
 const PERSONAL_MAX_MULTIPLIER = 20
 const CAR_MAX_LTV = 0.8
 
-export default function UAELoanEligibilityCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function UAELoanEligibilityCalculator(_props: Props) {
+  const tr = useTranslations('tool')
 
   const [inputs, setInputs] = useState<Inputs>({
     loanType: 'general',
@@ -180,84 +181,44 @@ export default function UAELoanEligibilityCalculator({ locale }: Props) {
     })
   }
 
-  const t = isAr
-    ? {
-        loanType: 'نوع القرض',
-        personal: 'قرض شخصي',
-        car: 'قرض سيارة',
-        general: 'أهلية عامة',
-        income: 'الراتب الشهري الإجمالي',
-        nationality: 'الجنسية',
-        expat: 'وافد / غير مواطن',
-        national: 'مواطن إماراتي',
-        existingDebt: 'الالتزامات الشهرية القائمة',
-        existingDebtHint: 'أقساط القروض الحالية + ~5% من حدود بطاقات الائتمان',
-        tenure: 'مدة القرض (أشهر)',
-        rate: 'معدل الفائدة السنوي (%)',
-        vehiclePrice: 'سعر السيارة',
-        downPayment: 'الدفعة الأولى',
-        calculate: 'احسب الأهلية',
-        reset: 'إعادة تعيين',
-        results: 'نتيجة الأهلية',
-        maxLoan: 'الحد الأقصى للقرض',
-        monthlyEMI: 'القسط الشهري التقديري',
-        totalInterest: 'إجمالي الفوائد',
-        totalPayable: 'إجمالي المبلغ المدفوع',
-        currentDBR: 'نسبة عبء الدين الحالية',
-        dbrAfterLoan: 'نسبة عبء الدين بعد القرض',
-        remainingCapacity: 'القدرة الشهرية المتبقية',
-        tips: 'نصائح لتحسين أهليتك',
-        disclaimer: 'هذه الأداة تقديرية للأغراض التعليمية فقط. الموافقة الفعلية تعتمد على درجة ائتمانك لدى الاتحاد للمعلومات الائتمانية (AECB) وسياسات البنك وعوامل أخرى. ليست نصيحة مالية.',
-        green: 'أهلية عالية',
-        yellow: 'أهلية محتملة',
-        red: 'أهلية منخفضة',
-        greenDesc: 'نسبة عبء دين صحية — فرص الموافقة جيدة',
-        yellowDesc: 'قريب من الحد الأقصى — الموافقة ممكنة لكن محدودة',
-        redDesc: 'تجاوز الحد الأقصى — من المرجح رفض القرض',
-        enterAmount: 'أدخل المبلغ',
-        maxTenureNote: 'الحد الأقصى للمدة',
-        carLTVNote: '80% من قيمة السيارة كحد أقصى',
-        personalCapNote: '20× الراتب كحد أقصى',
-      }
-    : {
-        loanType: 'Loan Type',
-        personal: 'Personal Loan',
-        car: 'Car Loan',
-        general: 'General Eligibility',
-        income: 'Gross Monthly Salary',
-        nationality: 'Nationality',
-        expat: 'Expatriate / Non-national',
-        national: 'UAE National',
-        existingDebt: 'Existing Monthly Obligations',
-        existingDebtHint: 'Current loan EMIs + ~5% of total credit card limits',
-        tenure: 'Loan Tenure (Months)',
-        rate: 'Annual Interest Rate (%)',
-        vehiclePrice: 'Vehicle Price',
-        downPayment: 'Down Payment',
-        calculate: 'Check Eligibility',
-        reset: 'Reset',
-        results: 'Your Eligibility Results',
-        maxLoan: 'Max Loan Amount',
-        monthlyEMI: 'Estimated Monthly EMI',
-        totalInterest: 'Total Interest',
-        totalPayable: 'Total Payable',
-        currentDBR: 'Current DBR',
-        dbrAfterLoan: 'DBR After New Loan',
-        remainingCapacity: 'Monthly Repayment Capacity',
-        tips: 'Tips to Improve Your Eligibility',
-        disclaimer:
-          'This is an educational estimation tool based on CBUAE regulations. It is not a loan approval, financial advice, or guarantee. Actual approval depends on your AECB credit score, employment profile, and bank-specific policies. Consult a licensed bank or financial advisor.',
-        green: 'High Eligibility',
-        yellow: 'Possible — Borderline',
-        red: 'Low Eligibility',
-        greenDesc: 'Healthy DBR — strong approval odds',
-        yellowDesc: 'Approaching the limit — approval tighter',
-        redDesc: 'Exceeds CBUAE cap — approval unlikely',
-        enterAmount: 'Enter amount',
-        maxTenureNote: 'max tenure',
-        carLTVNote: 'Max 80% of vehicle value',
-        personalCapNote: 'Max 20× salary',
-      }
+  const t = {
+    loanType: tr('t.loanType'),
+    personal: tr('t.personal'),
+    car: tr('t.car'),
+    general: tr('t.general'),
+    income: tr('t.income'),
+    nationality: tr('t.nationality'),
+    expat: tr('t.expat'),
+    national: tr('t.national'),
+    existingDebt: tr('t.existingDebt'),
+    existingDebtHint: tr('t.existingDebtHint'),
+    tenure: tr('t.tenure'),
+    rate: tr('t.rate'),
+    vehiclePrice: tr('t.vehiclePrice'),
+    downPayment: tr('t.downPayment'),
+    calculate: tr('t.calculate'),
+    reset: tr('t.reset'),
+    results: tr('t.results'),
+    maxLoan: tr('t.maxLoan'),
+    monthlyEMI: tr('t.monthlyEMI'),
+    totalInterest: tr('t.totalInterest'),
+    totalPayable: tr('t.totalPayable'),
+    currentDBR: tr('t.currentDBR'),
+    dbrAfterLoan: tr('t.dbrAfterLoan'),
+    remainingCapacity: tr('t.remainingCapacity'),
+    tips: tr('t.tips'),
+    disclaimer: tr('t.disclaimer'),
+    green: tr('t.green'),
+    yellow: tr('t.yellow'),
+    red: tr('t.red'),
+    greenDesc: tr('t.greenDesc'),
+    yellowDesc: tr('t.yellowDesc'),
+    redDesc: tr('t.redDesc'),
+    enterAmount: tr('t.enterAmount'),
+    maxTenureNote: tr('t.maxTenureNote'),
+    carLTVNote: tr('t.carLTVNote'),
+    personalCapNote: tr('t.personalCapNote'),
+  }
 
   const eligibilityConfig = {
     green: { bg: 'bg-emerald-600', badge: 'bg-emerald-100 text-emerald-800', label: t.green, desc: t.greenDesc },

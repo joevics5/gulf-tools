@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -143,6 +145,7 @@ function fmt(n: number) {
 // ─── Component ───────────────────────────────────────────────────────────────
 export default function OmanEmiCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   const [mode,         setMode]         = useState<Mode>('emi')
   const [loanType,     setLoanType]     = useState('gpl')
@@ -158,60 +161,33 @@ export default function OmanEmiCalculator({ locale }: Props) {
   const lt = LOAN_TYPES.find(l => l.value === loanType)!
 
   // ── Labels ──────────────────────────────────────────────────────────────
-  const t = isAr ? {
-    modeEmi:         'حاسبة القسط الشهري',
-    modeLoan:        'أقصى مبلغ قرض',
-    loanType:        'نوع القرض',
-    loanAmount:      'مبلغ القرض (ر.ع)',
-    rate:            'نسبة الفائدة السنوية (%)',
-    tenure:          'مدة القرض (بالسنوات)',
-    salary:          'صافي الراتب الشهري (ر.ع)',
-    age:             'عمرك الحالي (اختياري)',
-    calculate:       'احسب',
-    reset:           'إعادة تعيين',
-    results:         'النتائج',
-    monthlyEmi:      'القسط الشهري',
-    totalInterest:   'إجمالي الفائدة',
-    totalPayable:    'إجمالي المبلغ المستحق',
-    tenureMonths:    'عدد الأشهر',
-    effectiveRate:   'معدل الفائدة الفعلي',
-    maxLoan:         'أقصى قرض ممكن',
-    warnRate:        'يُقيّد البنك المركزي العُماني معدل الفائدة بحد أقصى 6% سنوياً — تم استخدام 6%.',
-    warnTenure:      `القرض الشخصي في عُمان: الحد الأقصى للمدة ${lt.maxTenure} سنوات.`,
-    warnAge:         'تم تعديل المدة لضمان السداد الكامل قبل سن 70.',
-    warnDbr:         `يجب ألّا يتجاوز القسط الشهري ${Math.round(lt.dbr * 100)}% من صافي راتبك وفقاً لقواعد نسبة خدمة الدين.`,
-    enterAmount:     'أدخل المبلغ',
-    enterYears:      'أدخل عدد السنوات',
-    enterSalary:     'أدخل الراتب',
-    enterAge:        'مثال: 35',
-    noteReducing:    'تُطبَّق الفائدة على الرصيد المتناقص وفق اشتراطات البنك المركزي العُماني.',
-  } : {
-    modeEmi:         'EMI Calculator',
-    modeLoan:        'Max Loan Amount',
-    loanType:        'Loan Type',
-    loanAmount:      `Loan Amount (${CURRENCY})`,
-    rate:            'Annual Interest Rate (%)',
-    tenure:          'Tenure (Years)',
-    salary:          `Net Monthly Salary (${CURRENCY})`,
-    age:             'Your Current Age (optional)',
-    calculate:       'Calculate',
-    reset:           'Reset',
-    results:         'Results',
-    monthlyEmi:      'Monthly EMI',
-    totalInterest:   'Total Interest',
-    totalPayable:    'Total Payable',
-    tenureMonths:    'Tenure (Months)',
-    effectiveRate:   'Effective Rate',
-    maxLoan:         'Max Loan You Can Get',
-    warnRate:        'Central Bank of Oman caps personal-loan interest at 6% p.a. — using 6% for this calculation.',
-    warnTenure:      `Oman personal loans: maximum tenure is ${lt.maxTenure} years.`,
-    warnAge:         'Tenure adjusted to ensure full repayment before age 70.',
-    warnDbr:         `Monthly repayment must not exceed ${Math.round(lt.dbr * 100)}% of your net salary under Oman DBR rules.`,
-    enterAmount:     'Enter amount',
-    enterYears:      'e.g. 3',
-    enterSalary:     'Enter salary',
-    enterAge:        'e.g. 35',
-    noteReducing:    'Interest calculated on reducing balance per Central Bank of Oman requirements.',
+  const t = {
+    modeEmi: tl('t.modeEmi'),
+    modeLoan: tl('t.modeLoan'),
+    loanType: tl('t.loanType'),
+    loanAmount: tl('t.loanAmount', { p0: String(CURRENCY) }),
+    rate: tl('t.rate'),
+    tenure: tl('t.tenure'),
+    salary: tl('t.salary', { p0: String(CURRENCY) }),
+    age: tl('t.age'),
+    calculate: tl('t.calculate'),
+    reset: tl('t.reset'),
+    results: tl('t.results'),
+    monthlyEmi: tl('t.monthlyEmi'),
+    totalInterest: tl('t.totalInterest'),
+    totalPayable: tl('t.totalPayable'),
+    tenureMonths: tl('t.tenureMonths'),
+    effectiveRate: tl('t.effectiveRate'),
+    maxLoan: tl('t.maxLoan'),
+    warnRate: tl('t.warnRate'),
+    warnTenure: tl('t.warnTenure', { p0: String(lt.maxTenure) }),
+    warnAge: tl('t.warnAge'),
+    warnDbr: tl('t.warnDbr', { p0: String(Math.round(lt.dbr * 100)) }),
+    enterAmount: tl('t.enterAmount'),
+    enterYears: tl('t.enterYears'),
+    enterSalary: tl('t.enterSalary'),
+    enterAge: tl('t.enterAge'),
+    noteReducing: tl('t.noteReducing'),
   }
 
   function reset() {
@@ -229,7 +205,7 @@ export default function OmanEmiCalculator({ locale }: Props) {
   }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Mode toggle */}
       <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
@@ -314,7 +290,7 @@ export default function OmanEmiCalculator({ locale }: Props) {
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">%</span>
           </div>
           <p className="mt-1 text-xs text-gray-500">
-            {isAr ? 'الحد الأقصى: 6% (البنك المركزي العُماني)' : 'Max 6% per CBO regulations'}
+            {tl('inline.max_6_per_cbo_regulations')}
           </p>
         </div>
 
@@ -334,11 +310,11 @@ export default function OmanEmiCalculator({ locale }: Props) {
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">
-              {isAr ? 'سنة' : 'yr'}
+              {tl('inline.yr')}
             </span>
           </div>
           <p className="mt-1 text-xs text-gray-500">
-            {isAr ? `الحد الأقصى: ${lt.maxTenure} سنوات` : `Max ${lt.maxTenure} years`}
+            {tl('inline.max_years', { p0: String(lt.maxTenure) })}
           </p>
         </div>
 
@@ -348,7 +324,7 @@ export default function OmanEmiCalculator({ locale }: Props) {
             {t.salary}
             {mode === 'emi' && (
               <span className="ml-1 text-xs text-gray-500 font-normal">
-                ({isAr ? 'لفحص نسبة خدمة الدين' : 'for DBR check'})
+                ({tl('inline.for_dbr_check')})
               </span>
             )}
           </label>
@@ -436,7 +412,7 @@ export default function OmanEmiCalculator({ locale }: Props) {
             <ResultRow label={t.totalInterest}  value={fmt(result.totalInterest)} negative />
             <ResultRow label={t.totalPayable}    value={fmt(result.totalPayable)}  highlight />
             <div className="border-t border-gray-200 pt-3 space-y-2">
-              <ResultRow label={t.tenureMonths}  value={`${result.months} ${isAr ? 'شهر' : 'months'}`} />
+              <ResultRow label={t.tenureMonths}  value={`${result.months} ${tl('inline.months')}`} />
               <ResultRow label={t.effectiveRate} value={`${result.effectiveRate.toFixed(2)}% p.a.`} />
             </div>
           </div>

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -49,7 +51,7 @@ function pct(n: number) {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function TopUpLoanCalculatorUAE({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   // ── Inputs ──
   const [monthlyIncome, setMonthlyIncome] = useState('')
@@ -106,46 +108,34 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
     // ── Hard rules ──
     if (currentDBR >= cap) {
       hardReasons.push(
-        isAr
-          ? `نسبة عبء الدين الحالية (${pct(currentDBR)}) تتجاوز الحد الأقصى (${pct(cap)})`
-          : `Current DBR (${pct(currentDBR)}) already at or above the ${pct(cap)} UAE cap`
+        tr('inline.current_dbr_already_at_or_above_the_uae_', { p0: String(pct(currentDBR)), p1: String(pct(cap)) })
       )
     }
     if (desired > 0 && postDBR > cap) {
       hardReasons.push(
-        isAr
-          ? `مبلغ القرض المطلوب سيرفع نسبة عبء الدين إلى ${pct(postDBR)}، وهو فوق الحد المسموح`
-          : `Requested amount pushes DBR to ${pct(postDBR)}, exceeding the ${pct(cap)} cap`
+        tr('inline.requested_amount_pushes_dbr_to_exceeding', { p0: String(pct(postDBR)), p1: String(pct(cap)) })
       )
     }
     if (nTenor > MAX_TENOR_MONTHS) {
       hardReasons.push(
-        isAr
-          ? `المدة المطلوبة تتجاوز الحد الأقصى المعتاد للقروض الشخصية (${MAX_TENOR_MONTHS} شهرًا)`
-          : `Requested tenor exceeds typical UAE personal loan maximum of ${MAX_TENOR_MONTHS} months`
+        tr('inline.requested_tenor_exceeds_typical_uae_pers', { p0: String(MAX_TENOR_MONTHS) })
       )
     }
 
     // ── Soft rules ──
     if (!isExistingCustomer) {
       softFlags.push(
-        isAr
-          ? 'القرض الإضافي يستلزم عادةً أن تكون عميلًا حاليًا لدى البنك'
-          : 'Top-up is generally restricted to existing customers of the same lender'
+        tr('inline.top_up_is_generally_restricted_to_existi')
       )
     }
     if (!salaryTransferred) {
       softFlags.push(
-        isAr
-          ? 'كثير من البنوك الإماراتية تشترط تحويل الراتب للموافقة'
-          : 'Many UAE banks require salary transfer to the same bank for approval'
+        tr('inline.many_uae_banks_require_salary_transfer_t')
       )
     }
     if (income < 5000) {
       softFlags.push(
-        isAr
-          ? 'بعض البنوك تشترط دخلًا أدنى يبلغ 5,000 درهم'
-          : 'Some UAE lenders require a minimum monthly income of AED 5,000'
+        tr('inline.some_uae_lenders_require_a_minimum_month')
       )
     }
 
@@ -181,69 +171,37 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
   }
 
   // ── Labels ──
-  const t = isAr
-    ? {
-        title: 'حاسبة القرض الإضافي – الإمارات',
-        income: 'الراتب الشهري الإجمالي',
-        instalment: 'القسط الشهري الحالي',
-        cards: 'الحد الأدنى لبطاقات الائتمان',
-        balance: 'الرصيد المتبقي للقرض',
-        tenor: 'الأشهر المتبقية للقرض',
-        desired: 'المبلغ الإضافي المطلوب',
-        newTenor: 'مدة القرض الجديد (أشهر)',
-        rate: 'معدل الفائدة السنوي (%)',
-        existingCustomer: 'أنا عميل حالي لدى البنك',
-        salaryTransfer: 'راتبي محوّل لنفس البنك',
-        pensioner: 'أنا متقاعد',
-        advanced: 'إعدادات متقدمة',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        eligible: 'مؤهل للحصول على القرض الإضافي',
-        conditional: 'مؤهل مبدئيًا (يخضع لشروط البنك)',
-        ineligible: 'غير مؤهل حاليًا',
-        currentDBR: 'نسبة عبء الدين الحالية',
-        postDBR: 'نسبة عبء الدين بعد القرض',
-        headroom: 'الهامش المتاح',
-        maxTopUp: 'الحد الأقصى للقرض الإضافي',
-        newPayment: 'القسط الشهري الجديد',
-        combined: 'إجمالي الأقساط الشهرية',
-        hardIssues: 'موانع قانونية',
-        softFlags: 'شروط البنك',
-        disclaimer: 'هذه الحاسبة للاسترشاد فقط ولا تمثل عرضًا ائتمانيًا رسميًا.',
-        enterAmount: 'أدخل المبلغ',
-        cap: 'الحد الأقصى لنسبة عبء الدين',
-      }
-    : {
-        title: 'Top-Up Loan Calculator UAE',
-        income: 'Gross Monthly Income',
-        instalment: 'Existing Monthly Instalment',
-        cards: 'Credit Card Minimum Payments',
-        balance: 'Remaining Loan Balance',
-        tenor: 'Remaining Loan Tenor (months)',
-        desired: 'Additional Amount Needed',
-        newTenor: 'New Loan Tenor (months)',
-        rate: 'Annual Interest Rate (%)',
-        existingCustomer: 'I am an existing customer of this bank',
-        salaryTransfer: 'My salary is transferred to this bank',
-        pensioner: 'I am a pensioner / retiree',
-        advanced: 'Advanced Settings',
-        calculate: 'Calculate Eligibility',
-        reset: 'Reset',
-        eligible: 'Eligible for Top-Up',
-        conditional: 'Conditionally Eligible',
-        ineligible: 'Not Eligible at This Amount',
-        currentDBR: 'Current DBR',
-        postDBR: 'Post Top-Up DBR',
-        headroom: 'DBR Headroom',
-        maxTopUp: 'Max Safe Top-Up',
-        newPayment: 'New Monthly Payment',
-        combined: 'Total Monthly Obligations',
-        hardIssues: 'Hard Rule Failures',
-        softFlags: 'Bank Policy Checks',
-        disclaimer: 'This calculator is an estimate based on published UAE Central Bank guidelines. Final approval depends on your lender.',
-        enterAmount: 'Enter amount',
-        cap: 'DBR Cap Applied',
-      }
+  const t = {
+    title: tr('t.title'),
+    income: tr('t.income'),
+    instalment: tr('t.instalment'),
+    cards: tr('t.cards'),
+    balance: tr('t.balance'),
+    tenor: tr('t.tenor'),
+    desired: tr('t.desired'),
+    newTenor: tr('t.newTenor'),
+    rate: tr('t.rate'),
+    existingCustomer: tr('t.existingCustomer'),
+    salaryTransfer: tr('t.salaryTransfer'),
+    pensioner: tr('t.pensioner'),
+    advanced: tr('t.advanced'),
+    calculate: tr('t.calculate'),
+    reset: tr('t.reset'),
+    eligible: tr('t.eligible'),
+    conditional: tr('t.conditional'),
+    ineligible: tr('t.ineligible'),
+    currentDBR: tr('t.currentDBR'),
+    postDBR: tr('t.postDBR'),
+    headroom: tr('t.headroom'),
+    maxTopUp: tr('t.maxTopUp'),
+    newPayment: tr('t.newPayment'),
+    combined: tr('t.combined'),
+    hardIssues: tr('t.hardIssues'),
+    softFlags: tr('t.softFlags'),
+    disclaimer: tr('t.disclaimer'),
+    enterAmount: tr('t.enterAmount'),
+    cap: tr('t.cap'),
+  }
 
   // ── Status config ──
   const statusConfig = {
@@ -253,7 +211,7 @@ export default function TopUpLoanCalculatorUAE({ locale }: Props) {
   }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Section 1: Core inputs ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

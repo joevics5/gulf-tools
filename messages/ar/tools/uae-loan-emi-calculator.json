@@ -1,0 +1,42 @@
+{
+  "t": {
+    "title": "حاسبة القرض الشخصي",
+    "country": "الدولة",
+    "income": "الراتب الشهري",
+    "loanAmount": "مبلغ القرض",
+    "tenure": "مدة القرض (أشهر)",
+    "rate": "معدل الفائدة السنوي (%)",
+    "processingFee": "رسوم المعالجة (اختياري)",
+    "calculate": "احسب القسط",
+    "reset": "إعادة تعيين",
+    "results": "نتيجة الحساب",
+    "monthlyEMI": "القسط الشهري",
+    "totalPayable": "إجمالي المبلغ المدفوع",
+    "totalInterest": "إجمالي الفوائد",
+    "dbr": "نسبة عبء الدين",
+    "exceedsMaxLoan": "⚠️ يتجاوز الحد الأقصى للقرض",
+    "exceedsDBR": "⚠️ يتجاوز الحد المسموح به لعبء الدين",
+    "schedule": "جدول السداد",
+    "hideSchedule": "إخفاء الجدول",
+    "showSchedule": "عرض جدول السداد",
+    "downloadCSV": "تحميل CSV",
+    "month": "الشهر",
+    "payment": "القسط",
+    "principalPaid": "الأصل",
+    "interestPaid": "الفائدة",
+    "balance": "الرصيد",
+    "disclaimer": "هذه الحاسبة للأغراض التوضيحية فقط. المعدلات والموافقة تعتمد على البنك وملفك الشخصي. ليست نصيحة مالية.",
+    "enterAmount": "أدخل المبلغ",
+    "feeNote": "سيُضاف إلى التكلفة الإجمالية",
+    "maxLoanNote": "الحد الأقصى للقرض",
+    "dbrLabel": "عبء الدين الحالي",
+    "ofIncome": "من الدخل",
+    "maxAllowed": "الحد الأقصى"
+  },
+  "inline": {
+    "loan_principal": "مبلغ القرض",
+    "processing_fee": "رسوم المعالجة",
+    "total_cost_incl_fees": "إجمالي التكلفة (شامل الرسوم)",
+    "this_emi_uses_of_your_monthly_income": "هذا القسط يستهلك {p0} من دخلك الشهري"
+  }
+}

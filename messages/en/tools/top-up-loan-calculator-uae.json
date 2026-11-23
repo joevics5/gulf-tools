@@ -1,0 +1,41 @@
+{
+  "t": {
+    "title": "Top-Up Loan Calculator UAE",
+    "income": "Gross Monthly Income",
+    "instalment": "Existing Monthly Instalment",
+    "cards": "Credit Card Minimum Payments",
+    "balance": "Remaining Loan Balance",
+    "tenor": "Remaining Loan Tenor (months)",
+    "desired": "Additional Amount Needed",
+    "newTenor": "New Loan Tenor (months)",
+    "rate": "Annual Interest Rate (%)",
+    "existingCustomer": "I am an existing customer of this bank",
+    "salaryTransfer": "My salary is transferred to this bank",
+    "pensioner": "I am a pensioner / retiree",
+    "advanced": "Advanced Settings",
+    "calculate": "Calculate Eligibility",
+    "reset": "Reset",
+    "eligible": "Eligible for Top-Up",
+    "conditional": "Conditionally Eligible",
+    "ineligible": "Not Eligible at This Amount",
+    "currentDBR": "Current DBR",
+    "postDBR": "Post Top-Up DBR",
+    "headroom": "DBR Headroom",
+    "maxTopUp": "Max Safe Top-Up",
+    "newPayment": "New Monthly Payment",
+    "combined": "Total Monthly Obligations",
+    "hardIssues": "Hard Rule Failures",
+    "softFlags": "Bank Policy Checks",
+    "disclaimer": "This calculator is an estimate based on published UAE Central Bank guidelines. Final approval depends on your lender.",
+    "enterAmount": "Enter amount",
+    "cap": "DBR Cap Applied"
+  },
+  "inline": {
+    "current_dbr_already_at_or_above_the_uae_": "Current DBR ({p0}) already at or above the {p1} UAE cap",
+    "requested_amount_pushes_dbr_to_exceeding": "Requested amount pushes DBR to {p0}, exceeding the {p1} cap",
+    "requested_tenor_exceeds_typical_uae_pers": "Requested tenor exceeds typical UAE personal loan maximum of {p0} months",
+    "top_up_is_generally_restricted_to_existi": "Top-up is generally restricted to existing customers of the same lender",
+    "many_uae_banks_require_salary_transfer_t": "Many UAE banks require salary transfer to the same bank for approval",
+    "some_uae_lenders_require_a_minimum_month": "Some UAE lenders require a minimum monthly income of AED 5,000"
+  }
+}

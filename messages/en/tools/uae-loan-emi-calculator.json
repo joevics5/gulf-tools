@@ -1,0 +1,42 @@
+{
+  "t": {
+    "title": "Personal Loan EMI Calculator",
+    "country": "Country",
+    "income": "Monthly Salary (AED)",
+    "loanAmount": "Loan Amount",
+    "tenure": "Tenure (Months)",
+    "rate": "Annual Interest Rate (%)",
+    "processingFee": "Processing Fee (optional)",
+    "calculate": "Calculate EMI",
+    "reset": "Reset",
+    "results": "Your Results",
+    "monthlyEMI": "Monthly EMI",
+    "totalPayable": "Total Payable",
+    "totalInterest": "Total Interest",
+    "dbr": "Debt Burden Ratio",
+    "exceedsMaxLoan": "⚠️ Exceeds max loan ({p0}× salary)",
+    "exceedsDBR": "⚠️ Exceeds max DBR ({p0}%)",
+    "schedule": "Amortization Schedule",
+    "hideSchedule": "Hide Schedule",
+    "showSchedule": "View Amortization Schedule",
+    "downloadCSV": "Download CSV",
+    "month": "Month",
+    "payment": "Payment",
+    "principalPaid": "Principal",
+    "interestPaid": "Interest",
+    "balance": "Balance",
+    "disclaimer": "This is an illustrative calculator only. Actual rates, fees, and approval depend on the bank and your profile. Results do not constitute financial advice or a loan offer. Consult a licensed bank or financial advisor.",
+    "enterAmount": "Enter amount",
+    "feeNote": "Added to total cost",
+    "maxLoanNote": "Max loan: {p0}× salary",
+    "dbrLabel": "Your DBR",
+    "ofIncome": "of income",
+    "maxAllowed": "max {p0}%"
+  },
+  "inline": {
+    "loan_principal": "Loan Principal",
+    "processing_fee": "Processing Fee",
+    "total_cost_incl_fees": "Total Cost (incl. fees)",
+    "this_emi_uses_of_your_monthly_income": "This EMI uses {p0} of your monthly income"
+  }
+}

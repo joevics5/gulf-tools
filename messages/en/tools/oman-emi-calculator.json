@@ -1,0 +1,37 @@
+{
+  "t": {
+    "modeEmi": "EMI Calculator",
+    "modeLoan": "Max Loan Amount",
+    "loanType": "Loan Type",
+    "loanAmount": "Loan Amount ({p0})",
+    "rate": "Annual Interest Rate (%)",
+    "tenure": "Tenure (Years)",
+    "salary": "Net Monthly Salary ({p0})",
+    "age": "Your Current Age (optional)",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Results",
+    "monthlyEmi": "Monthly EMI",
+    "totalInterest": "Total Interest",
+    "totalPayable": "Total Payable",
+    "tenureMonths": "Tenure (Months)",
+    "effectiveRate": "Effective Rate",
+    "maxLoan": "Max Loan You Can Get",
+    "warnRate": "Central Bank of Oman caps personal-loan interest at 6% p.a. — using 6% for this calculation.",
+    "warnTenure": "Oman personal loans: maximum tenure is {p0} years.",
+    "warnAge": "Tenure adjusted to ensure full repayment before age 70.",
+    "warnDbr": "Monthly repayment must not exceed {p0}% of your net salary under Oman DBR rules.",
+    "enterAmount": "Enter amount",
+    "enterYears": "e.g. 3",
+    "enterSalary": "Enter salary",
+    "enterAge": "e.g. 35",
+    "noteReducing": "Interest calculated on reducing balance per Central Bank of Oman requirements."
+  },
+  "inline": {
+    "max_6_per_cbo_regulations": "Max 6% per CBO regulations",
+    "yr": "yr",
+    "max_years": "Max {p0} years",
+    "for_dbr_check": "for DBR check",
+    "months": "months"
+  }
+}

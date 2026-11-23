@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -80,8 +81,8 @@ function fmtPct(n: number) {
   return `${n.toFixed(1)}%`
 }
 
-export default function UAELoanEMICalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function UAELoanEMICalculator(_props: Props) {
+  const tl = useTranslations('tool')
 
   const [country, setCountry] = useState<CountryKey>('uae')
   const [income, setIncome] = useState('')
@@ -145,76 +146,40 @@ export default function UAELoanEMICalculator({ locale }: Props) {
     setCountry('uae')
   }
 
-  const t = isAr
-    ? {
-        title: 'حاسبة القرض الشخصي',
-        country: 'الدولة',
-        income: 'الراتب الشهري',
-        loanAmount: 'مبلغ القرض',
-        tenure: 'مدة القرض (أشهر)',
-        rate: 'معدل الفائدة السنوي (%)',
-        processingFee: 'رسوم المعالجة (اختياري)',
-        calculate: 'احسب القسط',
-        reset: 'إعادة تعيين',
-        results: 'نتيجة الحساب',
-        monthlyEMI: 'القسط الشهري',
-        totalPayable: 'إجمالي المبلغ المدفوع',
-        totalInterest: 'إجمالي الفوائد',
-        dbr: 'نسبة عبء الدين',
-        exceedsMaxLoan: '⚠️ يتجاوز الحد الأقصى للقرض',
-        exceedsDBR: '⚠️ يتجاوز الحد المسموح به لعبء الدين',
-        schedule: 'جدول السداد',
-        hideSchedule: 'إخفاء الجدول',
-        showSchedule: 'عرض جدول السداد',
-        downloadCSV: 'تحميل CSV',
-        month: 'الشهر',
-        payment: 'القسط',
-        principalPaid: 'الأصل',
-        interestPaid: 'الفائدة',
-        balance: 'الرصيد',
-        disclaimer: 'هذه الحاسبة للأغراض التوضيحية فقط. المعدلات والموافقة تعتمد على البنك وملفك الشخصي. ليست نصيحة مالية.',
-        enterAmount: 'أدخل المبلغ',
-        feeNote: 'سيُضاف إلى التكلفة الإجمالية',
-        maxLoanNote: 'الحد الأقصى للقرض',
-        dbrLabel: 'عبء الدين الحالي',
-        ofIncome: 'من الدخل',
-        maxAllowed: 'الحد الأقصى',
-      }
-    : {
-        title: 'Personal Loan EMI Calculator',
-        country: 'Country',
-        income: 'Monthly Salary (AED)',
-        loanAmount: 'Loan Amount',
-        tenure: 'Tenure (Months)',
-        rate: 'Annual Interest Rate (%)',
-        processingFee: 'Processing Fee (optional)',
-        calculate: 'Calculate EMI',
-        reset: 'Reset',
-        results: 'Your Results',
-        monthlyEMI: 'Monthly EMI',
-        totalPayable: 'Total Payable',
-        totalInterest: 'Total Interest',
-        dbr: 'Debt Burden Ratio',
-        exceedsMaxLoan: `⚠️ Exceeds max loan (${config.maxMultiplier}× salary)`,
-        exceedsDBR: `⚠️ Exceeds max DBR (${config.maxDBR}%)`,
-        schedule: 'Amortization Schedule',
-        hideSchedule: 'Hide Schedule',
-        showSchedule: 'View Amortization Schedule',
-        downloadCSV: 'Download CSV',
-        month: 'Month',
-        payment: 'Payment',
-        principalPaid: 'Principal',
-        interestPaid: 'Interest',
-        balance: 'Balance',
-        disclaimer:
-          'This is an illustrative calculator only. Actual rates, fees, and approval depend on the bank and your profile. Results do not constitute financial advice or a loan offer. Consult a licensed bank or financial advisor.',
-        enterAmount: 'Enter amount',
-        feeNote: 'Added to total cost',
-        maxLoanNote: `Max loan: ${config.maxMultiplier}× salary`,
-        dbrLabel: 'Your DBR',
-        ofIncome: 'of income',
-        maxAllowed: `max ${config.maxDBR}%`,
-      }
+  const t = {
+    title: tl('t.title'),
+    country: tl('t.country'),
+    income: tl('t.income'),
+    loanAmount: tl('t.loanAmount'),
+    tenure: tl('t.tenure'),
+    rate: tl('t.rate'),
+    processingFee: tl('t.processingFee'),
+    calculate: tl('t.calculate'),
+    reset: tl('t.reset'),
+    results: tl('t.results'),
+    monthlyEMI: tl('t.monthlyEMI'),
+    totalPayable: tl('t.totalPayable'),
+    totalInterest: tl('t.totalInterest'),
+    dbr: tl('t.dbr'),
+    exceedsMaxLoan: tl('t.exceedsMaxLoan', { p0: String(config.maxMultiplier) }),
+    exceedsDBR: tl('t.exceedsDBR', { p0: String(config.maxDBR) }),
+    schedule: tl('t.schedule'),
+    hideSchedule: tl('t.hideSchedule'),
+    showSchedule: tl('t.showSchedule'),
+    downloadCSV: tl('t.downloadCSV'),
+    month: tl('t.month'),
+    payment: tl('t.payment'),
+    principalPaid: tl('t.principalPaid'),
+    interestPaid: tl('t.interestPaid'),
+    balance: tl('t.balance'),
+    disclaimer: tl('t.disclaimer'),
+    enterAmount: tl('t.enterAmount'),
+    feeNote: tl('t.feeNote'),
+    maxLoanNote: tl('t.maxLoanNote', { p0: String(config.maxMultiplier) }),
+    dbrLabel: tl('t.dbrLabel'),
+    ofIncome: tl('t.ofIncome'),
+    maxAllowed: tl('t.maxAllowed', { p0: String(config.maxDBR) }),
+  }
 
   // DBR traffic light
   const dbrColor =
@@ -429,14 +394,14 @@ export default function UAELoanEMICalculator({ locale }: Props) {
 
           {/* Breakdown rows */}
           <div className="space-y-3">
-            <ResultRow label={isAr ? 'مبلغ القرض' : 'Loan Principal'} value={fmt(parseFloat(loanAmount), result.currency)} />
+            <ResultRow label={tl('inline.loan_principal')} value={fmt(parseFloat(loanAmount), result.currency)} />
             <ResultRow label={t.totalInterest} value={fmt(result.totalInterest, result.currency)} />
             {processingFeeVal > 0 && (
-              <ResultRow label={isAr ? 'رسوم المعالجة' : 'Processing Fee'} value={fmt(processingFeeVal, result.currency)} />
+              <ResultRow label={tl('inline.processing_fee')} value={fmt(processingFeeVal, result.currency)} />
             )}
             <div className="border-t border-gray-200 pt-3">
               <ResultRow
-                label={processingFeeVal > 0 ? (isAr ? 'إجمالي التكلفة (شامل الرسوم)' : 'Total Cost (incl. fees)') : t.totalPayable}
+                label={processingFeeVal > 0 ? (tl('inline.total_cost_incl_fees')) : t.totalPayable}
                 value={fmt(processingFeeVal > 0 ? totalCost : result.totalPayable, result.currency)}
                 highlight
               />
@@ -462,9 +427,7 @@ export default function UAELoanEMICalculator({ locale }: Props) {
                 />
               </div>
               <p className="text-xs text-gray-500">
-                {isAr
-                  ? `هذا القسط يستهلك ${fmtPct(result.dbr)} من دخلك الشهري`
-                  : `This EMI uses ${fmtPct(result.dbr)} of your monthly income`}
+                {tl('inline.this_emi_uses_of_your_monthly_income', { p0: String(fmtPct(result.dbr)) })}
               </p>
             </div>
           )}
