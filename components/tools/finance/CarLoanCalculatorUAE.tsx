@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -368,6 +370,7 @@ function fmtPct(n: number) { return `${n.toFixed(2)}%` }
 
 export default function CarLoanCalculatorUAE({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   // Inputs
   const [country, setCountry]             = useState('uae')
@@ -410,82 +413,46 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
     setEarlySettle('0'); setResult(null); setShowSchedule(false)
   }
 
-  const t = isAr ? {
-    country: 'الدولة',
-    vehiclePrice: 'سعر السيارة',
-    downPayment: 'الدفعة الأولى',
-    term: 'مدة القرض (أشهر)',
-    rate: 'معدل الفائدة السنوي (%)',
-    interestType: 'نوع الفائدة',
-    reducing: 'متناقصة',
-    flat: 'ثابتة',
-    procFee: 'رسوم المعالجة',
-    capitalize: 'إضافة الرسوم إلى القرض',
-    usedCar: 'سيارة مستعملة',
-    earlySettle: 'محاكاة السداد المبكر (بعد شهر)',
-    calculate: 'احسب',
-    reset: 'إعادة تعيين',
-    results: 'النتائج',
-    monthlyPayment: 'القسط الشهري',
-    financed: 'المبلغ الممول',
-    totalInterest: 'إجمالي الفائدة',
-    totalCost: 'التكلفة الإجمالية',
-    apr: 'معدل الفائدة الفعلي (APR)',
-    flatEquiv: 'ما يعادله بالمتناقص',
-    earlyPayoff: 'مبلغ السداد المبكر',
-    showSchedule: 'عرض جدول السداد',
-    hideSchedule: 'إخفاء جدول السداد',
-    month: 'شهر',
-    principal: 'أصل',
-    interest: 'فائدة',
-    balance: 'رصيد',
-    warning: 'تنبيه',
-    disclaimer: 'إخلاء مسؤولية',
-    marketPractice: 'ممارسة السوق',
-    exportNote: 'ملاحظة النقل/التصدير',
-    downPct: 'الدفعة الأولى كنسبة',
-    typicalRates: 'المعدلات الشائعة في السوق',
-    enterAmount: 'أدخل المبلغ',
-  } : {
-    country: 'Country',
-    vehiclePrice: 'Vehicle Price',
-    downPayment: 'Down Payment',
-    term: 'Loan Term (months)',
-    rate: 'Annual Interest Rate (%)',
-    interestType: 'Interest Type',
-    reducing: 'Reducing Balance',
-    flat: 'Flat Rate',
-    procFee: 'Processing Fee',
-    capitalize: 'Add fees to loan amount',
-    usedCar: 'Used / Second-hand Car',
-    earlySettle: 'Simulate Early Settlement (after month)',
-    calculate: 'Calculate',
-    reset: 'Reset',
-    results: 'Your Results',
-    monthlyPayment: 'Monthly Payment',
-    financed: 'Financed Amount',
-    totalInterest: 'Total Interest',
-    totalCost: 'Total Cost of Finance',
-    apr: 'Effective APR',
-    flatEquiv: 'Flat → Reducing Equivalent',
-    earlyPayoff: 'Early Settlement Amount',
-    showSchedule: 'View Amortization Schedule',
-    hideSchedule: 'Hide Schedule',
-    month: 'Month',
-    principal: 'Principal',
-    interest: 'Interest',
-    balance: 'Balance',
-    warning: 'Note',
-    disclaimer: 'Disclaimer',
-    marketPractice: 'Market Practice',
-    exportNote: 'Transfer / Export Notice',
-    downPct: 'Down payment is',
-    typicalRates: 'Typical market rates',
-    enterAmount: 'Enter amount',
+  const t = {
+    country: tl('t.country'),
+    vehiclePrice: tl('t.vehiclePrice'),
+    downPayment: tl('t.downPayment'),
+    term: tl('t.term'),
+    rate: tl('t.rate'),
+    interestType: tl('t.interestType'),
+    reducing: tl('t.reducing'),
+    flat: tl('t.flat'),
+    procFee: tl('t.procFee'),
+    capitalize: tl('t.capitalize'),
+    usedCar: tl('t.usedCar'),
+    earlySettle: tl('t.earlySettle'),
+    calculate: tl('t.calculate'),
+    reset: tl('t.reset'),
+    results: tl('t.results'),
+    monthlyPayment: tl('t.monthlyPayment'),
+    financed: tl('t.financed'),
+    totalInterest: tl('t.totalInterest'),
+    totalCost: tl('t.totalCost'),
+    apr: tl('t.apr'),
+    flatEquiv: tl('t.flatEquiv'),
+    earlyPayoff: tl('t.earlyPayoff'),
+    showSchedule: tl('t.showSchedule'),
+    hideSchedule: tl('t.hideSchedule'),
+    month: tl('t.month'),
+    principal: tl('t.principal'),
+    interest: tl('t.interest'),
+    balance: tl('t.balance'),
+    warning: tl('t.warning'),
+    disclaimer: tl('t.disclaimer'),
+    marketPractice: tl('t.marketPractice'),
+    exportNote: tl('t.exportNote'),
+    downPct: tl('t.downPct'),
+    typicalRates: tl('t.typicalRates'),
+    enterAmount: tl('t.enterAmount'),
   }
 
   return (
-    <div className="space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-6" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* ── Section 1: Country & Vehicle ── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -549,7 +516,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           >
             {[12,18,24,30,36,42,48,54,60].filter(m => m >= rules.minTermMonths && m <= rules.maxTermMonths).map(m => (
-              <option key={m} value={m}>{m} {isAr ? 'شهرًا' : 'months'} ({(m/12).toFixed(1)} {isAr ? 'سنة' : 'yrs'})</option>
+              <option key={m} value={m}>{m} {tl('inline.months')} ({(m/12).toFixed(1)} {tl('inline.yrs')})</option>
             ))}
           </select>
         </div>
@@ -671,7 +638,7 @@ export default function CarLoanCalculatorUAE({ locale }: Props) {
                 ? [{ label: t.flatEquiv, value: fmtPct(result.flatRateEquivalent) }]
                 : []),
               ...(result.earlySettlementAfter > 0
-                ? [{ label: `${t.earlyPayoff} (${isAr ? 'شهر' : 'mo.'} ${result.earlySettlementAfter})`, value: fmtCur(result.earlySettlementAmount, result.currency) }]
+                ? [{ label: `${t.earlyPayoff} (${tl('inline.mo')} ${result.earlySettlementAfter})`, value: fmtCur(result.earlySettlementAmount, result.currency) }]
                 : []),
             ].map(({ label, value }) => (
               <div key={label} className="bg-white rounded-xl border border-gray-100 p-4">

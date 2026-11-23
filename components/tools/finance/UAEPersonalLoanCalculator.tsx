@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -114,6 +115,7 @@ type Result = {
 
 export default function UAEPersonalLoanCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   const [salary, setSalary]       = useState('')
   const [loanAmount, setLoanAmount] = useState('')
@@ -171,72 +173,43 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
   }
 
   // i18n
-  const L = isAr ? {
-    salary: 'الراتب الشهري (درهم)',
-    loanAmount: 'مبلغ القرض (درهم)',
-    term: 'مدة السداد (بالأشهر)',
-    rateType: 'نوع معدل الفائدة',
-    rate: 'معدل الفائدة السنوي (%)',
-    reducing: 'رصيد متناقص',
-    flat: 'معدل ثابت',
-    calculate: 'احسب',
-    reset: 'إعادة تعيين',
-    eligibility: 'الأهلية',
-    eligible: '✓ مؤهل',
-    notEligible: '✗ غير مؤهل',
-    emi: 'القسط الشهري',
-    totalPayment: 'إجمالي المدفوعات',
-    totalInterest: 'إجمالي الفائدة',
-    loanCeiling: 'سقف القرض المسموح (20× الراتب)',
-    maxDeduction: 'الحد الأقصى للقسط (50% من الراتب)',
-    reducingBasis: 'أساس الاحتساب: رصيد متناقص',
-    flatComparison: 'القسط بالمعدل الثابت (للمقارنة فقط)',
-    flatEquivRate: 'المعدل الثابت المعادل (تقريبي)',
-    legalDisclosure: 'تُلزم الجهات التنظيمية في الإمارات البنوك بالإفصاح عن الفائدة على أساس الرصيد المتناقص',
-    showSchedule: 'عرض جدول الاستهلاك',
-    hideSchedule: 'إخفاء الجدول',
-    month: 'الشهر', opening: 'الرصيد الافتتاحي', interest: 'الفائدة',
-    principalComp: 'الأصل', closing: 'الرصيد الختامي',
-    whyBlock: 'لماذا هذه النتيجة؟',
-    enterAmount: 'أدخل المبلغ',
-  } : {
-    salary: 'Monthly Salary (AED)',
-    loanAmount: 'Loan Amount (AED)',
-    term: 'Loan Term (Months)',
-    rateType: 'Interest Rate Type',
-    rate: 'Annual Interest Rate (%)',
-    reducing: 'Reducing Balance',
-    flat: 'Flat Rate',
-    calculate: 'Calculate',
-    reset: 'Reset',
-    eligibility: 'Eligibility',
-    eligible: '✓ Eligible',
-    notEligible: '✗ Not Eligible',
-    emi: 'Monthly Installment',
-    totalPayment: 'Total Repayment',
-    totalInterest: 'Total Interest',
-    loanCeiling: 'Loan Ceiling (20× Salary)',
-    maxDeduction: 'Max Monthly Deduction (50% Salary)',
-    reducingBasis: 'Rate Basis: Reducing Balance',
-    flatComparison: 'Flat Rate Installment (comparison only)',
-    flatEquivRate: 'Flat Rate Equivalent (approx.)',
-    legalDisclosure: 'UAE regulations require banks to disclose interest on a reducing-balance basis',
-    showSchedule: 'Show Amortisation Schedule',
-    hideSchedule: 'Hide Schedule',
-    month: 'Month', opening: 'Opening', interest: 'Interest',
-    principalComp: 'Principal', closing: 'Closing',
-    whyBlock: 'Why this result?',
-    enterAmount: 'Enter amount',
+  const L = {
+    salary: tl('L.salary'),
+    loanAmount: tl('L.loanAmount'),
+    term: tl('L.term'),
+    rateType: tl('L.rateType'),
+    rate: tl('L.rate'),
+    reducing: tl('L.reducing'),
+    flat: tl('L.flat'),
+    calculate: tl('L.calculate'),
+    reset: tl('L.reset'),
+    eligibility: tl('L.eligibility'),
+    eligible: tl('L.eligible'),
+    notEligible: tl('L.notEligible'),
+    emi: tl('L.emi'),
+    totalPayment: tl('L.totalPayment'),
+    totalInterest: tl('L.totalInterest'),
+    loanCeiling: tl('L.loanCeiling'),
+    maxDeduction: tl('L.maxDeduction'),
+    reducingBasis: tl('L.reducingBasis'),
+    flatComparison: tl('L.flatComparison'),
+    flatEquivRate: tl('L.flatEquivRate'),
+    legalDisclosure: tl('L.legalDisclosure'),
+    showSchedule: tl('L.showSchedule'),
+    hideSchedule: tl('L.hideSchedule'),
+    month: tl('L.month'),
+    opening: tl('L.opening'),
+    interest: tl('L.interest'),
+    principalComp: tl('L.principalComp'),
+    closing: tl('L.closing'),
+    whyBlock: tl('L.whyBlock'),
+    enterAmount: tl('L.enterAmount'),
   }
 
-  const errMsg: Record<string, string> = isAr ? {
-    ERR_LOAN_EXCEEDS_20X_SALARY: `مبلغ القرض يتجاوز 20 ضعف الراتب (${result ? fmt(result.validation.loanCeiling) : ''})`,
-    ERR_TERM_EXCEEDS_48_MONTHS: 'مدة السداد تتجاوز الحد القانوني البالغ 48 شهراً في الإمارات',
-    ERR_INSTALLMENT_EXCEEDS_50PCT_SALARY: `القسط الشهري يتجاوز 50% من الراتب (${result ? fmt(result.validation.maxDeduction) : ''})`,
-  } : {
-    ERR_LOAN_EXCEEDS_20X_SALARY: `Loan exceeds 20× salary ceiling (${result ? fmt(result.validation.loanCeiling) : ''})`,
-    ERR_TERM_EXCEEDS_48_MONTHS: 'Term exceeds UAE legal maximum of 48 months',
-    ERR_INSTALLMENT_EXCEEDS_50PCT_SALARY: `Installment exceeds 50% of salary (max: ${result ? fmt(result.validation.maxDeduction) : ''})`,
+  const errMsg: Record<string, string> = {
+    ERR_LOAN_EXCEEDS_20X_SALARY: tl('errMsg.ERR_LOAN_EXCEEDS_20X_SALARY', { p0: String(result ? fmt(result.validation.loanCeiling) : '') }),
+    ERR_TERM_EXCEEDS_48_MONTHS: tl('errMsg.ERR_TERM_EXCEEDS_48_MONTHS'),
+    ERR_INSTALLMENT_EXCEEDS_50PCT_SALARY: tl('errMsg.ERR_INSTALLMENT_EXCEEDS_50PCT_SALARY', { p0: String(result ? fmt(result.validation.maxDeduction) : '') }),
   }
 
   const whyText = (r: Result) => {
@@ -304,7 +277,7 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
             onChange={e => setTermMonths(e.target.value)}
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           />
-          <p className="text-xs text-gray-500 mt-1">{isAr ? 'الحد الأقصى القانوني: 48 شهراً' : 'UAE legal max: 48 months'}</p>
+          <p className="text-xs text-gray-500 mt-1">{tl('inline.uae_legal_max_48_months')}</p>
         </div>
 
         {/* Rate type */}
@@ -397,8 +370,8 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
               ok={result.validation.loanCapOk}
             />
             <GateRow
-              label={isAr ? 'أقصى مدة' : 'Max Term'}
-              value={`${UAE_PERSONAL_LOAN.maxTermMonths} ${isAr ? 'شهر' : 'months'}`}
+              label={tl('inline.max_term')}
+              value={`${UAE_PERSONAL_LOAN.maxTermMonths} ${tl('inline.months')}`}
               ok={result.validation.termOk}
             />
             <GateRow
@@ -412,17 +385,17 @@ export default function UAEPersonalLoanCalculator({ locale }: Props) {
           {result.flatEmi !== null && result.flatRateIfEntered !== null && (
             <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 space-y-2">
               <p className="text-xs font-bold text-amber-700 uppercase tracking-wide">
-                {isAr ? 'مقارنة المعدل الثابت (للمقارنة فقط — ليس أساساً قانونياً)' : 'Flat Rate Comparison (comparison only — not the legal basis)'}
+                {tl('inline.flat_rate_comparison_comparison_only_not')}
               </p>
               <Row
                 label={rateType === 'flat'
-                  ? (isAr ? 'المعدل الثابت المُدخل' : 'Flat Rate Entered')
+                  ? (tl('inline.flat_rate_entered'))
                   : L.flatEquivRate}
                 value={fmtPct(result.flatRateIfEntered)}
               />
               <Row label={L.flatComparison} value={fmt(result.flatEmi)} />
               <Row
-                label={isAr ? 'فارق التكلفة (رصيد متناقص مقابل ثابت)' : 'Cost difference (reducing vs flat)'}
+                label={tl('inline.cost_difference_reducing_vs_flat')}
                 value={fmt(Math.abs(result.emi - result.flatEmi))}
                 negative={result.flatEmi > result.emi}
                 highlight={result.flatEmi < result.emi}

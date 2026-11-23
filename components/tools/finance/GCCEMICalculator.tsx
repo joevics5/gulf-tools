@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -178,6 +179,7 @@ function buildAmortization(principal: number, annualRate: number, months: number
 
 export default function GCCEMICalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   const [loanAmount, setLoanAmount] = useState('')
   const [interestRate, setInterestRate] = useState('')
@@ -330,67 +332,36 @@ export default function GCCEMICalculator({ locale }: Props) {
     setResult(null)
   }
 
-  const t = isAr
-    ? {
-        title: 'حاسبة القسط الشهري — دول الخليج',
-        amount: 'مبلغ القرض',
-        rate: 'سعر الفائدة / الربح السنوي (%)',
-        tenor: 'المدة (بالأشهر)',
-        country: 'الدولة',
-        mode: 'نوع التمويل',
-        salary: 'الراتب الشهري (للتحقق من DBR)',
-        fee: 'رسوم المعالجة',
-        calc: 'احسب القسط',
-        reset: 'إعادة تعيين',
-        results: 'النتائج',
-        emi: 'القسط الشهري',
-        totalPayable: 'إجمالي المبلغ المستحق',
-        totalInterest: 'إجمالي الفائدة / الربح',
-        apr: 'معدل الفائدة السنوي (APR)',
-        adminFee: 'رسوم إدارية',
-        compliant: '✅ متوافق مع القانون المحلي',
-        notCompliant: '⚠️ يوجد تحذيرات قانونية',
-        warnings: 'التحذيرات',
-        showSchedule: 'عرض جدول السداد',
-        hideSchedule: 'إخفاء جدول السداد',
-        month: 'الشهر',
-        principal: 'أصل القرض',
-        interest: 'الفائدة',
-        balance: 'الرصيد المتبقي',
-        legalNote: 'الملاحظة القانونية',
-        enterAmt: 'أدخل المبلغ',
-        placeholder: '0',
-      }
-    : {
-        title: 'GCC EMI Calculator',
-        amount: 'Loan Amount',
-        rate: 'Annual Interest / Profit Rate (%)',
-        tenor: 'Loan Tenor (months)',
-        country: 'Country',
-        mode: 'Finance Type',
-        salary: 'Monthly Salary (for DBR check)',
-        fee: 'Processing Fee',
-        calc: 'Calculate EMI',
-        reset: 'Reset',
-        results: 'Results',
-        emi: 'Monthly EMI',
-        totalPayable: 'Total Payable',
-        totalInterest: 'Total Interest / Profit',
-        apr: 'Annual Percentage Rate (APR)',
-        adminFee: 'Admin / Processing Fee',
-        compliant: '✅ Compliant with local law',
-        notCompliant: '⚠️ Legal warnings detected',
-        warnings: 'Warnings',
-        showSchedule: 'Show Amortization Schedule',
-        hideSchedule: 'Hide Schedule',
-        month: 'Month',
-        principal: 'Principal',
-        interest: isAr ? 'الفائدة' : 'Interest',
-        balance: 'Balance',
-        legalNote: 'Legal Note',
-        enterAmt: 'Enter amount',
-        placeholder: '0',
-      }
+  const t = {
+    title: tl('t.title'),
+    amount: tl('t.amount'),
+    rate: tl('t.rate'),
+    tenor: tl('t.tenor'),
+    country: tl('t.country'),
+    mode: tl('t.mode'),
+    salary: tl('t.salary'),
+    fee: tl('t.fee'),
+    calc: tl('t.calc'),
+    reset: tl('t.reset'),
+    results: tl('t.results'),
+    emi: tl('t.emi'),
+    totalPayable: tl('t.totalPayable'),
+    totalInterest: tl('t.totalInterest'),
+    apr: tl('t.apr'),
+    adminFee: tl('t.adminFee'),
+    compliant: tl('t.compliant'),
+    notCompliant: tl('t.notCompliant'),
+    warnings: tl('t.warnings'),
+    showSchedule: tl('t.showSchedule'),
+    hideSchedule: tl('t.hideSchedule'),
+    month: tl('t.month'),
+    principal: tl('t.principal'),
+    interest: isAr ? tl('t.interest_if') : tl('t.interest_else'),
+    balance: tl('t.balance'),
+    legalNote: tl('t.legalNote'),
+    enterAmt: tl('t.enterAmt'),
+    placeholder: tl('t.placeholder'),
+  }
 
   const maxTenorHint = selectedCountry.maxTenorMonths
     ? `max ${selectedCountry.maxTenorMonths} mo`
@@ -593,9 +564,9 @@ export default function GCCEMICalculator({ locale }: Props) {
 
           {/* Breakdown */}
           <div className="space-y-3">
-            <Row label={isAr ? 'أصل القرض' : 'Loan Principal'} value={fmt(result.principal, result.currency)} />
+            <Row label={tl('inline.loan_principal')} value={fmt(result.principal, result.currency)} />
             <Row
-              label={result.isIslamic ? (isAr ? 'إجمالي الربح' : 'Total Profit') : t.totalInterest}
+              label={result.isIslamic ? (tl('inline.total_profit')) : t.totalInterest}
               value={fmt(result.totalInterest, result.currency)}
               negative
             />

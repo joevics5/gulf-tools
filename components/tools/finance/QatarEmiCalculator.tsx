@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -164,6 +165,7 @@ function fmtPct(n: number) {
 
 export default function QatarEmiCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   // Mode
   const [mode, setMode] = useState<'emi' | 'eligibility'>('emi')
@@ -249,84 +251,47 @@ export default function QatarEmiCalculator({ locale }: Props) {
   }
 
   // i18n labels
-  const L = isAr ? {
-    title: 'حاسبة القسط الشهري — قطر',
-    mode: 'نوع الحساب',
-    loanType: 'نوع القرض',
-    borrower: 'نوع المقترض',
-    principal: 'مبلغ القرض (ر.ق)',
-    rate: 'معدل الفائدة السنوي (%)',
-    tenure: 'مدة القرض (بالأشهر)',
-    salary: 'الراتب الشهري (ر.ق) — اختياري',
-    otherDebt: 'أقساط قروض أخرى (ر.ق) — اختياري',
-    desiredEmi: 'القسط الشهري المستهدف (ر.ق)',
-    calculate: 'احسب',
-    reset: 'إعادة تعيين',
-    emi: 'القسط الشهري',
-    totalPayment: 'إجمالي المدفوعات',
-    totalInterest: 'إجمالي الفائدة',
-    dsr: 'نسبة خدمة الدين',
-    maxEmi: 'الحد الأقصى للقسط',
-    maxLoan: 'الحد الأقصى للقرض',
-    showSchedule: 'عرض جدول السداد',
-    hideSchedule: 'إخفاء الجدول',
-    month: 'الشهر',
-    opening: 'الرصيد الافتتاحي',
-    interest: 'الفائدة',
-    principalComp: 'الأصل',
-    closing: 'الرصيد الختامي',
-    qcbNote: 'القيود وفقاً لمتطلبات بنك قطر المركزي',
-    clampedNote: 'مقيّد بسقف بنك قطر المركزي',
-    enterAmount: 'أدخل المبلغ',
-  } : {
-    title: 'Qatar EMI Calculator',
-    mode: 'Calculator Mode',
-    loanType: 'Loan Type',
-    borrower: 'Borrower Type',
-    principal: 'Loan Amount (QAR)',
-    rate: 'Annual Interest Rate (%)',
-    tenure: 'Loan Tenure (Months)',
-    salary: 'Monthly Salary (QAR) — optional',
-    otherDebt: 'Other Monthly Debt (QAR) — optional',
-    desiredEmi: 'Target Monthly EMI (QAR)',
-    calculate: 'Calculate',
-    reset: 'Reset',
-    emi: 'Monthly EMI',
-    totalPayment: 'Total Payment',
-    totalInterest: 'Total Interest',
-    dsr: 'Debt Service Ratio',
-    maxEmi: 'Max Monthly EMI',
-    maxLoan: 'Max Loan Amount',
-    showSchedule: 'Show Amortisation Schedule',
-    hideSchedule: 'Hide Schedule',
-    month: 'Month',
-    opening: 'Opening Balance',
-    interest: 'Interest',
-    principalComp: 'Principal',
-    closing: 'Closing Balance',
-    qcbNote: 'Limits per Qatar Central Bank (QCB) rules',
-    clampedNote: 'Capped at QCB maximum',
-    enterAmount: 'Enter amount',
+  const L = {
+    title: tl('L.title'),
+    mode: tl('L.mode'),
+    loanType: tl('L.loanType'),
+    borrower: tl('L.borrower'),
+    principal: tl('L.principal'),
+    rate: tl('L.rate'),
+    tenure: tl('L.tenure'),
+    salary: tl('L.salary'),
+    otherDebt: tl('L.otherDebt'),
+    desiredEmi: tl('L.desiredEmi'),
+    calculate: tl('L.calculate'),
+    reset: tl('L.reset'),
+    emi: tl('L.emi'),
+    totalPayment: tl('L.totalPayment'),
+    totalInterest: tl('L.totalInterest'),
+    dsr: tl('L.dsr'),
+    maxEmi: tl('L.maxEmi'),
+    maxLoan: tl('L.maxLoan'),
+    showSchedule: tl('L.showSchedule'),
+    hideSchedule: tl('L.hideSchedule'),
+    month: tl('L.month'),
+    opening: tl('L.opening'),
+    interest: tl('L.interest'),
+    principalComp: tl('L.principalComp'),
+    closing: tl('L.closing'),
+    qcbNote: tl('L.qcbNote'),
+    clampedNote: tl('L.clampedNote'),
+    enterAmount: tl('L.enterAmount'),
   }
 
   // Error/warning messages
-  const errMsg: Record<string, string> = isAr ? {
-    ERR_PRINCIPAL_ABOVE_QCB_CAP: `مبلغ القرض يتجاوز الحد الأقصى المسموح به من بنك قطر المركزي (${fmt(currentLimits.maxPrincipal)})`,
-    ERR_TENURE_ABOVE_QCB_LIMIT: `المدة تتجاوز الحد الأقصى وفق بنك قطر المركزي (${currentLimits.maxTenureMonths} شهراً)`,
-    ERR_RATE_ABOVE_HARD_CAP: `معدل الفائدة يتجاوز السقف الأقصى لبنك قطر المركزي (${QCB.rateHardCap}%)`,
-    ERR_DSR_ABOVE_LIMIT: `نسبة خدمة الدين تتجاوز الحد المسموح به (${fmtPct(currentLimits.dsrLimit)})`,
-  } : {
-    ERR_PRINCIPAL_ABOVE_QCB_CAP: `Loan exceeds QCB maximum (${fmt(currentLimits.maxPrincipal)})`,
-    ERR_TENURE_ABOVE_QCB_LIMIT: `Tenure exceeds QCB limit of ${currentLimits.maxTenureMonths} months`,
-    ERR_RATE_ABOVE_HARD_CAP: `Rate exceeds QCB hard cap of ${QCB.rateHardCap}%`,
-    ERR_DSR_ABOVE_LIMIT: `DSR exceeds QCB limit of ${fmtPct(currentLimits.dsrLimit)}`,
+  const errMsg: Record<string, string> = {
+    ERR_PRINCIPAL_ABOVE_QCB_CAP: tl('errMsg.ERR_PRINCIPAL_ABOVE_QCB_CAP', { p0: String(fmt(currentLimits.maxPrincipal)) }),
+    ERR_TENURE_ABOVE_QCB_LIMIT: tl('errMsg.ERR_TENURE_ABOVE_QCB_LIMIT', { p0: String(currentLimits.maxTenureMonths) }),
+    ERR_RATE_ABOVE_HARD_CAP: tl('errMsg.ERR_RATE_ABOVE_HARD_CAP', { p0: String(QCB.rateHardCap) }),
+    ERR_DSR_ABOVE_LIMIT: tl('errMsg.ERR_DSR_ABOVE_LIMIT', { p0: String(fmtPct(currentLimits.dsrLimit)) }),
   }
-  const warnMsg: Record<string, string> = isAr ? {
-    WARN_RATE_ABOVE_PERSONAL_CAP: `الفائدة أعلى من السقف المعتاد للقروض الشخصية (${QCB.ratePersonalSoftCap}%) — تحقق مع مصرفك`,
-    WARN_TENURE_ABOVE_MARKET_TYPICAL: 'المدة أطول من المعتاد في السوق — تأكد مع المصرف',
-  } : {
-    WARN_RATE_ABOVE_PERSONAL_CAP: `Rate above typical QCB personal loan ceiling of ${QCB.ratePersonalSoftCap}% — verify with your bank`,
-    WARN_TENURE_ABOVE_MARKET_TYPICAL: 'Tenure exceeds typical market range — confirm with lender',
+  const warnMsg: Record<string, string> = {
+    WARN_RATE_ABOVE_PERSONAL_CAP: tl('warnMsg.WARN_RATE_ABOVE_PERSONAL_CAP', { p0: String(QCB.ratePersonalSoftCap) }),
+    WARN_TENURE_ABOVE_MARKET_TYPICAL: tl('warnMsg.WARN_TENURE_ABOVE_MARKET_TYPICAL'),
   }
 
   const hasErrors   = (validation?.errors.length ?? 0) > 0
@@ -469,7 +434,7 @@ export default function QatarEmiCalculator({ locale }: Props) {
 
       {/* QCB limits note */}
       <div className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
-        {L.qcbNote} — {isAr ? 'الحد الأقصى للقرض' : 'Max loan'}: {fmt(currentLimits.maxPrincipal)} | {isAr ? 'أقصى مدة' : 'Max tenure'}: {currentLimits.maxTenureMonths} {isAr ? 'شهر' : 'months'} | DSR: {fmtPct(currentLimits.dsrLimit)}
+        {L.qcbNote} — {tl('inline.max_loan')}: {fmt(currentLimits.maxPrincipal)} | {tl('inline.max_tenure')}: {currentLimits.maxTenureMonths} {tl('inline.months')} | DSR: {fmtPct(currentLimits.dsrLimit)}
       </div>
 
       {/* Buttons */}
@@ -497,13 +462,13 @@ export default function QatarEmiCalculator({ locale }: Props) {
             <div className="text-sm opacity-80 mb-1">{L.emi}</div>
             <div className="text-3xl font-black">{fmt(emiResult.emi)}</div>
             <div className="text-sm opacity-70 mt-1">
-              {isAr ? 'شهرياً' : 'per month'} × {tenureMonths} {isAr ? 'شهر' : 'months'}
+              {tl('inline.per_month')} × {tenureMonths} {tl('inline.months')}
             </div>
           </div>
 
           {/* Breakdown */}
           <div className="space-y-3">
-            <Row label={isAr ? 'مبلغ القرض' : 'Loan Amount'}      value={fmt(parseFloat(principal))} />
+            <Row label={tl('inline.loan_amount')}      value={fmt(parseFloat(principal))} />
             <Row label={L.totalInterest}                            value={fmt(emiResult.totalInterest)} negative />
             <div className="border-t border-gray-200 pt-3">
               <Row label={L.totalPayment} value={fmt(emiResult.totalPayment)} highlight />
@@ -594,19 +559,17 @@ export default function QatarEmiCalculator({ locale }: Props) {
               </div>
               <Row label={L.maxEmi} value={fmt(eligResult.maxEmi)} highlight />
               <Row
-                label={isAr ? 'المدة' : 'Tenure'}
-                value={`${tenureMonths} ${isAr ? 'شهراً' : 'months'}`}
+                label={tl('inline.tenure')}
+                value={`${tenureMonths} ${tl('inline.months_2')}`}
               />
               <Row
-                label={isAr ? 'معدل الفائدة' : 'Interest Rate'}
+                label={tl('inline.interest_rate')}
                 value={`${annualRate}%`}
               />
             </>
           ) : (
             <div className="text-red-600 text-sm font-semibold text-center py-4">
-              {isAr
-                ? 'لا تتوفر طاقة تحمّل بموجب قواعد نسبة خدمة الدين من بنك قطر المركزي'
-                : 'No borrowing capacity under QCB DSR rules with current inputs'}
+              {tl('inline.no_borrowing_capacity_under_qcb_dsr_rule')}
             </div>
           )}
         </div>

@@ -1,0 +1,47 @@
+{
+  "L": {
+    "salary": "Monthly Salary (AED)",
+    "loanAmount": "Loan Amount (AED)",
+    "term": "Loan Term (Months)",
+    "rateType": "Interest Rate Type",
+    "rate": "Annual Interest Rate (%)",
+    "reducing": "Reducing Balance",
+    "flat": "Flat Rate",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "eligibility": "Eligibility",
+    "eligible": "✓ Eligible",
+    "notEligible": "✗ Not Eligible",
+    "emi": "Monthly Installment",
+    "totalPayment": "Total Repayment",
+    "totalInterest": "Total Interest",
+    "loanCeiling": "Loan Ceiling (20× Salary)",
+    "maxDeduction": "Max Monthly Deduction (50% Salary)",
+    "reducingBasis": "Rate Basis: Reducing Balance",
+    "flatComparison": "Flat Rate Installment (comparison only)",
+    "flatEquivRate": "Flat Rate Equivalent (approx.)",
+    "legalDisclosure": "UAE regulations require banks to disclose interest on a reducing-balance basis",
+    "showSchedule": "Show Amortisation Schedule",
+    "hideSchedule": "Hide Schedule",
+    "month": "Month",
+    "opening": "Opening",
+    "interest": "Interest",
+    "principalComp": "Principal",
+    "closing": "Closing",
+    "whyBlock": "Why this result?",
+    "enterAmount": "Enter amount"
+  },
+  "errMsg": {
+    "ERR_LOAN_EXCEEDS_20X_SALARY": "Loan exceeds 20× salary ceiling ({p0})",
+    "ERR_TERM_EXCEEDS_48_MONTHS": "Term exceeds UAE legal maximum of 48 months",
+    "ERR_INSTALLMENT_EXCEEDS_50PCT_SALARY": "Installment exceeds 50% of salary (max: {p0})"
+  },
+  "inline": {
+    "uae_legal_max_48_months": "UAE legal max: 48 months",
+    "max_term": "Max Term",
+    "months": "months",
+    "flat_rate_comparison_comparison_only_not": "Flat Rate Comparison (comparison only — not the legal basis)",
+    "flat_rate_entered": "Flat Rate Entered",
+    "cost_difference_reducing_vs_flat": "Cost difference (reducing vs flat)"
+  }
+}

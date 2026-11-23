@@ -1,0 +1,47 @@
+{
+  "L": {
+    "salary": "الراتب الشهري (درهم)",
+    "loanAmount": "مبلغ القرض (درهم)",
+    "term": "مدة السداد (بالأشهر)",
+    "rateType": "نوع معدل الفائدة",
+    "rate": "معدل الفائدة السنوي (%)",
+    "reducing": "رصيد متناقص",
+    "flat": "معدل ثابت",
+    "calculate": "احسب",
+    "reset": "إعادة تعيين",
+    "eligibility": "الأهلية",
+    "eligible": "✓ مؤهل",
+    "notEligible": "✗ غير مؤهل",
+    "emi": "القسط الشهري",
+    "totalPayment": "إجمالي المدفوعات",
+    "totalInterest": "إجمالي الفائدة",
+    "loanCeiling": "سقف القرض المسموح (20× الراتب)",
+    "maxDeduction": "الحد الأقصى للقسط (50% من الراتب)",
+    "reducingBasis": "أساس الاحتساب: رصيد متناقص",
+    "flatComparison": "القسط بالمعدل الثابت (للمقارنة فقط)",
+    "flatEquivRate": "المعدل الثابت المعادل (تقريبي)",
+    "legalDisclosure": "تُلزم الجهات التنظيمية في الإمارات البنوك بالإفصاح عن الفائدة على أساس الرصيد المتناقص",
+    "showSchedule": "عرض جدول الاستهلاك",
+    "hideSchedule": "إخفاء الجدول",
+    "month": "الشهر",
+    "opening": "الرصيد الافتتاحي",
+    "interest": "الفائدة",
+    "principalComp": "الأصل",
+    "closing": "الرصيد الختامي",
+    "whyBlock": "لماذا هذه النتيجة؟",
+    "enterAmount": "أدخل المبلغ"
+  },
+  "errMsg": {
+    "ERR_LOAN_EXCEEDS_20X_SALARY": "مبلغ القرض يتجاوز 20 ضعف الراتب ({p0})",
+    "ERR_TERM_EXCEEDS_48_MONTHS": "مدة السداد تتجاوز الحد القانوني البالغ 48 شهراً في الإمارات",
+    "ERR_INSTALLMENT_EXCEEDS_50PCT_SALARY": "القسط الشهري يتجاوز 50% من الراتب ({p0})"
+  },
+  "inline": {
+    "uae_legal_max_48_months": "الحد الأقصى القانوني: 48 شهراً",
+    "max_term": "أقصى مدة",
+    "months": "شهر",
+    "flat_rate_comparison_comparison_only_not": "مقارنة المعدل الثابت (للمقارنة فقط — ليس أساساً قانونياً)",
+    "flat_rate_entered": "المعدل الثابت المُدخل",
+    "cost_difference_reducing_vs_flat": "فارق التكلفة (رصيد متناقص مقابل ثابت)"
+  }
+}

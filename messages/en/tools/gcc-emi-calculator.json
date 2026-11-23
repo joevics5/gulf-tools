@@ -1,0 +1,37 @@
+{
+  "t": {
+    "title": "GCC EMI Calculator",
+    "amount": "Loan Amount",
+    "rate": "Annual Interest / Profit Rate (%)",
+    "tenor": "Loan Tenor (months)",
+    "country": "Country",
+    "mode": "Finance Type",
+    "salary": "Monthly Salary (for DBR check)",
+    "fee": "Processing Fee",
+    "calc": "Calculate EMI",
+    "reset": "Reset",
+    "results": "Results",
+    "emi": "Monthly EMI",
+    "totalPayable": "Total Payable",
+    "totalInterest": "Total Interest / Profit",
+    "apr": "Annual Percentage Rate (APR)",
+    "adminFee": "Admin / Processing Fee",
+    "compliant": "✅ Compliant with local law",
+    "notCompliant": "⚠️ Legal warnings detected",
+    "warnings": "Warnings",
+    "showSchedule": "Show Amortization Schedule",
+    "hideSchedule": "Hide Schedule",
+    "month": "Month",
+    "principal": "Principal",
+    "interest_if": "الفائدة",
+    "interest_else": "Interest",
+    "balance": "Balance",
+    "legalNote": "Legal Note",
+    "enterAmt": "Enter amount",
+    "placeholder": "0"
+  },
+  "inline": {
+    "loan_principal": "Loan Principal",
+    "total_profit": "Total Profit"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "L": {
+    "title": "Qatar EMI Calculator",
+    "mode": "Calculator Mode",
+    "loanType": "Loan Type",
+    "borrower": "Borrower Type",
+    "principal": "Loan Amount (QAR)",
+    "rate": "Annual Interest Rate (%)",
+    "tenure": "Loan Tenure (Months)",
+    "salary": "Monthly Salary (QAR) — optional",
+    "otherDebt": "Other Monthly Debt (QAR) — optional",
+    "desiredEmi": "Target Monthly EMI (QAR)",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "emi": "Monthly EMI",
+    "totalPayment": "Total Payment",
+    "totalInterest": "Total Interest",
+    "dsr": "Debt Service Ratio",
+    "maxEmi": "Max Monthly EMI",
+    "maxLoan": "Max Loan Amount",
+    "showSchedule": "Show Amortisation Schedule",
+    "hideSchedule": "Hide Schedule",
+    "month": "Month",
+    "opening": "Opening Balance",
+    "interest": "Interest",
+    "principalComp": "Principal",
+    "closing": "Closing Balance",
+    "qcbNote": "Limits per Qatar Central Bank (QCB) rules",
+    "clampedNote": "Capped at QCB maximum",
+    "enterAmount": "Enter amount"
+  },
+  "errMsg": {
+    "ERR_PRINCIPAL_ABOVE_QCB_CAP": "Loan exceeds QCB maximum ({p0})",
+    "ERR_TENURE_ABOVE_QCB_LIMIT": "Tenure exceeds QCB limit of {p0} months",
+    "ERR_RATE_ABOVE_HARD_CAP": "Rate exceeds QCB hard cap of {p0}%",
+    "ERR_DSR_ABOVE_LIMIT": "DSR exceeds QCB limit of {p0}"
+  },
+  "warnMsg": {
+    "WARN_RATE_ABOVE_PERSONAL_CAP": "Rate above typical QCB personal loan ceiling of {p0}% — verify with your bank",
+    "WARN_TENURE_ABOVE_MARKET_TYPICAL": "Tenure exceeds typical market range — confirm with lender"
+  },
+  "inline": {
+    "max_loan": "Max loan",
+    "max_tenure": "Max tenure",
+    "months": "months",
+    "per_month": "per month",
+    "loan_amount": "Loan Amount",
+    "tenure": "Tenure",
+    "months_2": "months",
+    "interest_rate": "Interest Rate",
+    "no_borrowing_capacity_under_qcb_dsr_rule": "No borrowing capacity under QCB DSR rules with current inputs"
+  }
+}

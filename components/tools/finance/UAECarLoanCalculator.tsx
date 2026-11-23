@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -257,7 +259,8 @@ function AmortizationTable({ schedule, isAr }: { schedule: ScheduleRow[]; isAr: 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function UAECarLoanCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
-  const dir = isAr ? 'rtl' : 'ltr'
+  const tl = useTranslations('tool')
+  const dir = isRtl(locale) ? 'rtl' : 'ltr'
 
   const [amount, setAmount] = useState(DEFAULTS.loanAmount)
   const [rate, setRate] = useState(DEFAULTS.annualRate)
@@ -313,58 +316,32 @@ export default function UAECarLoanCalculator({ locale }: Props) {
     URL.revokeObjectURL(url)
   }, [result.schedule])
 
-  const l = isAr ? {
-    amount: 'مبلغ القرض',
-    rate: 'معدل الفائدة / الربح السنوي',
-    tenure: 'مدة القرض',
-    fee: 'رسوم المعالجة (اختياري)',
-    presets: 'أمثلة سريعة',
-    monthlyEMI: 'القسط الشهري',
-    totalRepayment: 'إجمالي السداد',
-    totalInterest: 'إجمالي الفائدة',
-    effectiveRate: 'المعدل الفعلي السنوي',
-    results: 'النتائج',
-    schedule: 'جدول السداد',
-    compare: 'مقارنة المعدلات',
-    flatRate: 'المعدل الثابت',
-    flatEMI: 'القسط (معدل ثابت)',
-    flatInterest: 'إجمالي الفائدة (ثابت)',
-    reducingEMI: 'القسط (رصيد متناقص)',
-    reducingInterest: 'إجمالي الفائدة (متناقص)',
-    dbrTitle: 'تقدير نسبة الدين للدخل',
-    dbrSalary: 'الراتب الشهري الإجمالي',
-    dbrMax: 'الحد الأقصى المسموح (50%)',
-    dbrStatus: (ok: boolean) => ok ? '✓ ضمن الحد المسموح' : '⚠ يتجاوز الحد الموصى به',
-    exportCSV: 'تصدير CSV',
-    disclaimer: 'هذه الأداة توضيحية استناداً إلى طريقة الرصيد المتناقص وفق إرشادات المصرف المركزي الإماراتي. لا تمثل عرضاً رسمياً من أي بنك. استشر بنكك للحصول على عرض رسمي.',
-    months: 'شهراً',
-    years: 'سنوات',
-  } : {
-    amount: 'Loan Amount',
-    rate: 'Annual Interest / Profit Rate',
-    tenure: 'Loan Tenure',
-    fee: 'Processing Fee (optional)',
-    presets: 'Quick presets',
-    monthlyEMI: 'Monthly EMI',
-    totalRepayment: 'Total Repayment',
-    totalInterest: 'Total Interest / Profit',
-    effectiveRate: 'Effective Annual Rate',
-    results: 'Results',
-    schedule: 'Amortization',
-    compare: 'Rate Comparison',
-    flatRate: 'Flat Rate',
-    flatEMI: 'EMI (Flat)',
-    flatInterest: 'Total Interest (Flat)',
-    reducingEMI: 'EMI (Reducing)',
-    reducingInterest: 'Total Interest (Reducing)',
-    dbrTitle: 'DBR Estimator',
-    dbrSalary: 'Gross Monthly Salary',
-    dbrMax: 'Max recommended EMI (50% DBR)',
-    dbrStatus: (ok: boolean) => ok ? '✓ Within DBR limit' : '⚠ Exceeds recommended limit',
-    exportCSV: 'Export CSV',
-    disclaimer: 'Illustrative tool based on reducing balance method per CBUAE guidelines (Regulation No. 29/2011). Actual bank offers may vary — including fees, insurance, and conditions. Not a substitute for professional advice. Consult your bank for a formal offer.',
-    months: 'months',
-    years: 'yrs',
+  const l = {
+    amount: tl('l.amount'),
+    rate: tl('l.rate'),
+    tenure: tl('l.tenure'),
+    fee: tl('l.fee'),
+    presets: tl('l.presets'),
+    monthlyEMI: tl('l.monthlyEMI'),
+    totalRepayment: tl('l.totalRepayment'),
+    totalInterest: tl('l.totalInterest'),
+    effectiveRate: tl('l.effectiveRate'),
+    results: tl('l.results'),
+    schedule: tl('l.schedule'),
+    compare: tl('l.compare'),
+    flatRate: tl('l.flatRate'),
+    flatEMI: tl('l.flatEMI'),
+    flatInterest: tl('l.flatInterest'),
+    reducingEMI: tl('l.reducingEMI'),
+    reducingInterest: tl('l.reducingInterest'),
+    dbrTitle: tl('l.dbrTitle'),
+    dbrSalary: tl('l.dbrSalary'),
+    dbrMax: tl('l.dbrMax'),
+    dbrStatus: (ok: boolean) => ok ? tl('l.dbrStatus_if') : tl('l.dbrStatus_else'),
+    exportCSV: tl('l.exportCSV'),
+    disclaimer: tl('l.disclaimer'),
+    months: tl('l.months'),
+    years: tl('l.years'),
   }
 
   return (
@@ -405,9 +382,7 @@ export default function UAECarLoanCalculator({ locale }: Props) {
           step={0.1}
           onChange={setRate}
           display={fmtPct(rate)}
-          sub={isAr
-            ? 'الفائدة التقليدية أو معدل الربح الإسلامي'
-            : 'Conventional interest rate or Islamic profit rate'}
+          sub={tl('inline.conventional_interest_rate_or_islamic_pr')}
         />
         <SliderInput
           label={l.tenure}
@@ -504,9 +479,7 @@ export default function UAECarLoanCalculator({ locale }: Props) {
                   {l.dbrStatus(result.dbrOk)}
                 </div>
                 <p className="text-xs text-slate-400">
-                  {isAr
-                    ? 'الحد الأقصى لنسبة الدين للدخل (DBR) هو 50% وفق توجيهات المصرف المركزي. للأغراض التوعوية فقط.'
-                    : 'CBUAE sets a maximum 50% DBR for total monthly loan obligations. For educational purposes only.'}
+                  {tl('inline.cbuae_sets_a_maximum_50_dbr_for_total_mo')}
                 </p>
               </div>
             )}
@@ -544,7 +517,7 @@ export default function UAECarLoanCalculator({ locale }: Props) {
               step={0.1}
               onChange={setFlatRate}
               display={fmtPct(flatRate)}
-              sub={isAr ? 'أدخل المعدل الثابت للمقارنة' : 'Enter flat rate for comparison'}
+              sub={tl('inline.enter_flat_rate_for_comparison')}
             />
           </div>
 
@@ -554,16 +527,16 @@ export default function UAECarLoanCalculator({ locale }: Props) {
                 <tr className="bg-slate-50 border-b border-slate-200">
                   <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500"></th>
                   <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-teal-600">
-                    {isAr ? 'رصيد متناقص' : 'Reducing Balance'}
+                    {tl('inline.reducing_balance')}
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-semibold uppercase text-amber-600">
-                    {isAr ? 'معدل ثابت' : 'Flat Rate'}
+                    {tl('inline.flat_rate')}
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 <tr>
-                  <td className="px-4 py-3 text-slate-600 text-xs">{isAr ? 'المعدل' : 'Rate'}</td>
+                  <td className="px-4 py-3 text-slate-600 text-xs">{tl('inline.rate')}</td>
                   <td className="px-4 py-3 font-bold text-slate-900">{fmtPct(rate)}</td>
                   <td className="px-4 py-3 font-bold text-slate-900">{fmtPct(flatRate)}</td>
                 </tr>
@@ -573,7 +546,7 @@ export default function UAECarLoanCalculator({ locale }: Props) {
                   <td className="px-4 py-3 font-bold text-amber-600">{fmtAED(result.flat.emi)}</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3 text-slate-600 text-xs">{isAr ? 'إجمالي الفائدة' : 'Total Interest'}</td>
+                  <td className="px-4 py-3 text-slate-600 text-xs">{tl('inline.total_interest')}</td>
                   <td className="px-4 py-3 font-bold text-teal-600">{fmtAED(result.totalInterest)}</td>
                   <td className="px-4 py-3 font-bold text-amber-600">{fmtAED(result.flat.totalInterest)}</td>
                 </tr>
@@ -587,9 +560,7 @@ export default function UAECarLoanCalculator({ locale }: Props) {
           </div>
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800 leading-relaxed">
-            {isAr
-              ? 'يُلزم المصرف المركزي الإماراتي البنوك باستخدام طريقة الرصيد المتناقص. المعدل الثابت يبدو أقل لكنه يعني فائدة أعلى فعلياً. المضاعف النموذجي: حوالي 1.8 مرة لتحويل المعدل الثابت إلى معدل فعلي.'
-              : 'CBUAE (Regulation No. 29/2011) mandates the reducing balance method. Flat rates appear lower but result in higher effective cost. A typical multiplier is ~1.8–1.9× to convert flat to effective rate.'}
+            {tl('inline.cbuae_regulation_no_29_2011_mandates_the')}
           </div>
         </div>
       )}
