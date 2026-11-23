@@ -15,7 +15,7 @@ import { BackButton } from '@/components/layout/BackButton'
 import { ToolWrapper } from '@/components/tools/ToolWrapper'
 import { ToolMessages } from '@/components/tools/ToolMessages'
 import { routing } from '@/lib/i18n/routing'
-import { BASE_URL, defaultOgImage, isRtl, languageAlternates, ogLocale } from '@/lib/i18n/locales'
+import { BASE_URL, isRtl, languageAlternates, ogLocale, toolOgImage } from '@/lib/i18n/locales'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import AdUnit from '@/components/ads/AdUnit'
@@ -132,7 +132,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
       siteName: 'Gulf Tools',
       locale:   ogLocale(locale),
       type:     'website' as const,
-      images:   [defaultOgImage(locale, toolContent.title)],
+      images:   [toolOgImage(locale, toolSlug, toolContent.title)],
     },
     twitter: {
       card:        'summary_large_image' as const,

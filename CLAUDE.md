@@ -80,7 +80,9 @@ them is not done.
    metadata shallowly, so a page without it inherits its parent's. Don't put a
    canonical in a layout. Don't add a `title.template`: titles already end in
    `| Gulf Tools`. For images use `defaultOgImage(locale, alt)` (1200x630,
-   `public/og/default-<locale>.jpg`); only reference a per-page image that exists.
+   `public/og/default-<locale>.jpg`); only reference a per-page image that exists. Tool pages
+   use `toolOgImage(locale, slug, alt)`: a per-tool card if `lib/og/manifest.json` lists it,
+   else the default. Generate cards with `scripts/generate-og.mjs` (see header for setup).
 4. **Discovery**: the URL appears in the right `app/sitemap-*.xml/route.ts`
    and is linked from its category/hub page.
 

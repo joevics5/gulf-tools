@@ -1,4 +1,5 @@
 import { routing, type Locale } from './routing'
+import ogManifest from '../og/manifest.json'
 
 /**
  * Single place for per-locale facts. Adding a language = add it to
@@ -64,4 +65,16 @@ export function pageAlternates(locale: string, pathWithoutLocale: string) {
 export function defaultOgImage(locale: string, alt = 'Gulf Tools') {
   const l = routing.locales.includes(locale as Locale) ? locale : routing.defaultLocale
   return { url: `${BASE_URL}/og/default-${l}.jpg`, width: 1200, height: 630, alt }
+}
+
+/**
+ * Per-tool OG image if `node scripts/generate-og.mjs` has produced one for this
+ * (locale, tool) — listed in lib/og/manifest.json — otherwise the shared default.
+ */
+export function toolOgImage(locale: string, toolSlug: string, alt = 'Gulf Tools') {
+  const have = (ogManifest as Record<string, string[]>)[locale]
+  if (have?.includes(toolSlug)) {
+    return { url: `${BASE_URL}/og/tools/${locale}/${toolSlug}.jpg`, width: 1200, height: 630, alt }
+  }
+  return defaultOgImage(locale, alt)
 }

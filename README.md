@@ -13,6 +13,7 @@ npm run dev            # http://localhost:3000 (redirects to /en)
 npm run lint
 npm run check:messages # en/ar tool strings have identical keys
 npm run build
+node scripts/generate-og.mjs  # per-tool social cards from tool_translations (see script header)
 ```
 
 Supabase connection details go in `.env.local` (see `lib/supabase/client.ts` for the
