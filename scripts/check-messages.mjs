@@ -38,5 +38,20 @@ for (const locale of locales) {
   for (const f of have) if (!base.includes(f)) { console.error(`✗ ${locale}: tools/${f} has no ${DEFAULT} counterpart`); problems++ }
 }
 
+// ICU safety. next-intl returns messages without `{` or `<` untouched, but in a message WITH
+// placeholders an apostrophe is ICU quoting syntax: a doubled one collapses to one, and one
+// next to a brace quotes it. Keep apostrophes away from braces and never double them.
+const leaves = (o, p = '') => Object.entries(o).flatMap(([k, v]) => (typeof v === 'object' ? leaves(v, `${p}${k}.`) : [[`${p}${k}`, v]]))
+for (const locale of locales) {
+  for (const f of files(locale)) {
+    const tool = JSON.parse(readFileSync(join(toolsDir(locale), f), 'utf8'))
+    for (const [k, v] of leaves(tool)) {
+      if (typeof v === 'string' && /[{<]/.test(v) && /''|'[{}]|[{}]'/.test(v)) {
+        console.error(`✗ ${locale}/${f}: "${k}" has an apostrophe next to ICU syntax or a doubled apostrophe`); problems++
+      }
+    }
+  }
+}
+
 if (problems) { console.error(`\n${problems} problem(s)`); process.exit(1) }
 console.log(`✓ tool messages consistent across: ${locales.join(', ')} (${base.length} tool file(s))`)
