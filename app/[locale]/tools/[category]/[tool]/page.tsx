@@ -265,6 +265,8 @@ async function loadToolComponent(toolSlug: string) {
       case 'holiday-pay-calculator-uae':
       case 'uae-holiday-pay-calculator': // Consolidated duplicates
         return (await import('@/components/tools/hr-payroll/UAEHolidayPayCalculator')).default;
+      case 'qatar-overtime-calculator':
+        return (await import('@/components/tools/hr-payroll/QatarOvertimeCalculator')).default;
       case 'saudi-annual-leave-calculator':
         return (await import('@/components/tools/hr-payroll/SaudiAnnualLeaveCalculator')).default;
       case 'uae-gratuity-calculator':
