@@ -1,0 +1,25 @@
+{
+  "labels": {
+    "title": "KSA VAT Calculator - Saudi Arabia 15%",
+    "amount": "Amount (SAR)",
+    "modeExcl": "Price Excluding VAT",
+    "modeIncl": "Price Including VAT",
+    "supplyType": "Supply Type",
+    "standard": "Standard (15%)",
+    "zero": "Zero-Rated (0%)",
+    "exempt": "Exempt",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "net": "Net Amount",
+    "vat": "VAT Amount (15%)",
+    "gross": "Gross Amount (Total)",
+    "copy": "Copy Results",
+    "presets": "Quick Presets",
+    "disclaimer": "For illustrative purposes only. Consult ZATCA or a qualified tax advisor. Rates current as of 2026."
+  },
+  "inline": {
+    "net_amount_vat_amount_gross_amount": "Net Amount: {p0}\nVAT Amount: {p1}\nGross Amount: {p2}",
+    "vat_will_be_calculated_at_0_for_this_sup": "VAT will be calculated at 0% for this supply type.",
+    "copied": "✓ Copied!"
+  }
+}

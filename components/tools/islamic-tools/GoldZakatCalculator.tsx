@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { FALLBACK_GOLD_USD_PER_GRAM } from '@/lib/constants/metalPrices'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -98,7 +100,7 @@ function newHolding(type: GoldType = 'investment'): Holding {
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function GoldZakatCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   const [currency,      setCurrency]      = useState('AED')
   const [holdings,      setHoldings]      = useState<Holding[]>([newHolding()])
@@ -147,86 +149,50 @@ export default function GoldZakatCalculator({ locale }: Props) {
   }
 
   // ── Labels ─────────────────────────────────────────────────────────────────
-  const L = isAr ? {
-    title: 'حاسبة زكاة الذهب',
-    subtitle: 'الذهب الاستثماري والمجوهرات — بالجرام والتولة والأوقية',
-    currency: 'العملة',
-    madhab: 'المذهب الفقهي',
-    majority: 'الجمهور (شافعي/مالكي/حنبلي)',
-    hanafi: 'الحنفي',
-    madhabNote: 'الجمهور يُعفي مجوهرات الاستخدام الشخصي. الحنفية تُوجب الزكاة على كل الذهب.',
-    holdings: 'الذهب المملوك',
-    addInvestment: '+ إضافة ذهب استثماري / سبائك',
-    addJewellery: '+ إضافة مجوهرات',
-    investment: 'استثماري / سبائك',
-    jewellery: 'مجوهرات',
-    weight: 'الوزن',
-    karat: 'العيار',
-    unit: 'الوحدة',
-    pureLabel: 'ذهب خالص',
-    valueLabel: 'القيمة',
-    exempt: 'معفاة (الجمهور)',
-    hawl: 'أؤكد أن هذا الذهب بحوزتي لمدة حول كامل (عام هجري)',
-    calculate: 'احسب الزكاة',
-    reset: 'إعادة تعيين',
-    results: 'نتيجة زكاة الذهب',
-    zakatDue: 'الزكاة الواجبة',
-    notEligible: 'لا زكاة واجبة',
-    notEligibleDesc: 'إجمالي الذهب الخالص أقل من النصاب (85 جرام) أو لم يكتمل الحول.',
-    totalPure: 'إجمالي الذهب الخالص',
-    totalValue: 'إجمالي القيمة',
-    nisab: 'النصاب (85 جرام ذهب خالص)',
-    livePrice: 'سعر الجرام 24 قيراط (مباشر)',
-    cachedPrice: 'سعر الجرام 24 قيراط (مخزن)',
-    progressLabel: 'التقدم نحو النصاب',
-    disclaimer: 'هذه أداة حسابية للمعلومات العامة. ليست فتوى. استشر عالماً مؤهلاً. أحكام المجوهرات تختلف بحسب المذهب. استخدم السعر يوم استحقاق الزكاة.',
-    remove: 'حذف',
-    g: 'جرام', tola: 'تولة', oz: 'أوقية',
-    noHawl: 'لم يُؤكَّد الحول',
-    belowNisab: 'أقل من النصاب',
-    enterAmount: 'أدخل الوزن',
-  } : {
-    title: 'Gold Zakat Calculator',
-    subtitle: 'Investment Gold & Jewellery — Grams, Tola & Ounces',
-    currency: 'Currency',
-    madhab: 'School of Jurisprudence (Madhhab)',
-    majority: 'Majority (Shafi\'i / Maliki / Hanbali)',
-    hanafi: 'Hanafi',
-    madhabNote: 'Majority schools exempt personally worn jewellery. Hanafi requires Zakat on all gold.',
-    holdings: 'Your Gold Holdings',
-    addInvestment: '+ Add Investment Gold / Bullion',
-    addJewellery: '+ Add Jewellery',
-    investment: 'Investment / Bullion',
-    jewellery: 'Jewellery',
-    weight: 'Weight',
-    karat: 'Karat',
-    unit: 'Unit',
-    pureLabel: 'Pure gold',
-    valueLabel: 'Value',
-    exempt: 'Exempt (Majority)',
-    hawl: 'I confirm this gold has been in my possession for one full lunar year (hawl)',
-    calculate: 'Calculate Zakat',
-    reset: 'Reset',
-    results: 'Your Gold Zakat Result',
-    zakatDue: 'Zakat Due',
-    notEligible: 'No Zakat Due',
-    notEligibleDesc: 'Total pure gold is below nisab (85g) or hawl is not confirmed.',
-    totalPure: 'Total Pure Gold',
-    totalValue: 'Total Value',
-    nisab: 'Nisab (85g pure gold)',
-    livePrice: '24K price / gram (live)',
-    cachedPrice: '24K price / gram (cached)',
-    progressLabel: 'Progress toward nisab',
-    disclaimer: 'This is a calculation aid for general information only. Not a fatwa. Consult a qualified scholar. Jewellery rulings differ by school of jurisprudence. Use the gold price on your Zakat due date.',
-    remove: 'Remove',
-    g: 'Grams', tola: 'Tola', oz: 'Ounce (troy)',
-    noHawl: 'Hawl not confirmed',
-    belowNisab: 'Below nisab',
-    enterAmount: 'Enter weight',
+  const L = {
+    title: tr('L.title'),
+    subtitle: tr('L.subtitle'),
+    currency: tr('L.currency'),
+    madhab: tr('L.madhab'),
+    majority: tr('L.majority'),
+    hanafi: tr('L.hanafi'),
+    madhabNote: tr('L.madhabNote'),
+    holdings: tr('L.holdings'),
+    addInvestment: tr('L.addInvestment'),
+    addJewellery: tr('L.addJewellery'),
+    investment: tr('L.investment'),
+    jewellery: tr('L.jewellery'),
+    weight: tr('L.weight'),
+    karat: tr('L.karat'),
+    unit: tr('L.unit'),
+    pureLabel: tr('L.pureLabel'),
+    valueLabel: tr('L.valueLabel'),
+    exempt: tr('L.exempt'),
+    hawl: tr('L.hawl'),
+    calculate: tr('L.calculate'),
+    reset: tr('L.reset'),
+    results: tr('L.results'),
+    zakatDue: tr('L.zakatDue'),
+    notEligible: tr('L.notEligible'),
+    notEligibleDesc: tr('L.notEligibleDesc'),
+    totalPure: tr('L.totalPure'),
+    totalValue: tr('L.totalValue'),
+    nisab: tr('L.nisab'),
+    livePrice: tr('L.livePrice'),
+    cachedPrice: tr('L.cachedPrice'),
+    progressLabel: tr('L.progressLabel'),
+    disclaimer: tr('L.disclaimer'),
+    remove: tr('L.remove'),
+    g: tr('L.g'),
+    tola: tr('L.tola'),
+    oz: tr('L.oz'),
+    noHawl: tr('L.noHawl'),
+    belowNisab: tr('L.belowNisab'),
+    enterAmount: tr('L.enterAmount'),
   }
 
   return (
-    <div className="space-y-5" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-5" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Disclaimer */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3 items-start">

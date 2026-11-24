@@ -1,14 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
 type Mode = 'excl' | 'incl'
 type SupplyType = 'standard' | 'zero' | 'exempt'
 
-export default function KSAVatCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function KSAVatCalculator(_props: Props) {
+  const tr = useTranslations('tool')
   const VAT_RATE = 0.15
 
   const [amount, setAmount] = useState<string>('')
@@ -17,43 +18,24 @@ export default function KSAVatCalculator({ locale }: Props) {
   const [copied, setCopied] = useState(false)
   const [result, setResult] = useState<{ net: number; vat: number; gross: number } | null>(null)
 
-  const labels = isAr
-    ? {
-        title: 'حاسبة ضريبة القيمة المضافة في السعودية',
-        amount: 'المبلغ (ريال سعودي)',
-        modeExcl: 'السعر بدون ضريبة',
-        modeIncl: 'السعر شامل الضريبة',
-        supplyType: 'نوع التوريد',
-        standard: 'قياسي (15%)',
-        zero: 'صفرية (0%)',
-        exempt: 'معفاة',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        net: 'المبلغ الصافي',
-        vat: 'ضريبة القيمة المضافة (15%)',
-        gross: 'المبلغ الإجمالي',
-        copy: 'نسخ النتائج',
-        presets: 'مبالغ سريعة',
-        disclaimer: 'لأغراض توضيحية فقط. استشر هيئة الزكاة والضريبة والجمارك (ZATCA) أو مستشاراً ضريبياً. الأسعار حالية حتى 2026.',
-      }
-    : {
-        title: 'KSA VAT Calculator - Saudi Arabia 15%',
-        amount: 'Amount (SAR)',
-        modeExcl: 'Price Excluding VAT',
-        modeIncl: 'Price Including VAT',
-        supplyType: 'Supply Type',
-        standard: 'Standard (15%)',
-        zero: 'Zero-Rated (0%)',
-        exempt: 'Exempt',
-        calculate: 'Calculate',
-        reset: 'Reset',
-        net: 'Net Amount',
-        vat: 'VAT Amount (15%)',
-        gross: 'Gross Amount (Total)',
-        copy: 'Copy Results',
-        presets: 'Quick Presets',
-        disclaimer: 'For illustrative purposes only. Consult ZATCA or a qualified tax advisor. Rates current as of 2026.',
-      }
+  const labels = {
+    title: tr('labels.title'),
+    amount: tr('labels.amount'),
+    modeExcl: tr('labels.modeExcl'),
+    modeIncl: tr('labels.modeIncl'),
+    supplyType: tr('labels.supplyType'),
+    standard: tr('labels.standard'),
+    zero: tr('labels.zero'),
+    exempt: tr('labels.exempt'),
+    calculate: tr('labels.calculate'),
+    reset: tr('labels.reset'),
+    net: tr('labels.net'),
+    vat: tr('labels.vat'),
+    gross: tr('labels.gross'),
+    copy: tr('labels.copy'),
+    presets: tr('labels.presets'),
+    disclaimer: tr('labels.disclaimer'),
+  }
 
   // Live calculation
   useEffect(() => {
@@ -86,9 +68,7 @@ export default function KSAVatCalculator({ locale }: Props) {
 
   const copyResults = () => {
     if (!result) return
-    const text = isAr
-      ? `المبلغ الصافي: ${formatSAR(result.net)}\nضريبة القيمة المضافة: ${formatSAR(result.vat)}\nالمبلغ الإجمالي: ${formatSAR(result.gross)}`
-      : `Net Amount: ${formatSAR(result.net)}\nVAT Amount: ${formatSAR(result.vat)}\nGross Amount: ${formatSAR(result.gross)}`
+    const text = tr('inline.net_amount_vat_amount_gross_amount', { p0: String(formatSAR(result.net)), p1: String(formatSAR(result.vat)), p2: String(formatSAR(result.gross)) })
     
     navigator.clipboard.writeText(text)
     setCopied(true)
@@ -186,9 +166,7 @@ export default function KSAVatCalculator({ locale }: Props) {
         </div>
         {(supplyType === 'zero' || supplyType === 'exempt') && (
           <p className="mt-2 text-sm text-amber-600">
-            {isAr
-              ? 'سيتم حساب ضريبة القيمة المضافة بـ 0% لهذا النوع من التوريد.'
-              : 'VAT will be calculated at 0% for this supply type.'}
+            {tr('inline.vat_will_be_calculated_at_0_for_this_sup')}
           </p>
         )}
       </div>
@@ -222,7 +200,7 @@ export default function KSAVatCalculator({ locale }: Props) {
             onClick={copyResults}
             className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl transition"
           >
-            {copied ? (isAr ? '✓ تم النسخ' : '✓ Copied!') : labels.copy}
+            {copied ? (tr('inline.copied')) : labels.copy}
           </button>
         </div>
       )}

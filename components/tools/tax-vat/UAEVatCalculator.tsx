@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -9,8 +10,8 @@ type SupplyType = 'standard' | 'zero' | 'exempt'
 
 const UAE_VAT_RATE = 0.05
 
-export default function UAEVatCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function UAEVatCalculator(_props: Props) {
+  const tr = useTranslations('tool')
 
   const [amount, setAmount] = useState<string>('')
   const [mode, setMode] = useState<Mode>('excl')
@@ -22,43 +23,24 @@ export default function UAEVatCalculator({ locale }: Props) {
     gross: number
   } | null>(null)
 
-  const labels = isAr
-    ? {
-        title: 'حاسبة ضريبة القيمة المضافة في الإمارات',
-        amount: 'المبلغ',
-        modeExcl: 'السعر بدون ضريبة (شائع)',
-        modeIncl: 'السعر شامل الضريبة',
-        supplyType: 'نوع التوريد',
-        standard: 'قياسي (5%)',
-        zero: 'صفرية (0%)',
-        exempt: 'معفاة',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        net: 'المبلغ الصافي',
-        vat: 'ضريبة القيمة المضافة',
-        gross: 'المبلغ الإجمالي',
-        copy: 'نسخ النتائج',
-        presets: 'مبالغ سريعة',
-        disclaimer: 'لأغراض توضيحية فقط. استشر هيئة الضرائب الاتحادية (FTA) أو مستشاراً ضريبياً للحصول على نصيحة مهنية. الأسعار حالية حتى 2026.',
-      }
-    : {
-        title: 'UAE VAT Calculator',
-        amount: 'Amount',
-        modeExcl: 'Price Excluding VAT (Most Common)',
-        modeIncl: 'Price Including VAT',
-        supplyType: 'Supply Type',
-        standard: 'Standard (5%)',
-        zero: 'Zero-Rated (0%)',
-        exempt: 'Exempt',
-        calculate: 'Calculate',
-        reset: 'Reset',
-        net: 'Net Amount',
-        vat: 'VAT Amount',
-        gross: 'Gross Amount (Total)',
-        copy: 'Copy Results',
-        presets: 'Quick Presets',
-        disclaimer: 'For illustrative purposes only. Consult the Federal Tax Authority (FTA) or a qualified tax advisor for professional advice. Rates current as of 2026.',
-      }
+  const labels = {
+    title: tr('labels.title'),
+    amount: tr('labels.amount'),
+    modeExcl: tr('labels.modeExcl'),
+    modeIncl: tr('labels.modeIncl'),
+    supplyType: tr('labels.supplyType'),
+    standard: tr('labels.standard'),
+    zero: tr('labels.zero'),
+    exempt: tr('labels.exempt'),
+    calculate: tr('labels.calculate'),
+    reset: tr('labels.reset'),
+    net: tr('labels.net'),
+    vat: tr('labels.vat'),
+    gross: tr('labels.gross'),
+    copy: tr('labels.copy'),
+    presets: tr('labels.presets'),
+    disclaimer: tr('labels.disclaimer'),
+  }
 
   // Live calculation
   useEffect(() => {
@@ -92,9 +74,7 @@ export default function UAEVatCalculator({ locale }: Props) {
 
   const copyResults = () => {
     if (!result) return
-    const text = isAr
-      ? `المبلغ الصافي: ${formatAED(result.net)}\nضريبة القيمة المضافة: ${formatAED(result.vat)}\nالمبلغ الإجمالي: ${formatAED(result.gross)}`
-      : `Net Amount: ${formatAED(result.net)}\nVAT Amount: ${formatAED(result.vat)}\nGross Amount: ${formatAED(result.gross)}`
+    const text = tr('inline.net_amount_vat_amount_gross_amount', { p0: String(formatAED(result.net)), p1: String(formatAED(result.vat)), p2: String(formatAED(result.gross)) })
     
     navigator.clipboard.writeText(text)
     setCopied(true)
@@ -195,9 +175,7 @@ export default function UAEVatCalculator({ locale }: Props) {
         </div>
         {(supplyType === 'zero' || supplyType === 'exempt') && (
           <p className="mt-2 text-sm text-amber-600">
-            {isAr 
-              ? 'سيتم حساب ضريبة القيمة المضافة بـ 0% لهذا النوع من التوريد.'
-              : 'VAT will be calculated at 0% for this supply type.'}
+            {tr('inline.vat_will_be_calculated_at_0_for_this_sup')}
           </p>
         )}
       </div>
@@ -231,7 +209,7 @@ export default function UAEVatCalculator({ locale }: Props) {
             onClick={copyResults}
             className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl transition"
           >
-            {copied ? (isAr ? '✓ تم النسخ' : '✓ Copied!') : labels.copy}
+            {copied ? (tr('inline.copied')) : labels.copy}
           </button>
         </div>
       )}

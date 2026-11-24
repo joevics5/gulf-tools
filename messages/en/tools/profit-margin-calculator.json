@@ -1,0 +1,22 @@
+{
+  "labels": {
+    "title": "Profit Margin Calculator",
+    "revenue": "Revenue / Sales",
+    "cogs": "Cost of Goods Sold (COGS)",
+    "opEx": "Operating Expenses",
+    "country": "Country",
+    "grossProfit": "Gross Profit",
+    "grossMargin": "Gross Profit Margin",
+    "netProfit": "Net Profit",
+    "netMargin": "Net Profit Margin",
+    "estimatedTax": "Estimated Tax",
+    "afterTax": "Profit After Tax",
+    "reset": "Reset",
+    "copy": "Copy Results",
+    "copied": "Copied!",
+    "taxNote": "Simplified estimate using the standard headline tax rate. Actual liability depends on entity structure, free zone status, and ownership nationality. Consult a tax advisor."
+  },
+  "inline": {
+    "gross_margin_net_margin": "Gross Margin: {p0}%\nNet Margin: {p1}%\n{p2}"
+  }
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -23,8 +24,8 @@ const COUNTRIES: Country[] = [
   { value: 'egypt', label: 'Egypt', currency: 'EGP', cit: 0.225 },
 ]
 
-export default function ProfitMarginCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function ProfitMarginCalculator(_props: Props) {
+  const tr = useTranslations('tool')
 
   const [country, setCountry] = useState('uae')
   const [revenue, setRevenue] = useState<string>('')
@@ -69,45 +70,27 @@ export default function ProfitMarginCalculator({ locale }: Props) {
   const formatNum = (n: number) => 
     `${selectedCountry.currency} ${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
-  const labels = isAr ? {
-    title: 'حاسبة هامش الربح',
-    revenue: 'الإيرادات / المبيعات',
-    cogs: 'تكلفة البضائع المباعة (COGS)',
-    opEx: 'المصروفات التشغيلية',
-    country: 'الدولة',
-    grossProfit: 'الربح الإجمالي',
-    grossMargin: 'هامش الربح الإجمالي',
-    netProfit: 'الربح الصافي',
-    netMargin: 'هامش الربح الصافي',
-    estimatedTax: 'الضرائب التقديرية',
-    afterTax: 'الربح بعد الضريبة',
-    reset: 'إعادة تعيين',
-    copy: 'نسخ النتائج',
-    copied: 'تم النسخ!',
-    taxNote: 'تقدير مبسط بناءً على معدل الضريبة القياسي. المسؤولية الفعلية تعتمد على هيكل الشركة، والمنطقة الحرة، وجنسية الملكية. استشر مستشارًا ضريبيًا.',
-  } : {
-    title: 'Profit Margin Calculator',
-    revenue: 'Revenue / Sales',
-    cogs: 'Cost of Goods Sold (COGS)',
-    opEx: 'Operating Expenses',
-    country: 'Country',
-    grossProfit: 'Gross Profit',
-    grossMargin: 'Gross Profit Margin',
-    netProfit: 'Net Profit',
-    netMargin: 'Net Profit Margin',
-    estimatedTax: 'Estimated Tax',
-    afterTax: 'Profit After Tax',
-    reset: 'Reset',
-    copy: 'Copy Results',
-    copied: 'Copied!',
-    taxNote: 'Simplified estimate using the standard headline tax rate. Actual liability depends on entity structure, free zone status, and ownership nationality. Consult a tax advisor.',
+  const labels = {
+    title: tr('labels.title'),
+    revenue: tr('labels.revenue'),
+    cogs: tr('labels.cogs'),
+    opEx: tr('labels.opEx'),
+    country: tr('labels.country'),
+    grossProfit: tr('labels.grossProfit'),
+    grossMargin: tr('labels.grossMargin'),
+    netProfit: tr('labels.netProfit'),
+    netMargin: tr('labels.netMargin'),
+    estimatedTax: tr('labels.estimatedTax'),
+    afterTax: tr('labels.afterTax'),
+    reset: tr('labels.reset'),
+    copy: tr('labels.copy'),
+    copied: tr('labels.copied'),
+    taxNote: tr('labels.taxNote'),
   }
 
   const copyResults = () => {
     if (!result) return
-    const text = isAr 
-      ? `هامش الربح الإجمالي: ${result.grossMargin}%\nالربح الصافي: ${result.netMargin}%\n${formatNum(result.netProfit)}`
-      : `Gross Margin: ${result.grossMargin}%\nNet Margin: ${result.netMargin}%\n${formatNum(result.netProfit)}`
+    const text = tr('inline.gross_margin_net_margin', { p0: String(result.grossMargin), p1: String(result.netMargin), p2: String(formatNum(result.netProfit)) })
     navigator.clipboard.writeText(text)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)

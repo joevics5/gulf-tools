@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { FALLBACK_GOLD_USD_PER_GRAM } from '@/lib/constants/metalPrices'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -68,7 +70,7 @@ type Result = {
 }
 
 export default function TolaGoldZakatCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   // ── Inputs ──────────────────────────────────────────────────────────────────
   const [tola, setTola]             = useState('')
@@ -166,66 +168,40 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
   const currencySymbol = CURRENCIES.find(c => c.value === currency)?.symbol ?? currency
 
   // ── Labels ───────────────────────────────────────────────────────────────────
-  const L = isAr ? {
-    heading: 'حاسبة زكاة الذهب بالتولة',
-    subhead: 'احسب زكاة ذهبك وفق معايير الشريعة الإسلامية',
-    tolaLabel: 'كمية الذهب (بالتولة)',
-    karatLabel: 'عيار الذهب',
-    currencyLabel: 'العملة',
-    hawlLabel: 'أمتلك هذا الذهب منذ حول كامل (سنة قمرية)؟',
-    jewelryLabel: 'تضمين مجوهرات الاستخدام الشخصي (مذهب حنفي)',
-    goldPrice: 'سعر الذهب عيار 24 / غرام',
-    manualToggle: 'تعديل يدوي للسعر',
-    calculate: 'احسب الزكاة',
-    reset: 'مسح',
-    results: 'نتائج الحساب',
-    zakatDue: 'الزكاة المستحقة',
-    zakatPerTola: 'الزكاة لكل تولة',
-    totalWeight: 'الوزن الكلي',
-    pureGold: 'الذهب الخالص',
-    totalValue: 'القيمة السوقية',
-    nisabStatus: 'هل تجاوز النصاب؟',
-    yes: 'نعم ✓', no: 'لا ✗',
-    noZakat: 'لا زكاة واجبة',
-    noZakatSub: 'لا تستوفي المتطلبات حالياً.',
-    presets: 'حسابات سريعة',
-    disclaimer: 'هذه الأداة تقديرية فقط. استشر عالماً معتمداً في بلدك للحصول على فتوى شخصية.',
-    live: 'مباشر',
-    fallback: 'تقريبي',
-    hawlNote: 'يجب تأكيد الحول لحساب الزكاة',
-  } : {
-    heading: 'Tola Gold Zakat Calculator',
-    subhead: 'Calculate Zakat on gold using standard Shariah parameters',
-    tolaLabel: 'Total Gold (in Tola)',
-    karatLabel: 'Gold Purity (Karat)',
-    currencyLabel: 'Display Currency',
-    hawlLabel: 'I have owned this gold for one full lunar year (Hawl)?',
-    jewelryLabel: 'Include personal-use jewelry (Hanafi school — all gold is zakatable)',
-    goldPrice: '24K Gold Price / gram',
-    manualToggle: 'Override price manually',
-    calculate: 'Calculate Zakat',
-    reset: 'Reset',
-    results: 'Zakat Breakdown',
-    zakatDue: 'Total Zakat Due',
-    zakatPerTola: 'Zakat per Tola',
-    totalWeight: 'Total Weight',
-    pureGold: 'Pure Gold (24K eq.)',
-    totalValue: 'Market Value',
-    nisabStatus: 'Meets Nisab (7.5 tola / ~87.5g)?',
-    yes: 'Yes ✓', no: 'No ✗',
-    noZakat: 'No Zakat Due',
-    noZakatSub: 'Current conditions do not require Zakat.',
-    presets: 'Quick Presets',
-    disclaimer: 'This tool provides estimates based on common scholarly consensus. Consult a qualified scholar in your country for a personal fatwa. This is not financial or religious advice.',
-    live: 'Live',
-    fallback: 'Estimated',
-    hawlNote: 'Confirm Hawl (ownership ≥ 1 lunar year) to calculate',
+  const L = {
+    heading: tr('L.heading'),
+    subhead: tr('L.subhead'),
+    tolaLabel: tr('L.tolaLabel'),
+    karatLabel: tr('L.karatLabel'),
+    currencyLabel: tr('L.currencyLabel'),
+    hawlLabel: tr('L.hawlLabel'),
+    jewelryLabel: tr('L.jewelryLabel'),
+    goldPrice: tr('L.goldPrice'),
+    manualToggle: tr('L.manualToggle'),
+    calculate: tr('L.calculate'),
+    reset: tr('L.reset'),
+    results: tr('L.results'),
+    zakatDue: tr('L.zakatDue'),
+    zakatPerTola: tr('L.zakatPerTola'),
+    totalWeight: tr('L.totalWeight'),
+    pureGold: tr('L.pureGold'),
+    totalValue: tr('L.totalValue'),
+    nisabStatus: tr('L.nisabStatus'),
+    yes: tr('L.yes'),
+    no: tr('L.no'),
+    noZakat: tr('L.noZakat'),
+    noZakatSub: tr('L.noZakatSub'),
+    presets: tr('L.presets'),
+    disclaimer: tr('L.disclaimer'),
+    live: tr('L.live'),
+    fallback: tr('L.fallback'),
+    hawlNote: tr('L.hawlNote'),
   }
 
   return (
     <div
       className="space-y-6"
-      dir={isAr ? 'rtl' : 'ltr'}
+      dir={isRtl(locale) ? 'rtl' : 'ltr'}
       style={{ fontFamily: "'Noto Sans', sans-serif" }}
     >
       {/* Gold Price Banner */}
@@ -269,7 +245,7 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
                   : 'bg-white text-amber-700 border-amber-200 hover:bg-amber-50'
               }`}
             >
-              {p} {isAr ? 'تولة' : 'Tola'}
+              {p} {tr('inline.tola')}
             </button>
           ))}
         </div>
@@ -293,7 +269,7 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
               className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition text-lg font-bold"
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-medium">
-              {isAr ? 'تولة' : 'tola'}
+              {tr('inline.tola_2')}
             </span>
           </div>
           {tola && (
@@ -449,12 +425,12 @@ export default function TolaGoldZakatCalculator({ locale }: Props) {
           {result.zakatDue > 0 && (
             <div className="bg-amber-50 px-6 py-4">
               <p className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-3">
-                {isAr ? 'مرجع سريع' : 'Quick Reference'}
+                {tr('inline.quick_reference')}
               </p>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
                 {[7.5, 10, 20, 24, 30, 40, 50].map(t => (
                   <div key={t} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{t} {isAr ? 'تولة' : 'tola'}</span>
+                    <span className="text-gray-600">{t} {tr('inline.tola_2')}</span>
                     <span className="font-semibold text-amber-800">
                       {fmt(t * result.zakatPerTola, currencySymbol)}
                     </span>

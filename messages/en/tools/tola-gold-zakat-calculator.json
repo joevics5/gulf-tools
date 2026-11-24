@@ -1,0 +1,36 @@
+{
+  "L": {
+    "heading": "Tola Gold Zakat Calculator",
+    "subhead": "Calculate Zakat on gold using standard Shariah parameters",
+    "tolaLabel": "Total Gold (in Tola)",
+    "karatLabel": "Gold Purity (Karat)",
+    "currencyLabel": "Display Currency",
+    "hawlLabel": "I have owned this gold for one full lunar year (Hawl)?",
+    "jewelryLabel": "Include personal-use jewelry (Hanafi school — all gold is zakatable)",
+    "goldPrice": "24K Gold Price / gram",
+    "manualToggle": "Override price manually",
+    "calculate": "Calculate Zakat",
+    "reset": "Reset",
+    "results": "Zakat Breakdown",
+    "zakatDue": "Total Zakat Due",
+    "zakatPerTola": "Zakat per Tola",
+    "totalWeight": "Total Weight",
+    "pureGold": "Pure Gold (24K eq.)",
+    "totalValue": "Market Value",
+    "nisabStatus": "Meets Nisab (7.5 tola / ~87.5g)?",
+    "yes": "Yes ✓",
+    "no": "No ✗",
+    "noZakat": "No Zakat Due",
+    "noZakatSub": "Current conditions do not require Zakat.",
+    "presets": "Quick Presets",
+    "disclaimer": "This tool provides estimates based on common scholarly consensus. Consult a qualified scholar in your country for a personal fatwa. This is not financial or religious advice.",
+    "live": "Live",
+    "fallback": "Estimated",
+    "hawlNote": "Confirm Hawl (ownership ≥ 1 lunar year) to calculate"
+  },
+  "inline": {
+    "tola": "Tola",
+    "tola_2": "tola",
+    "quick_reference": "Quick Reference"
+  }
+}
