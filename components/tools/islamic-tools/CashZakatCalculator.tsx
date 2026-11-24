@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { FALLBACK_GOLD_USD_PER_GRAM, FALLBACK_SILVER_USD_PER_GRAM } from '@/lib/constants/metalPrices'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -76,7 +78,7 @@ type Step = 'setup' | 'assets' | 'debts' | 'result'
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function CashZakatCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   // ── Global settings ────────────────────────────────────────────────────────
   const [step,          setStep]          = useState<Step>('setup')
@@ -143,106 +145,57 @@ export default function CashZakatCalculator({ locale }: Props) {
   }
 
   // ── Labels ─────────────────────────────────────────────────────────────────
-  const L = isAr ? {
-    title: 'حاسبة زكاة النقد والمدخرات',
-    subtitle: 'النقد والحسابات البنكية والمدخرات والديون',
-    steps: ['الإعداد', 'الأصول', 'الديون', 'النتيجة'],
-    // Setup
-    currency: 'العملة',
-    nisabBasis: 'أساس النصاب',
-    silver: 'الفضة — موصى به (أشمل)',
-    gold: 'الذهب',
-    custom: 'قيمة مخصصة',
-    customNisab: 'قيمة النصاب المخصصة',
-    currentNisab: 'النصاب الحالي',
-    liveRate: 'سعر مباشر',
-    cachedRate: 'سعر مخزن',
-    hawl: 'أؤكد أن صافي ثروتي يتجاوز النصاب منذ حول كامل (عام هجري)',
-    // Assets
-    assetsTitle: 'الأصول السائلة',
-    cashInHand: 'النقد في اليد',
-    currentAccount: 'الحسابات الجارية / الحسابات المصرفية',
-    savingsAccount: 'حسابات التوفير',
-    fixedDeposits: 'الودائع الثابتة (قابلة للسحب)',
-    moneyMarket: 'صناديق سوق المال / سيولة أخرى',
-    receivables: 'أموال مدينة لي (قابلة للتحصيل)',
-    otherLiquid: 'أصول سائلة أخرى',
-    totalAssets: 'إجمالي الأصول',
-    // Debts
-    debtsTitle: 'الخصومات والديون',
-    debtsNote: 'اخصم الديون قصيرة الأجل المستحقة خلال العام القادم فقط.',
-    creditCards: 'أرصدة بطاقات الائتمان (مستحقة الآن)',
-    loansImminent: 'أقساط قروض مستحقة قريباً',
-    overdueBills: 'فواتير متأخرة / التزامات فورية',
-    otherDebts: 'ديون أخرى قصيرة الأجل',
-    totalDebts: 'إجمالي الديون',
-    // Result
-    resultTitle: 'نتيجة زكاة النقد والمدخرات',
-    zakatDue: 'الزكاة الواجبة',
-    notEligible: 'لا زكاة واجبة',
-    notEligibleDesc: 'صافي أصولك أقل من النصاب أو لم يكتمل الحول.',
-    netZakatable: 'صافي الثروة الزكوية',
-    nisabLabel: 'النصاب',
-    progressLabel: 'التقدم نحو النصاب',
-    belowNisab: 'أقل من النصاب',
-    noHawl: 'لم يُؤكَّد الحول',
-    disclaimer: 'هذه أداة حسابية عامة. ليست فتوى. استشر عالماً مؤهلاً. النتائج تقديرية.',
-    next: 'التالي',
-    back: 'السابق',
-    calculate: 'احسب الزكاة',
-    reset: 'إعادة تعيين',
-    enterAmount: 'أدخل المبلغ',
-    assetsTip: 'أدخل الأصفار للبنود غير المنطبقة.',
-    receivablesTip: 'أضف فقط المبالغ التي تتوقع استردادها فعلاً.',
-    debtsTip: 'اخصم الأقساط المستحقة خلال السنة القادمة، لا الرصيد الإجمالي للقروض طويلة الأجل.',
-  } : {
-    title: 'Cash & Savings Zakat Calculator',
-    subtitle: 'Cash, Bank Accounts, Savings & Deductible Debts',
-    steps: ['Setup', 'Assets', 'Debts', 'Result'],
-    currency: 'Currency',
-    nisabBasis: 'Nisab Basis',
-    silver: 'Silver — Recommended (more inclusive)',
-    gold: 'Gold',
-    custom: 'Custom value',
-    customNisab: 'Custom Nisab Value',
-    currentNisab: 'Current Nisab',
-    liveRate: 'Live rate',
-    cachedRate: 'Cached rate',
-    hawl: 'I confirm my net wealth has been above nisab for one full lunar year (hawl)',
-    assetsTitle: 'Liquid Assets',
-    cashInHand: 'Cash in Hand / Physical Cash',
-    currentAccount: 'Current / Checking Account(s)',
-    savingsAccount: 'Savings Account(s)',
-    fixedDeposits: 'Fixed Deposits (accessible)',
-    moneyMarket: 'Money Market / Other Cash Equivalents',
-    receivables: 'Money Owed to Me (collectible)',
-    otherLiquid: 'Other Liquid Assets',
-    totalAssets: 'Total Assets',
-    debtsTitle: 'Deductible Liabilities',
-    debtsNote: 'Deduct only short-term debts due within the next lunar year.',
-    creditCards: 'Credit Card Balances (currently due)',
-    loansImminent: 'Loan Instalments Due Soon',
-    overdueBills: 'Overdue Bills / Immediate Obligations',
-    otherDebts: 'Other Short-term Debts',
-    totalDebts: 'Total Liabilities',
-    resultTitle: 'Your Cash & Savings Zakat Result',
-    zakatDue: 'Zakat Due',
-    notEligible: 'No Zakat Due',
-    notEligibleDesc: 'Your net wealth is below nisab or hawl is not confirmed.',
-    netZakatable: 'Net Zakatable Wealth',
-    nisabLabel: 'Nisab Threshold',
-    progressLabel: 'Progress toward nisab',
-    belowNisab: 'Below nisab',
-    noHawl: 'Hawl not confirmed',
-    disclaimer: 'This is a general calculation tool. Not a fatwa. Consult a qualified scholar. Results are estimates.',
-    next: 'Next',
-    back: 'Back',
-    calculate: 'Calculate Zakat',
-    reset: 'Reset',
-    enterAmount: 'Enter amount',
-    assetsTip: 'Enter 0 for any item that does not apply to you.',
-    receivablesTip: 'Only include amounts you genuinely expect to recover.',
-    debtsTip: 'Deduct instalments due in the next year — not the full outstanding balance of long-term loans.',
+  const L = {
+    title: tr('L.title'),
+    subtitle: tr('L.subtitle'),
+    step0: tr('L.step0'),
+    step1: tr('L.step1'),
+    step2: tr('L.step2'),
+    step3: tr('L.step3'),
+    currency: tr('L.currency'),
+    nisabBasis: tr('L.nisabBasis'),
+    silver: tr('L.silver'),
+    gold: tr('L.gold'),
+    custom: tr('L.custom'),
+    customNisab: tr('L.customNisab'),
+    currentNisab: tr('L.currentNisab'),
+    liveRate: tr('L.liveRate'),
+    cachedRate: tr('L.cachedRate'),
+    hawl: tr('L.hawl'),
+    assetsTitle: tr('L.assetsTitle'),
+    cashInHand: tr('L.cashInHand'),
+    currentAccount: tr('L.currentAccount'),
+    savingsAccount: tr('L.savingsAccount'),
+    fixedDeposits: tr('L.fixedDeposits'),
+    moneyMarket: tr('L.moneyMarket'),
+    receivables: tr('L.receivables'),
+    otherLiquid: tr('L.otherLiquid'),
+    totalAssets: tr('L.totalAssets'),
+    debtsTitle: tr('L.debtsTitle'),
+    debtsNote: tr('L.debtsNote'),
+    creditCards: tr('L.creditCards'),
+    loansImminent: tr('L.loansImminent'),
+    overdueBills: tr('L.overdueBills'),
+    otherDebts: tr('L.otherDebts'),
+    totalDebts: tr('L.totalDebts'),
+    resultTitle: tr('L.resultTitle'),
+    zakatDue: tr('L.zakatDue'),
+    notEligible: tr('L.notEligible'),
+    notEligibleDesc: tr('L.notEligibleDesc'),
+    netZakatable: tr('L.netZakatable'),
+    nisabLabel: tr('L.nisabLabel'),
+    progressLabel: tr('L.progressLabel'),
+    belowNisab: tr('L.belowNisab'),
+    noHawl: tr('L.noHawl'),
+    disclaimer: tr('L.disclaimer'),
+    next: tr('L.next'),
+    back: tr('L.back'),
+    calculate: tr('L.calculate'),
+    reset: tr('L.reset'),
+    enterAmount: tr('L.enterAmount'),
+    assetsTip: tr('L.assetsTip'),
+    receivablesTip: tr('L.receivablesTip'),
+    debtsTip: tr('L.debtsTip'),
   }
 
   const STEPS: Step[] = ['setup', 'assets', 'debts', 'result']
@@ -272,7 +225,7 @@ export default function CashZakatCalculator({ locale }: Props) {
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="space-y-5" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="space-y-5" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
 
       {/* Disclaimer */}
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex gap-2 items-start">
@@ -294,7 +247,7 @@ export default function CashZakatCalculator({ locale }: Props) {
               {i < stepIdx ? '✓' : i + 1}
             </button>
             <span className={`text-xs font-medium hidden sm:block ${i === stepIdx ? 'text-emerald-700' : 'text-gray-500'}`}>
-              {L.steps[i]}
+              {[L.step0, L.step1, L.step2, L.step3][i]}
             </span>
             {i < STEPS.length - 1 && (
               <div className={`flex-1 h-0.5 mx-1 ${i < stepIdx ? 'bg-emerald-400' : 'bg-gray-100'}`} />

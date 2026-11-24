@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { FALLBACK_GOLD_USD_PER_GRAM, FALLBACK_SILVER_USD_PER_GRAM } from '@/lib/constants/metalPrices'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 type Props = { locale: string }
 
@@ -76,6 +78,7 @@ type ZakatResult = {
 
 export default function SalaryZakatCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   // ── Step state ──────────────────────────────────────────────────────────────
   const [step, setStep] = useState<Step>('profile')
@@ -207,46 +210,56 @@ export default function SalaryZakatCalculator({ locale }: Props) {
 
   const countryMeta = COUNTRIES.find(c => c.value === country)!
 
-  const L = isAr ? {
-    title: 'حاسبة زكاة الراتب والدخل',
-    steps: ['الملف الشخصي', 'الدخل', 'المصروفات', 'الأصول', 'النتائج'],
-    next: 'التالي', back: 'السابق', calculate: 'احسب الزكاة', reset: 'إعادة',
-    country: 'الدولة', currency: 'العملة', madhab: 'المذهب الفقهي',
-    nisabBasis: 'أساس النصاب', silver: 'الفضة (مُوصى به)', gold: 'الذهب',
-    hawl: 'هل مضى على الثروة حول كامل (سنة قمرية)؟',
-    calcMode: 'طريقة الحساب', wealth: 'زكاة الثروة (كلاسيكي)', income: 'زكاة الدخل (معاصر)', both: 'كلاهما للمقارنة',
-    monthlySalary: 'الراتب الشهري الإجمالي', bonuses: 'المكافآت السنوية', otherIncome: 'دخل آخر (سنوي)',
-    rent: 'إيجار / سكن', food: 'طعام وأسرة', transport: 'مواصلات', utilities: 'فواتير',
-    education: 'تعليم', healthcare: 'صحة', debt: 'أقساط ديون', otherExp: 'مصروفات أخرى',
-    savings: 'مدخرات نقدية / بنك', goldValue: 'قيمة الذهب والفضة', stocks: 'أسهم / استثمارات سائلة', otherAssets: 'أصول زكوية أخرى',
-    results: 'نتائج الزكاة', nisabLabel: 'النصاب الحالي',
-    wealthMethod: 'زكاة الثروة (الحول مطلوب)', incomeMethod: 'زكاة الدخل (معاصر)',
-    meetsNisab: 'يبلغ النصاب', doesNot: 'لا يبلغ النصاب',
-    noZakat: 'لا زكاة واجبة', disclaimer: 'هذه أداة تعليمية تقديرية. استشر عالماً مؤهلاً أو جهة دينية معتمدة في بلدك. النتائج تقريبية.',
-    annualNet: 'صافي الدخل السنوي', netWealth: 'صافي الثروة الزكوية',
-    monthlyZakat: 'الزكاة الشهرية (دفع شهري)',
-    annualZakat: 'الزكاة السنوية',
-    priceNote: priceNote === 'live' ? '(أسعار لحظية)' : '(أسعار تقريبية)',
-  } : {
-    title: 'Salary & Income Zakat Calculator',
-    steps: ['Profile', 'Income', 'Expenses', 'Assets', 'Results'],
-    next: 'Next', back: 'Back', calculate: 'Calculate Zakat', reset: 'Reset',
-    country: 'Country', currency: 'Currency', madhab: 'School of Thought',
-    nisabBasis: 'Nisab Standard', silver: 'Silver (recommended)', gold: 'Gold',
-    hawl: 'Has this wealth been held for one full lunar year (Hawl)?',
-    calcMode: 'Calculation Method', wealth: 'Wealth Zakat (classical)', income: 'Income Zakat (contemporary)', both: 'Both (for comparison)',
-    monthlySalary: 'Gross Monthly Salary', bonuses: 'Annual Bonuses', otherIncome: 'Other Annual Income',
-    rent: 'Rent / Housing', food: 'Food & Family', transport: 'Transport', utilities: 'Utilities',
-    education: 'Education', healthcare: 'Healthcare', debt: 'Debt Installments', otherExp: 'Other Expenses',
-    savings: 'Cash / Bank Savings', goldValue: 'Gold & Silver Value', stocks: 'Liquid Stocks / Investments', otherAssets: 'Other Zakatable Assets',
-    results: 'Your Zakat Estimate', nisabLabel: 'Current Nisab',
-    wealthMethod: 'Wealth Zakat (Hawl required)', incomeMethod: 'Income Zakat (contemporary)',
-    meetsNisab: 'Meets Nisab ✓', doesNot: 'Below Nisab ✗',
-    noZakat: 'No Zakat due', disclaimer: 'This is an educational estimation tool based on common scholarly opinions. Zakat rules vary by school of thought and personal circumstances. Consult a qualified scholar or official authority in your country. Results are approximate.',
-    annualNet: 'Annual Net Income', netWealth: 'Net Zakatable Wealth',
-    monthlyZakat: 'Monthly Zakat (if paying monthly)',
-    annualZakat: 'Annual Zakat Due',
-    priceNote: priceNote === 'live' ? '(live prices)' : '(estimated prices)',
+  const L = {
+    title: tr('L.title'),
+    step0: tr('L.step0'),
+    step1: tr('L.step1'),
+    step2: tr('L.step2'),
+    step3: tr('L.step3'),
+    step4: tr('L.step4'),
+    next: tr('L.next'),
+    back: tr('L.back'),
+    calculate: tr('L.calculate'),
+    reset: tr('L.reset'),
+    country: tr('L.country'),
+    currency: tr('L.currency'),
+    madhab: tr('L.madhab'),
+    nisabBasis: tr('L.nisabBasis'),
+    silver: tr('L.silver'),
+    gold: tr('L.gold'),
+    hawl: tr('L.hawl'),
+    calcMode: tr('L.calcMode'),
+    wealth: tr('L.wealth'),
+    income: tr('L.income'),
+    both: tr('L.both'),
+    monthlySalary: tr('L.monthlySalary'),
+    bonuses: tr('L.bonuses'),
+    otherIncome: tr('L.otherIncome'),
+    rent: tr('L.rent'),
+    food: tr('L.food'),
+    transport: tr('L.transport'),
+    utilities: tr('L.utilities'),
+    education: tr('L.education'),
+    healthcare: tr('L.healthcare'),
+    debt: tr('L.debt'),
+    otherExp: tr('L.otherExp'),
+    savings: tr('L.savings'),
+    goldValue: tr('L.goldValue'),
+    stocks: tr('L.stocks'),
+    otherAssets: tr('L.otherAssets'),
+    results: tr('L.results'),
+    nisabLabel: tr('L.nisabLabel'),
+    wealthMethod: tr('L.wealthMethod'),
+    incomeMethod: tr('L.incomeMethod'),
+    meetsNisab: tr('L.meetsNisab'),
+    doesNot: tr('L.doesNot'),
+    noZakat: tr('L.noZakat'),
+    disclaimer: tr('L.disclaimer'),
+    annualNet: tr('L.annualNet'),
+    netWealth: tr('L.netWealth'),
+    monthlyZakat: tr('L.monthlyZakat'),
+    annualZakat: tr('L.annualZakat'),
+    priceNote: priceNote === 'live' ? tr('L.priceNote_if') : tr('L.priceNote_else'),
   }
 
   // ── Nisab progress bar ───────────────────────────────────────────────────────
@@ -256,12 +269,12 @@ export default function SalaryZakatCalculator({ locale }: Props) {
   return (
     <div
       className="space-y-6"
-      dir={isAr ? 'rtl' : 'ltr'}
+      dir={isRtl(locale) ? 'rtl' : 'ltr'}
       style={{ fontFamily: "'Noto Sans', 'Segoe UI', sans-serif" }}
     >
       {/* ── Stepper ────────────────────────────────────────────────────────────── */}
       <div className="flex items-center gap-1">
-        {L.steps.map((s, i) => (
+        {[L.step0, L.step1, L.step2, L.step3, L.step4].map((s, i) => (
           <div key={i} className="flex items-center flex-1 min-w-0">
             <button
               onClick={() => i < stepIndex && setStep(STEPS[i])}
@@ -287,11 +300,11 @@ export default function SalaryZakatCalculator({ locale }: Props) {
       {/* ── Nisab Banner (always visible) ──────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div className={`rounded-xl px-4 py-2.5 border ${nisabBasis === 'silver' ? 'bg-teal-50 border-teal-200' : 'bg-gray-50 border-gray-100'}`}>
-          <p className="text-xs text-gray-500 mb-0.5">{isAr ? 'نصاب الفضة' : 'Silver Nisab'} {L.priceNote}</p>
+          <p className="text-xs text-gray-500 mb-0.5">{tr('inline.silver_nisab')} {L.priceNote}</p>
           <p className="font-bold text-gray-800">{fmt(nisabSilverLocal, currMeta.symbol)}</p>
         </div>
         <div className={`rounded-xl px-4 py-2.5 border ${nisabBasis === 'gold' ? 'bg-amber-50 border-amber-200' : 'bg-gray-50 border-gray-100'}`}>
-          <p className="text-xs text-gray-500 mb-0.5">{isAr ? 'نصاب الذهب' : 'Gold Nisab'} {L.priceNote}</p>
+          <p className="text-xs text-gray-500 mb-0.5">{tr('inline.gold_nisab')} {L.priceNote}</p>
           <p className="font-bold text-gray-800">{fmt(nisabGoldLocal, currMeta.symbol)}</p>
         </div>
       </div>
@@ -361,12 +374,12 @@ export default function SalaryZakatCalculator({ locale }: Props) {
           <SectionTitle isAr={isAr} en="Income Sources" ar="مصادر الدخل" />
 
           <NumberField label={L.monthlySalary}  symbol={currMeta.symbol} value={monthlySalary}  onChange={setMonthlySalary} />
-          <NumberField label={L.bonuses}         symbol={currMeta.symbol} value={bonuses}         onChange={setBonuses} hint={isAr ? 'سنوي' : 'Annual total'} />
-          <NumberField label={L.otherIncome}     symbol={currMeta.symbol} value={otherIncome}     onChange={setOtherIncome} hint={isAr ? 'عمل حر، استثمارات...' : 'Freelance, investments...'} />
+          <NumberField label={L.bonuses}         symbol={currMeta.symbol} value={bonuses}         onChange={setBonuses} hint={tr('inline.annual_total')} />
+          <NumberField label={L.otherIncome}     symbol={currMeta.symbol} value={otherIncome}     onChange={setOtherIncome} hint={tr('inline.freelance_investments')} />
 
           {monthlySalary && (
             <div className="rounded-xl bg-teal-50 border border-teal-100 px-4 py-3 text-sm text-teal-800">
-              {isAr ? 'إجمالي الدخل السنوي المقدَّر' : 'Estimated annual gross'}: <strong>{fmt(annualGross, currMeta.symbol)}</strong>
+              {tr('inline.estimated_annual_gross')}: <strong>{fmt(annualGross, currMeta.symbol)}</strong>
             </div>
           )}
 
@@ -395,17 +408,17 @@ export default function SalaryZakatCalculator({ locale }: Props) {
           {monthlyExpenses > 0 && (
             <div className="rounded-xl bg-gray-50 border border-gray-100 px-4 py-3 space-y-1.5">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">{isAr ? 'إجمالي المصروفات الشهرية' : 'Total monthly expenses'}</span>
+                <span className="text-gray-500">{tr('inline.total_monthly_expenses')}</span>
                 <span className="font-semibold text-gray-800">{fmt(monthlyExpenses, currMeta.symbol)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">{isAr ? 'صافي الدخل السنوي' : 'Annual net income'}</span>
+                <span className="text-gray-500">{tr('inline.annual_net_income')}</span>
                 <span className="font-bold text-teal-700">{fmt(annualNetIncome, currMeta.symbol)}</span>
               </div>
               {/* Progress to nisab */}
               <div className="pt-1">
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  <span>{isAr ? 'تقدم نحو النصاب' : 'Progress to Nisab'}</span>
+                  <span>{tr('inline.progress_to_nisab')}</span>
                   <span>{pct(incomePct)}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -426,22 +439,22 @@ export default function SalaryZakatCalculator({ locale }: Props) {
       {step === 'assets' && (
         <div className="space-y-4">
           <SectionTitle isAr={isAr} en="Zakatable Assets" ar="الأصول الزكوية" />
-          <p className="text-xs text-gray-500">{isAr ? 'أدخل القيمة الحالية لكل ما تمتلكه من أصول قابلة للزكاة' : 'Enter current market value of all zakatable holdings'}</p>
+          <p className="text-xs text-gray-500">{tr('inline.enter_current_market_value_of_all_zakata')}</p>
 
-          <NumberField label={L.savings}    symbol={currMeta.symbol} value={savings}    onChange={setSavings} hint={isAr ? 'حساب بنكي، نقد' : 'Bank accounts, cash'} />
-          <NumberField label={L.goldValue}  symbol={currMeta.symbol} value={goldValue}  onChange={setGoldValue} hint={isAr ? 'القيمة السوقية الحالية' : 'Current market value'} />
-          <NumberField label={L.stocks}     symbol={currMeta.symbol} value={stocks}     onChange={setStocks} hint={isAr ? 'أسهم وصناديق استثمار' : 'Stocks, funds, crypto'} />
+          <NumberField label={L.savings}    symbol={currMeta.symbol} value={savings}    onChange={setSavings} hint={tr('inline.bank_accounts_cash')} />
+          <NumberField label={L.goldValue}  symbol={currMeta.symbol} value={goldValue}  onChange={setGoldValue} hint={tr('inline.current_market_value')} />
+          <NumberField label={L.stocks}     symbol={currMeta.symbol} value={stocks}     onChange={setStocks} hint={tr('inline.stocks_funds_crypto')} />
           <NumberField label={L.otherAssets} symbol={currMeta.symbol} value={otherAssets} onChange={setOtherA} />
 
           {totalAssets > 0 && (
             <div className="rounded-xl bg-amber-50 border border-amber-100 px-4 py-3 space-y-1.5">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">{isAr ? 'إجمالي الأصول' : 'Total assets declared'}</span>
+                <span className="text-gray-500">{tr('inline.total_assets_declared')}</span>
                 <span className="font-bold text-amber-800">{fmt(totalAssets, currMeta.symbol)}</span>
               </div>
               <div className="pt-1">
                 <div className="flex justify-between text-xs text-gray-500 mb-1">
-                  <span>{isAr ? 'الأصول مقارنة بالنصاب' : 'Assets vs Nisab'}</span>
+                  <span>{tr('inline.assets_vs_nisab')}</span>
                   <span>{pct(wealthPct)}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -466,13 +479,13 @@ export default function SalaryZakatCalculator({ locale }: Props) {
           {/* Nisab status */}
           <div className="grid grid-cols-2 gap-3">
             <StatusCard
-              label={isAr ? 'زكاة الثروة' : 'Wealth Zakat'}
+              label={tr('inline.wealth_zakat')}
               meets={result.wealthMeetsNisab && hawlMet}
               meetsLabel={L.meetsNisab}
-              notLabel={!hawlMet ? (isAr ? 'الحول غير مكتمل' : 'Hawl not confirmed') : L.doesNot}
+              notLabel={!hawlMet ? (tr('inline.hawl_not_confirmed')) : L.doesNot}
             />
             <StatusCard
-              label={isAr ? 'زكاة الدخل' : 'Income Zakat'}
+              label={tr('inline.income_zakat')}
               meets={result.incomeMeetsNisab}
               meetsLabel={L.meetsNisab}
               notLabel={L.doesNot}
@@ -490,9 +503,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
                 { label: L.annualZakat, value: result.wealthZakat > 0 ? fmt(result.wealthZakat, result.symbol) : L.noZakat,
                   highlight: result.wealthZakat > 0 },
               ]}
-              note={isAr
-                ? 'زكاة الثروة الكلاسيكية: 2.5% من صافي الثروة الزكوية إذا بلغت النصاب وحال عليها الحول.'
-                : 'Classical wealth Zakat: 2.5% of net zakatable wealth if Nisab is met and Hawl (1 lunar year) has passed.'}
+              note={tr('inline.classical_wealth_zakat_2_5_of_net_zakata')}
             />
           )}
 
@@ -507,9 +518,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
                   highlight: result.incomeZakat > 0 },
                 { label: L.monthlyZakat,     value: fmt(result.monthlyIncomeZakat, result.symbol) },
               ]}
-              note={isAr
-                ? 'الزكاة على الدخل المعاصرة: 2.5% من صافي الدخل السنوي (بعد المصروفات الضرورية). مستندة لآراء علماء معاصرين كالشيخ يوسف القرضاوي. لا تشترط الحول.'
-                : 'Contemporary income Zakat: 2.5% on annual net income (after essential expenses). Based on scholars like Sheikh Yusuf al-Qaradawi. Hawl not strictly required under this view.'}
+              note={tr('inline.contemporary_income_zakat_2_5_on_annual_')}
             />
           )}
 
@@ -523,9 +532,7 @@ export default function SalaryZakatCalculator({ locale }: Props) {
           {/* Madhab note */}
           {madhab !== 'general' && (
             <div className="rounded-xl bg-purple-50 border border-purple-100 px-4 py-3 text-xs text-purple-700">
-              {isAr
-                ? `ملاحظة: هذه الحاسبة تعتمد على الأسس الفقهية العامة. قد تكون لمذهب ${MADHABS.find(m=>m.value===madhab)?.label} خصائص دقيقة مختلفة. استشر عالماً متخصصاً.`
-                : `Note: This calculator uses general Shariah principles. The ${MADHABS.find(m=>m.value===madhab)?.label} school may have nuanced differences. Consult a specialist scholar.`}
+              {tr('inline.note_this_calculator_uses_general_sharia', { p0: String(MADHABS.find(m=>m.value===madhab)?.label) })}
             </div>
           )}
 
