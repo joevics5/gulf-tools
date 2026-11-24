@@ -1,0 +1,35 @@
+{
+  "L": {
+    "title": "UAE Gratuity Calculator",
+    "disclaimer": "For guidance only. Not legal advice. Consult MOHRE or a professional for your specific case.",
+    "contractType": "Contract Type",
+    "limited": "Limited (Fixed-Term) — Current",
+    "unlimited": "Unlimited (Legacy/Indefinite)",
+    "endReason": "Reason for Contract End",
+    "resignation": "Resignation (by employee)",
+    "termination": "Termination (by employer)",
+    "basicSalary": "Basic Monthly Salary (AED)",
+    "startDate": "Employment Start Date",
+    "endDate": "Last Working Day / End Date",
+    "unpaidLeave": "Unpaid Leave Days (optional)",
+    "calculate": "Calculate Gratuity",
+    "reset": "Reset",
+    "sample": "Try sample (5 yrs, AED 10,000)",
+    "results": "End-of-Service Gratuity Result",
+    "totalGratuity": "Total Gratuity",
+    "breakdown": "Calculation Breakdown",
+    "servicePeriod": "Service Period",
+    "dailySalary": "Daily Salary",
+    "cappedNote": "Cap applied: gratuity cannot exceed 2 years' basic salary.",
+    "notEligible": "Service period is less than 1 year. No gratuity is payable.",
+    "limitedNote": "Limited contracts follow Federal Decree-Law No. 33 of 2021.",
+    "unlimitedNote": "Unlimited contracts follow legacy rules (Federal Law No. 8 of 1980). Resignation before 5 years results in reduced gratuity.",
+    "enterAmount": "Enter amount"
+  },
+  "inline": {
+    "please_enter_a_valid_basic_salary": "Please enter a valid basic salary.",
+    "please_enter_start_and_end_dates": "Please enter start and end dates.",
+    "end_date_must_be_after_start_date": "End date must be after start date.",
+    "source_federal_decree_law_no_33_of_2021_": "Source: Federal Decree-Law No. 33 of 2021 | Ministry of Human Resources & Emiratisation (MOHRE)"
+  }
+}

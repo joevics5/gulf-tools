@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -130,8 +131,8 @@ function calcGratuity(
   return { totalGratuity: gratuity, breakdown, serviceSummary, cappedAt2Years, eligible: true, currency: 'AED' }
 }
 
-export default function UAEGratuityCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function UAEGratuityCalculator(_props: Props) {
+  const tr = useTranslations('tool')
 
   const [basicSalary, setBasicSalary] = useState('')
   const [contractType, setContractType] = useState<ContractType>('limited')
@@ -145,11 +146,11 @@ export default function UAEGratuityCalculator({ locale }: Props) {
   function calculate() {
     setError('')
     const salary = parseFloat(basicSalary)
-    if (!salary || salary <= 0) { setError(isAr ? 'أدخل الراتب الأساسي' : 'Please enter a valid basic salary.'); return }
-    if (!startDate || !endDate) { setError(isAr ? 'أدخل تواريخ البدء والانتهاء' : 'Please enter start and end dates.'); return }
+    if (!salary || salary <= 0) { setError(tr('inline.please_enter_a_valid_basic_salary')); return }
+    if (!startDate || !endDate) { setError(tr('inline.please_enter_start_and_end_dates')); return }
     const start = new Date(startDate)
     const end = new Date(endDate)
-    if (end <= start) { setError(isAr ? 'يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء' : 'End date must be after start date.'); return }
+    if (end <= start) { setError(tr('inline.end_date_must_be_after_start_date')); return }
     const unpaid = parseInt(unpaidLeave) || 0
     setResult(calcGratuity(salary, start, end, contractType, endReason, unpaid))
   }
@@ -177,61 +178,33 @@ export default function UAEGratuityCalculator({ locale }: Props) {
     setError('')
   }
 
-  const L = isAr
-    ? {
-        title: 'حاسبة مكافأة نهاية الخدمة - الإمارات',
-        disclaimer: 'للإرشاد فقط. ليست استشارة قانونية. راجع وزارة الموارد البشرية أو متخصصاً لحالتك.',
-        contractType: 'نوع العقد',
-        limited: 'عقد محدد المدة (الحالي)',
-        unlimited: 'عقد غير محدد المدة (قديم)',
-        endReason: 'سبب انتهاء العقد',
-        resignation: 'استقالة (بقرار الموظف)',
-        termination: 'إنهاء من قِبل صاحب العمل',
-        basicSalary: 'الراتب الأساسي الشهري (درهم)',
-        startDate: 'تاريخ البدء',
-        endDate: 'تاريخ الانتهاء',
-        unpaidLeave: 'أيام الإجازة غير مدفوعة (اختياري)',
-        calculate: 'احسب المكافأة',
-        reset: 'إعادة تعيين',
-        sample: 'مثال (5 سنوات، 10,000)',
-        results: 'نتيجة مكافأة نهاية الخدمة',
-        totalGratuity: 'إجمالي مكافأة نهاية الخدمة',
-        breakdown: 'التفصيل',
-        servicePeriod: 'مدة الخدمة',
-        dailySalary: 'الأجر اليومي',
-        cappedNote: 'تم تطبيق الحد الأقصى: المكافأة لا تتجاوز راتبَين سنويَّين.',
-        notEligible: 'مدة الخدمة أقل من سنة. لا تستحق مكافأة.',
-        limitedNote: 'العقود المحددة المدة تخضع للقانون الاتحادي رقم 33 لسنة 2021.',
-        unlimitedNote: 'العقود غير محددة المدة تخضع لقواعد قانون العمل القديم (القانون الاتحادي رقم 8 لسنة 1980).',
-        enterAmount: 'أدخل المبلغ',
-      }
-    : {
-        title: 'UAE Gratuity Calculator',
-        disclaimer: 'For guidance only. Not legal advice. Consult MOHRE or a professional for your specific case.',
-        contractType: 'Contract Type',
-        limited: 'Limited (Fixed-Term) — Current',
-        unlimited: 'Unlimited (Legacy/Indefinite)',
-        endReason: 'Reason for Contract End',
-        resignation: 'Resignation (by employee)',
-        termination: 'Termination (by employer)',
-        basicSalary: 'Basic Monthly Salary (AED)',
-        startDate: 'Employment Start Date',
-        endDate: 'Last Working Day / End Date',
-        unpaidLeave: 'Unpaid Leave Days (optional)',
-        calculate: 'Calculate Gratuity',
-        reset: 'Reset',
-        sample: 'Try sample (5 yrs, AED 10,000)',
-        results: 'End-of-Service Gratuity Result',
-        totalGratuity: 'Total Gratuity',
-        breakdown: 'Calculation Breakdown',
-        servicePeriod: 'Service Period',
-        dailySalary: 'Daily Salary',
-        cappedNote: 'Cap applied: gratuity cannot exceed 2 years\' basic salary.',
-        notEligible: 'Service period is less than 1 year. No gratuity is payable.',
-        limitedNote: 'Limited contracts follow Federal Decree-Law No. 33 of 2021.',
-        unlimitedNote: 'Unlimited contracts follow legacy rules (Federal Law No. 8 of 1980). Resignation before 5 years results in reduced gratuity.',
-        enterAmount: 'Enter amount',
-      }
+  const L = {
+    title: tr('L.title'),
+    disclaimer: tr('L.disclaimer'),
+    contractType: tr('L.contractType'),
+    limited: tr('L.limited'),
+    unlimited: tr('L.unlimited'),
+    endReason: tr('L.endReason'),
+    resignation: tr('L.resignation'),
+    termination: tr('L.termination'),
+    basicSalary: tr('L.basicSalary'),
+    startDate: tr('L.startDate'),
+    endDate: tr('L.endDate'),
+    unpaidLeave: tr('L.unpaidLeave'),
+    calculate: tr('L.calculate'),
+    reset: tr('L.reset'),
+    sample: tr('L.sample'),
+    results: tr('L.results'),
+    totalGratuity: tr('L.totalGratuity'),
+    breakdown: tr('L.breakdown'),
+    servicePeriod: tr('L.servicePeriod'),
+    dailySalary: tr('L.dailySalary'),
+    cappedNote: tr('L.cappedNote'),
+    notEligible: tr('L.notEligible'),
+    limitedNote: tr('L.limitedNote'),
+    unlimitedNote: tr('L.unlimitedNote'),
+    enterAmount: tr('L.enterAmount'),
+  }
 
   return (
     <div className="space-y-6">
@@ -418,9 +391,7 @@ export default function UAEGratuityCalculator({ locale }: Props) {
 
       {/* Bottom disclaimer */}
       <p className="text-xs text-gray-500 text-center">
-        {isAr
-          ? 'المصدر: المرسوم الاتحادي بقانون رقم 33 لسنة 2021 | وزارة الموارد البشرية والتوطين'
-          : 'Source: Federal Decree-Law No. 33 of 2021 | Ministry of Human Resources & Emiratisation (MOHRE)'}
+        {tr('inline.source_federal_decree_law_no_33_of_2021_')}
       </p>
     </div>
   )

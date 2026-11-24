@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -40,8 +41,8 @@ function fmtH(n: number) {
   return `${parseFloat(n.toFixed(2))} hrs`
 }
 
-export default function QatarOvertimeCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function QatarOvertimeCalculator(_props: Props) {
+  const tl = useTranslations('tool')
 
   const [salary, setSalary] = useState('')
   const [ramadan, setRamadan] = useState(false)
@@ -57,13 +58,11 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
     setError('')
     const salaryVal = parseFloat(salary)
     if (!salaryVal || salaryVal <= 0) {
-      setError(isAr ? 'يرجى إدخال راتب أساسي صحيح' : 'Please enter a valid basic salary')
+      setError(tl('inline.please_enter_a_valid_basic_salary'))
       return
     }
     if (employeeType === 'managerial') {
-      setError(isAr
-        ? 'المديرون والمشرفون قد يُعفَون من قواعد العمل الإضافي وفق نظام العمل القطري.'
-        : 'Managers and supervisors may be exempt from overtime rules under Qatar Labour Law.')
+      setError(tl('inline.managers_and_supervisors_may_be_exempt_f'))
       return
     }
 
@@ -82,7 +81,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
     if (daytimeHrs > 0) {
       const amount = daytimeHrs * hourlyRate * 1.25
       breakdown.push({
-        category: isAr ? 'عمل إضافي نهاري' : 'Daytime Overtime',
+        category: tl('inline.daytime_overtime'),
         hours: daytimeHrs,
         multiplier: 1.25,
         rate: hourlyRate * 1.25,
@@ -92,7 +91,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
     if (nightHrs > 0) {
       const amount = nightHrs * hourlyRate * 1.50
       breakdown.push({
-        category: isAr ? 'عمل إضافي ليلي (9م–6ص)' : 'Night Overtime (9PM–6AM)',
+        category: tl('inline.night_overtime_9pm_6am'),
         hours: nightHrs,
         multiplier: 1.50,
         rate: hourlyRate * 1.50,
@@ -102,7 +101,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
     if (restdayHrs > 0) {
       const amount = restdayHrs * hourlyRate * 1.50
       breakdown.push({
-        category: isAr ? 'يوم راحة / عطلة رسمية' : 'Rest Day / Public Holiday',
+        category: tl('inline.rest_day_public_holiday'),
         hours: restdayHrs,
         multiplier: 1.50,
         rate: hourlyRate * 1.50,
@@ -129,7 +128,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
       ramadan,
       period,
     })
-  }, [salary, ot, period, ramadan, employeeType, standardHours, isAr])
+  }, [salary, ot, period, ramadan, employeeType, standardHours, tl])
 
   function reset() {
     setSalary('')
@@ -151,70 +150,40 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
     setError('')
   }
 
-  const lbl = isAr ? {
-    salary: 'الراتب الأساسي الشهري (ريال قطري)',
-    salaryHint: 'الراتب الأساسي فقط — لا يشمل البدلات أو المكافآت',
-    ramadan: 'وضع رمضان (6 ساعات يومياً)',
-    empType: 'نوع الموظف',
-    nonMgr: 'غير إداري / موظف عادي',
-    mgr: 'مديري / إشرافي',
-    period: 'فترة الحساب',
-    day: 'يوم واحد', week: 'أسبوع', month: 'شهر',
-    daytime: 'ساعات إضافية نهارية',
-    night: 'ساعات إضافية ليلية (9م–6ص)',
-    restday: 'ساعات يوم الراحة / العطلة الرسمية',
-    calculate: 'احسب',
-    reset: 'إعادة تعيين',
-    example: 'مثال',
-    results: 'نتائج العمل الإضافي',
-    hourlyRate: 'الأجر بالساعة',
-    totalOT: 'إجمالي مستحق الإضافي',
-    basicPeriod: 'الراتب الأساسي للفترة',
-    grandTotal: 'الإجمالي الكلي',
-    hours: 'الساعات',
-    multiplier: 'المضاعف',
-    rateHr: 'الأجر/ساعة',
-    amount: 'المبلغ',
-    maxWarn: '⚠️ إجمالي ساعات العمل يتجاوز الحد الأقصى اليومي (10 ساعات) وفق نظام العمل القطري.',
-    ramadanNote: '🕌 وضع رمضان: يوم العمل المعياري = 6 ساعات. يبدأ الإضافي مبكراً.',
-    disclaimer: 'تقديرات استرشادية وفق نظام العمل القطري (قانون رقم 14 لسنة 2004). تعتمد المستحقات الفعلية على عقدك ودورك ومزود العمل. استشر وزارة العمل أو متخصصاً قانونياً.',
-    noOT: 'لا يوجد عمل إضافي. أدخل الساعات الإضافية للحساب.',
-    category: 'النوع',
-    exemptWarn: '⚠️ المديرون والمشرفون قد يُعفَون من أحكام العمل الإضافي.',
-    enterHours: 'أدخل الساعات',
-    articleNote: 'وفق المادة 74 من نظام العمل القطري',
-  } : {
-    salary: 'Basic Monthly Salary (QAR)',
-    salaryHint: 'Basic salary only — excludes allowances, bonuses',
-    ramadan: 'Ramadan Mode (6 hrs/day standard)',
-    empType: 'Employee Type',
-    nonMgr: 'Non-managerial / Regular Employee',
-    mgr: 'Managerial / Supervisory',
-    period: 'Calculation Period',
-    day: 'Single Day', week: 'Week', month: 'Month',
-    daytime: 'Daytime Overtime Hours',
-    night: 'Night Overtime Hours (9PM–6AM)',
-    restday: 'Rest Day / Public Holiday Hours',
-    calculate: 'Calculate',
-    reset: 'Reset',
-    example: 'Load Example',
-    results: 'Overtime Results',
-    hourlyRate: 'Hourly Rate',
-    totalOT: 'Total Overtime Pay',
-    basicPeriod: 'Basic Pay for Period',
-    grandTotal: 'Grand Total',
-    hours: 'Hours',
-    multiplier: 'Rate',
-    rateHr: 'Rate/hr',
-    amount: 'Amount',
-    maxWarn: '⚠️ Total hours exceed the legal 10-hour daily maximum under Qatar Labour Law.',
-    ramadanNote: '🕌 Ramadan Mode: Standard day = 6 hours. Overtime starts earlier.',
-    disclaimer: 'Estimates based on Qatar Labour Law minimums (Law No. 14/2004). Actual entitlements depend on your contract, role, and employer policy. Consult the Ministry of Labour or a legal professional. Not applicable to managers/supervisors in many cases.',
-    noOT: 'No overtime hours entered. Add hours above to see your calculation.',
-    category: 'Category',
-    exemptWarn: '⚠️ Managers and supervisors may be exempt from overtime provisions.',
-    enterHours: 'e.g. 2',
-    articleNote: 'Per Article 74, Qatar Labour Law',
+  const lbl = {
+    salary: tl('lbl.salary'),
+    salaryHint: tl('lbl.salaryHint'),
+    ramadan: tl('lbl.ramadan'),
+    empType: tl('lbl.empType'),
+    nonMgr: tl('lbl.nonMgr'),
+    mgr: tl('lbl.mgr'),
+    period: tl('lbl.period'),
+    day: tl('lbl.day'),
+    week: tl('lbl.week'),
+    month: tl('lbl.month'),
+    daytime: tl('lbl.daytime'),
+    night: tl('lbl.night'),
+    restday: tl('lbl.restday'),
+    calculate: tl('lbl.calculate'),
+    reset: tl('lbl.reset'),
+    example: tl('lbl.example'),
+    results: tl('lbl.results'),
+    hourlyRate: tl('lbl.hourlyRate'),
+    totalOT: tl('lbl.totalOT'),
+    basicPeriod: tl('lbl.basicPeriod'),
+    grandTotal: tl('lbl.grandTotal'),
+    hours: tl('lbl.hours'),
+    multiplier: tl('lbl.multiplier'),
+    rateHr: tl('lbl.rateHr'),
+    amount: tl('lbl.amount'),
+    maxWarn: tl('lbl.maxWarn'),
+    ramadanNote: tl('lbl.ramadanNote'),
+    disclaimer: tl('lbl.disclaimer'),
+    noOT: tl('lbl.noOT'),
+    category: tl('lbl.category'),
+    exemptWarn: tl('lbl.exemptWarn'),
+    enterHours: tl('lbl.enterHours'),
+    articleNote: tl('lbl.articleNote'),
   }
 
   const periods: { value: Period; label: string }[] = [
@@ -358,9 +327,9 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
       {(totalH > 0 || parseFloat(salary) > 0) && (
         <div>
           <div className="flex justify-between text-xs text-gray-500 mb-1">
-            <span>{isAr ? `مجموع ساعات اليوم: ${usedH.toFixed(1)} / 10` : `Daily hours: ${usedH.toFixed(1)} / 10 max`}</span>
+            <span>{tl('inline.daily_hours_10_max', { p0: String(usedH.toFixed(1)) })}</span>
             <span className={usedH > 10 ? 'text-red-500 font-semibold' : 'text-gray-500'}>
-              {usedH > 10 ? (isAr ? 'تجاوز الحد' : 'Exceeds limit') : `${(10 - usedH).toFixed(1)} ${isAr ? 'متبقية' : 'remaining'}`}
+              {usedH > 10 ? (tl('inline.exceeds_limit')) : `${(10 - usedH).toFixed(1)} ${tl('inline.remaining')}`}
             </span>
           </div>
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
@@ -466,7 +435,7 @@ export default function QatarOvertimeCalculator({ locale }: Props) {
 
           {/* Summary rows */}
           <div className="space-y-3 border-t border-gray-200 pt-4">
-            <SRow label={isAr ? 'الأجر بالساعة الأساسية' : 'Base Hourly Rate'} value={`QAR ${result.hourlyRate.toFixed(2)}`} />
+            <SRow label={tl('inline.base_hourly_rate')} value={`QAR ${result.hourlyRate.toFixed(2)}`} />
             <SRow label={lbl.basicPeriod} value={fmt(result.basicForPeriod)} />
             <SRow label={lbl.totalOT} value={fmt(result.totalOTPay)} />
             <SRow label={lbl.grandTotal} value={fmt(result.grandTotal)} highlight />

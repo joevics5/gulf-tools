@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 type Mode = 'sick' | 'maternity'
@@ -88,8 +89,8 @@ function calcMaternity(basicSalary: number, extraUnpaidDays: number): MaternityR
   return { dailyRate, fullPayDays, halfPayDays, fullPayAmount, halfPayAmount, totalPayable, extraUnpaidDays: Math.min(extraUnpaidDays, 45), totalLeave }
 }
 
-export default function UAESickLeaveCalculator({ locale }: Props) {
-  const isAr = locale === 'ar'
+export default function UAESickLeaveCalculator(_props: Props) {
+  const tr = useTranslations('tool')
 
   const [mode, setMode] = useState<Mode>('sick')
   const [basicSalary, setBasicSalary] = useState('')
@@ -105,11 +106,11 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
   function calculate() {
     const errs: string[] = []
     const salary = parseFloat(basicSalary)
-    if (!salary || salary <= 0) errs.push(isAr ? 'أدخل راتباً أساسياً صحيحاً' : 'Enter a valid basic salary')
+    if (!salary || salary <= 0) errs.push(tr('inline.enter_a_valid_basic_salary'))
 
     if (mode === 'sick') {
       const days = parseFloat(sickDays)
-      if (!days || days <= 0) errs.push(isAr ? 'أدخل عدد أيام الإجازة المرضية' : 'Enter the number of sick leave days')
+      if (!days || days <= 0) errs.push(tr('inline.enter_the_number_of_sick_leave_days'))
       if (errs.length) { setErrors(errs); return }
       setErrors([])
       const used = parseFloat(usedDays) || 0
@@ -133,72 +134,42 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
   const inputClass = "w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent transition text-sm"
   const labelClass = "block text-sm font-semibold text-gray-700 mb-1.5"
 
-  const T = isAr ? {
-    modeSick: 'إجازة مرضية',
-    modeMat: 'إجازة أمومة',
-    salary: 'الراتب الأساسي الشهري (درهم)',
-    probation: 'حالة فترة التجربة',
-    probCompleted: 'اجتاز فترة التجربة',
-    probIn: 'في فترة التجربة',
-    sickDays: 'أيام الإجازة المرضية المطلوبة',
-    usedDays: 'أيام الإجازة المرضية المستخدمة هذا العام',
-    workInjury: 'إصابة عمل (قواعد مختلفة)',
-    extraUnpaid: 'أيام إجازة إضافية بدون راتب (إصابة ما بعد الولادة)',
-    calc: 'احسب',
-    reset: 'إعادة تعيين',
-    results: 'ملخص الإجازة المرضية',
-    matResults: 'ملخص إجازة الأمومة',
-    dailyRate: 'معدل الراتب اليومي',
-    fullPay: 'أيام الراتب الكامل (١-١٥)',
-    halfPay: 'أيام نصف الراتب (١٦-٤٥)',
-    unpaidDays: 'أيام بدون راتب (٤٦-٩٠)',
-    totalPayable: 'إجمالي المبلغ المستحق',
-    remaining: 'الاستحقاق المتبقي',
-    enterAmount: 'أدخل المبلغ',
-    disclaimer: 'للأغراض التوضيحية فقط. بناءً على المادة ٣١ من المرسوم الاتحادي بقانون رقم ٣٣ لسنة ٢٠٢١. ليس نصيحة قانونية. استشر وزارة الموارد البشرية والتوطين.',
-    warnProbation: 'لا يحق لك الحصول على إجازة مرضية مدفوعة أثناء فترة التجربة. يجوز لصاحب العمل منح إجازة غير مدفوعة بتقرير طبي.',
-    warnExceeds: 'تحذير: إجمالي أيام الإجازة المرضية يتجاوز الحد الأقصى البالغ ٩٠ يوماً في السنة. قد يُعدّ الغياب الزائد غياباً غير مصرح به.',
-    warnInjury: 'ملاحظة: تطبق قواعد مختلفة على إصابات العمل. تواصل مع وزارة الموارد البشرية والتوطين.',
-    noteReport: 'يجب إخطار صاحب العمل خلال ٣ أيام عمل وتقديم تقرير طبي معتمد.',
-    matNote: 'تشمل إجازة الأمومة ٤٥ يوماً بالراتب الكامل + ١٥ يوماً بنصف الراتب. يمكن البدء قبل الولادة بـ٤ أسابيع.',
-    matExtra: 'إجازة إضافية غير مدفوعة (حتى ٤٥ يوماً) متاحة لأسباب صحية مرتبطة بالحمل أو الولادة.',
-    totalLeave: 'إجمالي الإجازة',
-  } : {
-    modeSick: 'Sick Leave',
-    modeMat: 'Maternity Leave',
-    salary: 'Monthly Basic Salary (AED)',
-    probation: 'Probation Status',
-    probCompleted: 'Probation Completed',
-    probIn: 'Still in Probation',
-    sickDays: 'Sick Leave Days Requested',
-    usedDays: 'Sick Days Already Used This Year',
-    workInjury: 'Work-related injury (different rules)',
-    extraUnpaid: 'Additional Unpaid Days (post-birth illness)',
-    calc: 'Calculate',
-    reset: 'Reset',
-    results: 'Sick Leave Summary',
-    matResults: 'Maternity Leave Summary',
-    dailyRate: 'Daily Basic Rate',
-    fullPay: 'Full Pay Days (Days 1–15)',
-    halfPay: 'Half Pay Days (Days 16–45)',
-    unpaidDays: 'Unpaid Days (Days 46–90)',
-    totalPayable: 'Total Amount Payable',
-    remaining: 'Remaining Entitlement This Year',
-    enterAmount: 'Enter amount',
-    disclaimer: 'For informational purposes only. Based on Article 31, Federal Decree-Law No. 33 of 2021. Not legal advice. Consult MOHRE or a qualified legal professional.',
-    warnProbation: 'No paid sick leave entitlement during probation. Employer may grant unpaid leave on submission of a medical report.',
-    warnExceeds: 'Warning: Total sick days exceed the 90-day annual maximum. Excess absence may be treated as unauthorized absence.',
-    warnInjury: 'Note: Work-related injuries are subject to different rules under UAE law. Contact MOHRE for guidance.',
-    noteReport: 'You must notify your employer within 3 business days and submit an approved medical report.',
-    matNote: 'Maternity leave is 45 days at full pay + 15 days at half pay. Leave may begin up to 4 weeks before the expected birth date.',
-    matExtra: 'Additional unpaid leave (up to 45 days) is available for pregnancy/childbirth-related illness.',
-    totalLeave: 'Total Leave',
+  const T = {
+    modeSick: tr('T.modeSick'),
+    modeMat: tr('T.modeMat'),
+    salary: tr('T.salary'),
+    probation: tr('T.probation'),
+    probCompleted: tr('T.probCompleted'),
+    probIn: tr('T.probIn'),
+    sickDays: tr('T.sickDays'),
+    usedDays: tr('T.usedDays'),
+    workInjury: tr('T.workInjury'),
+    extraUnpaid: tr('T.extraUnpaid'),
+    calc: tr('T.calc'),
+    reset: tr('T.reset'),
+    results: tr('T.results'),
+    matResults: tr('T.matResults'),
+    dailyRate: tr('T.dailyRate'),
+    fullPay: tr('T.fullPay'),
+    halfPay: tr('T.halfPay'),
+    unpaidDays: tr('T.unpaidDays'),
+    totalPayable: tr('T.totalPayable'),
+    remaining: tr('T.remaining'),
+    enterAmount: tr('T.enterAmount'),
+    disclaimer: tr('T.disclaimer'),
+    warnProbation: tr('T.warnProbation'),
+    warnExceeds: tr('T.warnExceeds'),
+    warnInjury: tr('T.warnInjury'),
+    noteReport: tr('T.noteReport'),
+    matNote: tr('T.matNote'),
+    matExtra: tr('T.matExtra'),
+    totalLeave: tr('T.totalLeave'),
   }
 
   const BAR_SEGMENTS = [
-    { label: isAr ? 'كامل' : 'Full', days: 15, color: 'bg-rose-500' },
-    { label: isAr ? 'نصف' : 'Half', days: 30, color: 'bg-amber-400' },
-    { label: isAr ? 'بلا أجر' : 'Unpaid', days: 45, color: 'bg-gray-200' },
+    { label: tr('inline.full'), days: 15, color: 'bg-rose-500' },
+    { label: tr('inline.half'), days: 30, color: 'bg-amber-400' },
+    { label: tr('inline.unpaid'), days: 45, color: 'bg-gray-200' },
   ]
 
   return (
@@ -319,7 +290,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
           {!sickResult.inProbation && (
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                {isAr ? 'خريطة استخدام الـ ٩٠ يوماً' : '90-Day Entitlement Map'}
+                {tr('inline.90_day_entitlement_map')}
               </div>
               <div className="flex rounded-lg overflow-hidden h-6 text-xs">
                 {BAR_SEGMENTS.map(seg => (
@@ -339,7 +310,7 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
           {/* Breakdown rows */}
           {!sickResult.inProbation && (
             <div className="space-y-3">
-              <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{isAr ? 'تفاصيل الأيام والمبالغ' : 'Day & Amount Breakdown'}</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{tr('inline.day_amount_breakdown')}</div>
 
               <PayRow
                 label={T.fullPay}
@@ -360,18 +331,18 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
                 days={sickResult.unpaidDays}
                 amount={0}
                 color="text-gray-500"
-                formula={isAr ? 'لا يوجد استحقاق' : 'No pay'}
+                formula={tr('inline.no_pay')}
               />
 
               <div className="border-t border-gray-200 pt-3 space-y-2">
                 <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{T.remaining}</div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{isAr ? 'أيام الراتب الكامل المتبقية' : 'Full pay days left'}</span>
-                  <span className="font-semibold text-gray-900">{sickResult.remainingFull} {isAr ? 'يوم' : 'days'}</span>
+                  <span className="text-gray-600">{tr('inline.full_pay_days_left')}</span>
+                  <span className="font-semibold text-gray-900">{sickResult.remainingFull} {tr('inline.days')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{isAr ? 'أيام نصف الراتب المتبقية' : 'Half pay days left'}</span>
-                  <span className="font-semibold text-gray-900">{sickResult.remainingHalf} {isAr ? 'يوم' : 'days'}</span>
+                  <span className="text-gray-600">{tr('inline.half_pay_days_left')}</span>
+                  <span className="font-semibold text-gray-900">{sickResult.remainingHalf} {tr('inline.days')}</span>
                 </div>
               </div>
             </div>
@@ -391,21 +362,21 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
           <div className="bg-rose-600 rounded-xl p-5 text-white">
             <div className="text-sm opacity-80 mb-1">{T.totalPayable}</div>
             <div className="text-3xl font-black">{formatAED(maternityResult.totalPayable)}</div>
-            <div className="text-sm opacity-70 mt-1">{T.totalLeave}: {maternityResult.totalLeave} {isAr ? 'يوم' : 'days'}</div>
+            <div className="text-sm opacity-70 mt-1">{T.totalLeave}: {maternityResult.totalLeave} {tr('inline.days')}</div>
           </div>
 
           <div className="space-y-3">
-            <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{isAr ? 'تفاصيل الأيام والمبالغ' : 'Day & Amount Breakdown'}</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-gray-500">{tr('inline.day_amount_breakdown')}</div>
 
             <PayRow
-              label={isAr ? 'أيام الراتب الكامل (١-٤٥)' : 'Full Pay Days (1–45)'}
+              label={tr('inline.full_pay_days_1_45')}
               days={maternityResult.fullPayDays}
               amount={maternityResult.fullPayAmount}
               color="text-rose-600"
               formula={`${formatAED(maternityResult.dailyRate)}/day × 45 days × 100%`}
             />
             <PayRow
-              label={isAr ? 'أيام نصف الراتب (٤٦-٦٠)' : 'Half Pay Days (46–60)'}
+              label={tr('inline.half_pay_days_46_60')}
               days={maternityResult.halfPayDays}
               amount={maternityResult.halfPayAmount}
               color="text-amber-500"
@@ -413,11 +384,11 @@ export default function UAESickLeaveCalculator({ locale }: Props) {
             />
             {maternityResult.extraUnpaidDays > 0 && (
               <PayRow
-                label={isAr ? 'إجازة إضافية بدون راتب' : 'Extra Unpaid Leave'}
+                label={tr('inline.extra_unpaid_leave')}
                 days={maternityResult.extraUnpaidDays}
                 amount={0}
                 color="text-gray-500"
-                formula={isAr ? 'بموافقة صاحب العمل — حتى ٤٥ يوماً' : 'Employer approval required — up to 45 days'}
+                formula={tr('inline.employer_approval_required_up_to_45_days')}
               />
             )}
           </div>
