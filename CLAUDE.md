@@ -21,6 +21,15 @@ Standards that are cheap to follow now and expensive to retrofit across 70+ tool
 - Tool SEO copy (title, description, FAQ, article) comes from the Supabase
   `tool_translations` table, not from the JSON files.
 
+## Launch scope: UAE tools are unpublished
+
+The 40 UAE-specific tools are commented out in `lib/registry/tools.ts` (marked
+`UNPUBLISHED (UAE launch deferred)`) and in the `loadToolComponent` switch. Their
+components and `messages/` files are kept. Until UAE launches, build tools for Kuwait,
+Bahrain, Oman, Qatar and Egypt. To publish a UAE tool, uncomment both its registry
+entry and its `case`. Registry entries drive the sitemap, hubs and static params, so
+nothing else needs changing.
+
 ## Adding a tool
 
 1. Add the entry to `lib/registry/tools.ts`.
