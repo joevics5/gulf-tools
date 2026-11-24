@@ -1,0 +1,28 @@
+{
+  "inline": {
+    "please_enter_a_valid_basic_monthly_salar": "أدخل الراتب الأساسي الشهري.",
+    "please_enter_both_start_and_end_dates": "أدخل تاريخَي البدء والانتهاء.",
+    "end_date_must_be_after_start_date": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء.",
+    "estimates_only_final_amounts_depend_on_y": "هذه الحاسبة تقديرية فقط. المبالغ النهائية تعتمد على عقد العمل وسياسات المنطقة الحرة المختصة. ليست استشارة قانونية. تحقق من سلطة منطقتك الحرة أو وزارة الموارد البشرية.",
+    "free_zone": "المنطقة الحرة",
+    "difc_operates_the_dews_workplace_savings": "DIFC يطبّق نظام DEWS (ادخار نهاية الخدمة) منذ فبراير 2020. تُحسب المساهمات شهرياً بنسبة 5.83% (السنوات 1–5) ثم 8.33% بعد ذلك، بدلاً من مكافأة مقطوعة.",
+    "basic_monthly_salary_aed": "الراتب الأساسي الشهري (درهم)",
+    "basic_salary_only_exclude_housing_transp": "الراتب الأساسي فقط — لا تشمل البدلات والعمولات وبدل الإسكان",
+    "e_g_12_000": "أدخل المبلغ",
+    "employment_start_date": "تاريخ بدء الخدمة",
+    "last_working_day_end_date": "تاريخ آخر يوم عمل",
+    "reason_for_leaving": "سبب انتهاء الخدمة",
+    "deductions_amounts_owed_optional": "خصومات / مستحقات للشركة (اختياري)",
+    "calculate_gratuity": "احسب المكافأة",
+    "try_sample_6_3_yrs_aed_12_000": "مثال (6.3 سنة، 12,000)",
+    "reset": "إعادة تعيين",
+    "gratuity_result": "نتيجة المكافأة",
+    "federal_law": "القانون الاتحادي",
+    "estimated_dews_contributions": "إجمالي مساهمات DEWS المقدّرة",
+    "estimated_end_of_service_gratuity": "إجمالي مكافأة نهاية الخدمة المقدّرة",
+    "cap_applied_cannot_exceed_2_years_basic_": "طُبِّق الحد الأقصى: لا تتجاوز المكافأة سنتَي راتب أساسي.",
+    "breakdown": "التفصيل",
+    "gratuity_must_be_paid_within_14_days_of_": "⏱ يجب سداد المكافأة خلال 14 يوماً من تاريخ انتهاء العقد وفق القانون الاتحادي.",
+    "source_federal_decree_law_no_33_of_2021_": "المصدر: المرسوم الاتحادي بقانون رقم 33 لسنة 2021 | قواعد DIFC للتوظيف 2019"
+  }
+}

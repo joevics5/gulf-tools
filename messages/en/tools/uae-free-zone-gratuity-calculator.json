@@ -1,0 +1,28 @@
+{
+  "inline": {
+    "please_enter_a_valid_basic_monthly_salar": "Please enter a valid basic monthly salary.",
+    "please_enter_both_start_and_end_dates": "Please enter both start and end dates.",
+    "end_date_must_be_after_start_date": "End date must be after start date.",
+    "estimates_only_final_amounts_depend_on_y": "Estimates only. Final amounts depend on your employment contract and free zone authority policies. Not legal advice. Verify with your free zone authority (e.g., JAFZA Labour Affairs) or MOHRE.",
+    "free_zone": "Free Zone",
+    "difc_operates_the_dews_workplace_savings": "DIFC operates the DEWS (Workplace Savings) scheme since Feb 2020. Contributions are calculated monthly at 5.83% (years 1–5) then 8.33% — replacing the traditional lump-sum gratuity.",
+    "basic_monthly_salary_aed": "Basic Monthly Salary (AED)",
+    "basic_salary_only_exclude_housing_transp": "Basic salary only — exclude housing, transport, commissions, allowances",
+    "e_g_12_000": "e.g. 12,000",
+    "employment_start_date": "Employment Start Date",
+    "last_working_day_end_date": "Last Working Day / End Date",
+    "reason_for_leaving": "Reason for Leaving",
+    "deductions_amounts_owed_optional": "Deductions / Amounts Owed (optional)",
+    "calculate_gratuity": "Calculate Gratuity",
+    "try_sample_6_3_yrs_aed_12_000": "Try sample (6.3 yrs, AED 12,000)",
+    "reset": "Reset",
+    "gratuity_result": "Gratuity Result",
+    "federal_law": "Federal Law",
+    "estimated_dews_contributions": "Estimated DEWS Contributions",
+    "estimated_end_of_service_gratuity": "Estimated End-of-Service Gratuity",
+    "cap_applied_cannot_exceed_2_years_basic_": "Cap applied: cannot exceed 2 years' basic salary.",
+    "breakdown": "Breakdown",
+    "gratuity_must_be_paid_within_14_days_of_": "⏱ Gratuity must be paid within 14 days of contract end under UAE federal law.",
+    "source_federal_decree_law_no_33_of_2021_": "Source: Federal Decree-Law No. 33 of 2021 | DIFC Employment Law 2019 (as amended)"
+  }
+}

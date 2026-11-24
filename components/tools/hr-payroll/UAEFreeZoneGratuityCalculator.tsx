@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -218,6 +219,7 @@ const LEAVE_REASONS: { value: LeaveReason; en: string; ar: string }[] = [
 
 export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   const [freeZone, setFreeZone] = useState<FreeZone>('standard')
   const [basicSalary, setBasicSalary] = useState('')
@@ -232,17 +234,17 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
     setError('')
     const salary = parseFloat(basicSalary)
     if (!salary || salary <= 0) {
-      setError(isAr ? 'أدخل الراتب الأساسي الشهري.' : 'Please enter a valid basic monthly salary.')
+      setError(tr('inline.please_enter_a_valid_basic_monthly_salar'))
       return
     }
     if (!startDate || !endDate) {
-      setError(isAr ? 'أدخل تاريخَي البدء والانتهاء.' : 'Please enter both start and end dates.')
+      setError(tr('inline.please_enter_both_start_and_end_dates'))
       return
     }
     const start = new Date(startDate)
     const end = new Date(endDate)
     if (end <= start) {
-      setError(isAr ? 'يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء.' : 'End date must be after start date.')
+      setError(tr('inline.end_date_must_be_after_start_date'))
       return
     }
     const ded = parseFloat(deductions) || 0
@@ -281,16 +283,14 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
       <div className="flex gap-2 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
         <span className="text-lg leading-none">⚠️</span>
         <p>
-          {isAr
-            ? 'هذه الحاسبة تقديرية فقط. المبالغ النهائية تعتمد على عقد العمل وسياسات المنطقة الحرة المختصة. ليست استشارة قانونية. تحقق من سلطة منطقتك الحرة أو وزارة الموارد البشرية.'
-            : 'Estimates only. Final amounts depend on your employment contract and free zone authority policies. Not legal advice. Verify with your free zone authority (e.g., JAFZA Labour Affairs) or MOHRE.'}
+          {tr('inline.estimates_only_final_amounts_depend_on_y')}
         </p>
       </div>
 
       {/* Free Zone Selector */}
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          {isAr ? 'المنطقة الحرة' : 'Free Zone'}
+          {tr('inline.free_zone')}
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {FREE_ZONES.map(fz => (
@@ -317,9 +317,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
 
         {isDIFC && (
           <div className="mt-2 bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 text-xs text-blue-700">
-            {isAr
-              ? 'DIFC يطبّق نظام DEWS (ادخار نهاية الخدمة) منذ فبراير 2020. تُحسب المساهمات شهرياً بنسبة 5.83% (السنوات 1–5) ثم 8.33% بعد ذلك، بدلاً من مكافأة مقطوعة.'
-              : 'DIFC operates the DEWS (Workplace Savings) scheme since Feb 2020. Contributions are calculated monthly at 5.83% (years 1–5) then 8.33% — replacing the traditional lump-sum gratuity.'}
+            {tr('inline.difc_operates_the_dews_workplace_savings')}
           </div>
         )}
       </div>
@@ -330,10 +328,10 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         {/* Basic Salary */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'الراتب الأساسي الشهري (درهم)' : 'Basic Monthly Salary (AED)'}
+            {tr('inline.basic_monthly_salary_aed')}
           </label>
           <p className="text-xs text-gray-500 mb-1.5">
-            {isAr ? 'الراتب الأساسي فقط — لا تشمل البدلات والعمولات وبدل الإسكان' : 'Basic salary only — exclude housing, transport, commissions, allowances'}
+            {tr('inline.basic_salary_only_exclude_housing_transp')}
           </p>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
@@ -342,7 +340,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
               min="0"
               value={basicSalary}
               onChange={e => setBasicSalary(e.target.value)}
-              placeholder={isAr ? 'أدخل المبلغ' : 'e.g. 12,000'}
+              placeholder={tr('inline.e_g_12_000')}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -351,7 +349,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         {/* Start Date */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'تاريخ بدء الخدمة' : 'Employment Start Date'}
+            {tr('inline.employment_start_date')}
           </label>
           <input
             type="date"
@@ -364,7 +362,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         {/* End Date */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'تاريخ آخر يوم عمل' : 'Last Working Day / End Date'}
+            {tr('inline.last_working_day_end_date')}
           </label>
           <input
             type="date"
@@ -377,7 +375,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         {/* Leave Reason */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'سبب انتهاء الخدمة' : 'Reason for Leaving'}
+            {tr('inline.reason_for_leaving')}
           </label>
           <select
             value={leaveReason}
@@ -393,7 +391,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         {/* Deductions */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'خصومات / مستحقات للشركة (اختياري)' : 'Deductions / Amounts Owed (optional)'}
+            {tr('inline.deductions_amounts_owed_optional')}
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
@@ -420,19 +418,19 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {isAr ? 'احسب المكافأة' : 'Calculate Gratuity'}
+          {tr('inline.calculate_gratuity')}
         </button>
         <button
           onClick={loadSample}
           className="px-4 py-3 border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-semibold rounded-xl transition-colors text-sm"
         >
-          {isAr ? 'مثال (6.3 سنة، 12,000)' : 'Try sample (6.3 yrs, AED 12,000)'}
+          {tr('inline.try_sample_6_3_yrs_aed_12_000')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {isAr ? 'إعادة تعيين' : 'Reset'}
+          {tr('inline.reset')}
         </button>
       </div>
 
@@ -441,10 +439,10 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
           <div className="flex items-center justify-between">
             <h3 className="font-bold text-gray-900">
-              {isAr ? 'نتيجة المكافأة' : 'Gratuity Result'}
+              {tr('inline.gratuity_result')}
             </h3>
             <span className="text-xs bg-gray-200 text-gray-600 px-2.5 py-1 rounded-full font-medium">
-              {result.mode === 'difc' ? 'DIFC / DEWS' : (isAr ? 'القانون الاتحادي' : 'Federal Law')}
+              {result.mode === 'difc' ? 'DIFC / DEWS' : (tr('inline.federal_law'))}
             </span>
           </div>
 
@@ -458,13 +456,13 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
               <div className="bg-emerald-600 rounded-xl p-5 text-white">
                 <div className="text-sm opacity-80 mb-1">
                   {isDIFC
-                    ? (isAr ? 'إجمالي مساهمات DEWS المقدّرة' : 'Estimated DEWS Contributions')
-                    : (isAr ? 'إجمالي مكافأة نهاية الخدمة المقدّرة' : 'Estimated End-of-Service Gratuity')}
+                    ? (tr('inline.estimated_dews_contributions'))
+                    : (tr('inline.estimated_end_of_service_gratuity'))}
                 </div>
                 <div className="text-3xl font-black">{fmt(result.netGratuity)}</div>
                 {result.cappedAt2Years && (
                   <div className="mt-2 text-xs bg-white/20 rounded-lg px-3 py-1.5">
-                    {isAr ? 'طُبِّق الحد الأقصى: لا تتجاوز المكافأة سنتَي راتب أساسي.' : 'Cap applied: cannot exceed 2 years\' basic salary.'}
+                    {tr('inline.cap_applied_cannot_exceed_2_years_basic_')}
                   </div>
                 )}
               </div>
@@ -477,7 +475,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
               {/* Breakdown */}
               <div className="space-y-0">
                 <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">
-                  {isAr ? 'التفصيل' : 'Breakdown'}
+                  {tr('inline.breakdown')}
                 </p>
                 {result.breakdown.map((row, i) => (
                   <div
@@ -496,9 +494,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
 
               {/* Payment timeline note */}
               <div className="bg-gray-100 rounded-xl px-4 py-3 text-xs text-gray-500">
-                {isAr
-                  ? '⏱ يجب سداد المكافأة خلال 14 يوماً من تاريخ انتهاء العقد وفق القانون الاتحادي.'
-                  : '⏱ Gratuity must be paid within 14 days of contract end under UAE federal law.'}
+                {tr('inline.gratuity_must_be_paid_within_14_days_of_')}
               </div>
             </>
           )}
@@ -520,9 +516,7 @@ export default function UAEFreeZoneGratuityCalculator({ locale }: Props) {
       </div>
 
       <p className="text-xs text-gray-500 text-center">
-        {isAr
-          ? 'المصدر: المرسوم الاتحادي بقانون رقم 33 لسنة 2021 | قواعد DIFC للتوظيف 2019'
-          : 'Source: Federal Decree-Law No. 33 of 2021 | DIFC Employment Law 2019 (as amended)'}
+        {tr('inline.source_federal_decree_law_no_33_of_2021_')}
       </p>
     </div>
   )

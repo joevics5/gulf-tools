@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 // ─── Hijri Month Data ───────────────────────────────────────────────────────
 const HIJRI_MONTHS_EN = [
@@ -126,6 +128,7 @@ const PRESETS = [
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function HijriGregorianConverter({ locale = 'en' }: { locale?: string }) {
   const isAr = locale === 'ar'
+  const tl = useTranslations('tool')
 
   const today = new Date()
   const todayH = gregorianToHijri(today.getFullYear(), today.getMonth() + 1, today.getDate())
@@ -152,7 +155,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
     setGError('')
     if (!gYear || !gMonth || !gDay) return
     if (gMonth < 1 || gMonth > 12 || gDay < 1 || gDay > 31) {
-      setGError(isAr ? 'تاريخ غير صحيح' : 'Invalid date')
+      setGError(tl('inline.invalid_date'))
       setGResult(null)
       return
     }
@@ -160,22 +163,22 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
       const result = gregorianToHijri(gYear, gMonth, gDay)
       setGResult(result)
     } catch {
-      setGError(isAr ? 'خطأ في التحويل' : 'Conversion error')
+      setGError(tl('inline.conversion_error'))
       setGResult(null)
     }
-  }, [gYear, gMonth, gDay, isAr])
+  }, [gYear, gMonth, gDay, tl])
 
   // Convert H→G
   const convertHtoG = useCallback(() => {
     setHError('')
     const maxDay = hijriDaysInMonth(hMonth)
     if (hDay > maxDay) {
-      setHError(isAr ? `شهر ${HIJRI_MONTHS_AR[hMonth - 1]} يحتوي على ${maxDay} أيام فقط` : `${HIJRI_MONTHS_EN[hMonth - 1]} has only ${maxDay} days`)
+      setHError(tl('inline.has_only_days', { p0: String(HIJRI_MONTHS_AR[hMonth - 1]), p1: String(maxDay), p2: String(HIJRI_MONTHS_EN[hMonth - 1]) }))
       setHResult(null)
       return
     }
     if (hYear < 1 || hMonth < 1 || hMonth > 12 || hDay < 1) {
-      setHError(isAr ? 'تاريخ غير صحيح' : 'Invalid date')
+      setHError(tl('inline.invalid_date'))
       setHResult(null)
       return
     }
@@ -183,10 +186,10 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
       const result = hijriToGregorian(hYear, hMonth, hDay)
       setHResult(result)
     } catch {
-      setHError(isAr ? 'خطأ في التحويل' : 'Conversion error')
+      setHError(tl('inline.conversion_error'))
       setHResult(null)
     }
-  }, [hYear, hMonth, hDay, isAr])
+  }, [hYear, hMonth, hDay, tl])
 
   useEffect(() => { convertGtoH() }, [convertGtoH])
   useEffect(() => { convertHtoG() }, [convertHtoG])
@@ -218,7 +221,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
   const hEvent = ISLAMIC_EVENTS[hEventKey]
 
   return (
-    <div className="hgc-root" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="hgc-root" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
       <style>{`
         .hgc-root {
           font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
@@ -491,14 +494,14 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
       {/* Today bar */}
       <div className="hgc-today-bar">
         <div>
-          <div className="hgc-today-label">{isAr ? 'التاريخ الميلادي اليوم' : 'Today — Gregorian'}</div>
+          <div className="hgc-today-label">{tl('inline.today_gregorian')}</div>
           <div className="hgc-today-date">
             {weekdays[today.getDay()]}, {formatGregorian(today.getFullYear(), today.getMonth() + 1, today.getDate())}
           </div>
         </div>
         <div style={{ fontSize: 22, opacity: 0.5 }}>⇄</div>
         <div style={{ textAlign: isAr ? 'left' : 'right' }}>
-          <div className="hgc-today-label">{isAr ? 'التاريخ الهجري اليوم' : 'Today — Hijri'}</div>
+          <div className="hgc-today-label">{tl('inline.today_hijri')}</div>
           <div className="hgc-today-date">
             {weekdays[today.getDay()]}, {padTwo(todayH.day)} {hijriMonths[todayH.month - 1]} {todayH.year}
           </div>
@@ -508,7 +511,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
       {/* Presets */}
       <div className="hgc-presets">
         <span style={{ fontSize: 12, color: '#6b7280', alignSelf: 'center', marginInlineEnd: 6 }}>
-          {isAr ? 'تواريخ سريعة:' : 'Quick dates:'}
+          {tl('inline.quick_dates')}
         </span>
         {PRESETS.map((p, i) => (
           <button
@@ -526,7 +529,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
         {/* Gregorian → Hijri */}
         <div className="hgc-panel">
           <div className="hgc-panel-title">
-            {isAr ? 'ميلادي ← هجري' : 'Gregorian → Hijri'}
+            {tl('inline.gregorian_hijri')}
           </div>
 
           {/* Native date picker */}
@@ -541,22 +544,22 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
           />
 
           <div style={{ textAlign: 'center', fontSize: 11, color: '#6b7280', margin: '4px 0 14px' }}>
-            {isAr ? 'أو أدخل يدوياً' : 'or enter manually'}
+            {tl('inline.or_enter_manually')}
           </div>
 
           <div className="hgc-field-group">
             <div className="hgc-field">
-              <label className="hgc-label">{isAr ? 'اليوم' : 'Day'}</label>
+              <label className="hgc-label">{tl('inline.day')}</label>
               <input className="hgc-input" type="number" min={1} max={31} value={gDay}
                 onChange={e => { setGDay(Number(e.target.value)); setActivePreset(null) }} />
             </div>
             <div className="hgc-field">
-              <label className="hgc-label">{isAr ? 'الشهر' : 'Month'}</label>
+              <label className="hgc-label">{tl('inline.month')}</label>
               <input className="hgc-input" type="number" min={1} max={12} value={gMonth}
                 onChange={e => { setGMonth(Number(e.target.value)); setActivePreset(null) }} />
             </div>
             <div className="hgc-field">
-              <label className="hgc-label">{isAr ? 'السنة' : 'Year'}</label>
+              <label className="hgc-label">{tl('inline.year')}</label>
               <input className="hgc-input" type="number" value={gYear}
                 onChange={e => { setGYear(Number(e.target.value)); setActivePreset(null) }} />
             </div>
@@ -570,8 +573,8 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
                 {padTwo(gResult.day)} {hijriMonths[gResult.month - 1]} {gResult.year} AH
               </div>
               <div className="hgc-result-sub">
-                {gWeekday} · {isAr ? 'الشهر الهجري:' : 'Hijri month:'} {isAr ? HIJRI_MONTHS_AR[gResult.month - 1] : HIJRI_MONTHS_EN[gResult.month - 1]}<br />
-                {isAr ? 'التاريخ الرقمي:' : 'Numeric:'} {formatHijri(gResult.year, gResult.month, gResult.day)}
+                {gWeekday} · {tl('inline.hijri_month')} {isAr ? HIJRI_MONTHS_AR[gResult.month - 1] : HIJRI_MONTHS_EN[gResult.month - 1]}<br />
+                {tl('inline.numeric')} {formatHijri(gResult.year, gResult.month, gResult.day)}
               </div>
               {gEvent && (
                 <div className="hgc-result-event">
@@ -582,7 +585,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
                 className="hgc-copy-btn"
                 onClick={() => copyToClipboard(`${padTwo(gResult.day)} ${HIJRI_MONTHS_EN[gResult.month - 1]} ${gResult.year} AH`, 'g')}
               >
-                {copied === 'g' ? (isAr ? '✓ تم النسخ' : '✓ Copied!') : (isAr ? 'نسخ التاريخ' : 'Copy date')}
+                {copied === 'g' ? (tl('inline.copied')) : (tl('inline.copy_date'))}
               </button>
             </div>
           )}
@@ -592,7 +595,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
         <div className="hgc-swap">
           <button
             className="hgc-swap-btn"
-            title={isAr ? 'عكس الاتجاه' : 'Swap direction'}
+            title={tl('inline.swap_direction')}
             onClick={() => {
               if (hResult) {
                 setGYear(hResult.year); setGMonth(hResult.month); setGDay(hResult.day)
@@ -607,17 +610,17 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
         {/* Hijri → Gregorian */}
         <div className="hgc-panel">
           <div className="hgc-panel-title">
-            {isAr ? 'هجري ← ميلادي' : 'Hijri → Gregorian'}
+            {tl('inline.hijri_gregorian')}
           </div>
 
           <div className="hgc-field-group" style={{ marginBottom: 14 }}>
             <div className="hgc-field">
-              <label className="hgc-label">{isAr ? 'اليوم' : 'Day'}</label>
+              <label className="hgc-label">{tl('inline.day')}</label>
               <input className="hgc-input" type="number" min={1} max={30} value={hDay}
                 onChange={e => setHDay(Number(e.target.value))} />
             </div>
             <div className="hgc-field">
-              <label className="hgc-label">{isAr ? 'الشهر' : 'Month'}</label>
+              <label className="hgc-label">{tl('inline.month')}</label>
               <select className="hgc-select" value={hMonth}
                 onChange={e => setHMonth(Number(e.target.value))}>
                 {HIJRI_MONTHS_EN.map((m, i) => (
@@ -628,16 +631,14 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
               </select>
             </div>
             <div className="hgc-field">
-              <label className="hgc-label">{isAr ? 'السنة' : 'Year (AH)'}</label>
+              <label className="hgc-label">{tl('inline.year_ah')}</label>
               <input className="hgc-input" type="number" min={1} max={1600} value={hYear}
                 onChange={e => setHYear(Number(e.target.value))} />
             </div>
           </div>
 
           <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 14 }}>
-            {isAr
-              ? `أيام شهر ${HIJRI_MONTHS_AR[hMonth - 1]}: ${hijriDaysInMonth(hMonth)}`
-              : `${HIJRI_MONTHS_EN[hMonth - 1]} has ${hijriDaysInMonth(hMonth)} days`}
+            {tl('inline.has_days', { p0: String(HIJRI_MONTHS_AR[hMonth - 1]), p1: String(hijriDaysInMonth(hMonth)), p2: String(HIJRI_MONTHS_EN[hMonth - 1]) })}
           </div>
 
           {hError && <div className="hgc-error">{hError}</div>}
@@ -648,7 +649,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
                 {formatGregorian(hResult.year, hResult.month, hResult.day)}
               </div>
               <div className="hgc-result-sub">
-                {hWeekday} · {isAr ? 'بالتنسيق الدولي:' : 'ISO format:'} {hResult.year}-{padTwo(hResult.month)}-{padTwo(hResult.day)}
+                {hWeekday} · {tl('inline.iso_format')} {hResult.year}-{padTwo(hResult.month)}-{padTwo(hResult.day)}
               </div>
               {hEvent && (
                 <div className="hgc-result-event">
@@ -659,7 +660,7 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
                 className="hgc-copy-btn"
                 onClick={() => copyToClipboard(formatGregorian(hResult.year, hResult.month, hResult.day), 'h')}
               >
-                {copied === 'h' ? (isAr ? '✓ تم النسخ' : '✓ Copied!') : (isAr ? 'نسخ التاريخ' : 'Copy date')}
+                {copied === 'h' ? (tl('inline.copied')) : (tl('inline.copy_date'))}
               </button>
             </div>
           )}
@@ -668,15 +669,13 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
 
       {/* Disclaimer */}
       <div className="hgc-disclaimer">
-        <strong>ℹ️ {isAr ? 'ملاحظة الدقة:' : 'Accuracy Note:'}</strong>{' '}
-        {isAr
-          ? 'يعتمد هذا المحول على حساب أم القرى القياسي. قد تختلف التواريخ الهجرية الرسمية بيوم واحد (±١) بسبب رؤية الهلال في بعض الدول. للمسائل الرسمية والقانونية والدينية، يرجى الرجوع إلى السلطات الرسمية في بلدك.'
-          : 'This converter uses the standard Umm al-Qura (tabular) calculation. Official Hijri dates may differ by ±1 day due to moon sighting practices in different countries. For official, legal, or religious matters, always verify with your local authority.'}
+        <strong>ℹ️ {tl('inline.accuracy_note')}</strong>{' '}
+        {tl('inline.this_converter_uses_the_standard_umm_al_')}
       </div>
 
       {/* SEO Content */}
       <div className="hgc-seo">
-        <h2>{isAr ? 'محول التاريخ الهجري الميلادي' : 'Hijri to Gregorian Date Converter — Complete Guide'}</h2>
+        <h2>{tl('inline.hijri_to_gregorian_date_converter_comple')}</h2>
 
         <p>
           Our <strong>Hijri to Gregorian converter</strong> is the fastest, most reliable tool to convert Islamic dates to the English calendar and vice versa. Whether you need to convert a <strong>Hijri date to Gregorian</strong> for a visa application, convert <strong>Gregorian to Hijri</strong> for an Islamic contract, or simply know today's dual date, this free tool handles every conversion instantly — no API, no internet dependency, 100% accurate tabular calculation.
@@ -816,10 +815,8 @@ export default function HijriGregorianConverter({ locale = 'en' }: { locale?: st
         </p>
 
         <div className="hgc-disclaimer" style={{ marginTop: 32 }}>
-          <strong>📅 {isAr ? 'إخلاء المسؤولية:' : 'Disclaimer:'}</strong>{' '}
-          {isAr
-            ? 'هذه الأداة للأغراض المعلوماتية فقط. للوثائق الرسمية والالتزامات القانونية والمناسبات الدينية، يرجى التحقق من التاريخ مع الجهات الرسمية المختصة في دولتك.'
-            : 'This tool is for informational purposes only. For official documents, legal obligations, and religious observances, always verify dates with the relevant official authority in your country.'}
+          <strong>📅 {tl('inline.disclaimer')}</strong>{' '}
+          {tl('inline.this_tool_is_for_informational_purposes_')}
         </div>
       </div>
     </div>

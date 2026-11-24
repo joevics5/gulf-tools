@@ -1,0 +1,29 @@
+{
+  "inline": {
+    "invalid_date": "Invalid date",
+    "conversion_error": "Conversion error",
+    "has_only_days": "{p2} has only {p1} days",
+    "today_gregorian": "Today — Gregorian",
+    "today_hijri": "Today — Hijri",
+    "quick_dates": "Quick dates:",
+    "gregorian_hijri": "Gregorian → Hijri",
+    "or_enter_manually": "or enter manually",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "hijri_month": "Hijri month:",
+    "numeric": "Numeric:",
+    "copied": "✓ Copied!",
+    "copy_date": "Copy date",
+    "swap_direction": "Swap direction",
+    "hijri_gregorian": "Hijri → Gregorian",
+    "year_ah": "Year (AH)",
+    "has_days": "{p2} has {p1} days",
+    "iso_format": "ISO format:",
+    "accuracy_note": "Accuracy Note:",
+    "this_converter_uses_the_standard_umm_al_": "This converter uses the standard Umm al-Qura (tabular) calculation. Official Hijri dates may differ by ±1 day due to moon sighting practices in different countries. For official, legal, or religious matters, always verify with your local authority.",
+    "hijri_to_gregorian_date_converter_comple": "Hijri to Gregorian Date Converter — Complete Guide",
+    "disclaimer": "Disclaimer:",
+    "this_tool_is_for_informational_purposes_": "This tool is for informational purposes only. For official documents, legal obligations, and religious observances, always verify dates with the relevant official authority in your country."
+  }
+}

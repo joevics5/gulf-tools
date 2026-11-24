@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { FALLBACK_GOLD_USD_PER_GRAM, FALLBACK_SILVER_USD_PER_GRAM } from '@/lib/constants/metalPrices'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -189,6 +190,7 @@ async function fetchSpotPrices(): Promise<SpotPrices> {
 // ─── Main component
 export default function ZakatCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   // Settings
   const [currency, setCurrency] = useState('AED')
@@ -312,84 +314,45 @@ export default function ZakatCalculator({ locale }: Props) {
     setSilverValuePerGram((spot.silverPerGram / rate).toFixed(4))
   }
 
-  const t = isAr ? {
-    title: 'حاسبة الزكاة',
-    currency: 'العملة',
-    nisabBasis: 'أساس النصاب',
-    nisabGold: 'ذهب (85 جرام)',
-    nisabSilver: 'فضة (595 جرام)',
-    nisabValue: 'قيمة النصاب التقريبية',
-    sectionCash: 'النقد والمدخرات',
-    cashOnHand: 'النقد في اليد',
-    bankSavings: 'المدخرات البنكية',
-    fixedDeposits: 'الودائع الثابتة',
-    sectionGold: 'الذهب والفضة',
-    goldWeight: 'وزن الذهب',
-    goldUnit: 'الوحدة',
-    goldCarat: 'العيار',
-    goldPricePerGram: 'سعر الذهب لكل جرام',
-    silverWeight: 'وزن الفضة (جرام)',
-    silverPricePerGram: 'سعر الفضة لكل جرام',
-    sectionInvest: 'الاستثمارات والأعمال',
-    shares: 'الأسهم والمحافظ الاستثمارية',
-    inventory: 'البضائع والمخزون (بسعر البيع)',
-    receivables: 'الديون المستحقة لك',
-    sectionLiab: 'الخصومات والالتزامات',
-    debts: 'الديون قصيرة المدى (مستحقة خلال عام)',
-    expenses: 'النفقات الواجبة الأخرى',
-    results: 'ملخص الزكاة',
-    totalAssets: 'إجمالي الأصول الزكوية',
-    totalLiab: 'إجمالي الخصومات',
-    netWealth: 'صافي الثروة الزكوية',
-    nisabThreshold: 'حد النصاب',
-    zakatDue: 'الزكاة المستحقة (2.5٪)',
-    aboveNisab: '✓ تجاوزت النصاب — الزكاة واجبة',
-    belowNisab: 'لم تبلغ النصاب — لا تجب الزكاة',
-    reset: 'إعادة تعيين',
-    disclaimer: 'هذه الأداة للإرشاد العام وفق المبادئ الشرعية الشائعة. ليست فتوى ولا بديلاً عن استشارة عالم شرعي مؤهل. الأسعار والنصاب تقريبية — تحقق منها بشكل مستقل.',
-    hintCash: 'تشمل جميع الحسابات الجارية',
-    hintInventory: 'لأصحاب الأعمال فقط',
-    hintReceivables: 'الديون المتوقع تحصيلها',
-    hintDebts: 'الديون المستحقة خلال العام القادم',
-  } : {
-    title: 'Zakat Calculator',
-    currency: 'Currency',
-    nisabBasis: 'Nisab Basis',
-    nisabGold: 'Gold (85g)',
-    nisabSilver: 'Silver (595g)',
-    nisabValue: 'Approximate Nisab',
-    sectionCash: 'Cash & Savings',
-    cashOnHand: 'Cash on Hand',
-    bankSavings: 'Bank Savings',
-    fixedDeposits: 'Fixed Deposits',
-    sectionGold: 'Gold & Silver',
-    goldWeight: 'Gold Weight',
-    goldUnit: 'Unit',
-    goldCarat: 'Purity (Carat)',
-    goldPricePerGram: 'Gold Price per Gram',
-    silverWeight: 'Silver Weight (grams)',
-    silverPricePerGram: 'Silver Price per Gram',
-    sectionInvest: 'Investments & Business',
-    shares: 'Shares / Investment Portfolios',
-    inventory: 'Business Inventory (at resale value)',
-    receivables: 'Money Owed to You',
-    sectionLiab: 'Deductions & Liabilities',
-    debts: 'Short-term Debts (due within one year)',
-    expenses: 'Other Immediate Expenses',
-    results: 'Zakat Summary',
-    totalAssets: 'Total Zakatable Assets',
-    totalLiab: 'Total Deductions',
-    netWealth: 'Net Zakatable Wealth',
-    nisabThreshold: 'Nisab Threshold',
-    zakatDue: 'Zakat Due (2.5%)',
-    aboveNisab: '✓ Above Nisab — Zakat is obligatory',
-    belowNisab: 'Below Nisab — No Zakat due',
-    reset: 'Reset',
-    disclaimer: 'This tool provides general guidance based on common Shariah principles. It is not a fatwa or substitute for advice from a qualified Islamic scholar. Prices and Nisab values are approximate — verify independently.',
-    hintCash: 'All current accounts included',
-    hintInventory: 'Business owners only',
-    hintReceivables: 'Debts you expect to collect',
-    hintDebts: 'Debts due within the coming year',
+  const t = {
+    title: tr('t.title'),
+    currency: tr('t.currency'),
+    nisabBasis: tr('t.nisabBasis'),
+    nisabGold: tr('t.nisabGold'),
+    nisabSilver: tr('t.nisabSilver'),
+    nisabValue: tr('t.nisabValue'),
+    sectionCash: tr('t.sectionCash'),
+    cashOnHand: tr('t.cashOnHand'),
+    bankSavings: tr('t.bankSavings'),
+    fixedDeposits: tr('t.fixedDeposits'),
+    sectionGold: tr('t.sectionGold'),
+    goldWeight: tr('t.goldWeight'),
+    goldUnit: tr('t.goldUnit'),
+    goldCarat: tr('t.goldCarat'),
+    goldPricePerGram: tr('t.goldPricePerGram'),
+    silverWeight: tr('t.silverWeight'),
+    silverPricePerGram: tr('t.silverPricePerGram'),
+    sectionInvest: tr('t.sectionInvest'),
+    shares: tr('t.shares'),
+    inventory: tr('t.inventory'),
+    receivables: tr('t.receivables'),
+    sectionLiab: tr('t.sectionLiab'),
+    debts: tr('t.debts'),
+    expenses: tr('t.expenses'),
+    results: tr('t.results'),
+    totalAssets: tr('t.totalAssets'),
+    totalLiab: tr('t.totalLiab'),
+    netWealth: tr('t.netWealth'),
+    nisabThreshold: tr('t.nisabThreshold'),
+    zakatDue: tr('t.zakatDue'),
+    aboveNisab: tr('t.aboveNisab'),
+    belowNisab: tr('t.belowNisab'),
+    reset: tr('t.reset'),
+    disclaimer: tr('t.disclaimer'),
+    hintCash: tr('t.hintCash'),
+    hintInventory: tr('t.hintInventory'),
+    hintReceivables: tr('t.hintReceivables'),
+    hintDebts: tr('t.hintDebts'),
   }
 
   const sym = currency
@@ -443,30 +406,30 @@ export default function ZakatCalculator({ locale }: Props) {
         <div className="flex items-center justify-between">
           <span className="text-xs text-teal-600">
             {priceLoading
-              ? (isAr ? 'جارٍ تحديث الأسعار...' : 'Fetching live prices...')
+              ? (tr('inline.fetching_live_prices'))
               : priceError
-              ? (isAr ? '⚠ سعر تقريبي (تعذّر الاتصال)' : '⚠ Fallback price (fetch failed)')
+              ? (tr('inline.fallback_price_fetch_failed'))
               : spot.isLive
-              ? (isAr ? `✓ سعر مباشر · ${spot.fetchedAt}` : `✓ Live price · ${spot.fetchedAt}`)
-              : (isAr ? 'سعر تقديري' : 'Estimated price')}
+              ? (tr('inline.live_price', { p0: String(spot.fetchedAt) }))
+              : (tr('inline.estimated_price'))}
           </span>
           <button
             onClick={refreshPrices}
             disabled={priceLoading}
             className="text-xs text-teal-600 hover:text-teal-800 font-semibold disabled:opacity-40 flex items-center gap-1 transition"
           >
-            {priceLoading ? '⟳' : '↺'} {isAr ? 'تحديث' : 'Refresh'}
+            {priceLoading ? '⟳' : '↺'} {tr('inline.refresh')}
           </button>
         </div>
         {/* Gold/silver per-gram shown for transparency */}
         {spot.isLive && (
           <div className="text-xs text-teal-500 flex gap-4">
             <span>
-              {isAr ? 'ذهب/جرام:' : 'Gold/g:'}{' '}
+              {tr('inline.gold_g')}{' '}
               {fmt(spot.goldPerGram / (FX_TO_USD[currency] ?? 1), currency)}
             </span>
             <span>
-              {isAr ? 'فضة/جرام:' : 'Silver/g:'}{' '}
+              {tr('inline.silver_g')}{' '}
               {fmt(spot.silverPerGram / (FX_TO_USD[currency] ?? 1), currency)}
             </span>
           </div>

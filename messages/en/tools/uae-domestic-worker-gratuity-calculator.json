@@ -1,0 +1,26 @@
+{
+  "inline": {
+    "please_enter_a_valid_basic_monthly_salar": "Please enter a valid basic monthly salary.",
+    "please_enter_both_start_and_end_dates": "Please enter both start and end dates.",
+    "end_date_must_be_after_start_date": "End date must be after start date.",
+    "this_is_an_estimate_based_on_commonly_re": "This is an estimate based on commonly referenced practice (14 days/year). Federal Decree-Law No. 9 of 2022 defers the exact formula to a future Cabinet decision. Consult MOHRE or a legal professional. Not legal advice.",
+    "basic_monthly_salary_aed_excluding_allow": "Basic Monthly Salary (AED) — excluding allowances",
+    "enter_amount": "Enter amount",
+    "employment_start_date": "Employment Start Date",
+    "last_working_day_end_date": "Last Working Day / End Date",
+    "reason_for_contract_end": "Reason for Contract End",
+    "unpaid_leave_days_optional": "Unpaid Leave Days (optional)",
+    "unused_annual_leave_days_optional": "Unused Annual Leave Days (optional)",
+    "annual_leave_entitlement_30_days_per_yea": "Annual leave entitlement: 30 days per year of service",
+    "calculate_entitlement": "Calculate Entitlement",
+    "try_sample_3_yrs_aed_1_500": "Try sample (3 yrs, AED 1,500)",
+    "reset": "Reset",
+    "entitlement_result": "Entitlement Result",
+    "estimated_total_entitlement": "Estimated Total Entitlement",
+    "incl_gratuity_leave_pay": "Incl. {p0} gratuity + {p1} leave pay",
+    "breakdown": "Breakdown",
+    "employer_must_settle_all_financial_entit": "⏱ Employer must settle all financial entitlements within 10 days of contract end per UAE law.",
+    "official_verification": "Official verification: ",
+    "source_federal_decree_law_no_9_of_2022_o": "Source: Federal Decree-Law No. 9 of 2022 on Domestic Workers | Ministry of Human Resources & Emiratisation"
+  }
+}

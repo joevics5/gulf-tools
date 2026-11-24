@@ -1,0 +1,26 @@
+{
+  "inline": {
+    "please_enter_a_valid_basic_monthly_salar": "أدخل الراتب الأساسي الشهري.",
+    "please_enter_both_start_and_end_dates": "أدخل تاريخ البدء وتاريخ الانتهاء.",
+    "end_date_must_be_after_start_date": "يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء.",
+    "this_is_an_estimate_based_on_commonly_re": "هذه الحاسبة تقديرية فقط استناداً إلى الممارسة الشائعة (14 يوماً/سنة). القانون الحالي رقم 9 لسنة 2022 يُحيل آلية الحساب إلى قرار مجلس الوزراء. راجع وزارة الموارد البشرية أو مستشاراً قانونياً. ليست استشارة قانونية.",
+    "basic_monthly_salary_aed_excluding_allow": "الراتب الأساسي الشهري (درهم) — بدون البدلات",
+    "enter_amount": "أدخل المبلغ",
+    "employment_start_date": "تاريخ بدء العمل",
+    "last_working_day_end_date": "تاريخ آخر يوم عمل",
+    "reason_for_contract_end": "سبب انتهاء العقد",
+    "unpaid_leave_days_optional": "أيام الإجازة غير مدفوعة (اختياري)",
+    "unused_annual_leave_days_optional": "أيام الإجازة السنوية غير المستخدمة (اختياري)",
+    "annual_leave_entitlement_30_days_per_yea": "الإجازة السنوية: 30 يوماً لكل سنة خدمة",
+    "calculate_entitlement": "احسب المستحقات",
+    "try_sample_3_yrs_aed_1_500": "مثال (3 سنوات، 1,500)",
+    "reset": "إعادة تعيين",
+    "entitlement_result": "نتيجة المستحقات",
+    "estimated_total_entitlement": "إجمالي المستحقات التقديرية",
+    "incl_gratuity_leave_pay": "منها {p0} مكافأة + {p1} إجازة",
+    "breakdown": "التفصيل",
+    "employer_must_settle_all_financial_entit": "⏱ يجب على صاحب العمل سداد جميع المستحقات خلال 10 أيام من انتهاء العقد وفق القانون.",
+    "official_verification": "للتحقق الرسمي: ",
+    "source_federal_decree_law_no_9_of_2022_o": "المصدر: المرسوم الاتحادي بقانون رقم 9 لسنة 2022 بشأن عمال المنازل | وزارة الموارد البشرية والتوطين"
+  }
+}

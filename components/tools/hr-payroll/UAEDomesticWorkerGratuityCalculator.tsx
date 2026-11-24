@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -144,6 +145,7 @@ const TERMINATION_REASONS: { value: TerminationReason; en: string; ar: string }[
 
 export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   const [basicSalary, setBasicSalary] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -158,17 +160,17 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
     setError('')
     const salary = parseFloat(basicSalary)
     if (!salary || salary <= 0) {
-      setError(isAr ? 'أدخل الراتب الأساسي الشهري.' : 'Please enter a valid basic monthly salary.')
+      setError(tr('inline.please_enter_a_valid_basic_monthly_salar'))
       return
     }
     if (!startDate || !endDate) {
-      setError(isAr ? 'أدخل تاريخ البدء وتاريخ الانتهاء.' : 'Please enter both start and end dates.')
+      setError(tr('inline.please_enter_both_start_and_end_dates'))
       return
     }
     const start = new Date(startDate)
     const end = new Date(endDate)
     if (end <= start) {
-      setError(isAr ? 'يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء.' : 'End date must be after start date.')
+      setError(tr('inline.end_date_must_be_after_start_date'))
       return
     }
     const unpaid = parseInt(unpaidLeave) || 0
@@ -209,9 +211,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
       <div className="flex gap-2 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
         <span className="text-lg leading-none">⚠️</span>
         <p>
-          {isAr
-            ? 'هذه الحاسبة تقديرية فقط استناداً إلى الممارسة الشائعة (14 يوماً/سنة). القانون الحالي رقم 9 لسنة 2022 يُحيل آلية الحساب إلى قرار مجلس الوزراء. راجع وزارة الموارد البشرية أو مستشاراً قانونياً. ليست استشارة قانونية.'
-            : 'This is an estimate based on commonly referenced practice (14 days/year). Federal Decree-Law No. 9 of 2022 defers the exact formula to a future Cabinet decision. Consult MOHRE or a legal professional. Not legal advice.'}
+          {tr('inline.this_is_an_estimate_based_on_commonly_re')}
         </p>
       </div>
 
@@ -221,7 +221,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
         {/* Basic Salary */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'الراتب الأساسي الشهري (درهم) — بدون البدلات' : 'Basic Monthly Salary (AED) — excluding allowances'}
+            {tr('inline.basic_monthly_salary_aed_excluding_allow')}
           </label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500">AED</span>
@@ -230,7 +230,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
               min="0"
               value={basicSalary}
               onChange={e => setBasicSalary(e.target.value)}
-              placeholder={isAr ? 'أدخل المبلغ' : 'Enter amount'}
+              placeholder={tr('inline.enter_amount')}
               className="w-full pl-14 pr-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
             />
           </div>
@@ -239,7 +239,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
         {/* Start Date */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'تاريخ بدء العمل' : 'Employment Start Date'}
+            {tr('inline.employment_start_date')}
           </label>
           <input
             type="date"
@@ -252,7 +252,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
         {/* End Date */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'تاريخ آخر يوم عمل' : 'Last Working Day / End Date'}
+            {tr('inline.last_working_day_end_date')}
           </label>
           <input
             type="date"
@@ -265,7 +265,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
         {/* Termination Reason */}
         <div className="sm:col-span-2">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'سبب انتهاء العقد' : 'Reason for Contract End'}
+            {tr('inline.reason_for_contract_end')}
           </label>
           <select
             value={reason}
@@ -281,7 +281,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
         {/* Unpaid Leave */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'أيام الإجازة غير مدفوعة (اختياري)' : 'Unpaid Leave Days (optional)'}
+            {tr('inline.unpaid_leave_days_optional')}
           </label>
           <input
             type="number"
@@ -296,7 +296,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
         {/* Unused Annual Leave */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-            {isAr ? 'أيام الإجازة السنوية غير المستخدمة (اختياري)' : 'Unused Annual Leave Days (optional)'}
+            {tr('inline.unused_annual_leave_days_optional')}
           </label>
           <input
             type="number"
@@ -307,7 +307,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
             className="w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition"
           />
           <p className="mt-1 text-xs text-gray-500">
-            {isAr ? 'الإجازة السنوية: 30 يوماً لكل سنة خدمة' : 'Annual leave entitlement: 30 days per year of service'}
+            {tr('inline.annual_leave_entitlement_30_days_per_yea')}
           </p>
         </div>
       </div>
@@ -323,19 +323,19 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
           onClick={calculate}
           className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
         >
-          {isAr ? 'احسب المستحقات' : 'Calculate Entitlement'}
+          {tr('inline.calculate_entitlement')}
         </button>
         <button
           onClick={loadSample}
           className="px-4 py-3 border border-emerald-200 text-emerald-700 hover:bg-emerald-50 font-semibold rounded-xl transition-colors text-sm"
         >
-          {isAr ? 'مثال (3 سنوات، 1,500)' : 'Try sample (3 yrs, AED 1,500)'}
+          {tr('inline.try_sample_3_yrs_aed_1_500')}
         </button>
         <button
           onClick={reset}
           className="px-6 py-3 border border-gray-200 text-gray-600 hover:bg-gray-50 font-semibold rounded-xl transition-colors"
         >
-          {isAr ? 'إعادة تعيين' : 'Reset'}
+          {tr('inline.reset')}
         </button>
       </div>
 
@@ -343,7 +343,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
       {result && (
         <div className="bg-gray-50 rounded-2xl p-6 space-y-4 border border-gray-100">
           <h3 className="font-bold text-gray-900">
-            {isAr ? 'نتيجة المستحقات' : 'Entitlement Result'}
+            {tr('inline.entitlement_result')}
           </h3>
 
           {!result.eligible ? (
@@ -355,14 +355,12 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
               {/* Hero total */}
               <div className="bg-emerald-600 rounded-xl p-4 text-white">
                 <div className="text-sm opacity-80 mb-1">
-                  {isAr ? 'إجمالي المستحقات التقديرية' : 'Estimated Total Entitlement'}
+                  {tr('inline.estimated_total_entitlement')}
                 </div>
                 <div className="text-3xl font-black">{fmtAED(result.totalEntitlement)}</div>
                 {result.unusedLeavePayment > 0 && (
                   <div className="mt-1 text-sm opacity-80">
-                    {isAr
-                      ? `منها ${fmtAED(result.adjustedGratuity)} مكافأة + ${fmtAED(result.unusedLeavePayment)} إجازة`
-                      : `Incl. ${fmtAED(result.adjustedGratuity)} gratuity + ${fmtAED(result.unusedLeavePayment)} leave pay`}
+                    {tr('inline.incl_gratuity_leave_pay', { p0: String(fmtAED(result.adjustedGratuity)), p1: String(fmtAED(result.unusedLeavePayment)) })}
                   </div>
                 )}
               </div>
@@ -377,7 +375,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
               {/* Breakdown */}
               <div className="space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  {isAr ? 'التفصيل' : 'Breakdown'}
+                  {tr('inline.breakdown')}
                 </p>
                 {result.breakdown.map((row, i) => (
                   <div key={i} className="flex items-center justify-between gap-4 py-2 border-b border-gray-100 last:border-0">
@@ -393,16 +391,12 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
 
               {/* Payment deadline note */}
               <div className="bg-gray-100 rounded-xl px-4 py-3 text-xs text-gray-500">
-                {isAr
-                  ? '⏱ يجب على صاحب العمل سداد جميع المستحقات خلال 10 أيام من انتهاء العقد وفق القانون.'
-                  : '⏱ Employer must settle all financial entitlements within 10 days of contract end per UAE law.'}
+                {tr('inline.employer_must_settle_all_financial_entit')}
               </div>
 
               {/* MOHRE link */}
               <p className="text-xs text-gray-500 text-center">
-                {isAr
-                  ? 'للتحقق الرسمي: '
-                  : 'Official verification: '}
+                {tr('inline.official_verification')}
                 <a
                   href="https://www.mohre.gov.ae"
                   target="_blank"
@@ -419,9 +413,7 @@ export default function UAEDomesticWorkerGratuityCalculator({ locale }: Props) {
 
       {/* Bottom disclaimer */}
       <p className="text-xs text-gray-500 text-center">
-        {isAr
-          ? 'المصدر: المرسوم الاتحادي بقانون رقم 9 لسنة 2022 بشأن عمال المنازل | وزارة الموارد البشرية والتوطين'
-          : 'Source: Federal Decree-Law No. 9 of 2022 on Domestic Workers | Ministry of Human Resources & Emiratisation'}
+        {tr('inline.source_federal_decree_law_no_9_of_2022_o')}
       </p>
     </div>
   )
