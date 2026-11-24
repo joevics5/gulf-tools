@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -136,6 +137,7 @@ function formatNum(n: number, currency: string) {
 
 export default function NoticePeriodCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   const [country, setCountry] = useState('uae')
   const [contractType, setContractType] = useState('indefinite')
@@ -150,7 +152,7 @@ export default function NoticePeriodCalculator({ locale }: Props) {
   function calculate() {
     setError('')
     if (!startDate) {
-      setError(isAr ? 'يرجى اختيار تاريخ الإشعار' : 'Please select the notice start date')
+      setError(tr('inline.please_select_the_notice_start_date'))
       return
     }
 
@@ -204,51 +206,28 @@ export default function NoticePeriodCalculator({ locale }: Props) {
     setError('')
   }
 
-  const t = isAr
-    ? {
-        title: 'حاسبة فترة الإشعار',
-        country: 'الدولة',
-        contractType: 'نوع العقد',
-        startDate: 'تاريخ بدء فترة الإشعار',
-        salary: 'الراتب الشهري الأساسي (اختياري)',
-        salaryHint: 'لحساب الأجر بدلاً من فترة الإشعار',
-        serviceYears: 'سنوات الخدمة',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        results: 'نتائج فترة الإشعار',
-        noticeDays: 'مدة فترة الإشعار',
-        days: 'يوم',
-        lastDay: 'آخر يوم عمل',
-        payInLieu: 'الأجر بدلاً من الإشعار',
-        dailyRate: 'الأجر اليومي',
-        legalNote: 'الأساس القانوني',
-        source: 'المصدر الرسمي',
-        visitSource: 'زيارة المصدر',
-        disclaimer: 'هذه الأداة للأغراض المعلوماتية فقط. تحقق من وزارة العمل أو استشر محامياً.',
-        enterAmount: 'أدخل المبلغ',
-      }
-    : {
-        title: 'Notice Period Calculator',
-        country: 'Country',
-        contractType: 'Contract Type',
-        startDate: 'Notice Start Date',
-        salary: 'Basic Monthly Salary (optional)',
-        salaryHint: 'Used to calculate pay in lieu of notice',
-        serviceYears: 'Years of Service',
-        calculate: 'Calculate Notice Period',
-        reset: 'Reset',
-        results: 'Notice Period Results',
-        noticeDays: 'Notice Period',
-        days: 'days',
-        lastDay: 'Last Working Day',
-        payInLieu: 'Pay in Lieu of Notice',
-        dailyRate: 'Daily Rate',
-        legalNote: 'Legal Basis',
-        source: 'Official Source',
-        visitSource: 'Visit Source',
-        disclaimer: 'For informational purposes only. Verify with the Ministry of Labour or consult a legal professional.',
-        enterAmount: 'Enter amount',
-      }
+  const t = {
+    title: tr('t.title'),
+    country: tr('t.country'),
+    contractType: tr('t.contractType'),
+    startDate: tr('t.startDate'),
+    salary: tr('t.salary'),
+    salaryHint: tr('t.salaryHint'),
+    serviceYears: tr('t.serviceYears'),
+    calculate: tr('t.calculate'),
+    reset: tr('t.reset'),
+    results: tr('t.results'),
+    noticeDays: tr('t.noticeDays'),
+    days: tr('t.days'),
+    lastDay: tr('t.lastDay'),
+    payInLieu: tr('t.payInLieu'),
+    dailyRate: tr('t.dailyRate'),
+    legalNote: tr('t.legalNote'),
+    source: tr('t.source'),
+    visitSource: tr('t.visitSource'),
+    disclaimer: tr('t.disclaimer'),
+    enterAmount: tr('t.enterAmount'),
+  }
 
   return (
     <div className="space-y-6">

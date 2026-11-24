@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -517,7 +519,8 @@ interface Props {
 
 export default function GratuityCalculator({ locale = 'en' }: Props) {
   const isAr = locale === 'ar'
-  const dir = isAr ? 'rtl' : 'ltr'
+  const tr = useTranslations('tool')
+  const dir = isRtl(locale) ? 'rtl' : 'ltr'
 
   const [inputs, setInputs] = useState<GratuityInputs>({
     country: 'uae',
@@ -561,44 +564,42 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
   const today = new Date().toISOString().split('T')[0]
 
   const t = {
-    title: isAr ? 'حاسبة مكافأة نهاية الخدمة' : 'Gratuity Calculator',
-    subtitle: isAr ? 'الإمارات • السعودية • قطر • الكويت • البحرين • عُمان' : 'UAE • Saudi Arabia • Qatar • Kuwait • Bahrain • Oman',
-    country: isAr ? 'الدولة' : 'Country',
-    salary: isAr ? 'الراتب الأساسي الشهري' : 'Monthly Basic Salary',
-    salaryPlaceholder: isAr ? 'أدخل الراتب الأساسي' : 'Enter basic salary',
-    startDate: isAr ? 'تاريخ بدء العمل' : 'Employment Start Date',
-    endDate: isAr ? 'تاريخ انتهاء العمل' : 'Employment End Date',
-    reason: isAr ? 'سبب إنهاء العمل' : 'Reason for Termination',
-    resigned: isAr ? 'استقالة' : 'Resigned',
-    terminated: isAr ? 'إنهاء من قِبل صاحب العمل' : 'Terminated by Employer',
-    mutual: isAr ? 'اتفاق متبادل' : 'Mutual Agreement',
-    calculate: isAr ? 'احسب المكافأة' : 'Calculate Gratuity',
-    reset: isAr ? 'إعادة تعيين' : 'Reset',
-    yourGratuity: isAr ? 'مكافأتك المستحقة' : 'Your Gratuity Entitlement',
-    notEligible: isAr ? 'غير مستحق' : 'Not Eligible',
-    years: isAr ? 'سنة' : 'yr',
-    months: isAr ? 'أشهر' : 'mo',
-    days: isAr ? 'يوم' : 'days',
-    servicePeriod: isAr ? 'مدة الخدمة' : 'Service Period',
-    breakdown: isAr ? 'تفصيل الحساب' : 'Calculation Breakdown',
-    notes: isAr ? 'ملاحظات قانونية' : 'Legal Notes',
-    salaryBasis: isAr ? 'أساس الحساب' : 'Salary Basis',
-    capNote: isAr ? 'تم تطبيق الحد الأقصى' : 'Cap applied',
-    disclaimer: isAr
-      ? '⚠️ للأغراض المعلوماتية فقط. ليست استشارة قانونية. تحقق من وزارة العمل المختصة.'
-      : '⚠️ For informational purposes only. Not legal advice. Verify with the relevant Ministry of Labour.',
-    contractType: isAr ? 'نوع العقد' : 'Contract Type',
-    limited: isAr ? 'محدد المدة' : 'Limited Term',
-    unlimited: isAr ? 'غير محدد المدة' : 'Unlimited Term',
+    title: tr('inline.gratuity_calculator'),
+    subtitle: tr('inline.uae_saudi_arabia_qatar_kuwait_bahrain_om'),
+    country: tr('inline.country'),
+    salary: tr('inline.monthly_basic_salary'),
+    salaryPlaceholder: tr('inline.enter_basic_salary'),
+    startDate: tr('inline.employment_start_date'),
+    endDate: tr('inline.employment_end_date'),
+    reason: tr('inline.reason_for_termination'),
+    resigned: tr('inline.resigned'),
+    terminated: tr('inline.terminated_by_employer'),
+    mutual: tr('inline.mutual_agreement'),
+    calculate: tr('inline.calculate_gratuity'),
+    reset: tr('inline.reset'),
+    yourGratuity: tr('inline.your_gratuity_entitlement'),
+    notEligible: tr('inline.not_eligible'),
+    years: tr('inline.yr'),
+    months: tr('inline.mo'),
+    days: tr('inline.days'),
+    servicePeriod: tr('inline.service_period'),
+    breakdown: tr('inline.calculation_breakdown'),
+    notes: tr('inline.legal_notes'),
+    salaryBasis: tr('inline.salary_basis'),
+    capNote: tr('inline.cap_applied'),
+    disclaimer: tr('inline.for_informational_purposes_only_not_lega'),
+    contractType: tr('inline.contract_type'),
+    limited: tr('inline.limited_term'),
+    unlimited: tr('inline.unlimited_term'),
   }
 
   const countries: { key: Country; label: string }[] = [
-    { key: 'uae', label: isAr ? '🇦🇪 الإمارات' : '🇦🇪 UAE' },
-    { key: 'saudi', label: isAr ? '🇸🇦 السعودية' : '🇸🇦 Saudi Arabia' },
-    { key: 'qatar', label: isAr ? '🇶🇦 قطر' : '🇶🇦 Qatar' },
-    { key: 'kuwait', label: isAr ? '🇰🇼 الكويت' : '🇰🇼 Kuwait' },
-    { key: 'bahrain', label: isAr ? '🇧🇭 البحرين' : '🇧🇭 Bahrain' },
-    { key: 'oman', label: isAr ? '🇴🇲 عُمان' : '🇴🇲 Oman' },
+    { key: 'uae', label: tr('inline.uae') },
+    { key: 'saudi', label: tr('inline.saudi_arabia') },
+    { key: 'qatar', label: tr('inline.qatar') },
+    { key: 'kuwait', label: tr('inline.kuwait') },
+    { key: 'bahrain', label: tr('inline.bahrain') },
+    { key: 'oman', label: tr('inline.oman') },
   ]
 
   return (
@@ -1028,7 +1029,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
                 />
               </div>
               <p className="gc-salary-hint">
-                {isAr ? `أساس الحساب: ${config.salaryBasisAr}` : `Basis: ${config.salaryBasis}`}
+                {tr('inline.basis', { p0: String(config.salaryBasisAr), p1: String(config.salaryBasis) })}
               </p>
             </div>
 
@@ -1108,19 +1109,19 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
           <div className="gc-service-bar">
             <div className="gc-service-chip">
               <div className="gc-chip-val">{serviceInfo.years}</div>
-              <div className="gc-chip-label">{isAr ? 'سنوات' : 'Years'}</div>
+              <div className="gc-chip-label">{tr('inline.years')}</div>
             </div>
             <div className="gc-service-chip">
               <div className="gc-chip-val">{serviceInfo.months}</div>
-              <div className="gc-chip-label">{isAr ? 'أشهر' : 'Months'}</div>
+              <div className="gc-chip-label">{tr('inline.months')}</div>
             </div>
             <div className="gc-service-chip">
               <div className="gc-chip-val">{serviceInfo.days}</div>
-              <div className="gc-chip-label">{isAr ? 'أيام' : 'Days'}</div>
+              <div className="gc-chip-label">{tr('inline.days_2')}</div>
             </div>
             <div className="gc-service-chip">
               <div className="gc-chip-val">{serviceInfo.totalDays}</div>
-              <div className="gc-chip-label">{isAr ? 'إجمالي الأيام' : 'Total Days'}</div>
+              <div className="gc-chip-label">{tr('inline.total_days')}</div>
             </div>
           </div>
         )}
@@ -1129,18 +1130,18 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
         {showResult && result && (
           <div className="gc-result">
             <div className={`gc-result-badge ${!result.eligible ? 'red' : ''}`}>
-              {result.eligible ? (isAr ? '✓ مستحق' : '✓ Eligible') : (isAr ? '✗ غير مستحق' : '✗ Not Eligible')}
+              {result.eligible ? (tr('inline.eligible')) : (tr('inline.not_eligible_2'))}
             </div>
             <div className="gc-result-label">{t.yourGratuity}</div>
             <div className={`gc-result-amount ${!result.eligible ? 'ineligible' : ''}`}>
               {result.eligible
                 ? formatCurrency(result.total, result.currency, locale)
-                : (isAr ? 'لا يوجد استحقاق' : 'No Entitlement')
+                : (tr('inline.no_entitlement'))
               }
             </div>
             {result.cappedAt && (
               <div className="gc-result-service" style={{ color: '#fbbf24', marginTop: '0.3rem' }}>
-                {isAr ? `⚠ تم تطبيق الحد الأقصى: ${formatCurrency(result.cappedAt, result.currency, locale)}` : `⚠ Cap applied: ${formatCurrency(result.cappedAt, result.currency, locale)}`}
+                {tr('inline.cap_applied_2', { p0: String(formatCurrency(result.cappedAt, result.currency, locale)) })}
               </div>
             )}
           </div>
@@ -1155,7 +1156,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
                   <div>
                     <div className="gc-breakdown-label">{isAr ? row.labelAr : row.label}</div>
                     <div className="gc-breakdown-days">
-                      {formatNumber(row.days, locale)} {isAr ? 'يوم' : 'days'}
+                      {formatNumber(row.days, locale)} {tr('inline.days')}
                     </div>
                   </div>
                   <div className="gc-breakdown-amount">
@@ -1165,7 +1166,7 @@ export default function GratuityCalculator({ locale = 'en' }: Props) {
               ))}
               <div className="gc-breakdown-row" style={{ background: '#f8fafc', fontWeight: 700 }}>
                 <div className="gc-breakdown-label" style={{ fontWeight: 700, color: '#0f2942' }}>
-                  {isAr ? 'الإجمالي' : 'Total'}
+                  {tr('inline.total')}
                 </div>
                 <div className="gc-breakdown-amount" style={{ fontSize: '1rem' }}>
                   {formatCurrency(result.total, result.currency, locale)}

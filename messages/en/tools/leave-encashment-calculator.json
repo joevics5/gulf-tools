@@ -1,0 +1,21 @@
+{
+  "inline": {
+    "leave_encashment_for": "Leave Encashment: {p0} for {p2}",
+    "select_country": "Select Country",
+    "basic_monthly_salary": "Basic Monthly Salary",
+    "gross_monthly_salary_incl_allowances": "Gross Monthly Salary (incl. allowances)",
+    "years_of_service": "Years of Service",
+    "additional_months": "Additional Months",
+    "unused_leave_days": "Unused Leave Days",
+    "leave_encashment_amount": "Leave Encashment Amount",
+    "daily_rate": "Daily Rate",
+    "annual_entitlement": "Annual Entitlement",
+    "days": "days",
+    "unused_days": "Unused Days",
+    "total": "Total",
+    "print_result": "🖨️ Print Result",
+    "copied": "✓ Copied",
+    "copy_result": "📋 Copy Result",
+    "this_tool_is_for_informational_purposes_": "This tool is for informational purposes only. Laws may change. Please consult official sources or a qualified labour lawyer."
+  }
+}

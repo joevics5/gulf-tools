@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl'
+import { isRtl } from '@/lib/i18n/locales'
 
 interface Rules {
   name: string;
@@ -50,6 +52,7 @@ const legalData: Record<string, Rules> = {
 export default function LeaveEncashmentCalculator() {
   const locale = useLocale();
   const isAr = locale === 'ar';
+  const tr = useTranslations('tool')
 
   const [country, setCountry] = useState<'uae' | 'saudi' | 'qatar'>('uae');
   const [basicSalary, setBasicSalary] = useState(8000);
@@ -70,9 +73,7 @@ export default function LeaveEncashmentCalculator() {
   };
 
   const shareResult = () => {
-    const text = isAr 
-      ? `حاسبة صرف الإجازة: ${encashmentAmount.toLocaleString()} ${rules.nameAr}`
-      : `Leave Encashment: ${encashmentAmount.toLocaleString()} for ${rules.name}`;
+    const text = tr('inline.leave_encashment_for', { p0: String(encashmentAmount.toLocaleString()), p1: String(rules.nameAr), p2: String(rules.name) });
     
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -80,11 +81,11 @@ export default function LeaveEncashmentCalculator() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="max-w-5xl mx-auto px-4 py-8" dir={isRtl(locale) ? 'rtl' : 'ltr'}>
       <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12">
         {/* Country Selector */}
         <div className="mb-10">
-          <h3 className="text-xl font-semibold mb-4">{isAr ? 'اختر الدولة' : 'Select Country'}</h3>
+          <h3 className="text-xl font-semibold mb-4">{tr('inline.select_country')}</h3>
           <div className="flex flex-wrap gap-3">
             {Object.entries(legalData).map(([key, data]) => (
               <button
@@ -107,7 +108,7 @@ export default function LeaveEncashmentCalculator() {
           <div className="space-y-8">
             <div>
               <label className="block font-medium mb-2 text-lg">
-                {isAr ? 'الراتب الأساسي الشهري' : 'Basic Monthly Salary'}
+                {tr('inline.basic_monthly_salary')}
               </label>
               <input 
                 type="number" 
@@ -121,7 +122,7 @@ export default function LeaveEncashmentCalculator() {
             {rules.salaryBasis === 'gross' && (
               <div>
                 <label className="block font-medium mb-2 text-lg">
-                  {isAr ? 'الراتب الإجمالي الشهري' : 'Gross Monthly Salary (incl. allowances)'}
+                  {tr('inline.gross_monthly_salary_incl_allowances')}
                 </label>
                 <input 
                   type="number" 
@@ -135,7 +136,7 @@ export default function LeaveEncashmentCalculator() {
 
             <div className="grid grid-cols-2 gap-6">
               <div>
-                <label className="block font-medium mb-2">{isAr ? 'سنوات الخدمة' : 'Years of Service'}</label>
+                <label className="block font-medium mb-2">{tr('inline.years_of_service')}</label>
                 <input 
                   type="number" 
                   min="0"
@@ -145,7 +146,7 @@ export default function LeaveEncashmentCalculator() {
                 />
               </div>
               <div>
-                <label className="block font-medium mb-2">{isAr ? 'الأشهر الإضافية' : 'Additional Months'}</label>
+                <label className="block font-medium mb-2">{tr('inline.additional_months')}</label>
                 <input 
                   type="number" 
                   value={serviceMonths} 
@@ -159,7 +160,7 @@ export default function LeaveEncashmentCalculator() {
 
             <div>
               <label className="block font-medium mb-2 text-lg">
-                {isAr ? 'أيام الإجازة غير المستخدمة' : 'Unused Leave Days'}
+                {tr('inline.unused_leave_days')}
               </label>
               <input 
                 type="number" 
@@ -176,23 +177,23 @@ export default function LeaveEncashmentCalculator() {
             <h2 className="text-5xl font-bold text-emerald-700 mb-2">
               {encashmentAmount.toLocaleString()}
             </h2>
-            <p className="text-xl mb-8">{isAr ? 'المبلغ المستحق' : 'Leave Encashment Amount'}</p>
+            <p className="text-xl mb-8">{tr('inline.leave_encashment_amount')}</p>
 
             <div className="space-y-5 text-[15px]">
               <div className="flex justify-between py-3 border-b">
-                <span>{isAr ? 'الراتب اليومي' : 'Daily Rate'}</span>
+                <span>{tr('inline.daily_rate')}</span>
                 <span className="font-semibold">{dailyRate.toFixed(2)}</span>
               </div>
               <div className="flex justify-between py-3 border-b">
-                <span>{isAr ? 'الإجازة السنوية المستحقة' : 'Annual Entitlement'}</span>
-                <span className="font-semibold">{entitlement} {isAr ? 'يوم' : 'days'}</span>
+                <span>{tr('inline.annual_entitlement')}</span>
+                <span className="font-semibold">{entitlement} {tr('inline.days')}</span>
               </div>
               <div className="flex justify-between py-3 border-b">
-                <span>{isAr ? 'أيام غير مستخدمة' : 'Unused Days'}</span>
+                <span>{tr('inline.unused_days')}</span>
                 <span className="font-semibold">{unusedDays}</span>
               </div>
               <div className="flex justify-between py-6 text-2xl font-bold border-t border-emerald-200">
-                <span>{isAr ? 'الإجمالي' : 'Total'}</span>
+                <span>{tr('inline.total')}</span>
                 <span>{encashmentAmount.toLocaleString()}</span>
               </div>
             </div>
@@ -209,21 +210,19 @@ export default function LeaveEncashmentCalculator() {
             onClick={printResult}
             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-5 rounded-2xl font-semibold text-lg transition"
           >
-            {isAr ? '🖨️ طباعة النتيجة' : '🖨️ Print Result'}
+            {tr('inline.print_result')}
           </button>
           <button 
             onClick={shareResult}
             className="flex-1 border-2 border-gray-300 hover:border-gray-400 py-5 rounded-2xl font-semibold text-lg transition"
           >
-            {copied ? (isAr ? '✓ تم النسخ' : '✓ Copied') : (isAr ? '📋 نسخ النتيجة' : '📋 Copy Result')}
+            {copied ? (tr('inline.copied')) : (tr('inline.copy_result'))}
           </button>
         </div>
       </div>
 
       <p className="text-center text-xs text-gray-500 mt-10 px-4">
-        {isAr 
-          ? 'هذه الأداة لأغراض معلوماتية فقط. يرجى الرجوع إلى الجهات الرسمية أو محامٍ متخصص للحصول على نصيحة قانونية.'
-          : 'This tool is for informational purposes only. Laws may change. Please consult official sources or a qualified labour lawyer.'}
+        {tr('inline.this_tool_is_for_informational_purposes_')}
       </p>
     </div>
   );

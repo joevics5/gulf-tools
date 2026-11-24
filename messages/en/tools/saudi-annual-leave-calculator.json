@@ -1,0 +1,31 @@
+{
+  "lbl": {
+    "title": "Saudi Annual Leave Calculator",
+    "wage": "Monthly Actual Wage (SAR)",
+    "wageHint": "Basic salary + fixed allowances (Actual Wage per Labour Law)",
+    "years": "Years of Service",
+    "months": "Additional Months (Partial Year)",
+    "unused": "Unused Leave Days (Optional)",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "dailyRate": "Daily Rate",
+    "entitlement": "Entitlement Days",
+    "prorata": "Pro-rata Days",
+    "totalDays": "Total Days",
+    "totalPay": "Total Leave Pay",
+    "tier21": "Tier: 21 days (under 5 years)",
+    "tier30": "Tier: 30 days (5+ years)",
+    "disclaimer": "For informational purposes based on Saudi Labour Law (Articles 109 & 111). Consult official sources or legal experts for your specific case.",
+    "scenario": "Calculation Type",
+    "enterAmount": "Enter amount"
+  },
+  "inline": {
+    "please_enter_a_valid_wage_greater_than_0": "Please enter a valid wage greater than 0",
+    "progress_toward_30_day_tier": "Progress toward 30-day tier",
+    "qualified": "✓ Qualified",
+    "years": "years",
+    "days": "days",
+    "for_comparison_uae_typically_grants_30_d": "🌍 For comparison: UAE typically grants 30 days after 1 year of service. Qatar and Kuwait follow different labour legislation."
+  }
+}

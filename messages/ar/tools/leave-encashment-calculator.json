@@ -1,0 +1,21 @@
+{
+  "inline": {
+    "leave_encashment_for": "حاسبة صرف الإجازة: {p0} {p1}",
+    "select_country": "اختر الدولة",
+    "basic_monthly_salary": "الراتب الأساسي الشهري",
+    "gross_monthly_salary_incl_allowances": "الراتب الإجمالي الشهري",
+    "years_of_service": "سنوات الخدمة",
+    "additional_months": "الأشهر الإضافية",
+    "unused_leave_days": "أيام الإجازة غير المستخدمة",
+    "leave_encashment_amount": "المبلغ المستحق",
+    "daily_rate": "الراتب اليومي",
+    "annual_entitlement": "الإجازة السنوية المستحقة",
+    "days": "يوم",
+    "unused_days": "أيام غير مستخدمة",
+    "total": "الإجمالي",
+    "print_result": "🖨️ طباعة النتيجة",
+    "copied": "✓ تم النسخ",
+    "copy_result": "📋 نسخ النتيجة",
+    "this_tool_is_for_informational_purposes_": "هذه الأداة لأغراض معلوماتية فقط. يرجى الرجوع إلى الجهات الرسمية أو محامٍ متخصص للحصول على نصيحة قانونية."
+  }
+}

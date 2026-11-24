@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 type Mode = 'vacation' | 'encashment' | 'accrual' | 'holiday'
@@ -49,6 +50,7 @@ type HolidayResult = {
 
 export default function UAEHolidayPayCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
   const [mode, setMode] = useState<Mode>('vacation')
 
   // Shared inputs
@@ -80,7 +82,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
     const errs: string[] = []
     const basic = parseFloat(basicSalary)
     const gross = parseFloat(grossSalary) || basic
-    if (!basic || basic <= 0) errs.push(isAr ? 'أدخل الراتب الأساسي' : 'Enter a valid basic salary')
+    if (!basic || basic <= 0) errs.push(tr('inline.enter_a_valid_basic_salary'))
     setErrors(errs)
     return { basic, gross, ok: errs.length === 0 }
   }
@@ -94,7 +96,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
 
     if (mode === 'vacation') {
       const days = parseFloat(leaveDays) || 0
-      if (days <= 0) { setErrors([isAr ? 'أدخل عدد أيام الإجازة' : 'Enter leave days']); return }
+      if (days <= 0) { setErrors([tr('inline.enter_leave_days')]); return }
       setVacResult({
         basicDaily, fullDaily,
         basicPay: basicDaily * days,
@@ -109,7 +111,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
       const taken = parseFloat(takenDays) || 0
       const unpaid = parseFloat(unpaidDays) || 0
       if (!start || !end || end <= start) {
-        setErrors([isAr ? 'أدخل تواريخ خدمة صحيحة' : 'Enter valid employment dates']); return
+        setErrors([tr('inline.enter_valid_employment_dates')]); return
       }
       const totalMonths = getServiceMonths(start, end) - Math.floor(unpaid / 30)
       const { days: accrued, rate } = calcAccruedDays(totalMonths)
@@ -126,7 +128,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
       const start = parseDate(startDate)
       const end = parseDate(endDate)
       if (!start || !end || end <= start) {
-        setErrors([isAr ? 'أدخل تواريخ صحيحة' : 'Enter valid dates']); return
+        setErrors([tr('inline.enter_valid_dates')]); return
       }
       const totalMonths = getServiceMonths(start, end)
       const { days: accrued, rate } = calcAccruedDays(totalMonths)
@@ -159,66 +161,36 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
     { key: 'holiday',     label: 'Public Holiday',  labelAr: 'عطلة رسمية' },
   ]
 
-  const T = isAr ? {
-    salary: 'الراتب الأساسي الشهري (درهم)',
-    gross: 'إجمالي الراتب الشهري (درهم، اختياري)',
-    grossHint: 'الأساسي + البدلات. يُستخدم لراتب الإجازة المعتمدة.',
-    startDate: 'تاريخ بدء العمل',
-    endDate: 'تاريخ انتهاء الخدمة / اليوم',
-    leaveDays: 'أيام الإجازة المطلوبة',
-    takenDays: 'أيام الإجازة المستخدمة',
-    unpaidDays: 'أيام الإجازة غير مدفوعة (إجمالي)',
-    holidayComp: 'نوع التعويض',
-    optionPay: 'دفع نقدي (١٥٠٪ من الراتب الأساسي)',
-    optionOff: 'يوم تعويضي',
-    calc: 'احسب',
-    reset: 'إعادة',
-    dailyBasic: 'المعدل اليومي الأساسي',
-    dailyFull: 'المعدل اليومي الكامل',
-    vacBasic: 'راتب الإجازة (أساسي فقط)',
-    vacFull: 'راتب الإجازة (كامل — مُوصى به)',
-    vacNote: 'خلال الإجازة السنوية المعتمدة يُستخدم الراتب الكامل وفق القانون. يُستخدم الأساسي فقط عند الاسترداد عند الإنهاء.',
-    encashmentAmt: 'مبلغ استرداد الإجازة',
-    unusedDays: 'الأيام غير المستخدمة',
-    accrued: 'الأيام المستحقة',
-    taken: 'الأيام المستخدمة',
-    unused: 'الأيام المتبقية',
-    carry: 'الحد الأقصى للترحيل',
-    holComp: 'قيمة اليوم التعويضي',
-    holCash: 'قيمة الدفع النقدي (١.٥× الأساسي)',
-    holNote: 'إما يوم إجازة تعويضي أو علاوة ٥٠٪ إضافية على الراتب الأساسي عن يوم العمل.',
-    enterAmount: 'أدخل المبلغ',
-    disclaimer: 'للأغراض التوضيحية فقط. بناءً على المادتين ٢٨ و٢٩ من المرسوم الاتحادي بقانون رقم ٣٣ لسنة ٢٠٢١. ليس نصيحة قانونية. تحقق مع وزارة الموارد البشرية والتوطين.',
-  } : {
-    salary: 'Monthly Basic Salary (AED)',
-    gross: 'Monthly Gross Salary (AED, optional)',
-    grossHint: 'Basic + allowances. Used for approved vacation pay.',
-    startDate: 'Employment Start Date',
-    endDate: 'End / Current Date',
-    leaveDays: 'Leave Days Requested',
-    takenDays: 'Leave Days Already Taken',
-    unpaidDays: 'Unpaid Leave Days (total taken)',
-    holidayComp: 'Compensation Type',
-    optionPay: 'Cash pay (150% of basic daily)',
-    optionOff: 'Compensatory day off',
-    calc: 'Calculate',
-    reset: 'Reset',
-    dailyBasic: 'Basic Daily Rate',
-    dailyFull: 'Full Daily Rate',
-    vacBasic: 'Leave Pay (basic only)',
-    vacFull: 'Leave Pay (full salary — recommended)',
-    vacNote: 'During approved annual leave, full salary (basic + allowances) applies. Basic only is used for encashment on termination.',
-    encashmentAmt: 'Leave Encashment Amount',
-    unusedDays: 'Unused Leave Days',
-    accrued: 'Accrued Days',
-    taken: 'Days Taken',
-    unused: 'Remaining Balance',
-    carry: 'Max Carry-Forward',
-    holComp: 'Compensatory Day Value',
-    holCash: 'Cash Pay Value (1.5× basic)',
-    holNote: 'Employee is entitled to either a compensatory day off or an additional 50% of basic daily rate for the day worked.',
-    enterAmount: 'Enter amount',
-    disclaimer: 'For informational purposes only. Based on Articles 28–29, Federal Decree-Law No. 33 of 2021. Not legal advice. Verify with MOHRE.',
+  const T = {
+    salary: tr('T.salary'),
+    gross: tr('T.gross'),
+    grossHint: tr('T.grossHint'),
+    startDate: tr('T.startDate'),
+    endDate: tr('T.endDate'),
+    leaveDays: tr('T.leaveDays'),
+    takenDays: tr('T.takenDays'),
+    unpaidDays: tr('T.unpaidDays'),
+    holidayComp: tr('T.holidayComp'),
+    optionPay: tr('T.optionPay'),
+    optionOff: tr('T.optionOff'),
+    calc: tr('T.calc'),
+    reset: tr('T.reset'),
+    dailyBasic: tr('T.dailyBasic'),
+    dailyFull: tr('T.dailyFull'),
+    vacBasic: tr('T.vacBasic'),
+    vacFull: tr('T.vacFull'),
+    vacNote: tr('T.vacNote'),
+    encashmentAmt: tr('T.encashmentAmt'),
+    unusedDays: tr('T.unusedDays'),
+    accrued: tr('T.accrued'),
+    taken: tr('T.taken'),
+    unused: tr('T.unused'),
+    carry: tr('T.carry'),
+    holComp: tr('T.holComp'),
+    holCash: tr('T.holCash'),
+    holNote: tr('T.holNote'),
+    enterAmount: tr('T.enterAmount'),
+    disclaimer: tr('T.disclaimer'),
   }
 
   return (
@@ -337,14 +309,14 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
 
       {/* ── Vacation Pay Results ── */}
       {vacResult && (
-        <ResultShell title={isAr ? 'راتب الإجازة السنوية' : 'Annual Leave Pay'}>
+        <ResultShell title={tr('inline.annual_leave_pay')}>
           <HeroCard label={T.vacFull} value={formatAED(vacResult.fullPay)} />
           <Divider />
           <InfoLine label={T.dailyBasic} value={formatAED(vacResult.basicDaily)}
             sub={`AED ${parseFloat(basicSalary).toFixed(0)} ÷ 30`} />
           <InfoLine label={T.dailyFull} value={formatAED(vacResult.fullDaily)}
             sub={`AED ${(parseFloat(grossSalary) || parseFloat(basicSalary)).toFixed(0)} ÷ 30`} />
-          <InfoLine label={isAr ? 'أيام الإجازة' : 'Leave Days'} value={`${vacResult.days} days`} />
+          <InfoLine label={tr('inline.leave_days')} value={`${vacResult.days} days`} />
           <Divider />
           <InfoLine label={T.vacFull} value={formatAED(vacResult.fullPay)} highlight />
           <InfoLine label={T.vacBasic} value={formatAED(vacResult.basicPay)} />
@@ -355,37 +327,37 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
 
       {/* ── Encashment Results ── */}
       {encResult && (
-        <ResultShell title={isAr ? 'استرداد الإجازة غير المستخدمة' : 'Unused Leave Encashment'}>
+        <ResultShell title={tr('inline.unused_leave_encashment')}>
           <HeroCard label={T.encashmentAmt} value={formatAED(encResult.encashment)} />
           <Divider />
           <InfoLine label={T.dailyBasic} value={formatAED(encResult.basicDaily)}
             sub={`AED ${parseFloat(basicSalary).toFixed(0)} ÷ 30`} />
-          <InfoLine label={isAr ? 'معدل الاستحقاق' : 'Accrual Rate'} value={encResult.note} />
+          <InfoLine label={tr('inline.accrual_rate')} value={encResult.note} />
           <InfoLine label={T.unusedDays} value={`${encResult.unusedDays} days`} highlight />
           <Divider />
           <InfoLine label={T.encashmentAmt}
             value={formatAED(encResult.encashment)}
             sub={`${formatAED(encResult.basicDaily)} × ${encResult.unusedDays} days`}
             highlight />
-          <Note text={isAr ? 'يُستخدم الراتب الأساسي فقط عند الاسترداد وفق قانون العمل الإماراتي.' : 'Basic salary only is used for encashment on termination per UAE Labour Law.'} />
+          <Note text={tr('inline.basic_salary_only_is_used_for_encashment')} />
           <Disclaimer text={T.disclaimer} />
         </ResultShell>
       )}
 
       {/* ── Accrual Balance Results ── */}
       {accResult && (
-        <ResultShell title={isAr ? 'رصيد الإجازة السنوية' : 'Annual Leave Balance'}>
-          <HeroCard label={isAr ? 'الرصيد المتبقي' : 'Remaining Balance'} value={`${accResult.unused} ${isAr ? 'يوم' : 'days'}`} isText />
+        <ResultShell title={tr('inline.annual_leave_balance')}>
+          <HeroCard label={tr('inline.remaining_balance')} value={`${accResult.unused} ${tr('inline.days')}`} isText />
           <Divider />
-          <InfoLine label={isAr ? 'مدة الخدمة' : 'Service Duration'}
+          <InfoLine label={tr('inline.service_duration')}
             value={`${Math.floor(accResult.totalMonths / 12)}y ${accResult.totalMonths % 12}m`} />
-          <InfoLine label={isAr ? 'معدل الاستحقاق' : 'Accrual Rate'} value={accResult.rate} />
+          <InfoLine label={tr('inline.accrual_rate')} value={accResult.rate} />
 
           {/* Visual bar */}
           <div className="py-2">
             <div className="flex justify-between text-xs text-gray-500 mb-1">
-              <span>{isAr ? 'المستخدمة' : 'Used'}: {accResult.taken}</span>
-              <span>{isAr ? 'المستحقة' : 'Accrued'}: {accResult.accrued}</span>
+              <span>{tr('inline.used')}: {accResult.taken}</span>
+              <span>{tr('inline.accrued')}: {accResult.accrued}</span>
             </div>
             <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
               <div className="h-3 bg-violet-500 rounded-full transition-all"
@@ -403,7 +375,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
 
       {/* ── Public Holiday Results ── */}
       {holResult && (
-        <ResultShell title={isAr ? 'تعويض العمل في العطلة الرسمية' : 'Public Holiday Work Compensation'}>
+        <ResultShell title={tr('inline.public_holiday_work_compensation')}>
           <HeroCard
             label={holidayComp === 'pay' ? T.holCash : T.holComp}
             value={formatAED(holidayComp === 'pay' ? holResult.cashValue : holResult.compensatoryValue)}
@@ -413,7 +385,7 @@ export default function UAEHolidayPayCalculator({ locale }: Props) {
             sub={`AED ${parseFloat(basicSalary).toFixed(0)} ÷ 30`} />
           <Divider />
           <InfoLine label={T.holComp} value={formatAED(holResult.compensatoryValue)}
-            sub={isAr ? 'يوم إجازة إضافي بالأجر الكامل' : 'An additional paid day off'}
+            sub={tr('inline.an_additional_paid_day_off')}
             highlight={holidayComp === 'off'} />
           <InfoLine label={T.holCash} value={formatAED(holResult.cashValue)}
             sub={`${formatAED(holResult.basicDaily)} × 1.5`}

@@ -1,0 +1,27 @@
+{
+  "t": {
+    "title": "Notice Period Calculator",
+    "country": "Country",
+    "contractType": "Contract Type",
+    "startDate": "Notice Start Date",
+    "salary": "Basic Monthly Salary (optional)",
+    "salaryHint": "Used to calculate pay in lieu of notice",
+    "serviceYears": "Years of Service",
+    "calculate": "Calculate Notice Period",
+    "reset": "Reset",
+    "results": "Notice Period Results",
+    "noticeDays": "Notice Period",
+    "days": "days",
+    "lastDay": "Last Working Day",
+    "payInLieu": "Pay in Lieu of Notice",
+    "dailyRate": "Daily Rate",
+    "legalNote": "Legal Basis",
+    "source": "Official Source",
+    "visitSource": "Visit Source",
+    "disclaimer": "For informational purposes only. Verify with the Ministry of Labour or consult a legal professional.",
+    "enterAmount": "Enter amount"
+  },
+  "inline": {
+    "please_select_the_notice_start_date": "Please select the notice start date"
+  }
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -87,6 +88,7 @@ function calcGratuity(basicSalary: number, totalServiceDays: number): { days: nu
 
 export default function UAELeaveSettlementCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   const [basicSalary, setBasicSalary] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -109,10 +111,10 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
     const unpaid = parseFloat(unpaidLeaveDays) || 0
     const noticeDays = parseFloat(noticePeriodDays) || 0
 
-    if (!salary || salary <= 0) errs.push(isAr ? 'أدخل الراتب الأساسي' : 'Enter a valid basic salary')
-    if (!start) errs.push(isAr ? 'أدخل تاريخ البدء' : 'Enter a valid start date')
-    if (!end) errs.push(isAr ? 'أدخل تاريخ الانتهاء' : 'Enter a valid end date')
-    if (start && end && end <= start) errs.push(isAr ? 'يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء' : 'End date must be after start date')
+    if (!salary || salary <= 0) errs.push(tr('inline.enter_a_valid_basic_salary'))
+    if (!start) errs.push(tr('inline.enter_a_valid_start_date'))
+    if (!end) errs.push(tr('inline.enter_a_valid_end_date'))
+    if (start && end && end <= start) errs.push(tr('inline.end_date_must_be_after_start_date'))
 
     if (errs.length) { setErrors(errs); return }
     setErrors([])
@@ -164,7 +166,7 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
       noticePay,
       breakdown,
     })
-  }, [basicSalary, startDate, endDate, takenLeaveDays, unpaidLeaveDays, noticePeriodDays, isAr])
+  }, [basicSalary, startDate, endDate, takenLeaveDays, unpaidLeaveDays, noticePeriodDays, tr])
 
   function reset() {
     setBasicSalary(''); setStartDate(''); setEndDate('')
@@ -173,64 +175,37 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
     setResult(null); setErrors([])
   }
 
-  const l = isAr ? {
-    title: 'حاسبة تسوية الإجازة — الإمارات',
-    basicSalary: 'الراتب الأساسي الشهري (درهم)',
-    startDate: 'تاريخ بدء العمل',
-    endDate: 'تاريخ انتهاء العمل',
-    takenLeave: 'أيام الإجازة المأخوذة',
-    unpaidLeave: 'أيام الإجازة غير مدفوعة الأجر',
-    contractType: 'نوع العقد',
-    terminationReason: 'سبب إنهاء العقد',
-    noticePeriod: 'أيام فترة الإشعار',
-    limited: 'محدد المدة',
-    unlimited: 'غير محدد المدة',
-    resignation: 'استقالة',
-    termination: 'إنهاء من صاحب العمل',
-    mutual: 'اتفاق متبادل',
-    advanced: 'خيارات متقدمة',
-    calculate: 'احسب التسوية',
-    reset: 'إعادة تعيين',
-    results: 'ملخص التسوية',
-    servicePeriod: 'فترة الخدمة',
-    leaveEntitlement: 'استحقاق الإجازة',
-    accruedDays: 'أيام الإجازة المستحقة',
-    takenDays: 'أيام الإجازة المأخوذة',
-    unusedDays: 'أيام الإجازة غير المستخدمة',
-    dailyRate: 'معدل الراتب اليومي',
-    total: 'إجمالي التسوية المقدر',
-    disclaimer: 'للأغراض التوضيحية فقط. ليس نصيحة قانونية أو مالية. استشر وزارة الموارد البشرية أو متخصصاً قانونياً. بناءً على المرسوم الاتحادي بقانون رقم 33 لسنة 2021.',
-    enterAmount: 'أدخل المبلغ',
-    years: 'سنة', months: 'شهر', days: 'يوم',
-  } : {
-    title: 'UAE Leave Settlement Calculator',
-    basicSalary: 'Monthly Basic Salary (AED)',
-    startDate: 'Employment Start Date',
-    endDate: 'End / Termination Date',
-    takenLeave: 'Annual Leave Days Already Taken',
-    unpaidLeave: 'Unpaid Leave Days (total)',
-    contractType: 'Contract Type',
-    terminationReason: 'Termination Reason',
-    noticePeriod: 'Notice Period Days (if owed)',
-    limited: 'Limited (Fixed-term)',
-    unlimited: 'Unlimited',
-    resignation: 'Resignation',
-    termination: 'Employer Termination',
-    mutual: 'Mutual Agreement',
-    advanced: 'Advanced Options',
-    calculate: 'Calculate Settlement',
-    reset: 'Reset',
-    results: 'Settlement Summary',
-    servicePeriod: 'Service Period',
-    leaveEntitlement: 'Leave Entitlement',
-    accruedDays: 'Accrued Leave Days',
-    takenDays: 'Leave Taken',
-    unusedDays: 'Unused Leave Days',
-    dailyRate: 'Daily Basic Rate',
-    total: 'Estimated Total Settlement',
-    disclaimer: 'For illustrative purposes only. Not legal or financial advice. Consult MOHRE or a legal professional. Based on Federal Decree-Law No. 33 of 2021.',
-    enterAmount: 'Enter amount',
-    years: 'yrs', months: 'mo', days: 'days',
+  const l = {
+    title: tr('l.title'),
+    basicSalary: tr('l.basicSalary'),
+    startDate: tr('l.startDate'),
+    endDate: tr('l.endDate'),
+    takenLeave: tr('l.takenLeave'),
+    unpaidLeave: tr('l.unpaidLeave'),
+    contractType: tr('l.contractType'),
+    terminationReason: tr('l.terminationReason'),
+    noticePeriod: tr('l.noticePeriod'),
+    limited: tr('l.limited'),
+    unlimited: tr('l.unlimited'),
+    resignation: tr('l.resignation'),
+    termination: tr('l.termination'),
+    mutual: tr('l.mutual'),
+    advanced: tr('l.advanced'),
+    calculate: tr('l.calculate'),
+    reset: tr('l.reset'),
+    results: tr('l.results'),
+    servicePeriod: tr('l.servicePeriod'),
+    leaveEntitlement: tr('l.leaveEntitlement'),
+    accruedDays: tr('l.accruedDays'),
+    takenDays: tr('l.takenDays'),
+    unusedDays: tr('l.unusedDays'),
+    dailyRate: tr('l.dailyRate'),
+    total: tr('l.total'),
+    disclaimer: tr('l.disclaimer'),
+    enterAmount: tr('l.enterAmount'),
+    years: tr('l.years'),
+    months: tr('l.months'),
+    days: tr('l.days'),
   }
 
   const inputClass = "w-full px-4 py-3 border border-gray-200 rounded-xl text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition text-sm"
@@ -351,29 +326,29 @@ export default function UAELeaveSettlementCalculator({ locale }: Props) {
           {/* Service Period */}
           <Section title={l.servicePeriod}>
             <InfoRow
-              label={isAr ? 'مدة الخدمة' : 'Total Service'}
+              label={tr('inline.total_service')}
               value={`${result.serviceYears} ${l.years} ${result.serviceMonths} ${l.months} ${result.serviceDays} ${l.days}`}
             />
             <InfoRow
               label={isAr ? 'معدل الراتب اليومي' : l.dailyRate}
               value={formatAED(result.dailyBasicRate)}
-              sub={isAr ? `${formatAED(parseFloat(basicSalary))} ÷ 30` : `AED ${parseFloat(basicSalary).toFixed(0)} ÷ 30`}
+              sub={tr('inline.aed_30', { p0: String(formatAED(parseFloat(basicSalary))), p1: String(parseFloat(basicSalary).toFixed(0)) })}
             />
           </Section>
 
           {/* Leave Entitlement */}
           <Section title={l.leaveEntitlement}>
             <InfoRow
-              label={isAr ? 'معدل الاستحقاق' : 'Accrual Rate'}
+              label={tr('inline.accrual_rate')}
               value={result.accrualRate}
             />
-            <InfoRow label={l.accruedDays} value={`${result.accruedLeaveDays} ${isAr ? 'يوم' : 'days'}`} />
-            <InfoRow label={l.takenDays} value={`${takenLeaveDays || 0} ${isAr ? 'يوم' : 'days'}`} negative />
-            <InfoRow label={l.unusedDays} value={`${result.unusedLeaveDays} ${isAr ? 'يوم' : 'days'}`} highlight />
+            <InfoRow label={l.accruedDays} value={`${result.accruedLeaveDays} ${tr('inline.days')}`} />
+            <InfoRow label={l.takenDays} value={`${takenLeaveDays || 0} ${tr('inline.days')}`} negative />
+            <InfoRow label={l.unusedDays} value={`${result.unusedLeaveDays} ${tr('inline.days')}`} highlight />
           </Section>
 
           {/* Breakdown */}
-          <Section title={isAr ? 'تفاصيل المبالغ' : 'Amount Breakdown'}>
+          <Section title={tr('inline.amount_breakdown')}>
             {result.breakdown.map((row, i) => (
               <div key={i} className="flex items-start justify-between gap-4">
                 <div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 
 type Props = { locale: string }
 
@@ -29,6 +30,7 @@ function formatNum(n: number) {
 
 export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
   const isAr = locale === 'ar'
+  const tr = useTranslations('tool')
 
   const [scenario, setScenario] = useState<Scenario>('annual')
   const [wage, setWage] = useState('')
@@ -46,7 +48,7 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
     const unusedVal = parseFloat(unusedDays) || 0
 
     if (!wageVal || wageVal <= 0) {
-      setError(isAr ? 'يرجى إدخال راتب صحيح أكبر من صفر' : 'Please enter a valid wage greater than 0')
+      setError(tr('inline.please_enter_a_valid_wage_greater_than_0'))
       return
     }
 
@@ -101,7 +103,7 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
       yearsOfService: yearsVal,
       monthsWorked: monthsVal,
     })
-  }, [wage, years, months, unusedDays, scenario, isAr])
+  }, [wage, years, months, unusedDays, scenario, tr])
 
   function reset() {
     setWage('')
@@ -125,49 +127,27 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
         { value: 'termination', label: 'Accrued Leave on Termination' },
       ]
 
-  const lbl = isAr
-    ? {
-        title: 'حاسبة الإجازة السنوية – السعودية',
-        wage: 'الراتب الشهري الفعلي (ريال)',
-        wageHint: 'الراتب الأساسي + البدلات الثابتة (أجر فعلي وفق نظام العمل)',
-        years: 'سنوات الخدمة',
-        months: 'أشهر إضافية (للسنة الجزئية)',
-        unused: 'أيام الإجازة غير المستخدمة (اختياري)',
-        calculate: 'احسب',
-        reset: 'إعادة تعيين',
-        results: 'نتائج الحساب',
-        dailyRate: 'الأجر اليومي',
-        entitlement: 'أيام الاستحقاق',
-        prorata: 'أيام تناسبية',
-        totalDays: 'إجمالي الأيام',
-        totalPay: 'إجمالي مستحق الإجازة',
-        tier21: 'المستوى: 21 يوم (أقل من 5 سنوات)',
-        tier30: 'المستوى: 30 يوم (5 سنوات فأكثر)',
-        disclaimer: 'للأغراض الإعلامية استناداً إلى نظام العمل السعودي (المادتان 109 و111). استشر جهات رسمية أو خبراء قانونيين لحالتك.',
-        scenario: 'نوع الحساب',
-        enterAmount: 'أدخل المبلغ',
-      }
-    : {
-        title: 'Saudi Annual Leave Calculator',
-        wage: 'Monthly Actual Wage (SAR)',
-        wageHint: 'Basic salary + fixed allowances (Actual Wage per Labour Law)',
-        years: 'Years of Service',
-        months: 'Additional Months (Partial Year)',
-        unused: 'Unused Leave Days (Optional)',
-        calculate: 'Calculate',
-        reset: 'Reset',
-        results: 'Your Results',
-        dailyRate: 'Daily Rate',
-        entitlement: 'Entitlement Days',
-        prorata: 'Pro-rata Days',
-        totalDays: 'Total Days',
-        totalPay: 'Total Leave Pay',
-        tier21: 'Tier: 21 days (under 5 years)',
-        tier30: 'Tier: 30 days (5+ years)',
-        disclaimer: 'For informational purposes based on Saudi Labour Law (Articles 109 & 111). Consult official sources or legal experts for your specific case.',
-        scenario: 'Calculation Type',
-        enterAmount: 'Enter amount',
-      }
+  const lbl = {
+    title: tr('lbl.title'),
+    wage: tr('lbl.wage'),
+    wageHint: tr('lbl.wageHint'),
+    years: tr('lbl.years'),
+    months: tr('lbl.months'),
+    unused: tr('lbl.unused'),
+    calculate: tr('lbl.calculate'),
+    reset: tr('lbl.reset'),
+    results: tr('lbl.results'),
+    dailyRate: tr('lbl.dailyRate'),
+    entitlement: tr('lbl.entitlement'),
+    prorata: tr('lbl.prorata'),
+    totalDays: tr('lbl.totalDays'),
+    totalPay: tr('lbl.totalPay'),
+    tier21: tr('lbl.tier21'),
+    tier30: tr('lbl.tier30'),
+    disclaimer: tr('lbl.disclaimer'),
+    scenario: tr('lbl.scenario'),
+    enterAmount: tr('lbl.enterAmount'),
+  }
 
   // Progress toward 30-day tier
   const yearsNum = parseFloat(years) || 0
@@ -268,8 +248,8 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
       {yearsNum > 0 && (
         <div>
           <div className="flex justify-between text-xs text-gray-500 mb-1">
-            <span>{isAr ? 'التقدم نحو مستحق 30 يوم' : 'Progress toward 30-day tier'}</span>
-            <span>{yearsNum >= 5 ? (isAr ? '✓ مؤهل' : '✓ Qualified') : `${yearsNum}/5 ${isAr ? 'سنوات' : 'years'}`}</span>
+            <span>{tr('inline.progress_toward_30_day_tier')}</span>
+            <span>{yearsNum >= 5 ? (tr('inline.qualified')) : `${yearsNum}/5 ${tr('inline.years')}`}</span>
           </div>
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
             <div
@@ -325,13 +305,13 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
           <div className="space-y-3">
             <Row label={lbl.dailyRate} value={formatSAR(result.dailyRate)} />
             {result.scenario !== 'prorata' && (
-              <Row label={lbl.entitlement} value={`${result.entitlementDays} ${isAr ? 'يوم' : 'days'}`} />
+              <Row label={lbl.entitlement} value={`${result.entitlementDays} ${tr('inline.days')}`} />
             )}
             {result.prorataDays > 0 && (
-              <Row label={lbl.prorata} value={`${formatNum(result.prorataDays)} ${isAr ? 'يوم' : 'days'}`} />
+              <Row label={lbl.prorata} value={`${formatNum(result.prorataDays)} ${tr('inline.days')}`} />
             )}
             <div className="border-t border-gray-200 pt-3">
-              <Row label={lbl.totalDays} value={`${formatNum(result.totalDays)} ${isAr ? 'يوم' : 'days'}`} />
+              <Row label={lbl.totalDays} value={`${formatNum(result.totalDays)} ${tr('inline.days')}`} />
               <Row label={lbl.totalPay} value={formatSAR(result.totalPay)} highlight />
             </div>
           </div>
@@ -339,9 +319,7 @@ export default function SaudiAnnualLeaveCalculator({ locale }: Props) {
           {/* Comparison note */}
           <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
             <p className="text-xs text-blue-700 font-medium">
-              {isAr
-                ? '🌍 للمقارنة: الإمارات تمنح عادةً 30 يوم بعد سنة خدمة. قطر والكويت تتبع تشريعات مختلفة.'
-                : '🌍 For comparison: UAE typically grants 30 days after 1 year of service. Qatar and Kuwait follow different labour legislation.'}
+              {tr('inline.for_comparison_uae_typically_grants_30_d')}
             </p>
           </div>
         </div>
