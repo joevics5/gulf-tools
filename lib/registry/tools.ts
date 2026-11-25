@@ -390,6 +390,19 @@ export const TOOLS: Tool[] = [
   requiresApi: false,
   launchDate: '2025-01-01',
 },
+// PENDING: uncomment once tool_translations rows exist for bahrain-salary-calculator (en + ar)
+// {
+//   slug: 'bahrain-salary-calculator',
+//   category: 'finance',
+//   schema: 'calculator',
+//   featured: false,
+//   countries: ['bahrain'],
+//   relatedTools: ['bahrain-gratuity-calculator'],
+//   relatedArticles: [],
+//   hasCountryVariants: false,
+//   requiresApi: false,
+//   launchDate: '2026-11-26',
+// },
 {
   slug: 'bahrain-gratuity-calculator',
   category: 'finance',

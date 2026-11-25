@@ -1,0 +1,31 @@
+{
+  "labels": {
+    "nationality": "Nationality",
+    "gross": "Gross Monthly Salary (BHD)",
+    "enterAmount": "Enter amount",
+    "insurable": "Insurable salary (optional)",
+    "insurablePlaceholder": "Same as gross if left blank",
+    "insurableHint": "SIO contributions are charged on your insurable wage, up to BHD 4,000 a month. It depends on your employer's pay structure. Leave blank to use your gross salary.",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "netMonthly": "Net Monthly Salary",
+    "grossSalary": "Gross Salary",
+    "insurableSalary": "Insurable salary used (max BHD 4,000)",
+    "employeeBahraini": "SIO employee share (8%)",
+    "employeeExpat": "SIO employee share (1% unemployment)",
+    "annualGross": "Annual Gross",
+    "annualNet": "Annual Net",
+    "employer": "Employer SIO contribution ({rate}%)",
+    "employerCost": "Total monthly cost to employer"
+  },
+  "nationalities": {
+    "bahraini": "Bahraini national",
+    "expat": "Expatriate"
+  },
+  "notes": {
+    "bahraini": "Bahraini employees pay 8% of insurable wage (7% pension plus 1% unemployment). The employer pays a rising share: 18% in 2026, 19% in 2027 and 20% from 2028. Insurable wage is capped at BHD 4,000 a month. Bahrain has no personal income tax.",
+    "expat": "Expatriate employees pay 1% of insurable wage for unemployment insurance, and the employer pays 3% for work injury cover. Bahrain has no personal income tax. Expatriates also have an end-of-service benefit funded by the employer through the SIO.",
+    "disclaimer": "Estimate only. Rates are based on published SIO rules and can change. Nationals of other GCC countries follow their home country rules and are not covered here. Check with the SIO or your employer for your exact deduction."
+  }
+}

@@ -212,6 +212,8 @@ async function loadToolComponent(toolSlug: string) {
         return (await import('@/components/tools/finance/KuwaitGratuityCalculator')).default;
       case 'oman-gratuity-calculator':
         return (await import('@/components/tools/finance/OmanGratuityCalculator')).default;
+      case 'bahrain-salary-calculator':
+        return (await import('@/components/tools/finance/BahrainSalaryCalculator')).default;
       case 'bahrain-gratuity-calculator':
         return (await import('@/components/tools/finance/BahrainGratuityCalculator')).default;
       // case 'uae-indemnity-calculator':
