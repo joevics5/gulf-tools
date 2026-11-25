@@ -1,5 +1,5 @@
 {
-  "en": [
+  "ar": [
     "adcb-emi-calculator",
     "adcb-loan-calculator",
     "adcb-mortgage-calculator-dubai",
@@ -29,6 +29,7 @@
     "ksa-vat-calculator",
     "kuwait-emi-calculator",
     "kuwait-gratuity-calculator",
+    "kuwait-salary-calculator",
     "leave-encashment-calculator",
     "loan-emi-calculator",
     "mashreq-loan-calculator",
@@ -74,7 +75,7 @@
     "uae-vat-calculator",
     "zakat-calculator"
   ],
-  "ar": [
+  "en": [
     "adcb-emi-calculator",
     "adcb-loan-calculator",
     "adcb-mortgage-calculator-dubai",
@@ -104,6 +105,7 @@
     "ksa-vat-calculator",
     "kuwait-emi-calculator",
     "kuwait-gratuity-calculator",
+    "kuwait-salary-calculator",
     "leave-encashment-calculator",
     "loan-emi-calculator",
     "mashreq-loan-calculator",

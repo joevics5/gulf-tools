@@ -64,15 +64,18 @@ if (!rows.length) { console.error('No usable rows'); process.exit(1) }
 
 const browser = await chromium.launch()
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 })
-const manifest = {}
+// Start from the existing manifest so generating a few cards never drops the others.
+const manifestPath = join(root, 'lib/og/manifest.json')
+const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : {}
 for (const { tool_slug, locale, title } of rows) {
   const dir = join(root, 'public/og/tools', locale); mkdirSync(dir, { recursive: true })
   await page.setContent(card(locale, title)); await page.evaluate(() => document.fonts.ready)
   await page.screenshot({ path: join(dir, `${tool_slug}.jpg`), type: 'jpeg', quality: 86 })
-  ;(manifest[locale] ??= []).push(tool_slug)
+  manifest[locale] ??= []
+  if (!manifest[locale].includes(tool_slug)) manifest[locale].push(tool_slug)
 }
 await browser.close()
 for (const l of Object.keys(manifest)) manifest[l].sort()
 mkdirSync(join(root, 'lib/og'), { recursive: true })
-writeFileSync(join(root, 'lib/og/manifest.json'), JSON.stringify(manifest, null, 2) + '\n')
+writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n')
 console.log(`Generated ${rows.length} image(s) for: ${Object.entries(manifest).map(([l, s]) => `${l}=${s.length}`).join(', ')}`)
