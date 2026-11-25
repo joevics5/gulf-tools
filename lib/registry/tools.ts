@@ -355,6 +355,18 @@ export const TOOLS: Tool[] = [
   launchDate: '2025-01-01',
 },
 {
+  slug: 'kuwait-salary-calculator',
+  category: 'finance',
+  schema: 'calculator',
+  featured: false,
+  countries: ['kuwait'],
+  relatedTools: ['kuwait-gratuity-calculator', 'kuwait-emi-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2026-11-26',
+},
+{
   slug: 'kuwait-gratuity-calculator',
   category: 'finance',
   schema: 'calculator',

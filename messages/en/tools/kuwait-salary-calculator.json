@@ -1,0 +1,33 @@
+{
+  "labels": {
+    "nationality": "Nationality",
+    "gross": "Gross Monthly Salary (KWD)",
+    "enterAmount": "Enter amount",
+    "contributory": "Salary subject to PIFSS (optional)",
+    "contributoryPlaceholder": "Same as gross if left blank",
+    "contributoryHint": "PIFSS is charged on the contributory salary, which depends on your employer's rules. Leave blank to use your gross salary.",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "netMonthly": "Net Monthly Salary",
+    "grossSalary": "Gross Salary",
+    "contributorySalary": "Contributory salary used",
+    "employeeMain": "PIFSS employee share (8%, up to KWD 2,750)",
+    "employeeExtra": "Additional contribution (2.5%, up to KWD 1,500)",
+    "employeeTotal": "Total PIFSS deduction",
+    "noDeductions": "No social security deduction for expatriates",
+    "annualGross": "Annual Gross",
+    "annualNet": "Annual Net",
+    "employer": "Employer PIFSS contribution (11.5%)",
+    "employerCost": "Total monthly cost to employer"
+  },
+  "nationalities": {
+    "kuwaiti": "Kuwaiti national",
+    "expat": "Expatriate"
+  },
+  "notes": {
+    "kuwaiti": "Kuwaiti employees in the private sector pay 8% of contributory salary up to KWD 2,750, plus 2.5% up to KWD 1,500. Contributions are calculated on at least KWD 230. Employers pay 11.5%. Kuwait has no personal income tax.",
+    "expat": "Expatriate workers do not pay social security in Kuwait, and there is no personal income tax, so net salary equals gross salary. Expatriates receive an end-of-service indemnity instead.",
+    "disclaimer": "Estimate only. Rates are based on published private-sector PIFSS rules and can change. Check with PIFSS or your employer for your exact deduction."
+  }
+}
