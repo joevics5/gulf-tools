@@ -52,6 +52,8 @@ export default async function CategoryPage({ params }: { params: Promise<Params>
   if (!categoryData) notFound()
 
   const tools = getToolsByCategory(category)
+  // A category with no published tools is a thin page: don't serve or index it.
+  if (tools.length === 0) notFound()
   const t = await getTranslations({ locale, namespace: `categories.${category}` })
   const tNav = await getTranslations({ locale, namespace: 'nav' })
 

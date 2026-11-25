@@ -147,20 +147,20 @@ async function loadToolComponent(toolSlug: string) {
   try {
     switch (toolSlug) {
       // ── FINANCE TOOLS ──
-      case 'salary-calculator':
-        return (await import('@/components/tools/finance/SalaryCalculator')).default;
+      // case 'salary-calculator':
+        // return (await import('@/components/tools/finance/SalaryCalculator')).default;
       // case 'uae-mortgage-calculator':
         // return (await import('@/components/tools/finance/UAEMortgageCalculator')).default;
       // case 'dubai-mortgage-calculator-non-residents':
         // return (await import('@/components/tools/finance/DubaiNonResidentMortgageCalculator')).default;
       // case 'home-loan-calculator-dubai':
         // return (await import('@/components/tools/finance/HomeLoanCalculatorDubai')).default;
-      case 'loan-emi-calculator':
-        return (await import('@/components/tools/finance/LoanEMICalculator')).default;
-      case 'savings-goal-calculator':
-        return (await import('@/components/tools/finance/SavingsGoalCalculator')).default;
-      case 'compound-interest-calculator':
-        return (await import('@/components/tools/finance/CompoundInterestCalculator')).default;
+      // case 'loan-emi-calculator':
+        // return (await import('@/components/tools/finance/LoanEMICalculator')).default;
+      // case 'savings-goal-calculator':
+        // return (await import('@/components/tools/finance/SavingsGoalCalculator')).default;
+      // case 'compound-interest-calculator':
+        // return (await import('@/components/tools/finance/CompoundInterestCalculator')).default;
       // case 'uae-salary-calculator':
         // return (await import('@/components/tools/finance/UAESalaryCalculator')).default;
       // case 'dubai-salary-calculator':
@@ -173,8 +173,8 @@ async function loadToolComponent(toolSlug: string) {
         return (await import('@/components/tools/finance/SaudiSalaryCalculator')).default;
       case 'egypt-salary-calculator':
         return (await import('@/components/tools/finance/EgyptSalaryCalculator')).default;
-      case 'saudi-vacation-calculator':
-        return (await import('@/components/tools/finance/SaudiVacationCalculator')).default;
+      // case 'saudi-vacation-calculator':
+        // return (await import('@/components/tools/finance/SaudiVacationCalculator')).default;
       // case 'uae-car-loan-calculator':
         // return (await import('@/components/tools/finance/UAECarLoanCalculator')).default;
       case 'qatar-salary-calculator':
@@ -183,8 +183,8 @@ async function loadToolComponent(toolSlug: string) {
         // return (await import('@/components/tools/finance/UAELoanEMICalculator')).default;
       // case 'uae-loan-eligibility-calculator':
         // return (await import('@/components/tools/finance/UAELoanEligibilityCalculator')).default;
-      case 'gcc-emi-calculator':
-        return (await import('@/components/tools/finance/GCCEMICalculator')).default;
+      // case 'gcc-emi-calculator':
+        // return (await import('@/components/tools/finance/GCCEMICalculator')).default;
       case 'kuwait-emi-calculator':
         return (await import('@/components/tools/finance/KuwaitEMICalculator')).default;
       // case 'top-up-loan-calculator-uae':
@@ -252,12 +252,12 @@ async function loadToolComponent(toolSlug: string) {
         // return (await import('@/components/tools/finance/ADCBMortgageCalculator')).default;
 
       // ── HR & PAYROLL TOOLS ──
-      case 'gratuity-calculator':
-        return (await import('@/components/tools/hr-payroll/GratuityCalculator')).default;
-      case 'notice-period-calculator':
-        return (await import('@/components/tools/hr-payroll/NoticePeriodCalculator')).default;
-      case 'leave-encashment-calculator':
-        return (await import('@/components/tools/hr-payroll/LeaveEncashmentCalculator')).default;
+      // case 'gratuity-calculator':
+        // return (await import('@/components/tools/hr-payroll/GratuityCalculator')).default;
+      // case 'notice-period-calculator':
+        // return (await import('@/components/tools/hr-payroll/NoticePeriodCalculator')).default;
+      // case 'leave-encashment-calculator':
+        // return (await import('@/components/tools/hr-payroll/LeaveEncashmentCalculator')).default;
       // case 'uae-leave-settlement-calculator':
         // return (await import('@/components/tools/hr-payroll/UAELeaveSettlementCalculator')).default;
       // case 'uae-sick-leave-calculator':
@@ -277,18 +277,18 @@ async function loadToolComponent(toolSlug: string) {
         // return (await import('@/components/tools/hr-payroll/UAEFreeZoneGratuityCalculator')).default;
 
       // ── ISLAMIC TOOLS ──
-      case 'zakat-calculator':
-        return (await import('@/components/tools/islamic-tools/ZakatCalculator')).default;
-      case 'hijri-gregorian-converter':
-        return (await import('@/components/tools/islamic-tools/HijriGregorianConverter')).default;
-      case 'gold-zakat-calculator':
-        return (await import('@/components/tools/islamic-tools/GoldZakatCalculator')).default;
-      case 'cash-zakat-calculator':
-        return (await import('@/components/tools/islamic-tools/CashZakatCalculator')).default;
-      case 'tola-gold-zakat-calculator':
-        return (await import('@/components/tools/islamic-tools/TolaGoldZakatCalculator')).default;
-      case 'salary-zakat-calculator':
-        return (await import('@/components/tools/islamic-tools/SalaryZakatCalculator')).default;
+      // case 'zakat-calculator':
+        // return (await import('@/components/tools/islamic-tools/ZakatCalculator')).default;
+      // case 'hijri-gregorian-converter':
+        // return (await import('@/components/tools/islamic-tools/HijriGregorianConverter')).default;
+      // case 'gold-zakat-calculator':
+        // return (await import('@/components/tools/islamic-tools/GoldZakatCalculator')).default;
+      // case 'cash-zakat-calculator':
+        // return (await import('@/components/tools/islamic-tools/CashZakatCalculator')).default;
+      // case 'tola-gold-zakat-calculator':
+        // return (await import('@/components/tools/islamic-tools/TolaGoldZakatCalculator')).default;
+      // case 'salary-zakat-calculator':
+        // return (await import('@/components/tools/islamic-tools/SalaryZakatCalculator')).default;
 
       // ── TAX & VAT TOOLS ──
       // case 'uae-vat-calculator':
@@ -297,10 +297,10 @@ async function loadToolComponent(toolSlug: string) {
         return (await import('@/components/tools/tax-vat/KSAVatCalculator')).default;
 
       // ── BUSINESS TOOLS ──
-      case 'profit-margin-calculator':
-        return (await import('@/components/tools/business/ProfitMarginCalculator')).default;
-      case 'invoice-generator':
-        return (await import('@/components/tools/business/InvoiceGenerator')).default;
+      // case 'profit-margin-calculator':
+        // return (await import('@/components/tools/business/ProfitMarginCalculator')).default;
+      // case 'invoice-generator':
+        // return (await import('@/components/tools/business/InvoiceGenerator')).default;
 
       default:
         console.warn(`Tool slug not found: ${toolSlug}`);

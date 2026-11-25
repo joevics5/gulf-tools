@@ -21,14 +21,18 @@ Standards that are cheap to follow now and expensive to retrofit across 70+ tool
 - Tool SEO copy (title, description, FAQ, article) comes from the Supabase
   `tool_translations` table, not from the JSON files.
 
-## Launch scope: UAE tools are unpublished
+## Launch scope: country-specific tools only
 
-The 40 UAE-specific tools are commented out in `lib/registry/tools.ts` (marked
-`UNPUBLISHED (UAE launch deferred)`) and in the `loadToolComponent` switch. Their
-components and `messages/` files are kept. Until UAE launches, build tools for Kuwait,
-Bahrain, Oman, Qatar and Egypt. To publish a UAE tool, uncomment both its registry
-entry and its `case`. Registry entries drive the sitemap, hubs and static params, so
-nothing else needs changing.
+Only tools built for ONE country are published (currently Kuwait, Bahrain, Oman, Qatar,
+Egypt and a few Saudi ones). Everything else is commented out in `lib/registry/tools.ts`
+and in the `loadToolComponent` switch of the tool page: the 41 UAE tools (marked
+`UNPUBLISHED (UAE launch deferred)`) and the 18 generic multi-country tools
+(marked `UNPUBLISHED (generic ...)`), because generic tools are hard to rank. Components
+and `messages/` files are kept. To publish one, uncomment its registry entry and its
+`case`; the registry drives the sitemap, hubs and static params. A category with no
+published tool returns 404 and is left out of the sitemap, so it comes back by itself
+when a tool is added. New tools should be country-specific: Kuwait, Bahrain, Oman,
+Egypt first, 10-20 each, before launching the UAE.
 
 ## Adding a tool
 

@@ -4,13 +4,15 @@
 
 import { buildSitemapXml, xmlResponse } from '@/lib/sitemap/xml'
 import { CATEGORIES } from '@/lib/registry/categories'
+import { getToolsByCategory } from '@/lib/registry/tools'
 
 import { BASE_URL } from '@/lib/i18n/locales'
 import { routing } from '@/lib/i18n/routing'
 const locales  = routing.locales
 
 export async function GET() {
-  const entries = CATEGORIES.flatMap(category =>
+  // Only categories that have at least one published tool
+  const entries = CATEGORIES.filter(c => getToolsByCategory(c.slug).length > 0).flatMap(category =>
     locales.map(locale => ({
       url: `${BASE_URL}/${locale}/tools/${category.slug}`,
       lastModified: new Date(),
