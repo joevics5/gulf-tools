@@ -1,0 +1,72 @@
+{
+  "currency": "EGP",
+  "labels": {
+    "grossMonthlyInput": "Gross monthly salary",
+    "targetNet": "Target net monthly salary",
+    "mode": "Calculation mode",
+    "grossToNet": "Gross → Net",
+    "netToGross": "Net → Gross",
+    "quickExamples": "Quick examples:",
+    "grossUpHint": "We'll calculate the gross via iterative refinement",
+    "advanced": "Advanced options",
+    "nonTaxable": "Non-taxable allowances (monthly)",
+    "nonTaxableHint": "Housing, transport, food allowances excluded from tax",
+    "reset": "Reset",
+    "requiredGrossA": "Required gross salary:",
+    "requiredGrossB": "to achieve a net of",
+    "grossMonthly": "Gross monthly",
+    "perYear": "/ yr",
+    "totalDeductions": "Total deductions",
+    "netTakeHome": "Net take-home",
+    "effectiveRate": "Effective tax rate",
+    "effectiveRateSub": "income tax on gross"
+  },
+  "presets": {
+    "entry": "Entry level",
+    "mid": "Mid-level",
+    "senior": "Senior"
+  },
+  "notes": {
+    "minWage": "Social insurance is calculated on the minimum insurable wage of {amount}, not your gross.",
+    "maxWage": "Social insurance is capped at the maximum insurable wage of {amount}.",
+    "disclaimer": "Estimates based on Egypt Income Tax Law 91/2005 (as amended) and Social Insurance Law 148/2019. SI caps updated for 2026. For guidance specific to your contract, consult a licensed payroll advisor or the Egyptian Tax Authority."
+  },
+  "table": {
+    "component": "Component",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "earnings": "Earnings",
+    "grossSalary": "Gross salary",
+    "siDeductions": "Social insurance deductions",
+    "pension": "Pension & sickness (11% of insurable wage)",
+    "health": "Health insurance (1% of gross)",
+    "martyrs": "Martyrs' Families Fund (0.05%)",
+    "totalSi": "Total SI deductions",
+    "incomeTax": "Income tax",
+    "taxableIncome": "Annual taxable income",
+    "incomeTaxProgressive": "Income tax (progressive)",
+    "netPay": "Net take-home pay"
+  },
+  "bracket": {
+    "title": "Income tax bracket breakdown",
+    "bracket": "Bracket",
+    "taxable": "Taxable",
+    "tax": "Tax",
+    "total": "Total annual income tax",
+    "over": "Over EGP {from}k",
+    "range": "EGP {from}k – {to}k"
+  },
+  "employer": {
+    "toggle": "Show employer total cost",
+    "title": "Employer cost (informational)",
+    "si": "Employer SI (18.75% of insurable wage)",
+    "health": "Employer health insurance (3.25%)",
+    "total": "Total employer monthly cost"
+  },
+  "schedule": {
+    "title": "Egypt income tax brackets 2026",
+    "over": "Over {amount}",
+    "range": "{from} – {to}",
+    "note": "Personal exemption of EGP 20,000/year and SI contributions are deducted before applying brackets."
+  }
+}
