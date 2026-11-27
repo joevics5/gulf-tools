@@ -1,0 +1,26 @@
+{
+  "labels": {
+    "sickDays": "Sick leave days in the year",
+    "sickDaysHint": "Total sick leave days taken in one year.",
+    "wage": "Monthly wage (BHD)",
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "paidTotal": "Sick leave pay",
+    "daysUnit": "days",
+    "dailyRate": "Daily rate (monthly wage ÷ 30)",
+    "normalTotal": "Normal pay for the same days",
+    "deduction": "Reduction from normal pay"
+  },
+  "tiers": {
+    "full": "Full pay",
+    "half": "Half pay",
+    "unpaid": "Unpaid"
+  },
+  "notes": {
+    "outside": "{days} of these days fall beyond the 55-day sick leave schedule, so they are not covered by the statutory sick pay shown here.",
+    "rules": "Under Bahrain's Labour Law, sick leave in a year is paid at full wage for the first 15 days, half wage for the next 20 days, and is unpaid for the following 20 days.",
+    "disclaimer": "Estimate only. The daily rate is monthly wage divided by 30, and your contract may be more generous. Confirm with your employer or the Labour Market Regulatory Authority."
+  }
+}

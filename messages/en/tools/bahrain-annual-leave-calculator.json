@@ -1,0 +1,26 @@
+{
+  "labels": {
+    "startDate": "Start of employment",
+    "endDate": "Calculate up to (optional)",
+    "endDateHint": "Leave blank to use today's date.",
+    "taken": "Leave days already taken",
+    "wage": "Monthly wage (BHD)",
+    "optional": "Optional, for the cash value",
+    "dateError": "Enter a valid start date. The end date must not be before it.",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "balance": "Leave balance",
+    "daysUnit": "days",
+    "months": "Completed months of service",
+    "accrued": "Leave accrued",
+    "takenResult": "Leave taken",
+    "dailyRate": "Daily rate (monthly wage ÷ 30)",
+    "value": "Cash value of unused leave"
+  },
+  "notes": {
+    "overdrawn": "You have taken more leave than has accrued so far.",
+    "rules": "Bahrain private-sector employees get 30 calendar days of paid annual leave a year. Leave accrues at 2.5 days for each completed month, and unused leave is paid out in cash when employment ends.",
+    "disclaimer": "Estimate only. The cash value uses a daily rate of monthly wage divided by 30, and your contract may set a more generous entitlement. Confirm with your employer or the Labour Market Regulatory Authority."
+  }
+}
