@@ -475,6 +475,18 @@ export const TOOLS: Tool[] = [
   launchDate: '2026-11-28',
 },
 {
+  slug: 'kuwait-notice-period-calculator',
+  category: 'hr-payroll',
+  schema: 'calculator',
+  featured: false,
+  countries: ['kuwait'],
+  relatedTools: ['kuwait-gratuity-calculator', 'kuwait-salary-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2026-11-28',
+},
+{
   slug: 'bahrain-gratuity-calculator',
   category: 'finance',
   schema: 'calculator',

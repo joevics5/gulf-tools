@@ -1,0 +1,24 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "given": "Date notice is given",
+    "payType": "How the worker is paid",
+    "wage": "Monthly wage (KWD, optional)",
+    "wageHint": "Used to estimate pay in lieu of notice for monthly-paid workers.",
+    "lastDay": "Notice ends on",
+    "noticeLength": "Notice period",
+    "months": "{n} month(s)",
+    "compensation": "Pay in lieu if no notice is given"
+  },
+  "payTypes": {
+    "monthly": "Monthly wage",
+    "other": "Other (daily, weekly, hourly)"
+  },
+  "notes": {
+    "rules": "Under Kuwait's private-sector Labour Law (Law 6 of 2010, Art. 44) on an indefinite contract notice is 3 months for workers paid monthly and 1 month for other workers. Ending the contract without notice means paying compensation equal to pay for the notice period.",
+    "disclaimer": "Estimate only. Pay in lieu is shown as the monthly wage times the notice months, and your contract may set longer terms. Fixed-term contracts and probation follow different rules. Confirm with your employer or the Public Authority for Manpower."
+  }
+}
