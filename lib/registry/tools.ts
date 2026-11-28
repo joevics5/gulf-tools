@@ -499,6 +499,18 @@ export const TOOLS: Tool[] = [
   launchDate: '2026-11-28',
 },
 {
+  slug: 'egypt-annual-leave-calculator',
+  category: 'hr-payroll',
+  schema: 'calculator',
+  featured: false,
+  countries: ['egypt'],
+  relatedTools: ['egypt-salary-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2026-11-28',
+},
+{
   slug: 'bahrain-gratuity-calculator',
   category: 'finance',
   schema: 'calculator',

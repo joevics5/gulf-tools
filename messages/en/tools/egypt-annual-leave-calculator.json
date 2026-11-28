@@ -1,0 +1,28 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "daysUnit": "days",
+    "years": "Completed years of service",
+    "yearsHint": "Enter 0 if you are still in your first year.",
+    "over50": "Worker is over 50 years old",
+    "disability": "Worker is a person with a disability",
+    "wage": "Monthly wage (EGP, optional)",
+    "unused": "Unused leave days (optional)",
+    "entitlement": "Annual leave entitlement",
+    "basis": "Basis",
+    "value": "Value of {days} unused days"
+  },
+  "reasons": {
+    "first": "First year of service",
+    "later": "Second year of service onward",
+    "senior": "Ten years of service or over 50",
+    "disability": "Person with a disability"
+  },
+  "notes": {
+    "rules": "Under Egypt's Labour Law (Law 14 of 2025, Art. 124) paid annual leave, not counting holidays and weekly rest days, is 15 days in the first year, 21 days from the second year, 30 days after ten years of service or for workers over 50, and 45 days for persons with disabilities.",
+    "disclaimer": "Estimate only. The value of unused days is the monthly wage divided by 30, times the days. Your contract may give more, and the law took effect on 1 September 2025. Confirm with your employer or the Ministry of Labour."
+  }
+}
