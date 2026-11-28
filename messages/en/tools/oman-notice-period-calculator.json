@@ -1,0 +1,26 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "daysUnit": "days",
+    "given": "Date notice is given",
+    "payType": "How the worker is paid",
+    "contractDays": "Longer notice in the contract (days, optional)",
+    "contractDaysHint": "The law's period applies unless the contract sets a longer one.",
+    "wage": "Monthly gross wage (OMR, optional)",
+    "wageHint": "Used to estimate pay in lieu of notice.",
+    "lastDay": "Notice ends on",
+    "noticeLength": "Notice period",
+    "compensation": "Pay in lieu if no notice is given"
+  },
+  "payTypes": {
+    "monthly": "Monthly wage",
+    "other": "Other (daily, weekly, hourly)"
+  },
+  "notes": {
+    "rules": "Under Oman's Labour Law (Royal Decree 53/2023, Art. 38) on an indefinite contract either side gives written notice of 30 days for monthly-paid workers and 15 days for others, unless the contract says longer. Ending without notice means paying compensation for the notice period. Employer notice must be at least a month (Art. 36), and the worker gets 10 paid hours a week to look for work during notice (Art. 39).",
+    "disclaimer": "Estimate only. Pay in lieu is the monthly gross wage divided by 30, times the notice days. Fixed-term contracts and probation (up to 3 months for monthly-paid workers, 7 days' notice) follow different rules. Confirm with the Ministry of Labour."
+  }
+}

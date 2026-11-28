@@ -1,0 +1,37 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "daysUnit": "days",
+    "basic": "Monthly basic wage (OMR)",
+    "dailyHours": "Normal working hours per day",
+    "dailyHoursHint": "Used to turn the monthly wage into an hourly rate.",
+    "kind": "Type of overtime",
+    "consent": "Worker agreed to the overtime?",
+    "hours": "Overtime hours",
+    "restDays": "Rest days or holidays worked",
+    "totalPay": "Total overtime pay",
+    "totalExtra": "Extra pay for the days worked",
+    "dailyRate": "Daily basic wage (monthly ÷ 30)",
+    "hourlyRate": "Hourly basic wage",
+    "premium": "Premium",
+    "perHour": "Pay per overtime hour",
+    "perDay": "Extra pay per day"
+  },
+  "kinds": {
+    "day": "Daytime hours",
+    "night": "Night hours",
+    "rest": "Weekly rest day or official holiday"
+  },
+  "consent": {
+    "yes": "Yes, with the worker's consent",
+    "no": "No, exceptional work without consent"
+  },
+  "notes": {
+    "hourRule": "Under Oman's Labour Law (Royal Decree 53/2023, Art. 71–72) each overtime hour is paid at the basic hourly wage plus at least 25% by day and 50% at night. For limited exceptional work without the worker's consent the premium is at least 50% by day and 75% at night.",
+    "restRule": "Under Oman's Labour Law (Royal Decree 53/2023, Art. 71–72) work on a weekly rest day or holiday earns extra pay of 100% of the daily basic wage on top of the day's wage, or a day off in lieu. For limited exceptional work without consent it is 200%. The amount shown is the extra pay only.",
+    "disclaimer": "Estimate only. The hourly rate is the monthly basic wage divided by 30 and by the daily hours, and the law sets minimums that your contract may exceed. Confirm with your employer or the Ministry of Labour."
+  }
+}

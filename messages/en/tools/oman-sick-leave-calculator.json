@@ -1,0 +1,27 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "daysUnit": "days",
+    "sickDays": "Sick leave days in the year",
+    "sickDaysHint": "Total sick leave days taken in one year (maximum 182).",
+    "wage": "Monthly gross wage (OMR)",
+    "paidTotal": "Sick leave pay",
+    "dailyRate": "Daily rate (monthly wage ÷ 30)",
+    "normalTotal": "Normal pay for the same days",
+    "deduction": "Reduction from normal pay"
+  },
+  "tiers": {
+    "t1": "Days 1–21 at 100%",
+    "t2": "Days 22–35 at 75%",
+    "t3": "Days 36–70 at 50%",
+    "t4": "Days 71–182 at 35%"
+  },
+  "notes": {
+    "outside": "{days} of these days go beyond the 182-day yearly limit, so they are not covered by the sick pay shown here.",
+    "rules": "Under Oman's Labour Law (Royal Decree 53/2023, Art. 82) sick leave is up to 182 days a year, paid at 100% of the wage for days 1–21, 75% for days 22–35, 50% for days 36–70 and 35% for days 71–182.",
+    "disclaimer": "Estimate only. The daily rate is the monthly gross wage divided by 30, and your contract may be more generous. Confirm with your employer or the Ministry of Labour."
+  }
+}

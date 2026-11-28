@@ -214,6 +214,14 @@ async function loadToolComponent(toolSlug: string) {
         return (await import('@/components/tools/finance/OmanGratuityCalculator')).default;
       case 'bahrain-annual-leave-calculator':
         return (await import('@/components/tools/hr-payroll/BahrainAnnualLeaveCalculator')).default;
+      case 'oman-annual-leave-calculator':
+        return (await import('@/components/tools/hr-payroll/OmanAnnualLeaveCalculator')).default;
+      case 'oman-sick-leave-calculator':
+        return (await import('@/components/tools/hr-payroll/OmanSickLeaveCalculator')).default;
+      case 'oman-overtime-calculator':
+        return (await import('@/components/tools/hr-payroll/OmanOvertimeCalculator')).default;
+      case 'oman-notice-period-calculator':
+        return (await import('@/components/tools/hr-payroll/OmanNoticePeriodCalculator')).default;
       case 'bahrain-sick-leave-calculator':
         return (await import('@/components/tools/hr-payroll/BahrainSickLeaveCalculator')).default;
       case 'bahrain-salary-calculator':

@@ -1,0 +1,22 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "daysUnit": "days",
+    "wage": "Monthly gross wage (OMR)",
+    "days": "Unused leave days",
+    "daysHint": "Leave days you want to value in cash.",
+    "joined": "Joining date (optional)",
+    "joinedHint": "Used to show the earliest date you can take leave.",
+    "value": "Value of the leave days",
+    "dailyRate": "Daily rate (monthly wage ÷ 30)",
+    "daysCounted": "Leave days counted",
+    "firstLeave": "Earliest date for first leave"
+  },
+  "notes": {
+    "rules": "Under Oman's Labour Law (Royal Decree 53/2023, Art. 78 and 81) workers get at least 30 days of annual leave on full wage. Leave cannot be taken before 6 months from the joining date, and must be taken at least once every 2 years.",
+    "disclaimer": "Estimate only. The value is the monthly gross wage divided by 30, times the days. How leave builds up and what is paid out on leaving can depend on your contract. Confirm with your employer or the Ministry of Labour."
+  }
+}
