@@ -487,6 +487,18 @@ export const TOOLS: Tool[] = [
   launchDate: '2026-11-28',
 },
 {
+  slug: 'kuwait-overtime-calculator',
+  category: 'hr-payroll',
+  schema: 'calculator',
+  featured: false,
+  countries: ['kuwait'],
+  relatedTools: ['kuwait-salary-calculator', 'kuwait-notice-period-calculator'],
+  relatedArticles: [],
+  hasCountryVariants: false,
+  requiresApi: false,
+  launchDate: '2026-11-28',
+},
+{
   slug: 'bahrain-gratuity-calculator',
   category: 'finance',
   schema: 'calculator',

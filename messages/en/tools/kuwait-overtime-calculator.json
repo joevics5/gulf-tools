@@ -1,0 +1,21 @@
+{
+  "labels": {
+    "enterAmount": "Enter amount",
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "basic": "Monthly basic wage (KWD)",
+    "dailyHours": "Normal working hours per day",
+    "dailyHoursHint": "Used to turn the monthly wage into an hourly rate.",
+    "hours": "Overtime hours",
+    "totalPay": "Total overtime pay",
+    "dailyRate": "Daily basic wage (monthly ÷ 30)",
+    "hourlyRate": "Hourly basic wage",
+    "perHour": "Pay per overtime hour (+25%)"
+  },
+  "notes": {
+    "overYear": "These hours are above the {max}-hour yearly overtime limit, so the full amount may not be permitted.",
+    "rules": "Under Kuwait's private-sector Labour Law (Law 6 of 2010, Art. 66) overtime is paid at the normal rate for the same period plus 25%. Overtime is generally limited to 2 hours a day and 180 hours a year.",
+    "disclaimer": "Estimate only. The hourly rate is the monthly basic wage divided by 30 and by the daily hours, and your contract may pay more. Confirm with your employer or the Public Authority for Manpower."
+  }
+}
