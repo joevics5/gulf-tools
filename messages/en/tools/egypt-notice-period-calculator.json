@@ -1,0 +1,15 @@
+{
+  "labels": {
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "results": "Your Results",
+    "given": "Date written notice is given",
+    "lastDay": "Earliest end of the contract",
+    "noticeLength": "Notice period",
+    "months": "{n} months"
+  },
+  "notes": {
+    "rules": "Under Egypt's Labour Law (Law 14 of 2025, Art. 156) an open-ended contract can be ended with written notice of at least three months, and Art. 161 says the notice period cannot be waived or reduced.",
+    "disclaimer": "Estimate only. This applies to open-ended contracts; fixed-term contracts and probation follow different rules, and ending a contract without a legitimate reason can carry compensation. Confirm with your employer or the Ministry of Labour."
+  }
+}

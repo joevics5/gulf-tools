@@ -228,6 +228,8 @@ async function loadToolComponent(toolSlug: string) {
         return (await import('@/components/tools/hr-payroll/KuwaitOvertimeCalculator')).default;
       case 'egypt-annual-leave-calculator':
         return (await import('@/components/tools/hr-payroll/EgyptAnnualLeaveCalculator')).default;
+      case 'egypt-notice-period-calculator':
+        return (await import('@/components/tools/hr-payroll/EgyptNoticePeriodCalculator')).default;
       case 'bahrain-sick-leave-calculator':
         return (await import('@/components/tools/hr-payroll/BahrainSickLeaveCalculator')).default;
       case 'bahrain-salary-calculator':
